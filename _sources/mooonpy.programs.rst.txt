@@ -1,0 +1,21 @@
+mooonpy.programs package
+========================
+
+Submodules
+----------
+
+mooonpy.programs.hw module
+--------------------------
+
+.. automodule:: mooonpy.programs.hw
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: mooonpy.programs
+   :members:
+   :show-inheritance:
+   :undoc-members:

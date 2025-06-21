@@ -1,0 +1,21 @@
+mooonpy.xrdspace package
+========================
+
+Submodules
+----------
+
+mooonpy.xrdspace.hw module
+--------------------------
+
+.. automodule:: mooonpy.xrdspace.hw
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: mooonpy.xrdspace
+   :members:
+   :show-inheritance:
+   :undoc-members:

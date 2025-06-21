@@ -1,0 +1,21 @@
+mooonpy.guis package
+====================
+
+Submodules
+----------
+
+mooonpy.guis.hw module
+----------------------
+
+.. automodule:: mooonpy.guis.hw
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: mooonpy.guis
+   :members:
+   :show-inheritance:
+   :undoc-members:

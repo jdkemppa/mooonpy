@@ -1,0 +1,53 @@
+mooonpy.molspace package
+========================
+
+Submodules
+----------
+
+mooonpy.molspace.doc\_examples module
+-------------------------------------
+
+.. automodule:: mooonpy.molspace.doc_examples
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+mooonpy.molspace.hw module
+--------------------------
+
+.. automodule:: mooonpy.molspace.hw
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+mooonpy.molspace.hw\_2 module
+-----------------------------
+
+.. automodule:: mooonpy.molspace.hw_2
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+mooonpy.molspace.mc module
+--------------------------
+
+.. automodule:: mooonpy.molspace.mc
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+mooonpy.molspace.molspace module
+--------------------------------
+
+.. automodule:: mooonpy.molspace.molspace
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: mooonpy.molspace
+   :members:
+   :show-inheritance:
+   :undoc-members:
