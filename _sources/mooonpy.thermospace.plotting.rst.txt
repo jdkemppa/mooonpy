@@ -1,0 +1,7 @@
+mooonpy.thermospace.plotting module
+===================================
+
+.. automodule:: mooonpy.thermospace.plotting
+   :members:
+   :show-inheritance:
+   :undoc-members:

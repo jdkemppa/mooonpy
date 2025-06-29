@@ -1,0 +1,7 @@
+mooonpy.programs.hw module
+==========================
+
+.. automodule:: mooonpy.programs.hw
+   :members:
+   :show-inheritance:
+   :undoc-members:
