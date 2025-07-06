@@ -1,0 +1,581 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.molspace.doc_examples &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mooonpy.molspace.doc_examples</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mooonpy.molspace.doc_examples</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module shows a few doc string examples for how</span>
+<span class="sd">to write doc strings for automatic Sphinx documentation.</span>
+
+<span class="sd">This module will eventually be deleted once all developers</span>
+<span class="sd">understand doc strings and the syntax for sphinx.</span>
+
+<span class="sd">The following is a good resources</span>
+<span class="sd">    https://sphinx-rtd-tutorial.readthedocs.io/en/latest/docstrings.html</span>
+<span class="sd">    </span>
+<span class="sd">    https://thomas-cokelaer.info/tutorials/sphinx/docstring_python.html</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+
+
+
+<div class="viewcode-block" id="add">
+<a class="viewcode-back" href="../../../mooonpy.molspace.doc_examples.html#mooonpy.molspace.doc_examples.add">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">b</span><span class="p">:</span> <span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function adds two values a and b.</span>
+
+<span class="sd">    :param a: value a</span>
+<span class="sd">    :type a: float, int</span>
+<span class="sd">    :param b: value b</span>
+<span class="sd">    :type b: float, int</span>
+<span class="sd">    :return: a + b</span>
+<span class="sd">    :rtype: float</span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    :Example:</span>
+<span class="sd">        </span>
+<span class="sd">    &gt;&gt;&gt; import mooonpy</span>
+<span class="sd">    &gt;&gt;&gt; c = mooonpy.doc_examples.add(a: float 1.123, b: int 10)</span>
+<span class="sd">    &gt;&gt;&gt; print(c)</span>
+<span class="sd">    11.123</span>
+<span class="sd">    </span>
+<span class="sd">    .. note:: can be useful to emphasize</span>
+<span class="sd">        important feature</span>
+<span class="sd">        </span>
+<span class="sd">    .. seealso:: :func:`subtract`, :func:`multiply`, :func:`divide`</span>
+<span class="sd">    </span>
+<span class="sd">    .. warning:: a and b must be floats or ints.</span>
+<span class="sd">    </span>
+<span class="sd">    .. todo::</span>
+<span class="sd">        - check that a and b are floats or ints.</span>
+<span class="sd">        - add raises examples.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="subtract">
+<a class="viewcode-back" href="../../../mooonpy.molspace.doc_examples.html#mooonpy.molspace.doc_examples.subtract">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">subtract</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">b</span><span class="p">:</span> <span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function subtracts two values a and b.</span>
+
+<span class="sd">    :param a: value a</span>
+<span class="sd">    :type a: float, int</span>
+<span class="sd">    :param b: value b</span>
+<span class="sd">    :type b: float, int</span>
+<span class="sd">    :return: a - b</span>
+<span class="sd">    :rtype: float</span>
+<span class="sd">    </span>
+<span class="sd">    :Example:</span>
+<span class="sd">        </span>
+<span class="sd">    &gt;&gt;&gt; import mooonpy</span>
+<span class="sd">    &gt;&gt;&gt; c = mooonpy.doc_examples.subtract(a: float 1.123, b: int 10)</span>
+<span class="sd">    &gt;&gt;&gt; print(c)</span>
+<span class="sd">    -8.877</span>
+<span class="sd">    </span>
+<span class="sd">    .. note:: can be useful to emphasize</span>
+<span class="sd">        important feature</span>
+<span class="sd">        </span>
+<span class="sd">    .. seealso:: :func:`add`, :func:`multiply`, :func:`divide`</span>
+<span class="sd">    </span>
+<span class="sd">    .. warning:: a and b must be floats or ints.</span>
+<span class="sd">    </span>
+<span class="sd">    .. todo:: </span>
+<span class="sd">        - check that a and b are floats or ints.</span>
+<span class="sd">        - add raises examples.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="multiply">
+<a class="viewcode-back" href="../../../mooonpy.molspace.doc_examples.html#mooonpy.molspace.doc_examples.multiply">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">multiply</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">b</span><span class="p">:</span> <span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function multiplies two values a and b.</span>
+
+<span class="sd">    :param a: value a</span>
+<span class="sd">    :type a: float, int</span>
+<span class="sd">    :param b: value b</span>
+<span class="sd">    :type b: float, int</span>
+<span class="sd">    :raises TypeError: If a or b are not of type float or int.</span>
+<span class="sd">    :return: a*b</span>
+<span class="sd">    :rtype: float</span>
+<span class="sd">    </span>
+<span class="sd">    **Bullet list**:</span>
+<span class="sd">        - This section might be useful</span>
+<span class="sd">        - But who knows what to put here</span>
+<span class="sd">        </span>
+<span class="sd">    :Example:</span>
+<span class="sd">        </span>
+<span class="sd">    &gt;&gt;&gt; import mooonpy</span>
+<span class="sd">    &gt;&gt;&gt; c = mooonpy.doc_examples.multiply(a: float 1.123, b: int 10)</span>
+<span class="sd">    &gt;&gt;&gt; print(c)</span>
+<span class="sd">    11.23</span>
+<span class="sd">    </span>
+<span class="sd">    .. note:: can be useful to emphasize</span>
+<span class="sd">        important feature</span>
+<span class="sd">        </span>
+<span class="sd">    .. seealso:: :func:`subtract` :func:`add` :func:`divide`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39; a=</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s1"> is not of type int or float&#39;</span><span class="p">)</span>
+        
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39; b=</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s1"> is not of type int or float&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="divide">
+<a class="viewcode-back" href="../../../mooonpy.molspace.doc_examples.html#mooonpy.molspace.doc_examples.divide">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">divide</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">b</span><span class="p">:</span> <span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function divides two values a and b.</span>
+
+<span class="sd">    :param a: a parameter</span>
+<span class="sd">    :type a: float, int</span>
+<span class="sd">    :param b: b parameter</span>
+<span class="sd">    :type b: float, int</span>
+<span class="sd">    :raises TypeError: If a or b are not of type float or int.</span>
+<span class="sd">    :raises ZeroDivisionError: if b = 0.</span>
+<span class="sd">    :return: a/b</span>
+<span class="sd">    :rtype: float</span>
+<span class="sd">    </span>
+<span class="sd">    **Bullet list**:</span>
+<span class="sd">        - This section might be useful</span>
+<span class="sd">        - But who knows what to put here</span>
+<span class="sd">        </span>
+<span class="sd">    :Example:</span>
+<span class="sd">        </span>
+<span class="sd">    &gt;&gt;&gt; import mooonpy</span>
+<span class="sd">    &gt;&gt;&gt; c = mooonpy.doc_examples.divide(a: float 1.123, b: int 10)</span>
+<span class="sd">    &gt;&gt;&gt; print(c)</span>
+<span class="sd">    0.1123</span>
+<span class="sd">    </span>
+<span class="sd">    .. note:: can be useful to emphasize</span>
+<span class="sd">        important feature</span>
+<span class="sd">        </span>
+<span class="sd">    .. seealso:: :func:`subtract` :func:`add` :func:`multiply`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39; a=</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s1"> is not of type int or float&#39;</span><span class="p">)</span>
+        
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39; b=</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s1"> is not of type int or float&#39;</span><span class="p">)</span>
+        
+    <span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ZeroDivisionError</span><span class="p">(</span><span class="s1">&#39; b=</span><span class="si">{b}</span><span class="s1">. Can not divide by zero&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="latex">
+<a class="viewcode-back" href="../../../mooonpy.molspace.doc_examples.html#mooonpy.molspace.doc_examples.latex">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">latex</span><span class="p">(</span><span class="n">alpha</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function prints the alpha (:math:`\\alpha`) parameter and shows how to use latex symbols.</span>
+
+<span class="sd">    :param alpha: alpha parameter</span>
+<span class="sd">    :type alpha: str</span>
+<span class="sd">    :return: None</span>
+<span class="sd">    :rtype: None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="useful_docstring">
+<a class="viewcode-back" href="../../../mooonpy.molspace.doc_examples.html#mooonpy.molspace.doc_examples.useful_docstring">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">useful_docstring</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>    
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is a longer explanation, which may include math with latex syntax</span>
+<span class="sd">    :math:`\\alpha`.</span>
+<span class="sd">    Then, you need to provide optional subsection in this order (just to be</span>
+<span class="sd">    consistent and have a uniform documentation. Nothing prevent you to</span>
+<span class="sd">    switch the order):</span>
+
+<span class="sd">      - parameters using ``:param &lt;name&gt;: &lt;description&gt;``</span>
+<span class="sd">      - type of the parameters ``:type &lt;name&gt;: &lt;description&gt;``</span>
+<span class="sd">      - returns using ``:returns: &lt;description&gt;``</span>
+<span class="sd">      - examples (doctest)</span>
+<span class="sd">      - seealso using ``.. seealso:: text``</span>
+<span class="sd">      - notes using ``.. note:: text``</span>
+<span class="sd">      - warning using ``.. warning:: text``</span>
+<span class="sd">      - todo ``.. todo:: text``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="butter">
+<a class="viewcode-back" href="../../../mooonpy.molspace.doc_examples.html#mooonpy.molspace.doc_examples.butter">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">butter</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">Wn</span><span class="p">,</span> <span class="n">btype</span><span class="o">=</span><span class="s1">&#39;low&#39;</span><span class="p">,</span> <span class="n">analog</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s1">&#39;ba&#39;</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Butterworth digital and analog filter design.</span>
+
+<span class="sd">    Design an Nth-order digital or analog Butterworth filter and return</span>
+<span class="sd">    the filter coefficients.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    N : int</span>
+<span class="sd">        The order of the filter. For &#39;bandpass&#39; and &#39;bandstop&#39; filters,</span>
+<span class="sd">        the resulting order of the final second-order sections (&#39;sos&#39;)</span>
+<span class="sd">        matrix is ``2*N``, with `N` the number of biquad sections</span>
+<span class="sd">        of the desired system.</span>
+<span class="sd">    Wn : array_like</span>
+<span class="sd">        The critical frequency or frequencies. For lowpass and highpass</span>
+<span class="sd">        filters, Wn is a scalar; for bandpass and bandstop filters,</span>
+<span class="sd">        Wn is a length-2 sequence.</span>
+
+<span class="sd">        For a Butterworth filter, this is the point at which the gain</span>
+<span class="sd">        drops to 1/sqrt(2) that of the passband (the &quot;-3 dB point&quot;).</span>
+
+<span class="sd">        For digital filters, if `fs` is not specified, `Wn` units are</span>
+<span class="sd">        normalized from 0 to 1, where 1 is the Nyquist frequency (`Wn` is</span>
+<span class="sd">        thus in half cycles / sample and defined as 2*critical frequencies</span>
+<span class="sd">        / `fs`). If `fs` is specified, `Wn` is in the same units as `fs`.</span>
+
+<span class="sd">        For analog filters, `Wn` is an angular frequency (e.g. rad/s).</span>
+<span class="sd">    btype : {&#39;lowpass&#39;, &#39;highpass&#39;, &#39;bandpass&#39;, &#39;bandstop&#39;}, optional</span>
+<span class="sd">        The type of filter.  Default is &#39;lowpass&#39;.</span>
+<span class="sd">    analog : bool, optional</span>
+<span class="sd">        When True, return an analog filter, otherwise a digital filter is</span>
+<span class="sd">        returned.</span>
+<span class="sd">    output : {&#39;ba&#39;, &#39;zpk&#39;, &#39;sos&#39;}, optional</span>
+<span class="sd">        Type of output:  numerator/denominator (&#39;ba&#39;), pole-zero (&#39;zpk&#39;), or</span>
+<span class="sd">        second-order sections (&#39;sos&#39;). Default is &#39;ba&#39; for backwards</span>
+<span class="sd">        compatibility, but &#39;sos&#39; should be used for general-purpose filtering.</span>
+<span class="sd">    fs : float, optional</span>
+<span class="sd">        The sampling frequency of the digital system.</span>
+
+<span class="sd">        .. versionadded:: 1.2.0</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    b, a : ndarray, ndarray</span>
+<span class="sd">        Numerator (`b`) and denominator (`a`) polynomials of the IIR filter.</span>
+<span class="sd">        Only returned if ``output=&#39;ba&#39;``.</span>
+<span class="sd">    z, p, k : ndarray, ndarray, float</span>
+<span class="sd">        Zeros, poles, and system gain of the IIR filter transfer</span>
+<span class="sd">        function.  Only returned if ``output=&#39;zpk&#39;``.</span>
+<span class="sd">    sos : ndarray</span>
+<span class="sd">        Second-order sections representation of the IIR filter.</span>
+<span class="sd">        Only returned if ``output=&#39;sos&#39;``.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    buttord, buttap</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The Butterworth filter has maximally flat frequency response in the</span>
+<span class="sd">    passband.</span>
+
+<span class="sd">    The ``&#39;sos&#39;`` output parameter was added in 0.16.0.</span>
+
+<span class="sd">    If the transfer function form ``[b, a]`` is requested, numerical</span>
+<span class="sd">    problems can occur since the conversion between roots and</span>
+<span class="sd">    the polynomial coefficients is a numerically sensitive operation,</span>
+<span class="sd">    even for N &gt;= 4. It is recommended to work with the SOS</span>
+<span class="sd">    representation.</span>
+
+<span class="sd">    .. warning::</span>
+<span class="sd">        Designing high-order and narrowband IIR filters in TF form can</span>
+<span class="sd">        result in unstable or incorrect filtering due to floating point</span>
+<span class="sd">        numerical precision issues. Consider inspecting output filter</span>
+<span class="sd">        characteristics `freqz` or designing the filters with second-order</span>
+<span class="sd">        sections via ``output=&#39;sos&#39;``.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Design an analog filter and plot its frequency response, showing the</span>
+<span class="sd">    critical points:</span>
+
+<span class="sd">    &gt;&gt;&gt; from scipy import signal</span>
+<span class="sd">    &gt;&gt;&gt; import matplotlib.pyplot as plt</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+
+<span class="sd">import tools.signals    &gt;&gt;&gt; b, a = tools.signals.butter(4, 100, &#39;low&#39;, analog=True)</span>
+<span class="sd">    &gt;&gt;&gt; w, h = signal.freqs(b, a)</span>
+<span class="sd">    &gt;&gt;&gt; plt.semilogx(w, 20 * np.log10(abs(h)))</span>
+<span class="sd">    &gt;&gt;&gt; plt.title(&#39;Butterworth filter frequency response&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; plt.xlabel(&#39;Frequency [rad/s]&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; plt.ylabel(&#39;Amplitude [dB]&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; plt.margins(0, 0.1)</span>
+<span class="sd">    &gt;&gt;&gt; plt.grid(which=&#39;both&#39;, axis=&#39;both&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; plt.axvline(100, color=&#39;green&#39;) # cutoff frequency</span>
+<span class="sd">    &gt;&gt;&gt; plt.show()</span>
+
+<span class="sd">    Generate a signal made up of 10 Hz and 20 Hz, sampled at 1 kHz</span>
+
+<span class="sd">    &gt;&gt;&gt; t = np.linspace(0, 1, 1000, False)  # 1 second</span>
+<span class="sd">    &gt;&gt;&gt; sig = np.sin(2*np.pi*10*t) + np.sin(2*np.pi*20*t)</span>
+<span class="sd">    &gt;&gt;&gt; fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)</span>
+<span class="sd">    &gt;&gt;&gt; ax1.plot(t, sig)</span>
+<span class="sd">    &gt;&gt;&gt; ax1.set_title(&#39;10 Hz and 20 Hz sinusoids&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; ax1.axis([0, 1, -2, 2])</span>
+
+<span class="sd">    Design a digital high-pass filter at 15 Hz to remove the 10 Hz tone, and</span>
+<span class="sd">    apply it to the signal. (It&#39;s recommended to use second-order sections</span>
+<span class="sd">    format when filtering, to avoid numerical error with transfer function</span>
+<span class="sd">    (``ba``) format):</span>
+
+<span class="sd">import tools.signals    &gt;&gt;&gt; sos = tools.signals.butter(10, 15, &#39;hp&#39;, fs=1000, output=&#39;sos&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; filtered = signal.sosfilt(sos, sig)</span>
+<span class="sd">    &gt;&gt;&gt; ax2.plot(t, filtered)</span>
+<span class="sd">    &gt;&gt;&gt; ax2.set_title(&#39;After 15 Hz high-pass filter&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; ax2.axis([0, 1, -2, 2])</span>
+<span class="sd">    &gt;&gt;&gt; ax2.set_xlabel(&#39;Time [s]&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; plt.tight_layout()</span>
+<span class="sd">    &gt;&gt;&gt; plt.show()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="MainClass1">
+<a class="viewcode-back" href="../../../mooonpy.molspace.doc_examples.html#mooonpy.molspace.doc_examples.MainClass1">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MainClass1</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This class docstring shows how to use sphinx and rst syntax</span>
+
+<span class="sd">    The first line is brief explanation, which may be completed with </span>
+<span class="sd">    a longer one. For instance to discuss about its methods. The only</span>
+<span class="sd">    method here is :func:`function1`&#39;s. The main idea is to document</span>
+<span class="sd">    the class and methods&#39;s arguments with </span>
+
+<span class="sd">    - **parameters**, **types**, **return** and **return types**::</span>
+
+<span class="sd">          :param arg1: description</span>
+<span class="sd">          :param arg2: description</span>
+<span class="sd">          :type arg1: type description</span>
+<span class="sd">          :type arg1: type description</span>
+<span class="sd">          :return: return description</span>
+<span class="sd">          :rtype: the return type description</span>
+
+<span class="sd">    - and to provide sections such as **Example** using the double commas syntax::</span>
+
+<span class="sd">          :Example:</span>
+
+<span class="sd">          followed by a blank line !</span>
+
+<span class="sd">      which appears as follow:</span>
+
+<span class="sd">      :Example:</span>
+
+<span class="sd">      followed by a blank line</span>
+
+<span class="sd">    - Finally special sections such as **See Also**, **Warnings**, **Notes**</span>
+<span class="sd">      use the sphinx syntax (*paragraph directives*)::</span>
+
+<span class="sd">          .. seealso:: blabla</span>
+<span class="sd">          .. warnings also:: blabla</span>
+<span class="sd">          .. note:: blabla</span>
+<span class="sd">          .. todo:: blabla</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        There are many other Info fields but they may be redundant:</span>
+<span class="sd">            * param, parameter, arg, argument, key, keyword: Description of a</span>
+<span class="sd">              parameter.</span>
+<span class="sd">            * type: Type of a parameter.</span>
+<span class="sd">            * raises, raise, except, exception: That (and when) a specific</span>
+<span class="sd">              exception is raised.</span>
+<span class="sd">            * var, ivar, cvar: Description of a variable.</span>
+<span class="sd">            * returns, return: Description of the return value.</span>
+<span class="sd">            * rtype: Return type.</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        There are many other directives such as versionadded, versionchanged,</span>
+<span class="sd">        rubric, centered, ... See the sphinx documentation for more details.</span>
+
+<span class="sd">    Here below is the results of the :func:`function1` docstring.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MainClass1.function1">
+<a class="viewcode-back" href="../../../mooonpy.molspace.doc_examples.html#mooonpy.molspace.doc_examples.MainClass1.function1">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">function1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="n">arg3</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;returns (arg1 / arg2) + arg3</span>
+
+<span class="sd">        This is a longer explanation, which may include math with latex syntax</span>
+<span class="sd">        :math:`\\alpha`.</span>
+<span class="sd">        Then, you need to provide optional subsection in this order (just to be</span>
+<span class="sd">        consistent and have a uniform documentation. Nothing prevent you to</span>
+<span class="sd">        switch the order):</span>
+
+<span class="sd">          - parameters using ``:param &lt;name&gt;: &lt;description&gt;``</span>
+<span class="sd">          - type of the parameters ``:type &lt;name&gt;: &lt;description&gt;``</span>
+<span class="sd">          - returns using ``:returns: &lt;description&gt;``</span>
+<span class="sd">          - examples (doctest)</span>
+<span class="sd">          - seealso using ``.. seealso:: text``</span>
+<span class="sd">          - notes using ``.. note:: text``</span>
+<span class="sd">          - warning using ``.. warning:: text``</span>
+<span class="sd">          - todo ``.. todo:: text``</span>
+
+<span class="sd">        **Advantages**:</span>
+<span class="sd">         - Uses sphinx markups, which will certainly be improved in future</span>
+<span class="sd">           version</span>
+<span class="sd">         - Nice HTML output with the See Also, Note, Warnings directives</span>
+
+
+<span class="sd">        **Drawbacks**:</span>
+<span class="sd">         - Just looking at the docstring, the parameter, type and  return</span>
+<span class="sd">           sections do not appear nicely</span>
+
+<span class="sd">        :param arg1: the first value</span>
+<span class="sd">        :param arg2: the first value</span>
+<span class="sd">        :param arg3: the first value</span>
+<span class="sd">        :type arg1: int, float,...</span>
+<span class="sd">        :type arg2: int, float,...</span>
+<span class="sd">        :type arg3: int, float,...</span>
+<span class="sd">        :returns: arg1/arg2 +arg3</span>
+<span class="sd">        :rtype: int, float</span>
+
+<span class="sd">        :Example:</span>
+
+<span class="sd">        &gt;&gt;&gt; import template</span>
+<span class="sd">        &gt;&gt;&gt; a = template.MainClass1()</span>
+<span class="sd">        &gt;&gt;&gt; a.function1(1,1,1)</span>
+<span class="sd">        2</span>
+
+<span class="sd">        .. note:: can be useful to emphasize</span>
+<span class="sd">            important feature</span>
+<span class="sd">        .. seealso:: :class:`MainClass2`</span>
+<span class="sd">        .. warning:: arg2 must be non-zero.</span>
+<span class="sd">        .. todo:: check that arg2 is non zero.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">arg1</span><span class="o">/</span><span class="n">arg2</span> <span class="o">+</span> <span class="n">arg3</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
