@@ -26,12 +26,13 @@ import mooonpy
 #print('alias: ',  ts.lw.multiply(x=5, y=10))
 
 
-file = 'EPON_862/all2lmp_Outputs/detda_typed_IFF.data'
-#file = 'EPON_862/Graphite_AB_relaxed.data'
-#file = 'EPON_862/detda_typed_IFF_merged.data'
+# file = '../EPON_862/all2lmp_Outputs/detda_typed_IFF.data'
+# #file = '../EPON_862/Graphite_AB_relaxed.data'
+# file = '../EPON_862/detda_typed_IFF_merged.data'
 
-#file = 'EPON_862/Cellulose-supercell_morse_IFF.data'
-#file = 'EPON_862/system1_cell_replicate.data'
+# #file = '../EPON_862/Cellulose-supercell_morse_IFF.data'
+# file = '../EPON_862/system1_cell_replicate.data'
+file = '../EPON_862/detda_typed_IFF_merged.data'
 
 
 mooonpy.rcParams['color'] = 'green'
@@ -41,8 +42,8 @@ molecule = mooonpy.Molspace(filename=file)#, astyles=['full', 'charge'], dsect=[
 molecule.write_files('WRITE.data', atom_style='full')
 molecule.write_files('WRITE.ff.script')
 
-lines = molecule.ff.get_per_line_styles('bond_coeffs')
-print(lines)
+# lines = molecule.ff.get_per_line_styles('bond_coeffs')
+# print(lines)
 
 
 
@@ -53,16 +54,16 @@ print(lines)
 if __name__ == '__main__':
     import timeit
     
-    file = 'EPON_862/detda_typed_IFF_merged.data'
-    file = 'EPON_862/system1_cell_replicate.data'
-    def call_mooonpy():
-        m = mooonpy.Molspace(filename=file, read='mooonpy', astyles=['all', 'full'])
-        m.write_files('WRITE.data', atom_style='full')
+    # file = 'EPON_862/detda_typed_IFF_merged.data'
+    # file = 'EPON_862/system1_cell_replicate.data'
+    # def call_mooonpy():
+    #     m = mooonpy.Molspace(filename=file, read='mooonpy', astyles=['all', 'full'])
+    #     m.write_files('WRITE.data', atom_style='full')
     
-    number = 1
-    print('\n\n')
-    mooonpy_time = timeit.timeit(stmt=call_mooonpy, number=number)
-    print(f'mooonpy read time  : {mooonpy_time} seconds for {number} runs on 100,000 atom system')
+    # number = 1
+    # print('\n\n')
+    # mooonpy_time = timeit.timeit(stmt=call_mooonpy, number=number)
+    # print(f'mooonpy read time  : {mooonpy_time} seconds for {number} runs on 100,000 atom system')
     
     
 

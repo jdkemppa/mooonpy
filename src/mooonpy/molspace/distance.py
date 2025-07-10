@@ -2,8 +2,6 @@
 from collections import defaultdict
 from dataclasses import dataclass
 
-from molspace.topology import Bonds
-
 from .atoms import Atoms
 from .topology import Bonds
 # from ..tools.math_utils import MixingRule

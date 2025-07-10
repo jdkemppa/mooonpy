@@ -4,6 +4,7 @@
 class Parameters(object):
     def __init__(self, coeffs):                
         self.coeffs: list = coeffs
+        self.style: str = ''
         self.comment: str = ''
         self.type_label: str = ''
 
@@ -47,7 +48,8 @@ class ForceField(object):
         lines = {} # {'TypeID':'per-line-style'}
         potential = getattr(self, coeff)
         for i in potential:
-            lines[i] = potential[i].style
+            parameters = potential[i]
+            lines[i] = parameters.style
         return lines
 
         

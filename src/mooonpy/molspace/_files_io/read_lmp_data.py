@@ -177,6 +177,8 @@ def read(mol, filename, sections):
                 coeffs = digits[1:]
                 if typeID in ff_coeffs:
                     ff_coeffs[typeID].coeffs = coeffs
+                    ff_coeffs[typeID].comment = comment
+                    ff_coeffs[typeID].style = ff_coeffs.style
                 else:
                     # Build type label from comment, if type label
                     # doesnt already exist or set as read-in typeID
