@@ -30,22 +30,32 @@ def write(mol, filename):
             
         # Write all sections that have the "Coeffs ending"
         potentials = [i for i in dir(mol.ff) if i.endswith('coeffs')]
-        write_order = ['angleangletorsion_coeffs', 'endbondtorsion_coeffs',
-                       'middlebondtorsion_coeffs', 'bondbond13_coeffs', 
+        write_order = [ 
                        'angletorsion_coeffs', 'angleangle_coeffs']
         
         
+        # This will set the write order of the FF sections and will
+        # set the LAMMPS keyword to place in-front of each coeff
         write_order = {'pair_coeffs':'pair_coeff',
                        'bond_coeffs': 'bond_coeff',
                        'angle_coeffs': 'angle_coeff',
                        'dihedral_coeffs': 'dihedral_coeff',
                        'improper_coeffs': 'improper_coeff',
                        
-                       'bondbond_coeffs': 'angle_coeff {:^6}'.format('bb'),
-                       'bondangle_coeffs': 'angle_coeff {:^6}'.format('ba'),
+                       'bondbond_coeffs': 'angle_coeff bb',
+                       'bondangle_coeffs': 'angle_coeff ba',
+                       
+                       'angleangletorsion_coeffs' : 'dihedral_coeff aat',
+                       'endbondtorsion_coeffs': 'dihedral_coeff ebt',
+                       'middlebondtorsion_coeffs': 'dihedral_coeff mbt',
+                       'bondbond13_coeffs': 'dihedral_coeff bb13',
+                       'angletorsion_coeffs': 'dihedral_coeff at',
+                       
+                       'angleangle_coeffs': 'improper_coeff aa',
                        }
         
-        
+        # This will set the write order for the LAMMPS styles sections and
+        # will set the LAMMPS keyword to place in-front of each style
         styles = {'bond_coeffs':      'bond_style', 
                   'angle_coeffs':     'angle_style', 
                   'dihedral_coeffs':  'dihedral_style',
@@ -95,14 +105,23 @@ def write(mol, filename):
         
         # We will hold off writing each line till we can setup the force field styles
         for attr in write_order:
-            potential = getattr(mol.ff, attr)            
+            potential = getattr(mol.ff, attr)       
+            type_ids = sorted(potential.keys())
+            if not type_ids: continue
             f.write('\n\n#{}{}{}\n'.format(sections, potential.keyword, sections))
 
             type_ids = sorted(potential.keys())
             line_styles = mol.ff.get_per_line_styles(attr)
             unique_line_styles = set(line_styles.values())
             line_lengths = set()
-            lmp_name = write_order[attr]
+            lmp_name = write_order[attr].split()
+            if len(lmp_name) == 2:
+                pre, post = lmp_name
+                post = '{:^5}'.format(post)
+            else:
+                pre = write_order[attr]
+                post = ''
+            
             for i in type_ids: 
                 coeff = potential[i]
                 if coeff.comment:
@@ -113,6 +132,6 @@ def write(mol, filename):
                     style = ''
                 else: style = '{:^8}'.format(coeff.style)
                 
-                line = '{:^10} {:^10} {} {}'.format(lmp_name, i, style, string_parameters(coeff.coeffs))
+                line = '{:^10} {:^4} {} {} {}'.format(pre, i, post, style, string_parameters(coeff.coeffs))
                 line_lengths.add(len(line))                
                 f.write('{:<{s}} {}\n'.format(line, comment, s=max(line_lengths)))
