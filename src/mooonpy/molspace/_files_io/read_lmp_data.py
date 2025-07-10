@@ -175,10 +175,32 @@ def read(mol, filename, sections):
                 digits = [string2digit(string) for string in data_lst]
                 typeID = digits[0]
                 coeffs = digits[1:]
+                
+                # Some Coeffs section can be in the following format:
+                #   Bond Coeffs  # morse class2
+                #  
+                #   1  morse     82.696   2.000     1.530          # c2          c3
+                #   2  morse     82.696   2.000     1.501          # c2          cp
+                #   3  class2    1.1010 345.000  -691.890  844.600 # c2        hpan
+                #
+                # In which case we will "strip" out the hydrid styles so read-in
+                # coeffs are purely numeric and we will check for hybrid styles when
+                # write the LAMMPS datafile or LAMMPS script file.
+                if isinstance(coeffs[0], str):
+                    style = coeffs[0]
+                    del coeffs[0]
+                else:
+                    style = ff_coeffs.style
+                                   
+                # If typeID already exits, it means a type label built
+                # this section, so only add what is needed in this case
                 if typeID in ff_coeffs:
                     ff_coeffs[typeID].coeffs = coeffs
                     ff_coeffs[typeID].comment = comment
-                    ff_coeffs[typeID].style = ff_coeffs.style
+                    ff_coeffs[typeID].style = style
+                    
+                # Else a type label did not trigger a build of the coeffs
+                # and build everything from scratch
                 else:
                     # Build type label from comment, if type label
                     # doesnt already exist or set as read-in typeID
@@ -191,7 +213,7 @@ def read(mol, filename, sections):
                     params = coeffs_factory(coeffs)
                     params.comment = comment
                     params.type_label = type_label
-                    params.style = ff_coeffs.style
+                    params.style = style
                     ff_coeffs[typeID] = params
 
                     # Get box dimensions

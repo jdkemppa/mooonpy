@@ -46,45 +46,35 @@ def write(mol, filename):
                        }
         
         
-        styles = {'bond_coeffs': {'name':'bond_style', 'per-line':set([])},
-                  'angle_coeffs': {'name':'angle_style', 'per-line':set([])},
-                  'dihedral_coeffs': {'name':'dihedral_style', 'per-line':set([])},
-                  'improper_coeffs': {'name':'improper_style', 'per-line':set([])},
-                  
-                  'pair_coeffs': {'name':'pair_style', 'per-line':set([])}
+        styles = {'bond_coeffs':      'bond_style', 
+                  'angle_coeffs':     'angle_style', 
+                  'dihedral_coeffs':  'dihedral_style',
+                  'improper_coeffs':  'improper_style',
+                  'pair_coeffs':      'pair_style',
                   }
+                
         
-        
-        # We need to check for hybrid styling to know how to write the
-        # LAMMPS styles and the force field parameter secitons
-        for attr in write_order:
+        # Write LAMMPS force field style setup
+        sections = 50*'-'
+        f.write('\n\n#{}{}{}\n'.format(sections, 'Force Field', sections))
+        for attr in styles:
             if attr not in potentials:
                 print('WARNING potential: {} is not being written to {}.'.format(attr, filename))
                 print(__file__)
                 continue
             
-            if attr not in styles: continue
-            potential = getattr(mol.ff, attr)     
-            lines = mol.ff.get_per_line_styles(attr)
-            pot_styles = set(lines.values())
-            styles[attr]['per-line'].update(pot_styles)
-                
-        
-        # Write LAMMPS force field style setup
-        sections = 50*'-'
-        f.write('\n\n{}{}{}\n'.format(sections, 'Force Field', sections))
-        for i in styles:
-            name = styles[i]['name']
-            per_line = sorted(styles[i]['per-line'])
-            if len(per_line) > 1:
-                style = 'hybrid {}'.format(' '.join(per_line))
+            name = styles[attr]
+            line_styles = sorted(set(mol.ff.get_per_line_styles(attr).values()))
+
+            if len(line_styles) > 1:
+                style = 'hybrid {}'.format(' '.join(line_styles))
             else:
-                style = '{}'.format(' '.join(per_line))
+                style = '{}'.format(' '.join(line_styles))
                 
             if name == 'pair_style':
-                f.write('{:<20} {} # PLEASE CHECK I AM CORRECT\n'.format('special_bonds', 'lj/coul 0 0 1'))
+                f.write('{:<20} {}           # PLEASE CHECK I AM CORRECT\n'.format('special_bonds', 'lj/coul 0 0 1'))
                 
-                style = '{}'.format(' '.join(['{} 12.0'.format(i) for i in per_line]))
+                style = '{}'.format(' '.join(['{} 12.0'.format(i) for i in line_styles]))
                 f.write('\n')
                 f.write('{:<20} {}\n'.format(name, style))
                 f.write('{:<20} {}\n'.format('kspace_style', 'pppm 1.0e-4'))
@@ -93,33 +83,36 @@ def write(mol, filename):
                 elif 'charmm' in style:
                     f.write('{:<20} {}\n'.format('pair_modify', 'mix arithmetic'))   
                 else:
-                    f.write('{:<20} {} # PLEASE CHECK I AM CORRECT\n'.format('pair_modify', 'mix arithmetic'))   
-                    f.write('\n')
+                    f.write('{:<20} {}           # PLEASE CHECK I AM CORRECT\n'.format('pair_modify', 'mix arithmetic'))   
             else:
                 f.write('{:<20} {}\n'.format(name, style))
                 
         # Finally write the force field parameters and some sort of neighbor list settings
         f.write('\n')
         f.write('{:<20} {}\n'.format('neighbor', '2.0 bin'))
-        f.write('{:<20} {}\n'.format('neigh_modify', 'delay 0 every 1 check yes one 5000 page 100000'))
+        f.write('{:<20} {}\n'.format('neigh_modify', 'delay 0 every 1 check yes one 10000 page 1000000'))
         
         
         # We will hold off writing each line till we can setup the force field styles
         for attr in write_order:
             potential = getattr(mol.ff, attr)            
-            f.write('\n\n{}{}{}\n'.format(sections, potential.keyword, sections))
+            f.write('\n\n#{}{}{}\n'.format(sections, potential.keyword, sections))
 
             type_ids = sorted(potential.keys())
+            line_styles = mol.ff.get_per_line_styles(attr)
+            unique_line_styles = set(line_styles.values())
+            line_lengths = set()
             lmp_name = write_order[attr]
             for i in type_ids: 
                 coeff = potential[i]
-                parms = coeff.coeffs
                 if coeff.comment:
                     comment = '# {}'.format(coeff.comment)
                 else: comment = ''
                 
-                if attr in styles and len(styles[attr]['per-line']) > 1:
-                    style = coeff.style
-                else: style = ''
+                if len(unique_line_styles) == 1:
+                    style = ''
+                else: style = '{:^8}'.format(coeff.style)
                 
-                f.write(('{} {:^10} {} {} {}\n'.format(lmp_name, i, style, string_parameters(parms), comment)))
+                line = '{:^10} {:^10} {} {}'.format(lmp_name, i, style, string_parameters(coeff.coeffs))
+                line_lengths.add(len(line))                
+                f.write('{:<{s}} {}\n'.format(line, comment, s=max(line_lengths)))

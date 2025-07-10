@@ -175,20 +175,33 @@ def write(mol, filename, atom_style):
                 print('WARNING potential: {} is not being written to {}.'.format(attr, filename))
                 print(__file__)
                 continue
+            
             potential = getattr(mol.ff, attr)
             if not potential: continue
+            
             if potential.style:
                 style_hint = '# {}'.format(potential.style)
             else: style_hint = ''
+            
             f.write('\n{} {}\n\n'.format(potential.keyword, style_hint))
             type_ids = sorted(potential.keys())
+            line_styles = mol.ff.get_per_line_styles(attr)
+            unique_line_styles = set(line_styles.values())
+            line_lengths = set()
             for i in type_ids:
                 coeff = potential[i]
-                parms = coeff.coeffs
+                
+                if len(unique_line_styles) == 1:
+                    style = ''
+                else: style = '{:^8}'.format(coeff.style)
+                
                 if coeff.comment:
                     comment = '# {}'.format(coeff.comment)
                 else: comment = ''
-                f.write('{:^3} {} {}\n'.format(i, string_parameters(parms), comment))
+                
+                line = '{:^3} {} {}'.format(i, style, string_parameters(coeff.coeffs))
+                line_lengths.add(len(line))                
+                f.write('{:<{s}} {}\n'.format(line, comment, s=max(line_lengths)))
 
         # Write atoms and velocities
         if mol.atoms:
