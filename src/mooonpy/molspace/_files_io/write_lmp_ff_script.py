@@ -30,29 +30,26 @@ def write(mol, filename):
             
         # Write all sections that have the "Coeffs ending"
         potentials = [i for i in dir(mol.ff) if i.endswith('coeffs')]
-        write_order = [ 
-                       'angletorsion_coeffs', 'angleangle_coeffs']
-        
+
         
         # This will set the write order of the FF sections and will
         # set the LAMMPS keyword to place in-front of each coeff
-        write_order = {'pair_coeffs':'pair_coeff',
-                       'bond_coeffs': 'bond_coeff',
-                       'angle_coeffs': 'angle_coeff',
+        write_order = {'pair_coeffs':     'pair_coeff',
+                       'bond_coeffs':     'bond_coeff',
+                       'angle_coeffs':    'angle_coeff',
                        'dihedral_coeffs': 'dihedral_coeff',
                        'improper_coeffs': 'improper_coeff',
                        
-                       'bondbond_coeffs': 'angle_coeff bb',
+                       'bondbond_coeffs':  'angle_coeff bb',
                        'bondangle_coeffs': 'angle_coeff ba',
                        
-                       'angleangletorsion_coeffs' : 'dihedral_coeff aat',
-                       'endbondtorsion_coeffs': 'dihedral_coeff ebt',
-                       'middlebondtorsion_coeffs': 'dihedral_coeff mbt',
-                       'bondbond13_coeffs': 'dihedral_coeff bb13',
-                       'angletorsion_coeffs': 'dihedral_coeff at',
+                       'angleangletorsion_coeffs' : 'dihedral_coeff  aat',
+                       'endbondtorsion_coeffs':     'dihedral_coeff  ebt',
+                       'middlebondtorsion_coeffs':  'dihedral_coeff  mbt',
+                       'bondbond13_coeffs':         'dihedral_coeff  bb13',
+                       'angletorsion_coeffs':       'dihedral_coeff  at',
                        
-                       'angleangle_coeffs': 'improper_coeff aa',
-                       }
+                       'angleangle_coeffs': 'improper_coeff  aa'}
         
         # This will set the write order for the LAMMPS styles sections and
         # will set the LAMMPS keyword to place in-front of each style
@@ -60,8 +57,7 @@ def write(mol, filename):
                   'angle_coeffs':     'angle_style', 
                   'dihedral_coeffs':  'dihedral_style',
                   'improper_coeffs':  'improper_style',
-                  'pair_coeffs':      'pair_style',
-                  }
+                  'pair_coeffs':      'pair_style'}
                 
         
         # Write LAMMPS force field style setup

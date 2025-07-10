@@ -99,7 +99,10 @@ def read(mol, filename, sections):
                 bond.ordered = ordered  # [id1, id2]
                 bond.comment = comment
                 bond.type = type_id
-                key = tuple(sorted(ordered))
+                if id1 < id2:
+                    key = tuple(ordered)
+                else:
+                    key = (id2, id1)
                 mol.bonds[key] = bond
 
             elif section == 'Angles':
