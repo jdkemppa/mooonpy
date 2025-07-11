@@ -2,10 +2,12 @@
 from collections import defaultdict
 from dataclasses import dataclass
 
-from .atoms import Atoms
-from .topology import Bonds
+from mooonpy.molspace.topology import Bonds, Angles, Dihedrals, Impropers
+from mooonpy.molspace.atoms import Atoms
+
 # from ..tools.math_utils import MixingRule
 import math
+import numpy as np
 
 
 @dataclass
@@ -277,3 +279,122 @@ def domain_decomp_13(atoms, cutoff, whitelist=None, blacklist=None, periodicity=
                     domain.neighbors[neighbor_index] = tuple(image_shift)
 
     return domains, fractionals
+
+def ADI_from_bonds(bonds, angles=None, dihedrals=None, impropers=None):
+    if not isinstance(bonds, Bonds):
+        raise TypeError('bonds must be a Bond object')
+
+    vectors = {}
+    for key, bond in bonds.items():
+        if not hasattr(bond, 'vect'):
+            raise Exception('bond has no computed vector, use "compute_bond_length" first')
+        vectors[key] = np.array(bond.vect)
+
+    if isinstance(angles, Angles):
+        for key, angle in angles.items():
+            b1 = bonds.key_rule(angle.ordered[1], angle.ordered[0])  # outward if keys match
+            b2 = bonds.key_rule(angle.ordered[1], angle.ordered[2])  # may break if rules change. This will need tests
+
+            v1 = vectors[b1]
+            v2 = vectors[b2]
+            if b1[0] != angle.ordered[1]: v1 = -v1  # if tip is center mirror a copy
+            if b2[0] != angle.ordered[1]: v2 = -v2  # *= changes in the dict
+
+            dot = np.dot(v1, v2) / bonds[b1].dist / bonds[b2].dist
+            angle.theta = np.arccos(dot)*180/np.pi
+            ## could do a cross product to get normal?
+    else:
+        pass
+
+    if isinstance(dihedrals, Dihedrals):
+        for key, dihedral in dihedrals.items():
+            b1 = bonds.key_rule(dihedral.ordered[0], dihedral.ordered[1])
+            b2 = bonds.key_rule(dihedral.ordered[1], dihedral.ordered[2])
+            b3 = bonds.key_rule(dihedral.ordered[2], dihedral.ordered[3])
+
+            v1 = vectors[b1]
+            v2 = vectors[b2]
+            v3 = vectors[b3]
+            if b1[0] != dihedral.ordered[1]: v1 = -v1 # out from 1
+            if b2[0] != dihedral.ordered[1]: v2 = -v2 # out from 1
+            if b3[0] != dihedral.ordered[2]: v3 = -v3 # out from 2
+
+            vl = np.cross(v2, v1)
+            vl /= np.linalg.norm(vl)
+            vr = np.cross(v2, v3)
+            vr /= np.linalg.norm(vr)
+
+            vc = np.cross(vr, vl)
+            vc /= np.linalg.norm(vc)
+
+            ## not sure where, but it needs a sign flip
+            a = -np.arccos(np.dot(vl,vr))*np.sign(np.dot(vc,v2))*180/np.pi # -180 to 180
+            dihedral.phi = a
+    else:
+        pass
+
+    if isinstance(impropers, Impropers):
+        for key, improper in impropers.items():
+            b1 = bonds.key_rule(improper.ordered[1], improper.ordered[0])
+            b2 = bonds.key_rule(improper.ordered[1], improper.ordered[2])
+            b3 = bonds.key_rule(improper.ordered[1], improper.ordered[3])
+
+            v1 = vectors[b1]
+            v2 = vectors[b2]
+            v3 = vectors[b3]
+
+            if b1[0] != improper.ordered[1]: v1 = -v1 # all center out
+            if b2[0] != improper.ordered[1]: v2 = -v2
+            if b3[0] != improper.ordered[1]: v3 = -v3
+
+            norm1 = np.cross(v1, v2)
+            norm1 /= np.linalg.norm(norm1)
+            norm2 = np.cross(v2, v3)
+            norm2 /= np.linalg.norm(norm2)
+            norm3 = np.cross(v3, v1)
+            norm3 /= np.linalg.norm(norm3)
+
+            ch1 = 90 - np.dot(norm1, v3) / np.linalg.norm(v3) * 180 / np.pi
+
+            improper.chi = ch1
+    else:
+        pass
+
+def BADI_by_type(mol, type_label=False):
+    bond_types = mol.ff.bond_coeffs
+    angle_types = mol.ff.angle_coeffs
+    dihedral_types = mol.ff.dihedral_coeffs
+    improper_types = mol.ff.improper_coeffs
+
+    if type_label:
+        bond_hist = {coeff.type_label: [] for coeff in bond_types.values()}
+        angle_hist = {coeff.type_label: [] for coeff in angle_types.values()}
+        dihedral_hist = {coeff.type_label: [] for coeff in dihedral_types.values()}
+        improper_hist = {coeff.type_label: [] for coeff in improper_types.values()}
+    else:
+        bond_hist = {type_: [] for type_ in bond_types.keys()}
+        angle_hist = {type_: [] for type_ in angle_types.keys()}
+        dihedral_hist = {type_: [] for type_ in dihedral_types.keys()}
+        improper_hist = {type_: [] for type_ in improper_types.keys()}
+
+    for bond in mol.bonds.values():
+        key = bond.type
+        if type_label: key = bond_types[key].type_label
+        bond_hist[key].append(bond.dist)
+
+    for angle in mol.angles.values():
+        key = angle.type
+        if type_label: key = angle_types[key].type_label
+        angle_hist[key].append(angle.theta)
+
+    for dihedral in mol.dihedrals.values():
+        key = dihedral.type
+        if type_label: key = dihedral_types[key].type_label
+        dihedral_hist[key].append(dihedral.phi)
+
+    for improper in mol.impropers.values():
+        key = improper.type
+        if type_label: key = improper_types[key].type_label
+        improper_hist[key].append(improper.chi)
+
+    return bond_hist, angle_hist, dihedral_hist, improper_hist

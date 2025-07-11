@@ -3,9 +3,9 @@ import numpy as np
 import warnings
 from typing import Optional, Union
 
-from ..tools.tables import ColTable
-from ..tools.file_utils import Path
-from ..tools.string_utils import _col_convert
+from mooonpy.tools.tables import ColTable
+from mooonpy.tools.file_utils import Path
+from mooonpy.tools.string_utils import _col_convert
 # from ._files_io.read_logfile import readlog_basic
 
 class Thermospace(ColTable):

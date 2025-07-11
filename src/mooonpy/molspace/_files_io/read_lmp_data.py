@@ -99,8 +99,9 @@ def read(mol, filename, sections):
                 bond.ordered = ordered  # [id1, id2]
                 bond.comment = comment
                 bond.type = type_id
-                key = tuple(sorted(ordered))
-                mol.bonds[key] = bond
+                # key = tuple(sorted(ordered))
+                # mol.bonds[key] = bond
+                mol.bonds.id_set(bond, id1, id2)
 
             elif section == 'Angles':
                 # nid = int(data_lst[0])
@@ -114,11 +115,12 @@ def read(mol, filename, sections):
                 angle.ordered = ordered  # [id1, id2, id3]
                 angle.comment = comment
                 angle.type = type_id
-                if id1 < id3:
-                    key = tuple(ordered)
-                else:
-                    key = (id3, id2, id1)
-                mol.angles[key] = angle
+                # if id1 < id3:
+                #     key = tuple(ordered)
+                # else:
+                #     key = (id3, id2, id1)
+                # mol.angles[key] = angle
+                mol.angles.id_set(angle,id1, id2, id3)
 
             elif section == 'Dihedrals':
                 # nid = int(data_lst[0])
@@ -133,11 +135,12 @@ def read(mol, filename, sections):
                 dihedral.ordered = ordered  # [id1, id2, id3, id4]
                 dihedral.comment = comment
                 dihedral.type = type_id
-                if id1 < id4:
-                    key = tuple(ordered)
-                else:
-                    key = (id4, id3, id2, id1)
-                mol.dihedrals[key] = dihedral
+                # if id1 < id4:
+                #     key = tuple(ordered)
+                # else:
+                #     key = (id4, id3, id2, id1)
+                # mol.dihedrals[key] = dihedral
+                mol.dihedrals.id_set(dihedral,id1, id2, id3, id4)
 
             elif section == 'Impropers':
                 # nid = int(data_lst[0])
@@ -152,9 +155,10 @@ def read(mol, filename, sections):
                 improper.ordered = ordered  # [id1, id2, id3, id4]
                 improper.comment = comment
                 improper.type = type_id
-                outers = sorted([id1, id3, id4])
-                key = (outers[0], id2, outers[1], outers[2])
-                mol.impropers[key] = improper
+                # outers = sorted([id1, id3, id4])
+                # key = (outers[0], id2, outers[1], outers[2])
+                # mol.impropers[key] = improper
+                mol.impropers.id_set(improper,id1, id2, id3, id4)
 
 
             # Type labels can initialize a ff_coeffs build

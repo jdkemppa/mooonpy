@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from . import _files_io as _files_io
+from mooonpy.tools.file_utils import Path
 from .atoms import Atoms
 from .topology import Bonds, Angles, Dihedrals, Impropers
 from .force_field import ForceField
-from .distance import domain_decomp_13, pairs_from_bonds, pairs_from_domains
+from .distance import domain_decomp_13, pairs_from_bonds, pairs_from_domains, ADI_from_bonds, BADI_by_type
 from mooonpy.rcsetup import rcParams
 import os
 
@@ -77,11 +78,9 @@ class Molspace(object):
         # Handle file initilaizations
         self.filename = filename
         self.header = ''
-        if filename:
-            if not self.filename:
-                pass
-
-            if not os.path.exists(filename):
+        if filename != '' and filename is not None:
+            filename = Path(filename)
+            if not bool(filename): # check existence
                 raise FileNotFoundError(f'{filename} was not found or is a directory')
 
             self.read_files(filename, dsect=self.dsect)
@@ -119,4 +118,81 @@ class Molspace(object):
     def compute_bond_length(self, periodicity='ppp'):
         return pairs_from_bonds(self.atoms, self.bonds, 'ppp')
 
+    def compute_ADI(self):
+        return ADI_from_bonds(self.bonds, self.angles, self.dihedrals, self.impropers)
 
+    def compute_BADI_by_type(self,periodicity='ppp',comp_bond=True, comp_angle=True, comp_dihedral=True, comp_improper=True):
+        if comp_bond:
+            pairs_from_bonds(self.atoms, self.bonds, 'ppp')
+        ADI_from_bonds(self.bonds, self.angles, self.dihedrals, self.impropers)
+        bond_hist, angle_hist, dihedral_hist, improper_hist = BADI_by_type(self, self.ff.has_type_labels)
+        return bond_hist, angle_hist, dihedral_hist, improper_hist
+
+    def add_type_labels(self, labels):
+        """
+        Adds type labels for atom types and use 1st instance for each BADI type label
+
+        could refactor the composition to a function somewhere
+        """
+        ff = self.ff
+        ## Atom types
+        for atom_type, coeff in ff.masses.items():
+            if atom_type in labels:
+                coeff.type_label = labels[atom_type]
+                ff.pair_coeffs[atom_type].type_label = labels[atom_type]  # does this always exist
+            else:
+                raise Exception(f'Type label {atom_type} is not defined in input dictionary')
+
+        ## Bond Types from example
+        bond_types = {}
+        for key, bond in self.bonds.items():
+            if bond.type in bond_types: continue
+            tl1 = labels[self.atoms[bond.ordered[0]].type]  # use load order for label
+            tl2 = labels[self.atoms[bond.ordered[1]].type]
+            bond_types[bond.type] = f"{tl1}-{tl2}"
+            if len(bond_types) == len(ff.bond_coeffs): break  # found all examples
+        # else: not every type has an example
+
+        for type_, label in bond_types.items():
+            ff.bond_coeffs[type_].type_label = label
+            ## also cross terms?
+
+        angle_types = {}
+        for key, angle in self.angles.items():
+            if angle.type in angle_types: continue
+            tl1 = labels[self.atoms[angle.ordered[0]].type]
+            tl2 = labels[self.atoms[angle.ordered[1]].type]
+            tl3 = labels[self.atoms[angle.ordered[2]].type]
+            angle_types[angle.type] = f"{tl1}-{tl2}-{tl3}"
+            if len(angle_types) == len(ff.angle_coeffs): break
+
+        for type_, label in angle_types.items():
+            ff.angle_coeffs[type_].type_label = label
+
+        dihedral_types = {}
+        for key, dihedral in self.dihedrals.items():
+            if dihedral.type in dihedral_types: continue
+            tl1 = labels[self.atoms[dihedral.ordered[0]].type]
+            tl2 = labels[self.atoms[dihedral.ordered[1]].type]
+            tl3 = labels[self.atoms[dihedral.ordered[2]].type]
+            tl4 = labels[self.atoms[dihedral.ordered[3]].type]
+            dihedral_types[dihedral.type] = f"{tl1}-{tl2}-{tl3}-{tl4}"
+            if len(dihedral_types) == len(ff.dihedral_coeffs): break
+
+        for type_, label in dihedral_types.items():
+            ff.dihedral_coeffs[type_].type_label = label
+
+        improper_types = {}
+        for key, improper in self.impropers.items():
+            if improper.type in improper_types: continue
+            tl1 = labels[self.atoms[improper.ordered[0]].type]
+            tl2 = labels[self.atoms[improper.ordered[1]].type]
+            tl3 = labels[self.atoms[improper.ordered[2]].type]
+            tl4 = labels[self.atoms[improper.ordered[3]].type]
+            improper_types[improper.type] = f"{tl1}-{tl2}-{tl3}-{tl4}"
+            if len(improper_types) == len(ff.improper_coeffs): break
+
+        for type_, label in improper_types.items():
+            ff.improper_coeffs[type_].type_label = label
+
+        ff.has_type_labels = True
