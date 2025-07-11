@@ -183,8 +183,9 @@ def write(mol, filename, atom_style):
                 style_hint = '# {}'.format(potential.style)
             else: style_hint = ''
             
-            f.write('\n{} {}\n\n'.format(potential.keyword, style_hint))
             type_ids = sorted(potential.keys())
+            if not type_ids: continue
+            f.write('\n{} {}\n\n'.format(potential.keyword, style_hint))
             line_styles = mol.ff.get_per_line_styles(attr)
             unique_line_styles = set(line_styles.values())
             line_lengths = set()
