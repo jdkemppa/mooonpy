@@ -28,13 +28,14 @@ import mooonpy
 
 # file = '../EPON_862/all2lmp_Outputs/detda_typed_IFF.data'
 # #file = '../EPON_862/Graphite_AB_relaxed.data'
-# file = '../EPON_862/detda_typed_IFF_merged.data'
+file = '../EPON_862/dgebf_typed_IFF_merged.data'
+file = '../EPON_862/pyrene_typed_IFF.data'
 
 # #file = '../EPON_862/Cellulose-supercell_morse_IFF.data'
 # file = '../EPON_862/system1_cell_replicate.data'
-file = '../EPON_862/detda_typed_IFF_merged.data'
-file = '../EPON_862/detda_typed_IFF_hybrid_class2_morse.data'
-file = '../EPON_862/Graphite_AB_relaxed.data'
+#file = '../EPON_862/detda_typed_IFF_merged.data'
+#file = '../EPON_862/detda_typed_IFF_hybrid_class2_morse.data'
+#file = '../EPON_862/Graphite_AB_relaxed.data'
 
 
 mooonpy.rcParams['color'] = 'green'
@@ -57,11 +58,14 @@ graph = mooonpy.molspace.graph_theory.graph.generate_graph(molecule)
 
 def call():
     rings = mooonpy.molspace.graph_theory.graph.find_rings(graph, ring_sizes=(3,4,5,6,7))
-    print(len(rings))
+    print(rings)
 
 import timeit
 time = timeit.timeit(stmt=call, number=1)
 print(time)
+
+
+rings = {(751, 752, 753, 754, 785, 784), (442, 441, 410, 411, 444, 443), (20, 21, 438, 437, 436, 435)}
 
 if __name__ == '__main__':
     import timeit
