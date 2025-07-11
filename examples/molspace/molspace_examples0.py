@@ -34,6 +34,7 @@ import mooonpy
 # file = '../EPON_862/system1_cell_replicate.data'
 file = '../EPON_862/detda_typed_IFF_merged.data'
 file = '../EPON_862/detda_typed_IFF_hybrid_class2_morse.data'
+file = '../EPON_862/Graphite_AB_relaxed.data'
 
 
 mooonpy.rcParams['color'] = 'green'
@@ -48,9 +49,19 @@ molecule.write_files('WRITE.ff.script')
 
 
 
+graph = mooonpy.molspace.graph_theory.graph.generate_graph(molecule)
+#print(graph)
 
+# rings = mooonpy.molspace.graph_theory.graph.find_rings(graph, ring_sizes=(3,4,5,6,7))
+# print(len(rings))
 
+def call():
+    rings = mooonpy.molspace.graph_theory.graph.find_rings(graph, ring_sizes=(3,4,5,6,7))
+    print(len(rings))
 
+import timeit
+time = timeit.timeit(stmt=call, number=1)
+print(time)
 
 if __name__ == '__main__':
     import timeit
