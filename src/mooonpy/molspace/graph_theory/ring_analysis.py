@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
 This module provides basic support for finding cycles/rings in
-a molecular system.
+an undirected graph.
 """
-from .graph import find_cumulative_neighs
+from .interface import find_cumulative_neighs
 import math
 
 
@@ -49,7 +49,7 @@ def find_rings(graph: dict[int, list[int]], ring_sizes: tuple[int]=(3,4,5,6,7)):
     
     .. note::
         Each ring will be sorted in the order it was traversed in the graph and
-        will be in the canonical form (e.g., canonical=[1,2,3] vs rotated=[2,3,1]).
+        will be in the canonical form (e.g., canonical=(1,2,3) vs non_canonical=(2,3,1)).
 
     :param graph: An undirected graph
     :type graph: dict[int, list[int]]

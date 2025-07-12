@@ -35,7 +35,7 @@ file = '../EPON_862/pyrene_typed_IFF.data'
 # #file = '../EPON_862/Cellulose-supercell_morse_IFF.data'
 # file = '../EPON_862/system1_cell_replicate.data'
 #file = '../EPON_862/detda_typed_IFF_merged.data'
-#file = '../EPON_862/detda_typed_IFF_hybrid_class2_morse.data'
+file = '../EPON_862/detda_typed_IFF_hybrid_class2_morse.data'
 #file = '../EPON_862/Graphite_AB_relaxed.data'
 
 
@@ -51,7 +51,7 @@ molecule.write_files('WRITE.ff.script')
 
 
 
-graph = mooonpy.molspace.graph_theory.graph.generate_graph(molecule)
+graph = mooonpy.molspace.graph_theory.interface.generate_graph(molecule)
 #print(graph)
 
 # rings = mooonpy.molspace.graph_theory.graph.find_rings(graph, ring_sizes=(3,4,5,6,7))
@@ -61,15 +61,16 @@ def call():
     rings = mooonpy.molspace.graph_theory.ring_analysis.find_rings(graph, ring_sizes=(3,4,5,6,7))
     print()
     print(rings)
-
+    print(len(rings))
+    
+    rings = molecule.find_rings(ring_sizes=(3,4,5,6,7))
+    print(rings)
+    
 import timeit
 time = timeit.timeit(stmt=call, number=1)
 print(time)
 
 
-rings = {(751, 752, 753, 754, 785, 784), (442, 441, 410, 411, 444, 443), (20, 21, 438, 437, 436, 435)}
-
-rings = [(1, 2, 3, 4, 5, 6), (3, 4, 14, 13, 15, 16), (4, 5, 7, 8, 9, 14), (9, 10, 11, 12, 13, 14)]
 
 if __name__ == '__main__':
     import timeit

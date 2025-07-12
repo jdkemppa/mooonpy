@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import importlib
 
-__all__ = ['graph',
-           'ring_analysis'
+
+__all__ = ['ring_analysis'
 ]
 
 for name in __all__:

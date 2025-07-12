@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-This module provides basic support generating and working with graphs.
-The main purpose is to provide in interface between a Molspace instance
+This module provides basic support for generating and working with graphs.
+The main purpose is to provide an interface between a Molspace instance
 and the graph data structure used in all the graph theory supported 
 workflows.
 """
-from ..molspace import Molspace
-
+#from ..molspace import Molspace
+from mooonpy.molspace.molspace import Molspace
 
 def generate_graph(mol: Molspace):
     """
@@ -14,7 +14,7 @@ def generate_graph(mol: Molspace):
     
     .. note::
         The generated graph will contain the most current nodes/edges each
-        time this function is called, so if adding atoms/bonds to a Molspace
+        time this function is called. Thus if adding atoms/bonds to a Molspace
         instance, it is important to first update the Molspace instance before
         calling this function.
 
@@ -45,8 +45,7 @@ def find_cumulative_neighs(graph: dict[int, list[int]], node: int, max_depth: in
         For rings/cycles, where each neighbor has two classifications of
         depth due to ring symmetry, the lowest neighbor depth classification
         will be assigned and it will not be duplicated in the higher neighbor
-        depth set.
-        
+        depth set.  
 
     :param graph: An undirected graph
     :type graph: dict[int, list[int]]
