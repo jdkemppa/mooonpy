@@ -12,4 +12,5 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
-   mooonpy.molspace.graph_theory.hw
+   mooonpy.molspace.graph_theory.graph
+   mooonpy.molspace.graph_theory.ring_analysis

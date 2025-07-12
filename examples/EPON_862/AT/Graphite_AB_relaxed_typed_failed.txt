@@ -1,0 +1,130 @@
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : []
+2nd-neigh info : []
+3rd-neigh info : []
+atom number    : 8065 could not be characterized
+element        : Li
+ring size      : 0
+# of connects  : 0
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : []
+2nd-neigh info : []
+3rd-neigh info : []
+atom number    : 8066 could not be characterized
+element        : Li
+ring size      : 0
+# of connects  : 0
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : []
+2nd-neigh info : []
+3rd-neigh info : []
+atom number    : 8067 could not be characterized
+element        : Li
+ring size      : 0
+# of connects  : 0
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : []
+2nd-neigh info : []
+3rd-neigh info : []
+atom number    : 8068 could not be characterized
+element        : Li
+ring size      : 0
+# of connects  : 0
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : []
+2nd-neigh info : []
+3rd-neigh info : []
+atom number    : 8069 could not be characterized
+element        : Li
+ring size      : 0
+# of connects  : 0
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : []
+2nd-neigh info : []
+3rd-neigh info : []
+atom number    : 8070 could not be characterized
+element        : Li
+ring size      : 0
+# of connects  : 0
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : []
+2nd-neigh info : []
+3rd-neigh info : []
+atom number    : 8071 could not be characterized
+element        : Li
+ring size      : 0
+# of connects  : 0
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : []
+2nd-neigh info : []
+3rd-neigh info : []
+atom number    : 8072 could not be characterized
+element        : Li
+ring size      : 0
+# of connects  : 0
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : []
+2nd-neigh info : []
+3rd-neigh info : []
+atom number    : 8073 could not be characterized
+element        : Li
+ring size      : 0
+# of connects  : 0
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : []
+2nd-neigh info : []
+3rd-neigh info : []
+atom number    : 8074 could not be characterized
+element        : Li
+ring size      : 0
+# of connects  : 0
+
+

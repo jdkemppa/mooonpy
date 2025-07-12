@@ -58,12 +58,13 @@ class Elements:
     
     def element2radii(self, element, method='vdw'):
         return self.elements[element].radii[method]
-    
-pt = Elements()
-carbon = pt.elements['C']
-print(carbon.masses, carbon.radii)
 
-print('\n\nMapping mass to element')
-print(pt.mass2element(12))
-print(pt.element2mass('H'))
-print(pt.element2radii('C'))
+if __name__ == "__main__":
+    pt = Elements()
+    carbon = pt.elements['C']
+    print(carbon.masses, carbon.radii)
+    
+    print('\n\nMapping mass to element')
+    print(pt.mass2element(12))
+    print(pt.element2mass('H'))
+    print(pt.element2radii('C'))

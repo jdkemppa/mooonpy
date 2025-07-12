@@ -58,9 +58,9 @@ graph = mooonpy.molspace.graph_theory.graph.generate_graph(molecule)
 # print(len(rings))
 
 def call():
-    rings = mooonpy.molspace.graph_theory.graph.find_rings(graph, ring_sizes=(3,4,5,6,7))
+    rings = mooonpy.molspace.graph_theory.ring_analysis.find_rings(graph, ring_sizes=(3,4,5,6,7))
     print()
-    print(len(rings))
+    print(rings)
 
 import timeit
 time = timeit.timeit(stmt=call, number=1)

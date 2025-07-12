@@ -2,6 +2,7 @@
 import importlib
 
 __all__ = ['graph',
+           'ring_analysis'
 ]
 
 for name in __all__:
