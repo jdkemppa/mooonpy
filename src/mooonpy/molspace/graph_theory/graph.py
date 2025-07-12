@@ -42,22 +42,24 @@ def reduced_graph(graph, node, max_depth):
             if depth < len(neighs): 
                 rgraph[i] = graph[i]
             else: rgraph[i] = [] # graph termination
-    return rgraph
+    return rgraph, neighs
 
 
-def dfs_cycles(graph, start, end, visited=None):
+def dfs_cycles(graph, start, end, max_ring=None, visited=None):
     if visited is None: visited = set()
+    if max_ring is None: max_ring = float('inf')
     stack = [(start, [])]
     while stack:
         node, path = stack.pop()
-        if len(path) >= 3 and node == end: 
+        if node == end and len(path) > 2: 
             visited.add(node)
             yield path
-            continue
         if node in visited: continue
         for neighbor in graph[node]:
             if neighbor in path: continue
-            stack.append((neighbor, path+[neighbor]))
+            new_path = path + [neighbor]
+            if len(new_path) <= max_ring: 
+                stack.append((neighbor, new_path))
             
 
 def find_rings(graph, ring_sizes=(3,4,5,6,7)):
@@ -66,7 +68,8 @@ def find_rings(graph, ring_sizes=(3,4,5,6,7)):
     # want to find as the ring is symmetric about that many neighbors. It is
     # also quicker the use the "in" keyword on a set, so convert ringsizes
     # to a set for quicker speed
-    max_depth = math.ceil(0.5*(max(ring_sizes)))
+    max_ring = max(ring_sizes)
+    max_depth = math.ceil(0.5*(max_ring))
     rings2check = set(ring_sizes)
 
 
@@ -78,16 +81,16 @@ def find_rings(graph, ring_sizes=(3,4,5,6,7)):
     sorted_rings = set()
     visited = set()
     rings = set()
-    for node in graph:   
-        if len(graph[node]) <= 1: continue
-        
+    for node in graph:  
+        if len(graph[node]) <= 1 or node in visited: continue
+
         # Reduce graph for performance to smallest possible
         # adjacency list for quickest possible dfs traversal
-        rgraph = reduced_graph(graph, node, max_depth)
+        rgraph, neighs = reduced_graph(graph, node, max_depth)
         
         # Use a depth first search traveral on the reduced
         # graph and find all cycles in reduced graph
-        for path in dfs_cycles(rgraph, start=node, end=node, visited=visited):
+        for path in dfs_cycles(rgraph, start=node, end=node, max_ring=max_ring, visited=visited):
             sorted_ring = tuple(sorted(path))
             if len(sorted_ring) in rings2check and sorted_ring not in sorted_rings:
                 if path[0] < path[-1]:
@@ -95,5 +98,8 @@ def find_rings(graph, ring_sizes=(3,4,5,6,7)):
                 else: ordered_ring = tuple(path[::-1])
                 rings.add( ordered_ring )
                 sorted_rings.add( sorted_ring )
+        
+        # Add node to visted so it is not walked along in the dfs_cycles again
         visited.add(node)
-    return rings
+        
+    return sorted(rings, key=lambda x: min(x))
