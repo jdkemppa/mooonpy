@@ -217,8 +217,6 @@ class Molspace(object):
             Each ring will be sorted in the order it was traversed in the graph and
             will be in the canonical form (e.g., canonical=(1,2,3) vs non_canonical=(2,3,1)).
 
-        :param graph: An undirected graph
-        :type graph: dict[int, list[int]]
         :param ring_sizes: Tuple containing ring sizes to search for in graph
         :type ring_sizes: tuple[int]
         :return: rings
