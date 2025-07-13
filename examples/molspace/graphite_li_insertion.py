@@ -22,7 +22,7 @@ file = '../EPON_862/relax_PCFF_IFF_Pitch_rep_1_Graphite_AB.data'
 # Lithiation value (0 < x < 1; where 0 is 0% lithiation and 1 is 
 # 100% lithiation). A system that is 100% lithiated has a Li-ion
 # place in every thing center
-lithiation = 1 #0.5
+lithiation = 0.1 #0.5
 
 # Seed for random lithiuim ion placement (0 seed will use system time)
 seed = 12345
@@ -115,11 +115,17 @@ for n, ring in enumerate(rings):
     
     
 # Step 3: Insert Li-ion's up until the maximum lithiation value
+natoms_count = 0
+for i in graphite.atoms:
+    atom = graphite.atoms[i]
+    if graphite.ff.masses[atom.type].type_label != 'cge':
+        natoms_count += 1
+
 if seed > 0: random.seed(seed)
 if lithiation < 1.0:
-    n_ions = int(np.floor(lithiation*len(locations)))
+    n_ions = int(np.floor(lithiation*natoms_count/6))
 else:
-    n_ions = len(locations)
+    n_ions = int(np.floor(natoms_count/6))
 
 atom_id = max(graphite.atoms.keys())
 n_inserted = 0
@@ -139,6 +145,9 @@ while n_inserted < n_ions:
     atom.comment = 'li+'
     graphite.atoms[atom_id] = atom
     n_inserted += 1
+    
+    if not locations:
+        break
 
 print('Inserted {} Li-ions of {} requested'.format(n_inserted, n_ions))
 
@@ -146,4 +155,4 @@ print('Inserted {} Li-ions of {} requested'.format(n_inserted, n_ions))
 # Step 4: Wrap atoms and write LAMMPS datafile
 basename = os.path.splitext(file)[0]
 graphite.atoms.wrap()
-graphite.write_files('{}_Li-ions.data'.format(basename), atom_style='full')
+graphite.write_files('{}_lithiation_{}.data'.format(basename, lithiation), atom_style='full')
