@@ -62,6 +62,8 @@ def call():
     print()
     #print(rings)
     print(len(rings))
+    # for ring in rings:
+    #     print(ring)
     
     # rings = molecule.find_rings(ring_sizes=(3,4,5,6,7))
     # print(rings)

@@ -27,20 +27,7 @@ def _dfs_cycles(graph, start, max_ring):
         path_size = len(path)
         for neighbor in graph[current]:
             if neighbor == start and path_size > 2:
-                # Canonical form (e.g., (1,2,3) == (2,3,1))
-                if path_size % 2 == 0:
-                    middle = path_size // 2 - 1
-                    lo = sum(path[:middle+1])
-                    hi = sum(path[middle+1:])
-                else:
-                    middle = path_size // 2
-                    lo = sum(path[:middle])
-                    hi = sum(path[middle+1:])
-
-                if lo > hi: path = path[::-1]
-                min_index = path.index(min(path))
-                canonical = tuple(path[min_index:] + path[:min_index])
-                yield canonical
+                yield path
             elif neighbor not in visited and neighbor >= start:
                 new_path = path + [neighbor]
                 if len(new_path) > max_ring: continue
@@ -89,8 +76,23 @@ def find_rings(graph: dict[int, list[int]], ring_sizes: tuple[int]=(3,4,5,6,7)):
         # Use a depth first search traveral on the reduced graph
         for ring in _dfs_cycles(rgraph, node, max_ring):
             sorted_ring = tuple(sorted(ring))
-            if len(sorted_ring) in rings2check and sorted_ring not in sorted_rings:                
-                rings.add( ring )
+            ring_size = len(ring)
+            if ring_size in rings2check and sorted_ring not in sorted_rings:    
+                # Canonical form (e.g., (1,2,3) == (2,3,1))
+                if ring_size % 2 == 0:
+                    middle = ring_size // 2 - 1
+                    lo = sum(ring[:middle+1])
+                    hi = sum(ring[middle+1:])
+                else:
+                    middle = ring_size // 2
+                    lo = sum(ring[:middle])
+                    hi = sum(ring[middle+1:])
+
+                if lo > hi: ring = ring[::-1]
+                min_index = ring.index(min(ring))
+                canonical = tuple(ring[min_index:] + ring[:min_index])
+                
+                rings.add( canonical )
                 sorted_rings.add( sorted_ring )
         
     return sorted(rings, key=lambda x: min(x))
