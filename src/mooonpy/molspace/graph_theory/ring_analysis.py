@@ -20,8 +20,7 @@ def _reduced_graph(graph, node, max_depth):
     return rgraph
 
                 
-def _dfs_cycles(graph, start, max_ring=None):
-    if max_ring is None: max_ring = len(graph)
+def _dfs_cycles(graph, start, max_ring):
     stack = [(start, [start], {start})]
     while stack:
         current, path, visited = stack.pop()
@@ -88,7 +87,7 @@ def find_rings(graph: dict[int, list[int]], ring_sizes: tuple[int]=(3,4,5,6,7)):
         rgraph = _reduced_graph(graph, node, max_depth)
         
         # Use a depth first search traveral on the reduced graph
-        for ring in _dfs_cycles(rgraph, node, max_ring=max_ring):
+        for ring in _dfs_cycles(rgraph, node, max_ring):
             sorted_ring = tuple(sorted(ring))
             if len(sorted_ring) in rings2check and sorted_ring not in sorted_rings:                
                 rings.add( ring )
