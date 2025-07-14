@@ -319,16 +319,19 @@ def ADI_from_bonds(bonds, angles=None, dihedrals=None, impropers=None):
             if b2[0] != dihedral.ordered[1]: v2 = -v2 # out from 1
             if b3[0] != dihedral.ordered[2]: v3 = -v3 # out from 2
 
-            vl = np.cross(v2, v1)
-            vl /= np.linalg.norm(vl)
+
+            vl = np.cross(v2, v1) # I think these give the correct sign
             vr = np.cross(v2, v3)
-            vr /= np.linalg.norm(vr)
+            matrix = np.vstack([vl, vr, v2])
+            triple_product = np.linalg.det(matrix)
+            # triple_product = (vl[0] * (vr[1] * v2[2] - vr[2] * v2[1]) -
+            #                   vl[1] * (vr[0] * v2[2] - vr[2] * v2[0]) +
+            #                   vl[2] * (vr[0] * v2[1] - vr[1] * v2[0])) # slower
 
-            vc = np.cross(vr, vl)
-            vc /= np.linalg.norm(vc)
+            cos_theta = np.dot(vl, vr) # not normalized, cancels out
+            sin_theta = triple_product / bonds[b2].dist
+            a = np.atan2(sin_theta, cos_theta)*180/np.pi
 
-            ## not sure where, but it needs a sign flip
-            a = -np.arccos(np.dot(vl,vr))*np.sign(np.dot(vc,v2))*180/np.pi # -180 to 180
             dihedral.phi = a
     else:
         pass
@@ -360,41 +363,61 @@ def ADI_from_bonds(bonds, angles=None, dihedrals=None, impropers=None):
     else:
         pass
 
-def BADI_by_type(mol, type_label=False):
-    bond_types = mol.ff.bond_coeffs
-    angle_types = mol.ff.angle_coeffs
-    dihedral_types = mol.ff.dihedral_coeffs
-    improper_types = mol.ff.improper_coeffs
+def BADI_by_type(mol, type_label=False, comp_bond=True, comp_angle=True, comp_dihedral=True, comp_improper=True):
+    if comp_bond:
+        bond_types = mol.ff.bond_coeffs
+        if type_label:
+            bond_hist = {coeff.type_label: [] for coeff in bond_types.values()}
+        else:
+            bond_hist = {type_: [] for type_ in bond_types.keys()}
 
-    if type_label:
-        bond_hist = {coeff.type_label: [] for coeff in bond_types.values()}
-        angle_hist = {coeff.type_label: [] for coeff in angle_types.values()}
-        dihedral_hist = {coeff.type_label: [] for coeff in dihedral_types.values()}
-        improper_hist = {coeff.type_label: [] for coeff in improper_types.values()}
+        for bond in mol.bonds.values():
+            key = bond.type
+            if type_label: key = bond_types[key].type_label
+            bond_hist[key].append(bond.dist)
     else:
-        bond_hist = {type_: [] for type_ in bond_types.keys()}
-        angle_hist = {type_: [] for type_ in angle_types.keys()}
-        dihedral_hist = {type_: [] for type_ in dihedral_types.keys()}
-        improper_hist = {type_: [] for type_ in improper_types.keys()}
+        bond_hist = {}
 
-    for bond in mol.bonds.values():
-        key = bond.type
-        if type_label: key = bond_types[key].type_label
-        bond_hist[key].append(bond.dist)
+    if comp_angle:
+        angle_types = mol.ff.angle_coeffs
+        if type_label:
+            angle_hist = {coeff.type_label: [] for coeff in angle_types.values()}
+        else:
+            angle_hist = {type_: [] for type_ in angle_types.keys()}
 
-    for angle in mol.angles.values():
-        key = angle.type
-        if type_label: key = angle_types[key].type_label
-        angle_hist[key].append(angle.theta)
+        for angle in mol.angles.values():
+            key = angle.type
+            if type_label: key = angle_types[key].type_label
+            angle_hist[key].append(angle.theta)
+    else:
+        angle_hist = {}
 
-    for dihedral in mol.dihedrals.values():
-        key = dihedral.type
-        if type_label: key = dihedral_types[key].type_label
-        dihedral_hist[key].append(dihedral.phi)
+    if comp_dihedral:
+        dihedral_types = mol.ff.dihedral_coeffs
+        if type_label:
+            dihedral_hist = dihedral_hist = {coeff.type_label: [] for coeff in dihedral_types.values()}
+        else:
+            dihedral_hist = {type_: [] for type_ in dihedral_types.keys()}
 
-    for improper in mol.impropers.values():
-        key = improper.type
-        if type_label: key = improper_types[key].type_label
-        improper_hist[key].append(improper.chi)
+        for dihedral in mol.dihedrals.values():
+            key = dihedral.type
+            if type_label: key = dihedral_types[key].type_label
+            dihedral_hist[key].append(dihedral.phi)
+    else:
+        dihedral_hist = {}
+
+    if comp_improper:
+        improper_types = mol.ff.improper_coeffs
+        if type_label:
+            improper_hist = {coeff.type_label: [] for coeff in improper_types.values()}
+        else:
+            improper_hist = {type_: [] for type_ in improper_types.keys()}
+
+        for improper in mol.impropers.values():
+            key = improper.type
+            if type_label: key = improper_types[key].type_label
+            improper_hist[key].append(improper.chi)
+    else:
+        improper_hist = {}
 
     return bond_hist, angle_hist, dihedral_hist, improper_hist

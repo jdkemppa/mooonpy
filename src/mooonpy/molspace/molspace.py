@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-from . import _files_io as _files_io
-from mooonpy.tools.file_utils import Path
-from .atoms import Atoms
-from .topology import Bonds, Angles, Dihedrals, Impropers
-from .force_field import ForceField
-from .distance import domain_decomp_13, pairs_from_bonds, pairs_from_domains, ADI_from_bonds, BADI_by_type
+from mooonpy.molspace import _files_io as _files_io
+from mooonpy.molspace.atoms import Atoms
+from mooonpy.molspace.topology import Bonds, Angles, Dihedrals, Impropers
+from mooonpy.molspace.force_field import ForceField
+from mooonpy.molspace.distance import domain_decomp_13, pairs_from_bonds, pairs_from_domains, ADI_from_bonds, BADI_by_type
+
 from mooonpy.rcsetup import rcParams
+from mooonpy.tools.file_utils import Path
 import os
 
 
@@ -123,9 +124,17 @@ class Molspace(object):
 
     def compute_BADI_by_type(self,periodicity='ppp',comp_bond=True, comp_angle=True, comp_dihedral=True, comp_improper=True):
         if comp_bond:
-            pairs_from_bonds(self.atoms, self.bonds, 'ppp')
-        ADI_from_bonds(self.bonds, self.angles, self.dihedrals, self.impropers)
-        bond_hist, angle_hist, dihedral_hist, improper_hist = BADI_by_type(self, self.ff.has_type_labels)
+            pairs_from_bonds(self.atoms, self.bonds, periodicity)
+
+        if comp_angle: angles = self.angles
+        else: angles = None
+        if comp_dihedral: dihedrals = self.dihedrals
+        else: dihedrals = None
+        if comp_improper: impropers = self.impropers
+        else: impropers = None
+
+        ADI_from_bonds(self.bonds, angles, dihedrals, impropers)
+        bond_hist, angle_hist, dihedral_hist, improper_hist = BADI_by_type(self, self.ff.has_type_labels,comp_bond,comp_angle,comp_dihedral,comp_improper)
         return bond_hist, angle_hist, dihedral_hist, improper_hist
 
     def add_type_labels(self, labels):
