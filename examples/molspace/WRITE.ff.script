@@ -1,4 +1,4 @@
-# LAMMPS data file via write_data, version 27 Jun 2024, timestep = 4000000, units = real
+# LAMMPS data file via write_data, version 27 Jun 2024, timestep = 500000, units = real
 
 
 
@@ -20,6 +20,7 @@ neigh_modify         delay 0 every 1 check yes one 10000 page 1000000
 #--------------------------------------------------Pair Coeffs--------------------------------------------------
 pair_coeff  1         0.0620000000    3.9320000000 
 pair_coeff  2         0.0000100000    0.0000100000 
+pair_coeff  3         0.7214000000    3.0400000000 
 
 
 #--------------------------------------------------Bond Coeffs--------------------------------------------------

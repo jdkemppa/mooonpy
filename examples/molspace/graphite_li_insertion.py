@@ -22,7 +22,7 @@ file = '../EPON_862/relax_PCFF_IFF_Pitch_rep_1_Graphite_AB.data'
 # Lithiation value (0 < x < 1; where 0 is 0% lithiation and 1 is 
 # 100% lithiation). A system that is 100% lithiated has a Li-ion
 # place in every thing center
-lithiation = 0.1 #0.5
+lithiation = 1.0 #0.5
 
 # Seed for random lithiuim ion placement (0 seed will use system time)
 seed = 12345
@@ -120,6 +120,7 @@ for i in graphite.atoms:
     atom = graphite.atoms[i]
     if graphite.ff.masses[atom.type].type_label != 'cge':
         natoms_count += 1
+print('number of non-pi-electron atoms: {}'.format(natoms_count))
 
 if seed > 0: random.seed(seed)
 if lithiation < 1.0:

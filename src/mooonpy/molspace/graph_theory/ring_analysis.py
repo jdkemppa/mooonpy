@@ -17,29 +17,35 @@ def _reduced_graph(graph, node, max_depth):
             if depth < len(neighs): 
                 rgraph[i] = graph[i]
             else: rgraph[i] = [] # graph termination
-    return rgraph, neighs
+    return rgraph
 
-
-def _dfs_cycles(graph, start, max_ring=None, visited=None):
-    if visited is None: visited = set()
+                
+def _dfs_cycles(graph, start, max_ring=None):
     if max_ring is None: max_ring = len(graph)
-    stack = [(start, [])]
+    stack = [(start, [start], {start})]
     while stack:
-        node, path = stack.pop()
-        if node == start and len(path) > 2: 
-            # Canonical form (e.g., [1,2,3] == [2,3,1])
-            if path[0] > path[-1]:
-                path = path[::-1]
-            min_index = path.index(min(path))
-            canonical = tuple(path[min_index:] + path[:min_index])
-            visited.add(node)
-            yield canonical
-        if node in visited: continue
-        for neighbor in graph[node]:
-            if neighbor in path: continue
-            new_path = path + [neighbor]
-            if len(new_path) <= max_ring:
-                stack.append((neighbor, new_path))
+        current, path, visited = stack.pop()
+        path_size = len(path)
+        for neighbor in graph[current]:
+            if neighbor == start and path_size > 2:
+                # Canonical form (e.g., (1,2,3) == (2,3,1))
+                if path_size % 2 == 0:
+                    middle = path_size // 2 - 1
+                    lo = sum(path[:middle+1])
+                    hi = sum(path[middle+1:])
+                else:
+                    middle = path_size // 2
+                    lo = sum(path[:middle])
+                    hi = sum(path[middle+1:])
+
+                if lo > hi: path = path[::-1]
+                min_index = path.index(min(path))
+                canonical = tuple(path[min_index:] + path[:min_index])
+                yield canonical
+            elif neighbor not in visited and neighbor >= start:
+                new_path = path + [neighbor]
+                if len(new_path) > max_ring: continue
+                stack.append((neighbor, new_path, visited | {neighbor}))
             
 
 def find_rings(graph: dict[int, list[int]], ring_sizes: tuple[int]=(3,4,5,6,7)):
@@ -73,23 +79,19 @@ def find_rings(graph: dict[int, list[int]], ring_sizes: tuple[int]=(3,4,5,6,7)):
     # and logging the ring into sorted_rings. The return value will be unique
     # rings where the atomIDs are ordered in the direction they where walked.
     sorted_rings = set()
-    visited = set()
     rings = set()
     for node in graph:  
-        if len(graph[node]) <= 1 or node in visited: continue
+        if len(graph[node]) <= 1: continue 
 
         # Reduce graph for performance to smallest possible
         # adjacency list for quickest possible dfs traversal
-        rgraph, neighs = _reduced_graph(graph, node, max_depth)
+        rgraph = _reduced_graph(graph, node, max_depth)
         
         # Use a depth first search traveral on the reduced graph
-        for path in _dfs_cycles(rgraph, node, max_ring=max_ring, visited=visited):
-            sorted_ring = tuple(sorted(path))
+        for ring in _dfs_cycles(rgraph, node, max_ring=max_ring):
+            sorted_ring = tuple(sorted(ring))
             if len(sorted_ring) in rings2check and sorted_ring not in sorted_rings:                
-                rings.add( path )
+                rings.add( ring )
                 sorted_rings.add( sorted_ring )
-        
-        # Add node to visted so it is not walked along again in the next dfs
-        visited.add(node)
         
     return sorted(rings, key=lambda x: min(x))
