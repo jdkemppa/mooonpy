@@ -12,6 +12,5 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
-   mooonpy.programs.hw
    mooonpy.programs.program
    mooonpy.programs.regression_fringe_response

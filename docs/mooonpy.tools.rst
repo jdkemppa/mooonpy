@@ -13,9 +13,9 @@ Submodules
    :maxdepth: 4
 
    mooonpy.tools.file_utils
-   mooonpy.tools.hw
    mooonpy.tools.loop_utils
    mooonpy.tools.math_utils
+   mooonpy.tools.misc_utils
    mooonpy.tools.signals
    mooonpy.tools.string_utils
    mooonpy.tools.tables

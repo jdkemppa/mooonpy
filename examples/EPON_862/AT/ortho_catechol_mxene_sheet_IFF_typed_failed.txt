@@ -1,0 +1,624 @@
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 1 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 2 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 3 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 4 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 5 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 6 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 7 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 8 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 9 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 10 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 11 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 12 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 13 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 14 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 15 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 16 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 17 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 18 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 19 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 20 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 21 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 22 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 23 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 24 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 25 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 26 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 27 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 28 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 29 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 30 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 31 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 32 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 3
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 65 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 6
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 66 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 6
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 67 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 6
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 68 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 6
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 69 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 6
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 70 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 6
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 71 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 6
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 72 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 6
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 73 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 6
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 74 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 6
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 75 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 6
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 76 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 6
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 77 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 6
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 78 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 6
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 79 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 6
+
+
+FAILED TO BE CHARACTERIZED with search criteria of ring size, number of connects, and connected elements.
+Most likely cause is that PCFF-IFF doesnt have an atom type for this application and YOU MUST SET ATOM TYPE MANUALLY.
+You may go into the ouputted *.nta file and give this atom type a different type based on the following info.
+neigh info lst = [[element1, ring1, nb1], [element2, ring2, nb2], ....] sorted by nb -> ring -> element
+1st-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+2nd-neigh info : [['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 3], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6], ['Ti', 6, 6]]
+3rd-neigh info : [['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6], ['C', 6, 6]]
+atom number    : 80 could not be characterized
+element        : Ti
+ring size      : 6
+# of connects  : 6
+
+

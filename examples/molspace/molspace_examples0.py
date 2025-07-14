@@ -28,12 +28,15 @@ import mooonpy
 
 # file = '../EPON_862/all2lmp_Outputs/detda_typed_IFF.data'
 # #file = '../EPON_862/Graphite_AB_relaxed.data'
-# file = '../EPON_862/detda_typed_IFF_merged.data'
+file = '../EPON_862/dgebf_typed_IFF_merged.data'
+file = '../EPON_862/pyrene_typed_IFF.data'
+file = '../EPON_862/ortho_catechol_mxene_sheet_IFF.data'
 
 # #file = '../EPON_862/Cellulose-supercell_morse_IFF.data'
 # file = '../EPON_862/system1_cell_replicate.data'
-file = '../EPON_862/detda_typed_IFF_merged.data'
-file = '../EPON_862/detda_typed_IFF_hybrid_class2_morse.data'
+#file = '../EPON_862/detda_typed_IFF_merged.data'
+#file = '../EPON_862/detda_typed_IFF_hybrid_class2_morse.data'
+file = '../EPON_862/Graphite_AB_relaxed.data'
 
 
 mooonpy.rcParams['color'] = 'green'
@@ -48,7 +51,26 @@ molecule.write_files('WRITE.ff.script')
 
 
 
+graph = mooonpy.molspace.graph_theory.interface.generate_graph(molecule)
+#print(graph)
 
+# rings = mooonpy.molspace.graph_theory.graph.find_rings(graph, ring_sizes=(3,4,5,6,7))
+# print(len(rings))
+
+def call():
+    rings = mooonpy.molspace.graph_theory.ring_analysis.find_rings(graph, ring_sizes=(3,4,5,6,7))
+    print()
+    #print(rings)
+    print(len(rings))
+    # for ring in rings:
+    #     print(ring)
+    
+    # rings = molecule.find_rings(ring_sizes=(3,4,5,6,7))
+    # print(rings)
+    
+import timeit
+time = timeit.timeit(stmt=call, number=1)
+print(time)
 
 
 

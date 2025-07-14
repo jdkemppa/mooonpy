@@ -4,9 +4,12 @@ from mooonpy.molspace.atoms import Atoms
 from mooonpy.molspace.topology import Bonds, Angles, Dihedrals, Impropers
 from mooonpy.molspace.force_field import ForceField
 from mooonpy.molspace.distance import domain_decomp_13, pairs_from_bonds, pairs_from_domains, ADI_from_bonds, BADI_by_type
+from mooonpy.molspace.graph_theory import interface, ring_analysis
+
+from mooonpy.tools.file_utils import Path
 
 from mooonpy.rcsetup import rcParams
-from mooonpy.tools.file_utils import Path
+
 import os
 
 
@@ -205,3 +208,33 @@ class Molspace(object):
             ff.improper_coeffs[type_].type_label = label
 
         ff.has_type_labels = True
+        
+    def generate_graph(self):
+        return interface.generate_graph(self)
+        
+    def find_rings(self, ring_sizes: tuple[int]=(3,4,5,6,7)):
+        """
+        Finds all rings in the current Molspace instance. The size of rings searched for is
+        set in the in the ring_sizes parameter.
+        
+        :Example:
+        >>> import mooonpy
+        >>> my_molecule = mooonpy.molspace('detda.mol2')
+        >>> rings = my_molecule.find_rings(ring_sizes=(3,4,5,6,7))
+        >>> print(rings)
+        [(1, 2, 3, 4, 5, 6)]
+        
+        .. note::
+            Each ring will be sorted in the order it was traversed in the graph and
+            will be in the canonical form (e.g., canonical=(1,2,3) vs non_canonical=(2,3,1)).
+
+        :param ring_sizes: Tuple containing ring sizes to search for in graph
+        :type ring_sizes: tuple[int]
+        :return: rings
+        :rtype: list[tuple[int]]
+        """
+        graph = self.generate_graph()
+        return ring_analysis.find_rings(graph, ring_sizes)
+    
+    def find_cumulative_neighs(self):
+        return
