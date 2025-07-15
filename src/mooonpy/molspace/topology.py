@@ -129,7 +129,7 @@ class Impropers(dict):
         # Generate an Improper class with necessary slots and defaults, which will
         # be used by improper_factory() method to generate an instance of this class
         class_name = 'Improper'
-        defaults = {'type': 0, 'ordered': [], 'comment': '', 'chi': None, 'nb':0}
+        defaults = {'type': 0, 'ordered': [], 'comment': '', 'chi': None, 'nb': 0}
         slots = tuple(defaults.keys())
         self.Improper = _make_class(class_name, slots, defaults=defaults)
 
