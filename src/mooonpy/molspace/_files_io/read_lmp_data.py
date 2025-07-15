@@ -339,9 +339,19 @@ def read(mol, filename, sections):
                     # We need to toggle ff_coeffs between different sections
                     # so we do not add coeffs to the wrong dictionaries
                     ff_coeffs = None
+                    
+    # After parseing the file we need to update the improper number of 
+    # bonded atoms to the central atom since LAMMPS clumps impropers (nb=3)
+    # and angleangles (nb>3) in the same section.
+    if mol.impropers:
+        graph = mol.generate_graph()
+        for key in mol.impropers:
+            improper = mol.impropers[key]
+            ordered = improper.ordered
+            improper.nb = len(graph[ordered[1]])
 
     print_info = False
-    # print_info = True
+    #print_info = True
     if print_info:
         print('\n\n\nSTYLES:')
         print('header: ', mol.header[:50])
@@ -383,7 +393,7 @@ def read(mol, filename, sections):
         print('\n\nImpropers')
         for n, (key, value) in enumerate(mol.impropers.items()):
             if n < 5:
-                print(key, value.type, value.ordered, value.comment, id(value))
+                print(key, value.type, value.ordered, value.comment, id(value), value.nb)
 
         d = mol.ff.masses
         # d = mol.ff.pair_coeffs

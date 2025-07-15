@@ -35,8 +35,8 @@ file = '../EPON_862/ortho_catechol_mxene_sheet_IFF.data'
 # #file = '../EPON_862/Cellulose-supercell_morse_IFF.data'
 # file = '../EPON_862/system1_cell_replicate.data'
 #file = '../EPON_862/detda_typed_IFF_merged.data'
-#file = '../EPON_862/detda_typed_IFF_hybrid_class2_morse.data'
-file = '../EPON_862/Graphite_AB_relaxed.data'
+file = '../EPON_862/detda_typed_IFF_hybrid_class2_morse.data'
+#file = '../EPON_862/Graphite_AB_relaxed.data'
 
 
 mooonpy.rcParams['color'] = 'green'
@@ -58,7 +58,7 @@ graph = mooonpy.molspace.graph_theory.interface.generate_graph(molecule)
 # print(len(rings))
 
 def call():
-    rings = mooonpy.molspace.graph_theory.ring_analysis.find_rings(graph, ring_sizes=(3,4,5,6,7))
+    rings = mooonpy.molspace.graph_theory.ring_analysis.find_rings(graph, ring_sizes=(3,4,5,6,7,8,9,10))
     print()
     #print(rings)
     print(len(rings))
