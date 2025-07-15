@@ -340,9 +340,9 @@ def read(mol, filename, sections):
                     # so we do not add coeffs to the wrong dictionaries
                     ff_coeffs = None
                     
-    # After parseing the file we need to update the improper number of 
-    # bonded atoms to the central atom since LAMMPS clumps impropers (nb=3)
-    # and angleangles (nb>3) in the same section.
+    # After parsing the file we need to update the improper number of bonded
+    # atoms to the central atom since LAMMPS clumps impropers (nb=3) and
+    # angleangles (nb>3) in the same section.
     if mol.impropers:
         graph = mol.generate_graph()
         for key in mol.impropers:
