@@ -280,6 +280,7 @@ def domain_decomp_13(atoms, cutoff, whitelist=None, blacklist=None, periodicity=
 
     return domains, fractionals
 
+
 def ADI_from_bonds(bonds, angles=None, dihedrals=None, impropers=None):
     if not isinstance(bonds, Bonds):
         raise TypeError('bonds must be a Bond object')
@@ -288,7 +289,7 @@ def ADI_from_bonds(bonds, angles=None, dihedrals=None, impropers=None):
     for key, bond in bonds.items():
         if not hasattr(bond, 'vect'):
             raise Exception('bond has no computed vector, use "compute_bond_length" first')
-        vectors[key] = np.array(bond.vect)
+        vectors[key] = np.array(bond.vect) / bond.dist
 
     if isinstance(angles, Angles):
         for key, angle in angles.items():
@@ -300,8 +301,8 @@ def ADI_from_bonds(bonds, angles=None, dihedrals=None, impropers=None):
             if b1[0] != angle.ordered[1]: v1 = -v1  # if tip is center mirror a copy
             if b2[0] != angle.ordered[1]: v2 = -v2  # *= changes in the dict
 
-            dot = np.dot(v1, v2) / bonds[b1].dist / bonds[b2].dist
-            angle.theta = np.arccos(dot)*180/np.pi
+            dot = np.dot(v1, v2) # / bonds[b1].dist / bonds[b2].dist
+            angle.theta = np.arccos(dot) * 180 / np.pi
             ## could do a cross product to get normal?
     else:
         pass
@@ -315,12 +316,11 @@ def ADI_from_bonds(bonds, angles=None, dihedrals=None, impropers=None):
             v1 = vectors[b1]
             v2 = vectors[b2]
             v3 = vectors[b3]
-            if b1[0] != dihedral.ordered[1]: v1 = -v1 # out from 1
-            if b2[0] != dihedral.ordered[1]: v2 = -v2 # out from 1
-            if b3[0] != dihedral.ordered[2]: v3 = -v3 # out from 2
+            if b1[0] != dihedral.ordered[1]: v1 = -v1  # out from 1
+            if b2[0] != dihedral.ordered[1]: v2 = -v2  # out from 1
+            if b3[0] != dihedral.ordered[2]: v3 = -v3  # out from 2
 
-
-            vl = np.cross(v2, v1) # I think these give the correct sign
+            vl = np.cross(v2, v1)  # I think these give the correct sign
             vr = np.cross(v2, v3)
             matrix = np.vstack([vl, vr, v2])
             triple_product = np.linalg.det(matrix)
@@ -328,9 +328,9 @@ def ADI_from_bonds(bonds, angles=None, dihedrals=None, impropers=None):
             #                   vl[1] * (vr[0] * v2[2] - vr[2] * v2[0]) +
             #                   vl[2] * (vr[0] * v2[1] - vr[1] * v2[0])) # slower
 
-            cos_theta = np.dot(vl, vr) # not normalized, cancels out
-            sin_theta = triple_product / bonds[b2].dist
-            a = np.atan2(sin_theta, cos_theta)*180/np.pi
+            cos_theta = np.dot(vl, vr)  # not normalized, cancels out
+            sin_theta = triple_product # / bonds[b2].dist # inv vl and inv vr would also be here
+            a = np.atan2(sin_theta, cos_theta) * 180 / np.pi
 
             dihedral.phi = a
     else:
@@ -346,22 +346,33 @@ def ADI_from_bonds(bonds, angles=None, dihedrals=None, impropers=None):
             v2 = vectors[b2]
             v3 = vectors[b3]
 
-            if b1[0] != improper.ordered[1]: v1 = -v1 # all center out
+            if b1[0] != improper.ordered[1]: v1 = -v1  # all center out
             if b2[0] != improper.ordered[1]: v2 = -v2
             if b3[0] != improper.ordered[1]: v3 = -v3
 
-            norm1 = np.cross(v1, v2)
+            ## Slow
+            norm1 = np.cross(v2, v3)
             norm1 /= np.linalg.norm(norm1)
-            norm2 = np.cross(v2, v3)
+            norm2 = np.cross(v3, v1) # order matches LAMMPS class2.cpp
             norm2 /= np.linalg.norm(norm2)
-            norm3 = np.cross(v3, v1)
+            norm3 = np.cross(v1, v2)
             norm3 /= np.linalg.norm(norm3)
 
-            ch1 = 90 - np.dot(norm1, v3) / np.linalg.norm(v3) * 180 / np.pi
+            ch1 = np.arcsin(np.dot(norm1, v1)) # / bonds[b1].dist)
+            ch2 = np.arcsin(np.dot(norm2, v2)) # / bonds[b2].dist)
+            ch3 = np.arcsin(np.dot(norm3, v3)) # / bonds[b3].dist)
 
-            improper.chi = ch1
+            # ch1 = np.arcsin(np.linalg.det(np.vstack([v2, v3, v1])) / (bonds[b1].dist*bonds[b2].dist*bonds[b3].dist))
+            # ch2 = np.arcsin(np.linalg.det(np.vstack([v3, v1, v2])) / (bonds[b1].dist*bonds[b2].dist*bonds[b3].dist))
+            # ch3 = np.arcsin(np.linalg.det(np.vstack([v1, v2, v3])) / (bonds[b1].dist*bonds[b2].dist*bonds[b3].dist))
+            ## not work because norm1 mag is not the same as norm of v2 and v3
+
+
+
+            improper.chi = (ch1 + ch2 + ch3) * 180 / (3 * np.pi)
     else:
         pass
+
 
 def BADI_by_type(mol, type_label=False, comp_bond=True, comp_angle=True, comp_dihedral=True, comp_improper=True):
     if comp_bond:
