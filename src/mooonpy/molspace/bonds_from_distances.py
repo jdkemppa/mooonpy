@@ -51,7 +51,7 @@ def find(mol, periodicity):
         
         # Creating bonds respecting valency of each atom (e.g do
         # not connect to many atoms to any given atom)
-        for count_nb, bond in enumerate(distances):
+        for count_nb, bond in enumerate(distances, 1):
             if count_nb <= max_nb:
                 bonds.add(bond)
             else: # If bond does not meet criteria flag the bond to not create the bond
