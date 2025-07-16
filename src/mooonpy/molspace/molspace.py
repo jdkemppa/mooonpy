@@ -275,12 +275,13 @@ class Molspace(object):
         """
         Resets the bonds in a molecular system, based in interatomic distances and valences of atoms. 
         The cutoff distances are set based on the summation of vdw radii per element involved in the
-        bond. Each atom's valence is respected ()
+        bond. Each atom's valence is respected (e.g. the maximum number of allowable bonded atoms to
+        a carbon atom is 4).
         
         :Example:
         >>> import mooonpy
         >>> my_molecule = mooonpy.molspace('detda.data')
-        >>> my_molecule.bonds_from_distances(periodicity='ppp')
+        >>> my_molecule.bonds_from_distances(periodicity='fff')
         
         .. note::
             Before using this command the element per-atom info and element per-mass info need to be updated by
