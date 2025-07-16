@@ -3,7 +3,6 @@ from typing import Tuple, Union, Optional
 
 import numpy as np
 import scipy as sp
-from whittaker_eilers import WhittakerSmoother
 
 from mooonpy.tools.math_utils import first_value_cross
 
