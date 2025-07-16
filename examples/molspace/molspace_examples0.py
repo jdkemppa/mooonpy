@@ -43,25 +43,28 @@ mooonpy.rcParams['color'] = 'green'
 
 
 molecule = mooonpy.Molspace(filename=file)#, astyles=['full', 'charge'], dsect=['Atoms', 'Bonds', 'Angles', 'Dihedrals', 'Impropers', 'Velocities'])
-molecule.write_files('WRITE.data', atom_style='full')
-molecule.write_files('WRITE.ff.script')
+
 
     
 rings = molecule.find_rings(ring_sizes=(3,4,5,6,7))
 print(rings)
 
-molecule.update_per_atom_element()
+molecule.update_elements()
 molecule.bonds_from_distances(periodicity='fff')
 
-print('\n\nMasses')
-for i in molecule.ff.masses:
-    mass = molecule.ff.masses[i]
-    print(i, mass.comment, mass.element)
 
-print('\n\nAtoms')
-for i in molecule.atoms:
-    atom = molecule.atoms[i]
-    print(i, atom.type, atom.comment, atom.element)
+molecule.write_files('WRITE.data', atom_style='full')
+molecule.write_files('WRITE.ff.script')
+
+# print('\n\nMasses')
+# for i in molecule.ff.masses:
+#     mass = molecule.ff.masses[i]
+#     print(i, mass.comment, mass.element)
+
+# print('\n\nAtoms')
+# for i in molecule.atoms:
+#     atom = molecule.atoms[i]
+#     print(i, atom.type, atom.comment, atom.element)
     
 
     

@@ -5,7 +5,7 @@ from mooonpy.molspace.topology import Bonds, Angles, Dihedrals, Impropers
 from mooonpy.molspace.force_field import ForceField
 from mooonpy.molspace.distance import domain_decomp_13, pairs_from_bonds, pairs_from_domains, ADI_from_bonds, BADI_by_type
 from mooonpy.molspace.graph_theory import interface, ring_analysis
-from mooonpy.molspace.periodic_table import Elements
+from mooonpy.molspace.periodic_table import Elements as Ptable
 from mooonpy.molspace.bonds_from_distances import find as find_bonds_from_distances
 
 from mooonpy.tools.file_utils import Path
@@ -80,7 +80,7 @@ class Molspace(object):
         self.dihedrals: Dihedrals = Dihedrals()
         self.impropers: Impropers = Impropers()
         self.ff: ForceField = ForceField()
-        self.Elements: Elements = Elements()
+        self.ptable: Ptable = Ptable()
 
         # Handle file initilaizations
         self.filename = filename
@@ -242,14 +242,14 @@ class Molspace(object):
     def find_cumulative_neighs(self):
         return
     
-    def update_per_atom_element(self, type2mass=None, type2element=None):
+    def update_elements(self, type2mass=None, type2element=None):
         """
         Updates every per-atom .element attribute with the element type for that atom.
         
         :Example:
         >>> import mooonpy
         >>> my_molecule = mooonpy.molspace('detda.data')
-        >>> my_molecule.update_per_atom_element()
+        >>> my_molecule.update_elements()
         
         .. note::
             This will also update the per-mass .element attribute in ff.masses dictionary as well.
@@ -264,14 +264,33 @@ class Molspace(object):
         if type2mass is None:
             type2mass = {i:self.ff.masses[i].coeffs[0] for i in self.ff.masses}
         if type2element is None:
-            type2element = {i:self.Elements.mass2element(type2mass[i]) for i in type2mass}
+            type2element = {i:self.ptable.mass2element(type2mass[i]) for i in type2mass}
         for atom_type, mass in self.ff.masses.items():
             mass.element = type2element[atom_type]
         for atom_id, atom in self.atoms.items():
             atom.element = type2element[atom.type]
         return
     
-    def bonds_from_distances(self, periodicity='ppp'):
+    def bonds_from_distances(self, periodicity: str='ppp'):
+        """
+        Resets the bonds in a molecular system, based in interatomic distances and valences of atoms. 
+        The cutoff distances are set based on the summation of vdw radii per element involved in the
+        bond. Each atom's valence is respected ()
+        
+        :Example:
+        >>> import mooonpy
+        >>> my_molecule = mooonpy.molspace('detda.data')
+        >>> my_molecule.bonds_from_distances(periodicity='ppp')
+        
+        .. note::
+            Before using this command the element per-atom info and element per-mass info need to be updated by
+            running "my_molecule.update_elements()".
+
+        :param periodicity: Optional for setting the periodicity of the model, where f=fixed and p=periodic. Each position is a face (e.g. periodicity='fpp' is fixed on X-faces and periodic in Y- and Z-faces)
+        :type periodicity: str
+        :return: None
+        :rtype: None
+        """
         find_bonds_from_distances(self, periodicity)
         return
     
