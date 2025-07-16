@@ -7,6 +7,7 @@ class Parameters(object):
         self.style: str = ''
         self.comment: str = ''
         self.type_label: str = ''
+        self.element: str = ''
 
 
 class Coefficients(dict):

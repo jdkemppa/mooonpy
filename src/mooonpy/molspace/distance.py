@@ -202,6 +202,9 @@ def domain_decomp_13(atoms, cutoff, whitelist=None, blacklist=None, periodicity=
     nx = int(lx // cutoff)  # number of domains
     ny = int(ly // cutoff)
     nz = int(lz // cutoff)
+    if nx == 0: nx = 1
+    if ny == 0: ny = 1
+    if nz == 0: nz = 1
 
     ## number of domains for skewed triclinic, needs testing and 3D checks
     # nx = int(lx // (cutoff / math.cos(math.atan(box.xy / ly)) / math.cos(math.atan(box.xz / lz))))

@@ -46,48 +46,24 @@ molecule = mooonpy.Molspace(filename=file)#, astyles=['full', 'charge'], dsect=[
 molecule.write_files('WRITE.data', atom_style='full')
 molecule.write_files('WRITE.ff.script')
 
-#lines = molecule.ff.get_per_line_styles('bond_coeffs')
-#print(lines)
-
-
-
-graph = mooonpy.molspace.graph_theory.interface.generate_graph(molecule)
-#print(graph)
-
-# rings = mooonpy.molspace.graph_theory.graph.find_rings(graph, ring_sizes=(3,4,5,6,7))
-# print(len(rings))
-
-def call():
-    rings = mooonpy.molspace.graph_theory.ring_analysis.find_rings(graph, ring_sizes=(3,4,5,6,7,8,9,10))
-    print()
-    #print(rings)
-    print(len(rings))
-    # for ring in rings:
-    #     print(ring)
     
-    # rings = molecule.find_rings(ring_sizes=(3,4,5,6,7))
-    # print(rings)
-    
-import timeit
-time = timeit.timeit(stmt=call, number=1)
-print(time)
+rings = molecule.find_rings(ring_sizes=(3,4,5,6,7))
+print(rings)
 
+molecule.update_per_atom_element()
+molecule.bonds_from_distances(periodicity='fff')
 
+print('\n\nMasses')
+for i in molecule.ff.masses:
+    mass = molecule.ff.masses[i]
+    print(i, mass.comment, mass.element)
 
-if __name__ == '__main__':
-    import timeit
+print('\n\nAtoms')
+for i in molecule.atoms:
+    atom = molecule.atoms[i]
+    print(i, atom.type, atom.comment, atom.element)
     
-    # file = 'EPON_862/detda_typed_IFF_merged.data'
-    # file = 'EPON_862/system1_cell_replicate.data'
-    # def call_mooonpy():
-    #     m = mooonpy.Molspace(filename=file, read='mooonpy', astyles=['all', 'full'])
-    #     m.write_files('WRITE.data', atom_style='full')
-    
-    # number = 1
-    # print('\n\n')
-    # mooonpy_time = timeit.timeit(stmt=call_mooonpy, number=number)
-    # print(f'mooonpy read time  : {mooonpy_time} seconds for {number} runs on 100,000 atom system')
-    
+
     
 
     

@@ -5,6 +5,8 @@ from mooonpy.molspace.topology import Bonds, Angles, Dihedrals, Impropers
 from mooonpy.molspace.force_field import ForceField
 from mooonpy.molspace.distance import domain_decomp_13, pairs_from_bonds, pairs_from_domains, ADI_from_bonds, BADI_by_type
 from mooonpy.molspace.graph_theory import interface, ring_analysis
+from mooonpy.molspace.periodic_table import Elements
+from mooonpy.molspace.bonds_from_distances import find as find_bonds_from_distances
 
 from mooonpy.tools.file_utils import Path
 
@@ -78,6 +80,7 @@ class Molspace(object):
         self.dihedrals: Dihedrals = Dihedrals()
         self.impropers: Impropers = Impropers()
         self.ff: ForceField = ForceField()
+        self.Elements: Elements = Elements()
 
         # Handle file initilaizations
         self.filename = filename
@@ -238,3 +241,38 @@ class Molspace(object):
     
     def find_cumulative_neighs(self):
         return
+    
+    def update_per_atom_element(self, type2mass=None, type2element=None):
+        """
+        Updates every per-atom .element attribute with the element type for that atom.
+        
+        :Example:
+        >>> import mooonpy
+        >>> my_molecule = mooonpy.molspace('detda.data')
+        >>> my_molecule.update_per_atom_element()
+        
+        .. note::
+            This will also update the per-mass .element attribute in ff.masses dictionary as well.
+
+        :param type2mass: Optional for setting the atom type to mass map (e.g. type2mass={1: 12.01115, 2: 1.008}). If not provided this will be generated from the masses section.
+        :type type2mass: dict[int, float]
+        :param type2element: Optional for setting the atom type to mass map (e.g. type2element={1: 'C', 2: 'H'}). If not provided this will be generated from the masses section and interally defined periodic table.
+        :type type2element: dict[int, str]
+        :return: None
+        :rtype: None
+        """
+        if type2mass is None:
+            type2mass = {i:self.ff.masses[i].coeffs[0] for i in self.ff.masses}
+        if type2element is None:
+            type2element = {i:self.Elements.mass2element(type2mass[i]) for i in type2mass}
+        for atom_type, mass in self.ff.masses.items():
+            mass.element = type2element[atom_type]
+        for atom_id, atom in self.atoms.items():
+            atom.element = type2element[atom.type]
+        return
+    
+    def bonds_from_distances(self, periodicity='ppp'):
+        find_bonds_from_distances(self, periodicity)
+        return
+    
+    
