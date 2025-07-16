@@ -119,6 +119,7 @@ def compute_derivative(xdata: Array1D, ydata: Array1D) -> Tuple[np.ndarray, np.n
         make an example image
     """
     dxn = xdata[1:-1]  # ignore first and last point
+    dxn = dxn.astype(float)
     dy1 = np.zeros_like(dxn)
     dy2 = np.zeros_like(dxn)
     if len(xdata) == len(ydata):

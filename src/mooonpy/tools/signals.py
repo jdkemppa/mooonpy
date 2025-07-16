@@ -3,7 +3,9 @@ from typing import Tuple, Union, Optional
 
 import numpy as np
 import scipy as sp
-from .math_utils import first_value_cross
+from whittaker_eilers import WhittakerSmoother
+
+from mooonpy.tools.math_utils import first_value_cross
 
 Array1D = Union[np.ndarray, list]
 
@@ -277,3 +279,20 @@ def data_extension(xdata: Array1D, ydata: Array1D, lo: Number = 1, hi: Number = 
         lo_trim = 0
         hi_trim = xdata.shape[0]
     return xdata, ydata, lo_trim, hi_trim
+
+def sparse_eye_diff(m, d, format='csc'):
+    diagonals = np.zeros(2*d + 1)
+    diagonals[d] = 1
+    for i in range(d):
+        diagonals = diagonals[:-1] - diagonals[1:]
+    offsets = np.arange(d+1)
+    return sp.sparse.diags(diagonals, offsets, shape=(m-d, m), format=format)
+
+def whitt_smooth(ydata, order, lambda_):
+    # Base Whittaker Eilers smoother
+    m = len(ydata)
+    E = sp.sparse.eye(m, dtype=int, format='csc')
+    D = sparse_eye_diff(m, order, format='csc')
+    C = E + lambda_ * D.conj().T.dot(D)
+    z = sp.sparse.linalg.spsolve(C, ydata)
+    return z
