@@ -69,7 +69,7 @@ class Angles(dict):
         # Generate an Angle class with necessary slots and defaults, which will
         # be used by angle_factory() method to generate an instance of this class
         class_name = 'Angle'
-        defaults = {'type': 0, 'ordered': [], 'comment': '', 'theta': None}
+        defaults = {'type': 0, 'ordered': [], 'comment': '', 'theta': None, 'normal':None}
         slots = tuple(defaults.keys())
         self.Angle = _make_class(class_name, slots, defaults=defaults)
 

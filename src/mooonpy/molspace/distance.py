@@ -304,27 +304,40 @@ def ADI_from_bonds(bonds, angles=None, dihedrals=None, impropers=None):
             if b1[0] != angle.ordered[1]: v1 = -v1  # if tip is center mirror a copy
             if b2[0] != angle.ordered[1]: v2 = -v2  # *= changes in the dict
 
-            dot = np.dot(v1, v2) # / bonds[b1].dist / bonds[b2].dist
+            cross = np.cross(v1, v2) # needed for later operations
+            if key[0] != angle.ordered[0]: cross *= -1 # later index uses key not ordered
+            angle.normal = cross/np.linalg.norm(cross)
+            # angle.theta = 180 - np.arcsin(np.linalg.norm(cross)) * 180 / np.pi # slower
+
+            dot = np.dot(v1, v2) # / bonds[b1].dist / bonds[b2].dist # recomputing dot is faster than sqrt
             angle.theta = np.arccos(dot) * 180 / np.pi
-            ## could do a cross product to get normal?
+
     else:
         pass
 
     if isinstance(dihedrals, Dihedrals):
         for key, dihedral in dihedrals.items():
-            b1 = bonds.key_rule(dihedral.ordered[0], dihedral.ordered[1])
+            # b1 = bonds.key_rule(dihedral.ordered[0], dihedral.ordered[1])
             b2 = bonds.key_rule(dihedral.ordered[1], dihedral.ordered[2])
-            b3 = bonds.key_rule(dihedral.ordered[2], dihedral.ordered[3])
+            # b3 = bonds.key_rule(dihedral.ordered[2], dihedral.ordered[3])
 
-            v1 = vectors[b1]
+            # v1 = vectors[b1]
             v2 = vectors[b2]
-            v3 = vectors[b3]
-            if b1[0] != dihedral.ordered[1]: v1 = -v1  # out from 1
+            # v3 = vectors[b3]
+            # if b1[0] != dihedral.ordered[1]: v1 = -v1  # out from 1
             if b2[0] != dihedral.ordered[1]: v2 = -v2  # out from 1
-            if b3[0] != dihedral.ordered[2]: v3 = -v3  # out from 2
+            # if b3[0] != dihedral.ordered[2]: v3 = -v3  # out from 2
 
-            vl = np.cross(v2, v1)  # I think these give the correct sign
-            vr = np.cross(v2, v3)
+            ## Get existing normals
+            a1 = angles.key_rule(dihedral.ordered[0], dihedral.ordered[1], dihedral.ordered[2])
+            a2 = angles.key_rule(dihedral.ordered[1], dihedral.ordered[2], dihedral.ordered[3])
+            vl = angles[a1].normal
+            vr = angles[a2].normal
+            if a1[0] != dihedral.ordered[2]: vl = -vl
+            if a2[0] != dihedral.ordered[3]: vr = -vr
+
+            # vl = np.cross(v2, v1) # compute normals
+            # vr = np.cross(v2, v3)
             matrix = np.vstack([vl, vr, v2])
             triple_product = np.linalg.det(matrix)
             # triple_product = (vl[0] * (vr[1] * v2[2] - vr[2] * v2[1]) -
@@ -353,24 +366,30 @@ def ADI_from_bonds(bonds, angles=None, dihedrals=None, impropers=None):
             if b2[0] != improper.ordered[1]: v2 = -v2
             if b3[0] != improper.ordered[1]: v3 = -v3
 
+
+            a1 = angles.key_rule(improper.ordered[2], improper.ordered[1], improper.ordered[3])
+            a2 = angles.key_rule(improper.ordered[0], improper.ordered[1], improper.ordered[3])
+            a3 = angles.key_rule(improper.ordered[0], improper.ordered[1], improper.ordered[2])
+
+            norm1 = angles[a1].normal
+            norm2 = angles[a2].normal
+            norm3 = angles[a3].normal
+
+            if a1[0] != improper.ordered[2]: norm1 = -norm1
+            if a2[0] != improper.ordered[3]: norm2 = -norm2
+            if a3[0] != improper.ordered[0]: norm3 = -norm3
+
             ## Slow
-            norm1 = np.cross(v2, v3)
-            norm1 /= np.linalg.norm(norm1)
-            norm2 = np.cross(v3, v1) # order matches LAMMPS class2.cpp
-            norm2 /= np.linalg.norm(norm2)
-            norm3 = np.cross(v1, v2)
-            norm3 /= np.linalg.norm(norm3)
+            # norm1 = np.cross(v2, v3)
+            # norm1 /= np.linalg.norm(norm1)
+            # norm2 = np.cross(v3, v1) # order matches LAMMPS class2.cpp
+            # norm2 /= np.linalg.norm(norm2)
+            # norm3 = np.cross(v1, v2)
+            # norm3 /= np.linalg.norm(norm3)
 
-            ch1 = np.arcsin(np.dot(norm1, v1)) # / bonds[b1].dist)
-            ch2 = np.arcsin(np.dot(norm2, v2)) # / bonds[b2].dist)
-            ch3 = np.arcsin(np.dot(norm3, v3)) # / bonds[b3].dist)
-
-            # ch1 = np.arcsin(np.linalg.det(np.vstack([v2, v3, v1])) / (bonds[b1].dist*bonds[b2].dist*bonds[b3].dist))
-            # ch2 = np.arcsin(np.linalg.det(np.vstack([v3, v1, v2])) / (bonds[b1].dist*bonds[b2].dist*bonds[b3].dist))
-            # ch3 = np.arcsin(np.linalg.det(np.vstack([v1, v2, v3])) / (bonds[b1].dist*bonds[b2].dist*bonds[b3].dist))
-            ## not work because norm1 mag is not the same as norm of v2 and v3
-
-
+            ch1 = np.arcsin(np.dot(norm1, v1))
+            ch2 = np.arcsin(np.dot(norm2, v2))
+            ch3 = np.arcsin(np.dot(norm3, v3))
 
             improper.chi = (ch1 + ch2 + ch3) * 180 / (3 * np.pi)
     else:
