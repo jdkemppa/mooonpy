@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from ..tools.math_utils import compute_fringe_slope, compute_derivative, find_peaks_and_valleys
-from ..tools.signals import butter_lowpass, compute_PSD
-from .program import ProgramResults
+from mooonpy.tools.math_utils import compute_fringe_slope, compute_derivative, find_peaks_and_valleys
+from mooonpy.tools.signals import butter_lowpass, compute_PSD
+from mooonpy.programs.program import ProgramResults
 
 from numbers import Number
 from typing import Union, Optional, List

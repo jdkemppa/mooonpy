@@ -27,7 +27,7 @@ _package_dir = os.path.dirname(__file__)
 
 
 # List of submodules/folders to import
-_submodules = ['guis', 'molspace', 'programs', 'thermospace', 'tools', 'xrdspace']
+_submodules = ['guis', 'molspace', 'programs', 'thermospace', 'tools', 'xrdspace','fitting']
 for name in _submodules:
     if os.path.isdir(os.path.join(_package_dir, name)):
         module = importlib.import_module(f'.{name}', __package__)

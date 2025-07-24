@@ -223,7 +223,7 @@ class Path(str):
         """
         return Path(os.path.splitext(self.basename())[1])
 
-    def matches(self) -> List['Path']:
+    def matches(self,whitelist_ext=None, blacklist_ext=None) -> List['Path']:
         """
         Finds matching paths with a * (asterisk) wildcard character.
 
@@ -236,7 +236,14 @@ class Path(str):
             >>> print(Path.matches(MyWildcard))
             [Path('DETDA.mol'), Path('DEGBF.mol')]
         """
-        return [Path(file) for file in glob.glob(self)]
+        matches = [Path(file) for file in glob.glob(self)]
+        if blacklist_ext:
+            matches = [match for match in matches if match.ext() not in blacklist_ext]
+        elif whitelist_ext:
+            matches = [match for match in matches if match.ext() in whitelist_ext]
+
+        return matches
+
 
     def new_ext(self, ext: Union[str, 'Path']) -> 'Path':
         """

@@ -11,7 +11,7 @@ from mooonpy.tools.string_utils import _col_convert
 class Thermospace(ColTable):
     """
     Class to hold data found in LAMMPS logs.
-    Data is organized into
+    Data is organized into columns
 
     """
 
@@ -19,16 +19,18 @@ class Thermospace(ColTable):
         super(Thermospace, self).__init__(**kwargs)
         self.sections = {}
 
-    def sect(self, sect_string: Union[str,range,list,int]) -> ColTable:
+    def sect(self, sect_string: Optional[Union[str,range,list,int]]=None,priority='off') -> ColTable:
         if isinstance(sect_string, str):  # TODO
             if sect_string in self.sections:
                 sections = [sect_string]
             else:
                 pass  # Fancy splitting
         elif isinstance(sect_string, range):  # TODO
-            pass
+            sections = sect_string
         elif isinstance(sect_string, int):
             sections = [int(sect_string)]
+        elif sect_string is None:
+            sections = list(self.sections.keys())
         else:  # or allow custom ranges? also reverse slicing. look at slice object
             pass  # error message  # TODO
 
@@ -39,9 +41,15 @@ class Thermospace(ColTable):
 
         for key, col in self.grid.items():
             sect_ranges = [self.sections[section] for section in sections]
-            column = np.concatenate(
-                [self[key][sect_range.start:sect_range.stop:sect_range.step] for sect_range in sect_ranges])
-            out_table[key] = column
+            slices = []
+            for ii, sect_range in enumerate(sect_ranges):
+                if priority == 'first' and ii > 0:
+                    slices.append(col[sect_range.start + sect_range.step:sect_range.stop:sect_range.step])
+                elif priority == 'last' and ii > 0:
+                    slices.append(col[sect_range.start:sect_range.stop - sect_range.step:sect_range.step])
+                else: #  priority == 'off':
+                    slices.append(col[sect_range.start:sect_range.stop:sect_range.step])
+            out_table[key] = np.concatenate(slices)
 
         return out_table
 
@@ -53,6 +61,48 @@ class Thermospace(ColTable):
     @classmethod
     def basic_read(cls, file: Union[Path, str], silence_error_line: bool = False) -> 'Thermospace':
         return readlog_basic(file, silence_error_line=silence_error_line)
+
+    def join_restart(self, restart, step_col='Step',restart_step_ind=0, this_step_ind=None):
+        """
+        Appends data from a restarted thermospace to the current one.
+        Uses (step_col, restart_step_ind) as the start of the appended section,
+        and finds the last matching (step_col, this_step_ind) and overwrites after that
+
+        step_col is the column used for indexing, defaults to 'Step' but 'v_Time' may also be used
+
+        restart_step_ind = 0 uses 0th index step, and so on
+        this_step_ind = None uses last matching value
+        """
+        this_x = self[step_col]
+        restart_x = restart[step_col]
+        if this_step_ind is None:
+            matches = np.argwhere(np.equal(this_x, restart_x[restart_step_ind]))
+            if len(matches) == 0:
+                this_step_ind = len(this_x)  # no slice
+            else:
+                this_step_ind = matches[-1][0] # last match
+
+        for key in self.grid.keys():
+            if key in restart.grid:
+                self.grid[key] = np.concatenate((self.grid[key][:this_step_ind], restart.grid[key][restart_step_ind:]))
+            else:
+                self.grid[key] = np.concatenate((self.grid[key][:this_step_ind],np.full(len(restart),np.nan)[restart_step_ind:]))
+
+        last_sect = None
+        for sect, range_ in self.sections.items():
+            if this_step_ind in range_:
+                last_sect = sect
+                # Continues to last match
+        if last_sect is None:
+            self.sections.update(restart.sections)
+        else:
+            for sect, range_ in restart.sections.items():
+                if restart_step_ind in range_:
+                    self.sections[last_sect] = range(self.sections[last_sect].start, range_.stop+this_step_ind)
+                else:
+                    self.sections[last_sect+sect-1] = range(range_.start+this_step_ind, range_.stop+this_step_ind)
+        ## Test this ^
+        # !!!
 
 ## This should be refactored into _files_io but imports are being weird
 def readlog_basic(file: [Path, str], silence_error_line: bool = False) -> Thermospace:
@@ -175,3 +225,16 @@ def readlog_basic(file: [Path, str], silence_error_line: bool = False) -> Thermo
     out.title = file
     out.sections = sections
     return out
+
+if __name__ == '__main__':
+    this_x = np.array([0,1,2,3])
+    restart_x = np.array([3,4,5,6,7])
+    restart_step_ind =0
+    matches = np.argwhere(np.equal(this_x,restart_x[restart_step_ind]))
+    if len(matches) == 0:
+        this_step_ind = len(this_x) # no slice
+    else:
+        this_step_ind = matches[-1][0]
+
+    new = np.concatenate((this_x[:this_step_ind], restart_x[restart_step_ind:]))
+    print(new)

@@ -199,7 +199,10 @@ class Table(object):
             if left_flag:
                 line += cell.format(self.rowlabels()[row_index]) + delim
             for col_index in range(shape[1]):
-                value = self.rowcol(row_index, col_index)
+                if isinstance(self, ListListTable): # weird indexing error with rowcol here so it was hardcoded out
+                    value = self.grid[row_index][col_index]
+                else:
+                    value = self.rowcol(row_index, col_index)
                 if value is None:
                     line += delim
                 elif isinstance(value, float):

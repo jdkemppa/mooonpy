@@ -246,6 +246,28 @@ def first_value_cross(xdata: Array1D, ydata: Array1D, cross: Optional[Number] = 
     x_cross = xdata[np.min(np.where(ydata < cross)[0])]
     return x_cross
 
+def hyperbola(x, X0, Y0, a, b, c):
+    """
+    Patrone Hyperbola fit method
+
+    :param x: X data
+    :type x: Array1D
+    :param X0: center x coordinate
+    :type X0: Number
+    :param Y0: center y coordinate
+    :type Y0: Number
+    :param a: slope left of turn
+    :type a: Number
+    :param b: slope increase after turn
+    :type b: Number
+    :param c: slope curvature parameter
+    :type c: Number
+    """
+    dx = x - X0
+    h0 = 0.5 * dx + np.sqrt((dx * dx) / 4 + np.exp(c))
+    p = Y0 + a * dx + b * h0
+    return p
+
 class MixingRule():
     def __init__(self, style='add'):
         """
