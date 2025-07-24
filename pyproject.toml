@@ -8,6 +8,7 @@ authors = [{ name="Josh Kemppainen", email="jdkemppa@mtu.edu" },
 dependencies = ["numpy>=1.0.0",
                 "scipy>=1.0.0",
                 "matplotlib>=3.0.0",
+				"lmfit>=1.0.0",
 ]
 
 description = "mooonpy internal editable python package"

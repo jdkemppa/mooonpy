@@ -7,3 +7,4 @@ ghp-import
 matplotlib
 numpy
 scipy
+lmfit
