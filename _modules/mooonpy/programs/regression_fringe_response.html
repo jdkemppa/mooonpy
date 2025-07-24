@@ -1,0 +1,513 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.programs.regression_fringe_response &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mooonpy.programs.regression_fringe_response</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mooonpy.programs.regression_fringe_response</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.tools.math_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_fringe_slope</span><span class="p">,</span> <span class="n">compute_derivative</span><span class="p">,</span> <span class="n">find_peaks_and_valleys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.tools.signals</span><span class="w"> </span><span class="kn">import</span> <span class="n">butter_lowpass</span><span class="p">,</span> <span class="n">compute_PSD</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.programs.program</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProgramResults</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">numbers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Number</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.polynomial.polynomial</span><span class="w"> </span><span class="kn">import</span> <span class="n">polyfit</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+
+<div class="viewcode-block" id="RFR_tensile_analysis">
+<a class="viewcode-back" href="../../../mooonpy.programs.regression_fringe_response.html#mooonpy.programs.regression_fringe_response.RFR_tensile_analysis">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">RFR_tensile_analysis</span><span class="p">(</span><span class="n">strain</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">stress</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">trans_1</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                         <span class="n">trans_2</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">min_xhi</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Number</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                         <span class="n">max_xhi</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Number</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">wn</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Number</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;PSD&#39;</span><span class="p">,</span> <span class="n">order</span><span class="p">:</span> <span class="n">Number</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+                         <span class="n">qm</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;msr&#39;</span><span class="p">,</span> <span class="n">log</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">plots</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="n">List</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;all&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProgramResults</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implementation of the Regression Fringe Response Modulus Method Tensile Analysis.</span>
+
+<span class="sd">    Returns results in a Program object as attributes</span>
+
+<span class="sd">    **Result Attributes**</span>
+<span class="sd">        - program_name: str</span>
+<span class="sd">        - program_version: str</span>
+<span class="sd">        - log: Log object</span>
+<span class="sd">        - stress_wn: float. Cutoff used for stress filter</span>
+<span class="sd">        - stress_qm: str. quadrant mirror setting used for stress filter</span>
+<span class="sd">        - offset: float. Offset of stress after filtering</span>
+<span class="sd">        - stress_filt: vector. Filtered stress signal</span>
+<span class="sd">        - lox: float. Lower bound of linear region strain</span>
+<span class="sd">        - loy: float. Lower bound of linear region stress</span>
+<span class="sd">        - midx: float. First pass FBF strain</span>
+<span class="sd">        - midy: float. First pass FBF stress</span>
+<span class="sd">        - hix: float. Higher bound of linear region strain</span>
+<span class="sd">        - hiy: float. Higher bound of linear region stress</span>
+<span class="sd">        - lo_index: int. index of lower bound</span>
+<span class="sd">        - hi_index: int. index of higher bound</span>
+<span class="sd">        - x_intercept: float. Intercept of linear region</span>
+<span class="sd">        - youngs_modulus: float. Young&#39;s modulus from linear region</span>
+<span class="sd">        - dstrain: vector. x values from derivative of fringe slope</span>
+<span class="sd">        - dslopes1: vector. 1st derivative 2nd forward of fringe slope</span>
+<span class="sd">        - dslopes2: vector. 2nd derivative 2nd forward of fringe slope</span>
+<span class="sd">        - yield_index: int. index of yield. Falls back to linear region upper bound.</span>
+<span class="sd">        - yield_x: float. yield strain, will be None if not found</span>
+<span class="sd">        - yield_y: float. yield stress, will be None if not found</span>
+<span class="sd">        - figs: dict. Dictionary of matplotlib fig objects.</span>
+<span class="sd">        - axies: dict. Dictionary of matplotlib axes objects.</span>
+
+<span class="sd">    :param strain: Strain</span>
+<span class="sd">    :type strain: np.ndarray</span>
+<span class="sd">    :param stress: Stress</span>
+<span class="sd">    :type stress: np.ndarray</span>
+<span class="sd">    :param trans_1: Transverse strain 1</span>
+<span class="sd">    :type trans_1: np.ndarray</span>
+<span class="sd">    :param trans_2: Transverse strain 2</span>
+<span class="sd">    :type trans_2: np.ndarray</span>
+<span class="sd">    :param min_xhi: Minimum value of xhi, or the smallest span of the elastic region. default None -&gt; min(strain)</span>
+<span class="sd">    :type min_xhi: Number</span>
+<span class="sd">    :param max_xhi: Maximum value of xhi, considered for the elastic region. default None -&gt; max(strain)</span>
+<span class="sd">    :type max_xhi: Number | str</span>
+<span class="sd">    :param wn: Butterworth lowpass filter cutoff. default &#39;PSD&#39; to use optimization method. may also be &#39;off&#39; to disable.</span>
+<span class="sd">    :type wn: Number</span>
+<span class="sd">    :param order: Order of the Butterworth lowpass filter. default 2</span>
+<span class="sd">    :type order: Number</span>
+<span class="sd">    :param qm: Quadrant Mirror padding setting, as &#39;1,1&#39; as outlined in extend_data. default &#39;msr&#39; to use optimization method.</span>
+<span class="sd">    :type qm: str</span>
+<span class="sd">    :param log: Currently not implemented.</span>
+<span class="sd">    :type log: list</span>
+<span class="sd">    :param plots: &#39;all&#39; to plot all plots in individual frames, or &#39;quad&#39; to plot 4 figures in one frame. lists of figure stings select which plots to use.</span>
+<span class="sd">    :type plots: str | list</span>
+<span class="sd">    :returns: Object containing results of Tensile Analysis</span>
+<span class="sd">    :rtype: ProgramResults</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># --------------------------------------------</span>
+        <span class="c1"># Setup</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">ProgramResults</span><span class="p">(</span><span class="s1">&#39;RFR_tensile_analysis&#39;</span><span class="p">)</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">program_version</span> <span class="o">=</span> <span class="s1">&#39;1.1: 03-Jul-25&#39;</span>
+        <span class="k">if</span> <span class="n">log</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">log</span> <span class="o">=</span> <span class="n">ProgramResults</span><span class="o">.</span><span class="n">new_log</span><span class="p">()</span>  <span class="c1"># just a list currently</span>
+
+        <span class="n">results</span><span class="o">.</span><span class="n">input_settings</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;min_xhi&#39;</span><span class="p">:</span> <span class="n">min_xhi</span><span class="p">,</span> <span class="s1">&#39;max_xhi&#39;</span><span class="p">:</span> <span class="n">max_xhi</span><span class="p">,</span> <span class="s1">&#39;wn&#39;</span><span class="p">:</span> <span class="n">wn</span><span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">:</span> <span class="n">order</span><span class="p">,</span> <span class="s1">&#39;qm&#39;</span><span class="p">:</span> <span class="n">qm</span><span class="p">}</span>
+        <span class="n">figs</span><span class="p">,</span> <span class="n">axies</span> <span class="o">=</span> <span class="n">rfr_plotter</span><span class="p">(</span><span class="n">plots</span><span class="p">)</span>
+
+        <span class="c1"># --------------------------------------------</span>
+        <span class="c1"># Filtering</span>
+        <span class="k">if</span> <span class="n">wn</span> <span class="o">==</span> <span class="s1">&#39;off&#39;</span><span class="p">:</span>
+            <span class="n">stress_filt</span> <span class="o">=</span> <span class="n">stress</span>
+            <span class="c1"># results.stress_filt = stress</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">stress_wn</span> <span class="o">=</span> <span class="s1">&#39;1.0&#39;</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">stress_qm</span> <span class="o">=</span> <span class="s1">&#39;1,1&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">stress_filt</span><span class="p">,</span> <span class="n">stress_wn</span><span class="p">,</span> <span class="n">stress_qm</span> <span class="o">=</span> <span class="n">butter_lowpass</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span> <span class="n">stress</span><span class="p">,</span> <span class="n">wn</span><span class="o">=</span><span class="n">wn</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span> <span class="n">quadrant</span><span class="o">=</span><span class="n">qm</span><span class="p">)</span>
+            <span class="c1"># results.stress_filt = stress_filt</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">stress_wn</span> <span class="o">=</span> <span class="n">stress_wn</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">stress_qm</span> <span class="o">=</span> <span class="n">stress_qm</span>
+
+        <span class="c1"># --------------------------------------------</span>
+        <span class="c1"># enable or disable shifting?</span>
+        <span class="c1"># Shift all data by the &quot;minimum before the maximum&quot; to remove any residual</span>
+        <span class="c1"># stress. The &quot;minimum before the maximum&quot; allows for fracture to occur where</span>
+        <span class="c1"># the minimum stress is near zero strain and not maximum strain (in case fracture</span>
+        <span class="c1"># creates a minimum stress lower than the residual stress).</span>
+        <span class="n">max_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">stress_filt</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">stress_filt</span><span class="p">))[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">min_stress</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">stress_filt</span><span class="p">[:</span><span class="n">max_index</span><span class="p">])</span>
+        <span class="n">stress_filt</span> <span class="o">-=</span> <span class="n">min_stress</span>
+        <span class="n">stress</span> <span class="o">-=</span> <span class="n">min_stress</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="o">-</span><span class="n">min_stress</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">stress_filt</span> <span class="o">=</span> <span class="n">stress_filt</span>
+
+        <span class="k">if</span> <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_stress&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_stress&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span> <span class="n">stress</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Raw stress&#39;</span><span class="p">)</span>
+            <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_stress&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span> <span class="n">stress_filt</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Filtered stress&#39;</span><span class="p">)</span>
+
+        <span class="c1"># --------------------------------------------</span>
+        <span class="c1"># Determine Linear region</span>
+        <span class="n">lo</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">hi</span><span class="p">,</span> <span class="n">fr2_fringe</span><span class="p">,</span> <span class="n">fr2_slopes</span> <span class="o">=</span> <span class="n">_forward_backward_forward</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span> <span class="n">stress_filt</span><span class="p">,</span> <span class="n">min_xhi</span><span class="p">,</span> <span class="n">max_xhi</span><span class="p">,</span>
+                                                                        <span class="n">_plt_fbf</span><span class="o">=</span><span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_fbf&#39;</span><span class="p">])</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">lox</span> <span class="o">=</span> <span class="n">lo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">loy</span> <span class="o">=</span> <span class="n">lo</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">midx</span> <span class="o">=</span> <span class="n">mid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">mixy</span> <span class="o">=</span> <span class="n">mid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">hix</span> <span class="o">=</span> <span class="n">hi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">hiy</span> <span class="o">=</span> <span class="n">hi</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_stress&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_stress&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">lo</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">hi</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">lo</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">hi</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;go&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Linear region&#39;</span><span class="p">)</span>
+
+        <span class="n">lo_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">strain</span> <span class="o">-</span> <span class="n">lo</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">hi_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">strain</span> <span class="o">-</span> <span class="n">hi</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">youngs_modulus_coeffs</span> <span class="o">=</span> <span class="n">polyfit</span><span class="p">(</span><span class="n">strain</span><span class="p">[</span><span class="n">lo_index</span><span class="p">:</span><span class="n">hi_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">stress_filt</span><span class="p">[</span><span class="n">lo_index</span><span class="p">:</span><span class="n">hi_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">youngs_modulus_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">lo</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">hi</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+        <span class="n">youngs_modulus_y</span> <span class="o">=</span> <span class="n">youngs_modulus_coeffs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">youngs_modulus_x</span> <span class="o">+</span> <span class="n">youngs_modulus_coeffs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">results</span><span class="o">.</span><span class="n">lo_index</span> <span class="o">=</span> <span class="n">lo_index</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">hi_index</span> <span class="o">=</span> <span class="n">hi_index</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">y_intercept</span> <span class="o">=</span> <span class="n">youngs_modulus_coeffs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">youngs_modulus</span> <span class="o">=</span> <span class="n">youngs_modulus_coeffs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_stress&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_stress&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">youngs_modulus_x</span><span class="p">,</span> <span class="n">youngs_modulus_y</span><span class="p">,</span> <span class="s1">&#39;g--&#39;</span><span class="p">,</span>
+                                     <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Linear Fit: E = </span><span class="si">{:4.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">youngs_modulus_coeffs</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+        <span class="c1"># --------------------------------------------</span>
+        <span class="c1"># Find yield</span>
+        <span class="c1"># Step1: Compute the 2nd derivative from the end of the linear region to the max strain</span>
+        <span class="n">fr2_max_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">fr2_slopes</span><span class="p">)</span>
+        <span class="n">reduced_fringe</span> <span class="o">=</span> <span class="n">fr2_fringe</span><span class="p">[</span><span class="n">fr2_max_index</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">reduced_slopes</span> <span class="o">=</span> <span class="n">fr2_slopes</span><span class="p">[</span><span class="n">fr2_max_index</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">dstrain</span><span class="p">,</span> <span class="n">dslopes1</span><span class="p">,</span> <span class="n">dslopes2</span> <span class="o">=</span> <span class="n">compute_derivative</span><span class="p">(</span><span class="n">reduced_fringe</span><span class="p">,</span> <span class="n">reduced_slopes</span><span class="p">)</span>
+
+        <span class="n">results</span><span class="o">.</span><span class="n">dstrain</span> <span class="o">=</span> <span class="n">dstrain</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">dslopes1</span> <span class="o">=</span> <span class="n">dslopes1</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">dslopes2</span> <span class="o">=</span> <span class="n">dslopes2</span>
+
+        <span class="c1"># Step2: Find peaks and valleys of the 2nd derivative using tuned standard deviations</span>
+        <span class="n">prominence</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">dslopes2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
+        <span class="n">xpeaks</span><span class="p">,</span> <span class="n">ypeaks</span><span class="p">,</span> <span class="n">xvalleys</span><span class="p">,</span> <span class="n">yvalleys</span> <span class="o">=</span> <span class="n">find_peaks_and_valleys</span><span class="p">(</span><span class="n">dstrain</span><span class="p">,</span> <span class="n">dslopes2</span><span class="p">,</span> <span class="n">prominence</span><span class="o">=</span><span class="n">prominence</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_peaks&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_peaks&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dstrain</span><span class="p">,</span> <span class="n">dslopes2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;2nd Derivative of Fringe Slopes&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Step3: Use first valley with respect to strain as the yield point (if any valleys exist)</span>
+        <span class="n">yield_index</span><span class="p">,</span> <span class="n">x_yield</span><span class="p">,</span> <span class="n">y_yield</span><span class="p">,</span> <span class="n">x_yield_d2</span><span class="p">,</span> <span class="n">y_yield_d2</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">xvalleys</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">yvalleys</span><span class="p">):</span>
+            <span class="n">x_yield_d2</span> <span class="o">=</span> <span class="n">xvalleys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">y_yield_d2</span> <span class="o">=</span> <span class="n">yvalleys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">yield_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">strain</span> <span class="o">-</span> <span class="n">x_yield_d2</span><span class="p">))</span>  <span class="c1"># equivalent to .index</span>
+            <span class="n">x_yield</span> <span class="o">=</span> <span class="n">strain</span><span class="p">[</span><span class="n">yield_index</span><span class="p">]</span>
+            <span class="n">y_yield</span> <span class="o">=</span> <span class="n">stress_filt</span><span class="p">[</span><span class="n">yield_index</span><span class="p">]</span>
+            <span class="c1"># print(&#39;{:&lt;50} {}&#39;.format(&quot;Computed yield strength: &quot;, y_yield))</span>
+            <span class="k">if</span> <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_peaks&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_peaks&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xpeaks</span><span class="p">,</span> <span class="n">ypeaks</span><span class="p">,</span> <span class="s1">&#39;g^&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Peaks&#39;</span><span class="p">)</span>
+                <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_peaks&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xvalleys</span><span class="p">,</span> <span class="n">yvalleys</span><span class="p">,</span> <span class="s1">&#39;rv&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Valleys&#39;</span><span class="p">)</span>
+                <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_peaks&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x_yield</span><span class="p">,</span> <span class="n">x_yield</span><span class="p">],</span> <span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="n">dslopes2</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">dslopes2</span><span class="p">)],</span> <span class="s1">&#39;r--&#39;</span><span class="p">,</span>
+                                        <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Yield strain: ε = </span><span class="si">{:2.5f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_yield</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_stress&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_stress&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_yield</span><span class="p">,</span> <span class="n">y_yield</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span>
+                                         <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Yield Point: (</span><span class="si">{:2.5f}</span><span class="s1">, </span><span class="si">{:5.2f}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_yield</span><span class="p">,</span> <span class="n">y_yield</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># No yield found with prominence.</span>
+            <span class="c1"># yield_index = len(strain) - 1</span>
+            <span class="n">yield_index</span> <span class="o">=</span> <span class="n">hi_index</span>
+
+        <span class="n">results</span><span class="o">.</span><span class="n">yield_index</span> <span class="o">=</span> <span class="n">yield_index</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">x_yield</span> <span class="o">=</span> <span class="n">x_yield</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">y_yield</span> <span class="o">=</span> <span class="n">y_yield</span>
+
+        <span class="c1"># --------------------------------------------</span>
+        <span class="c1"># Find Poisson&#39;s</span>
+        <span class="n">redused_strain</span> <span class="o">=</span> <span class="n">strain</span><span class="p">[</span><span class="n">lo_index</span><span class="p">:</span><span class="n">yield_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">trans_1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">trans_1_filt</span><span class="p">,</span> <span class="n">wn</span><span class="p">,</span> <span class="n">qm</span> <span class="o">=</span> <span class="n">butter_lowpass</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span> <span class="n">trans_1</span><span class="p">)</span>
+            <span class="n">reduced_trans_1</span> <span class="o">=</span> <span class="n">trans_1_filt</span><span class="p">[</span><span class="n">lo_index</span><span class="p">:</span><span class="n">yield_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">trans_1_coeff</span> <span class="o">=</span> <span class="n">polyfit</span><span class="p">(</span><span class="n">redused_strain</span><span class="p">,</span> <span class="n">reduced_trans_1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_trans&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_trans&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span> <span class="n">trans_1</span><span class="p">,</span> <span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Raw Transverse 1&#39;</span><span class="p">)</span>
+                <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_trans&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span> <span class="n">trans_1_filt</span><span class="p">,</span> <span class="s1">&#39;b-.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Filtered Transverse 1&#39;</span><span class="p">)</span>
+                <span class="n">trans_1_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">redused_strain</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">redused_strain</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+                <span class="n">trans_1_y</span> <span class="o">=</span> <span class="n">trans_1_coeff</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">trans_1_x</span> <span class="o">+</span> <span class="n">trans_1_coeff</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_trans&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">trans_1_x</span><span class="p">,</span> <span class="n">trans_1_y</span><span class="p">,</span> <span class="s1">&#39;bo--&#39;</span><span class="p">,</span>
+                                        <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Transverse 1 Fit: nu = </span><span class="si">{:2.3f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">-</span><span class="n">trans_1_coeff</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">trans_1_coeff</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">trans_1_poi</span> <span class="o">=</span> <span class="o">-</span><span class="n">trans_1_coeff</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">trans_2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">trans_2_filt</span><span class="p">,</span> <span class="n">wn</span><span class="p">,</span> <span class="n">qm</span> <span class="o">=</span> <span class="n">butter_lowpass</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span> <span class="n">trans_2</span><span class="p">)</span>
+            <span class="n">reduced_trans_2</span> <span class="o">=</span> <span class="n">trans_2_filt</span><span class="p">[</span><span class="n">lo_index</span><span class="p">:</span><span class="n">yield_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">trans_2_coeff</span> <span class="o">=</span> <span class="n">polyfit</span><span class="p">(</span><span class="n">redused_strain</span><span class="p">,</span> <span class="n">reduced_trans_2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_trans&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_trans&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span> <span class="n">trans_2</span><span class="p">,</span> <span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Raw Transverse 2&#39;</span><span class="p">)</span>
+                <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_trans&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span> <span class="n">trans_2_filt</span><span class="p">,</span> <span class="s1">&#39;r-.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Filtered Transverse 2&#39;</span><span class="p">)</span>
+                <span class="n">trans_2_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">redused_strain</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">redused_strain</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+                <span class="n">trans_2_y</span> <span class="o">=</span> <span class="n">trans_2_coeff</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">trans_2_x</span> <span class="o">+</span> <span class="n">trans_2_coeff</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">axies</span><span class="p">[</span><span class="s1">&#39;plt_trans&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">trans_2_x</span><span class="p">,</span> <span class="n">trans_2_y</span><span class="p">,</span> <span class="s1">&#39;ro--&#39;</span><span class="p">,</span>
+                                        <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Transverse 2 Fit: nu = </span><span class="si">{:2.3f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">-</span><span class="n">trans_2_coeff</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">trans_2_coeff</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">trans_2_poi</span> <span class="o">=</span> <span class="o">-</span><span class="n">trans_2_coeff</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># --------------------------------------------</span>
+        <span class="c1"># Cleanup</span>
+        <span class="n">rfr_labeler</span><span class="p">(</span><span class="n">axies</span><span class="p">)</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">log</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">figs</span> <span class="o">=</span> <span class="n">figs</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">axies</span> <span class="o">=</span> <span class="n">axies</span>
+        <span class="k">return</span> <span class="n">results</span>
+
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">log</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;ERROR: RFR_tensile_analysis failed, log printed above&#39;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="rfr_plotter">
+<a class="viewcode-back" href="../../../mooonpy.programs.regression_fringe_response.html#mooonpy.programs.regression_fringe_response.rfr_plotter">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">rfr_plotter</span><span class="p">(</span><span class="n">plots</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">):</span>
+    <span class="n">all_plots</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;plt_stress&#39;</span><span class="p">,</span> <span class="s1">&#39;plt_fbf&#39;</span><span class="p">,</span> <span class="s1">&#39;plt_peaks&#39;</span><span class="p">,</span> <span class="s1">&#39;plt_trans&#39;</span><span class="p">]</span>
+    <span class="n">axies</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">figs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">plots</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;off&#39;</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="n">all_plots</span><span class="p">:</span>
+            <span class="n">axies</span><span class="p">[</span><span class="n">plot</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">figs</span><span class="p">[</span><span class="n">plot</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">elif</span> <span class="s1">&#39;quad&#39;</span> <span class="ow">in</span> <span class="n">plots</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">plots</span> <span class="o">==</span> <span class="s1">&#39;quad&#39;</span><span class="p">:</span>
+            <span class="n">plots</span> <span class="o">=</span> <span class="n">all_plots</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plots</span> <span class="o">=</span> <span class="n">plots</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">plots</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">fig</span><span class="p">,</span> <span class="p">((</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">),</span> <span class="p">(</span><span class="n">ax3</span><span class="p">,</span> <span class="n">ax4</span><span class="p">))</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">plot</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">plots</span><span class="p">,</span> <span class="p">[</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="n">ax3</span><span class="p">,</span> <span class="n">ax4</span><span class="p">]):</span>
+                <span class="n">figs</span><span class="p">[</span><span class="n">plot</span><span class="p">]</span> <span class="o">=</span> <span class="n">fig</span>  <span class="c1"># copy</span>
+                <span class="n">axies</span><span class="p">[</span><span class="n">plot</span><span class="p">]</span> <span class="o">=</span> <span class="n">ax</span>  <span class="c1"># reference</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;ERROR: RFR_tensile_analysis only supports quad plots.&#39;</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">plots</span> <span class="o">==</span> <span class="s1">&#39;all&#39;</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="n">all_plots</span><span class="p">:</span>
+            <span class="n">figs</span><span class="p">[</span><span class="n">plot</span><span class="p">],</span> <span class="n">axies</span><span class="p">[</span><span class="n">plot</span><span class="p">]</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="n">all_plots</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">plot</span> <span class="ow">in</span> <span class="n">plots</span><span class="p">:</span>  <span class="c1"># sub string or list</span>
+                <span class="n">figs</span><span class="p">[</span><span class="n">plot</span><span class="p">],</span> <span class="n">axies</span><span class="p">[</span><span class="n">plot</span><span class="p">]</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">axies</span><span class="p">[</span><span class="n">plot</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">figs</span><span class="p">[</span><span class="n">plot</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">figs</span><span class="p">,</span> <span class="n">axies</span></div>
+
+
+
+<div class="viewcode-block" id="rfr_labeler">
+<a class="viewcode-back" href="../../../mooonpy.programs.regression_fringe_response.html#mooonpy.programs.regression_fringe_response.rfr_labeler">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">rfr_labeler</span><span class="p">(</span><span class="n">axies</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">plot</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axies</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">plot</span> <span class="o">==</span> <span class="s1">&#39;plt_fbf&#39;</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Fringe&#39;</span><span class="p">)</span>  <span class="c1"># load units from rcParams?</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Slope&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s1">&#39;Forward-Backward-Forward Fringe response&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">plot</span> <span class="o">==</span> <span class="s1">&#39;plt_stress&#39;</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Strain&#39;</span><span class="p">)</span>  <span class="c1"># load units from rcParams?</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Stress&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s1">&#39;Stress-Strain&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">plot</span> <span class="o">==</span> <span class="s1">&#39;plt_peaks&#39;</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Fringe&#39;</span><span class="p">)</span>  <span class="c1"># load units from rcParams?</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Slope 2nd Derivative&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s1">&#39;2nd Derivative of Fringe response&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">plot</span> <span class="o">==</span> <span class="s1">&#39;plt_trans&#39;</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Strain&#39;</span><span class="p">)</span>  <span class="c1"># load units from rcParams?</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Transverse strain&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s2">&quot;Poisson&#39;s calculation&quot;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>  <span class="c1"># ignore legend errors</span>
+            <span class="k">pass</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_forward_backward_forward</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span> <span class="n">stress</span><span class="p">,</span> <span class="n">min_xhi</span><span class="p">,</span> <span class="n">max_xhi</span><span class="p">,</span> <span class="n">_plt_fbf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maximize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="c1"># --------------------------------------------------------</span>
+    <span class="c1"># Compute the forward-backwards-forwards fringe response</span>
+    <span class="c1"># --------------------------------------------------------</span>
+    <span class="c1"># Step1: First forward response (fr1 - applying minxhi and maxxhi accordingly)</span>
+    <span class="n">min_strain_fr1</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">strain</span><span class="p">)</span>
+    <span class="n">max_strain_fr1</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">strain</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">min_xhi</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">min_strain_fr1</span> <span class="o">=</span> <span class="n">min_xhi</span>
+    <span class="k">if</span> <span class="n">max_xhi</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">max_strain_fr1</span> <span class="o">=</span> <span class="n">max_xhi</span>
+    <span class="n">fr1_fringe</span><span class="p">,</span> <span class="n">fr1_slopes</span> <span class="o">=</span> <span class="n">compute_fringe_slope</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span> <span class="n">stress</span><span class="p">,</span> <span class="n">min_strain</span><span class="o">=</span><span class="n">min_strain_fr1</span><span class="p">,</span>
+                                                  <span class="n">max_strain</span><span class="o">=</span><span class="n">max_strain_fr1</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;forward&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">maximize</span><span class="p">:</span>
+        <span class="n">fr1_max_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">fr1_slopes</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fr1_max_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">fr1_slopes</span><span class="p">)</span>
+    <span class="n">fr1_max_slope</span> <span class="o">=</span> <span class="n">fr1_slopes</span><span class="p">[</span><span class="n">fr1_max_index</span><span class="p">]</span>
+    <span class="n">fr1_max_fringe</span> <span class="o">=</span> <span class="n">fr1_fringe</span><span class="p">[</span><span class="n">fr1_max_index</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">_plt_fbf</span><span class="p">:</span>
+        <span class="n">_plt_fbf</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fr1_fringe</span><span class="p">,</span> <span class="n">fr1_slopes</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Forward 1&#39;</span><span class="p">)</span>
+        <span class="n">_plt_fbf</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">fr1_max_fringe</span><span class="p">,</span> <span class="n">fr1_max_slope</span><span class="p">)</span>
+
+    <span class="c1"># Step2: First backwards response (br1 - applying minxhi and maxxhi accordingly)</span>
+    <span class="n">min_strain_br1</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">strain</span><span class="p">)</span>
+    <span class="n">max_strain_br1</span> <span class="o">=</span> <span class="n">fr1_max_fringe</span>  <span class="c1"># changed</span>
+    <span class="n">fr1_max_index_absolute</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">strain</span> <span class="o">-</span> <span class="n">fr1_max_fringe</span><span class="p">))</span>  <span class="c1"># equivalent to .index</span>
+    <span class="n">reduced_strain</span> <span class="o">=</span> <span class="n">strain</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">fr1_max_index_absolute</span><span class="p">]</span>
+    <span class="n">reduced_stress</span> <span class="o">=</span> <span class="n">stress</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">fr1_max_index_absolute</span><span class="p">]</span>
+
+    <span class="n">br1_fringe</span><span class="p">,</span> <span class="n">br1_slopes</span> <span class="o">=</span> <span class="n">compute_fringe_slope</span><span class="p">(</span><span class="n">reduced_strain</span><span class="p">,</span> <span class="n">reduced_stress</span><span class="p">,</span> <span class="n">min_strain</span><span class="o">=</span><span class="n">min_strain_br1</span><span class="p">,</span>
+                                                  <span class="n">max_strain</span><span class="o">=</span><span class="n">max_strain_br1</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;reverse&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">maximize</span><span class="p">:</span>
+        <span class="n">br1_max_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">br1_slopes</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">br1_max_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">br1_slopes</span><span class="p">)</span>
+    <span class="n">br1_max_slope</span> <span class="o">=</span> <span class="n">br1_slopes</span><span class="p">[</span><span class="n">br1_max_index</span><span class="p">]</span>
+    <span class="n">br1_max_fringe</span> <span class="o">=</span> <span class="n">br1_fringe</span><span class="p">[</span><span class="n">br1_max_index</span><span class="p">]</span>
+    <span class="n">br1_max_index_absolute</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">strain</span> <span class="o">-</span> <span class="n">br1_max_fringe</span><span class="p">))</span>  <span class="c1"># equivalent to .index</span>
+
+    <span class="k">if</span> <span class="n">_plt_fbf</span><span class="p">:</span>
+        <span class="n">_plt_fbf</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">br1_fringe</span><span class="p">,</span> <span class="n">br1_slopes</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Backward 1&#39;</span><span class="p">)</span>
+        <span class="n">_plt_fbf</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">br1_max_fringe</span><span class="p">,</span> <span class="n">br1_max_slope</span><span class="p">)</span>
+
+    <span class="c1"># Step3: Second forward response (fr2 - applying minxhi and maxxhi accordingly)</span>
+    <span class="n">min_strain_fr2</span> <span class="o">=</span> <span class="n">min_strain_fr1</span> <span class="o">+</span> <span class="n">br1_max_fringe</span>
+    <span class="n">max_strain_fr2</span> <span class="o">=</span> <span class="n">max_strain_fr1</span> <span class="o">+</span> <span class="n">br1_max_fringe</span>
+    <span class="n">reduced_strain</span> <span class="o">=</span> <span class="n">strain</span><span class="p">[</span><span class="n">br1_max_index_absolute</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">reduced_stress</span> <span class="o">=</span> <span class="n">stress</span><span class="p">[</span><span class="n">br1_max_index_absolute</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">fr2_fringe</span><span class="p">,</span> <span class="n">fr2_slopes</span> <span class="o">=</span> <span class="n">compute_fringe_slope</span><span class="p">(</span><span class="n">reduced_strain</span><span class="p">,</span> <span class="n">reduced_stress</span><span class="p">,</span> <span class="n">min_strain</span><span class="o">=</span><span class="n">min_strain_fr2</span><span class="p">,</span>
+                                                  <span class="n">max_strain</span><span class="o">=</span><span class="n">max_strain_fr2</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;forward&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">maximize</span><span class="p">:</span>
+        <span class="n">fr2_max_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">fr2_slopes</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fr2_max_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">fr2_slopes</span><span class="p">)</span>
+    <span class="n">fr2_max_slope</span> <span class="o">=</span> <span class="n">fr2_slopes</span><span class="p">[</span><span class="n">fr2_max_index</span><span class="p">]</span>
+    <span class="n">fr2_max_fringe</span> <span class="o">=</span> <span class="n">fr2_fringe</span><span class="p">[</span><span class="n">fr2_max_index</span><span class="p">]</span>
+    <span class="n">fr2_max_index_absolute</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">strain</span> <span class="o">-</span> <span class="n">fr2_max_fringe</span><span class="p">))</span>  <span class="c1"># equivalent to .index</span>
+
+    <span class="k">if</span> <span class="n">_plt_fbf</span><span class="p">:</span>
+        <span class="n">_plt_fbf</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fr2_fringe</span><span class="p">,</span> <span class="n">fr2_slopes</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Forward 2&#39;</span><span class="p">)</span>
+        <span class="n">_plt_fbf</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">fr2_max_fringe</span><span class="p">,</span> <span class="n">fr2_max_slope</span><span class="p">)</span>
+
+    <span class="c1"># Set linear region bounds xlo and xhi from the 3 step FBF method</span>
+    <span class="n">xlo</span> <span class="o">=</span> <span class="n">br1_max_fringe</span>
+    <span class="n">ylo</span> <span class="o">=</span> <span class="n">stress</span><span class="p">[</span><span class="n">br1_max_index_absolute</span><span class="p">]</span>
+    <span class="n">xmid</span> <span class="o">=</span> <span class="n">fr1_max_fringe</span>
+    <span class="n">ymid</span> <span class="o">=</span> <span class="n">stress</span><span class="p">[</span><span class="n">fr1_max_index_absolute</span><span class="p">]</span>
+    <span class="n">xhi</span> <span class="o">=</span> <span class="n">fr2_max_fringe</span>
+    <span class="n">yhi</span> <span class="o">=</span> <span class="n">stress</span><span class="p">[</span><span class="n">fr2_max_index_absolute</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">xlo</span><span class="p">,</span> <span class="n">ylo</span><span class="p">),</span> <span class="p">(</span><span class="n">xmid</span><span class="p">,</span> <span class="n">ymid</span><span class="p">),</span> <span class="p">(</span><span class="n">xhi</span><span class="p">,</span> <span class="n">yhi</span><span class="p">),</span> <span class="n">fr2_fringe</span><span class="p">,</span> <span class="n">fr2_slopes</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

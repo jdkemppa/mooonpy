@@ -1,0 +1,231 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.thermospace.thermospace module &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7026087e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="mooonpy.xrdspace package" href="mooonpy.xrdspace.html" />
+    <link rel="prev" title="mooonpy.thermospace.plotting module" href="mooonpy.thermospace.plotting.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="mooonpy.thermospace.html">mooonpy.thermospace package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="mooonpy.thermospace.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.thermospace.plotting.html">mooonpy.thermospace.plotting module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">mooonpy.thermospace.thermospace module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mooonpy.thermospace.thermospace.Thermospace"><code class="docutils literal notranslate"><span class="pre">Thermospace</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mooonpy.thermospace.thermospace.readlog_basic"><code class="docutils literal notranslate"><span class="pre">readlog_basic()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+      <li class="breadcrumb-item active">mooonpy.thermospace.thermospace module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mooonpy.thermospace.thermospace.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mooonpy.thermospace.thermospace">
+<span id="mooonpy-thermospace-thermospace-module"></span><h1>mooonpy.thermospace.thermospace module<a class="headerlink" href="#module-mooonpy.thermospace.thermospace" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mooonpy.thermospace.thermospace.Thermospace">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mooonpy.thermospace.thermospace.</span></span><span class="sig-name descname"><span class="pre">Thermospace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/thermospace/thermospace.html#Thermospace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.thermospace.thermospace.Thermospace" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ColTable" title="mooonpy.tools.tables.ColTable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColTable</span></code></a></p>
+<p>Class to hold data found in LAMMPS logs.
+Data is organized into columns</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.thermospace.thermospace.Thermospace.basic_read">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">basic_read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path" title="mooonpy.tools.file_utils.Path"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">silence_error_line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mooonpy.thermospace.thermospace.Thermospace" title="mooonpy.thermospace.thermospace.Thermospace"><span class="pre">Thermospace</span></a></span></span><a class="reference internal" href="_modules/mooonpy/thermospace/thermospace.html#Thermospace.basic_read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.thermospace.thermospace.Thermospace.basic_read" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.thermospace.thermospace.Thermospace.join_restart">
+<span class="sig-name descname"><span class="pre">join_restart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">restart</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Step'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">restart_step_ind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">this_step_ind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/thermospace/thermospace.html#Thermospace.join_restart"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.thermospace.thermospace.Thermospace.join_restart" title="Link to this definition"></a></dt>
+<dd><p>Appends data from a restarted thermospace to the current one.
+Uses (step_col, restart_step_ind) as the start of the appended section,
+and finds the last matching (step_col, this_step_ind) and overwrites after that</p>
+<p>step_col is the column used for indexing, defaults to ‘Step’ but ‘v_Time’ may also be used</p>
+<p>restart_step_ind = 0 uses 0th index step, and so on
+this_step_ind = None uses last matching value</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.thermospace.thermospace.Thermospace.sect">
+<span class="sig-name descname"><span class="pre">sect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sect_string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">range</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">priority</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'off'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ColTable" title="mooonpy.tools.tables.ColTable"><span class="pre">ColTable</span></a></span></span><a class="reference internal" href="_modules/mooonpy/thermospace/thermospace.html#Thermospace.sect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.thermospace.thermospace.Thermospace.sect" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mooonpy.thermospace.thermospace.readlog_basic">
+<span class="sig-prename descclassname"><span class="pre">mooonpy.thermospace.thermospace.</span></span><span class="sig-name descname"><span class="pre">readlog_basic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">file:</span> <span class="pre">[&lt;class</span> <span class="pre">'mooonpy.tools.file_utils.Path'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;],</span> <span class="pre">silence_error_line:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mooonpy.thermospace.thermospace.Thermospace" title="mooonpy.thermospace.thermospace.Thermospace"><span class="pre">Thermospace</span></a></span></span><a class="reference internal" href="_modules/mooonpy/thermospace/thermospace.html#readlog_basic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.thermospace.thermospace.readlog_basic" title="Link to this definition"></a></dt>
+<dd><p>Read a single log file into a Thermospace object.
+Only reads thermo table, no timing or variable information.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<em>[</em><a class="reference internal" href="mooonpy.html#mooonpy.Path" title="mooonpy.Path"><em>Path</em></a><em>,</em><em>str</em><em>]</em>) – path to a log file</p></li>
+<li><p><strong>silence_error_line</strong> (<em>bool</em>) – silences error line and warnings if True (default False)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Thermospace object</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mooonpy.thermospace.thermospace.Thermospace" title="mooonpy.thermospace.thermospace.Thermospace">Thermospace</a></p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">mooonpy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">file</span> <span class="o">=</span> <span class="n">mooonpy</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;somepath.log.lammps&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">MyLog</span> <span class="o">=</span> <span class="n">mooonpy</span><span class="o">.</span><span class="n">readlog_basic</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">MyLog</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">new_ext</span><span class="p">(</span><span class="s1">&#39;.csv&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">thermospace.Thermospace</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">tables.ColTable</span></code></p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Files with no thermo data, or incorrect format, will raise a warning, then return an empty Thermospace object.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function is capable reading logs with pauses for XRD, and changes to
+‘LAMMMPS thermo_style’_. Columns with missing data from style changes are padded with
+np.nan values in a float array. Complete columns that are intergers are converted to int arrays.</p>
+</div>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<ul class="simple">
+<li><p>Unit tests for failure modes and column changes</p></li>
+</ul>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mooonpy.thermospace.plotting.html" class="btn btn-neutral float-left" title="mooonpy.thermospace.plotting module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mooonpy.xrdspace.html" class="btn btn-neutral float-right" title="mooonpy.xrdspace package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
