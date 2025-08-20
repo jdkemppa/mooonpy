@@ -3,13 +3,17 @@ from mooonpy.fitting.fitting import CurveFit
 from scipy.stats import norm
 import numpy as np
 from matplotlib import pyplot as plt
+from lmfit import Parameters
 
+
+## add multi-symmetric_von-mises
 
 def symmetric_gaussian_periodic(x, center, sigma, amplitude):
     """
     Symmetric Gaussian with proper periodicity handling.
     Creates Gaussians at ±center and their periodic images for bleed-through.
     amplitude = ?
+    https://en.wikipedia.org/wiki/Wrapped_normal_distribution
     """
     y = np.zeros_like(x)
 
@@ -30,7 +34,7 @@ def multi_symmetric_gaussian(x, **params):
     y = np.zeros_like(x)
 
     i = 1
-    while f'center_{i}' in params: # change this to not assume 1?
+    while f'center_{i}' in params:  # change this to not assume 1?
         mu = params[f'center_{i}']
         sigma = params[f'sigma_{i}']
         amplitude = params[f'amp_{i}']
@@ -49,6 +53,7 @@ class DihedralDist(CurveFit):
         'method': 'powell',
         'max_nfev': 5000
     }
+
     def __init__(self, phi_angles, bin_scale=10, name=None, function=multi_symmetric_gaussian, ic=None, limits=None):
         self.phi_angles = phi_angles
         self.bin_scale = bin_scale
@@ -73,24 +78,24 @@ class DihedralDist(CurveFit):
             if guess == 1:  # could do is int and some spacing
                 self.ic['center_1'] = 90
                 self.ic['sigma_1'] = 30
-                self.ic['amplitude_1'] = self.amp2count
+                self.ic['amp_'] = self.amp2count
             elif guess == 2:
                 self.ic['center_1'] = 0
                 self.ic['sigma_1'] = 30
-                self.ic['amplitude_1'] = self.amp2count / 2
+                self.ic['amp_'] = self.amp2count / 2
                 self.ic['center_2'] = 180
                 self.ic['sigma_2'] = 30
-                self.ic['amplitude_2'] = self.amp2count / 2
+                self.ic['amp_'] = self.amp2count / 2
             elif guess == 3 or guess is None:
                 self.ic['center_1'] = 0
                 self.ic['sigma_1'] = 30
-                self.ic['amplitude_1'] = self.amp2count / 3
+                self.ic['amp_'] = self.amp2count / 3
                 self.ic['center_2'] = 180
                 self.ic['sigma_2'] = 30
-                self.ic['amplitude_2'] = self.amp2count / 3
+                self.ic['amp_'] = self.amp2count / 3
                 self.ic['center_3'] = 90
                 self.ic['sigma_3'] = 30
-                self.ic['amplitude_3'] = self.amp2count / 3
+                self.ic['amp_'] = self.amp2count / 3
             elif isinstance(guess, dict):
                 for key, value in guess.items():
                     self.ic[key] = value
@@ -111,11 +116,29 @@ class DihedralDist(CurveFit):
                 if key not in self.limits:
                     self.limits[key] = (0, 180)
                 if f'amp_{N}' not in self.limits:
-                    self.limits[f'amp_{N}'] = (self.amp2count * 0.1,
-                                                     self.amp2count * 1.1)  # 0% or 10%? makes comparing N=123 easier
+                    self.limits[f'amp_{N}'] = (0, self.amp2count * 1.1)
                 if f'sigma_{N}' not in self.limits:
                     self.limits[f'sigma_{N}'] = (5, 180)
 
+    def make_params(self):
+        """
+        Override base make_params function with extra amplitude constraint
+        """
+        params = Parameters()
+        amps = [param for param in self.ic.keys() if param.startswith('amp_')]
+        for param, value in self.ic.items():
+            limit = self.limits.get(param, self.def_limit)
+            if len(amps) > 1 and param == amps[-1]: # constraint mode
+                expr = f'{self.amp2count}'
+                for amp in amps[:-1]:
+                    expr += f' - {amp}'
+                # print(expr) # amp_3 = 10000 - amp_1 - amp_2
+                params.add(param, min=limit[0], max=limit[1], expr=expr)
+                    ## last amp is dependent such that area is preserved from ic
+            else:
+                params.add(param, value=float(value), min=limit[0], max=limit[1],
+                           vary=not isinstance(value, str))  # no vary if value is string
+        self.params = params
 
     def plot_mode_decomposition(self, ax=None, figsize=(10, 6)):
         if ax is None:

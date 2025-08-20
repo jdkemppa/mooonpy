@@ -15,7 +15,7 @@ def read(mol, filename, sections):
                               'EndBondTorsion Coeffs',
                               'MiddleBondTorsion Coeffs', 'BondBond13 Coeffs', 'AngleTorsion Coeffs',
                               'AngleAngle Coeffs']
-    sections_fixes: list[str] = ['bond_react_props_internal']
+    sections_fixes: list[str] = ['bond_react_props_internal','bond_react_stabilization_internal']
 
     # Set up the sets that will be used for parsing
     sections_all: set[str] = set(sections_mp + sections_tl + sections_ff + sections_xt + sections_fixes)

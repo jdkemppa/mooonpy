@@ -2,6 +2,7 @@
 
 
 import numpy as np
+import scipy
 from scipy.signal import find_peaks
 
 from numbers import Number
@@ -246,6 +247,7 @@ def first_value_cross(xdata: Array1D, ydata: Array1D, cross: Optional[Number] = 
     x_cross = xdata[np.min(np.where(ydata < cross)[0])]
     return x_cross
 
+
 def hyperbola(x, X0, Y0, a, b, c):
     """
     Patrone Hyperbola fit method
@@ -268,6 +270,41 @@ def hyperbola(x, X0, Y0, a, b, c):
     p = Y0 + a * dx + b * h0
     return p
 
+
+def gaussian_turn(x, X0, Y0, a, b, s):
+    '''
+    Muzzy Gaussian Turn curve for fitting Tg data
+    '''
+    dx = x - X0
+    z = dx / s / np.sqrt(2)
+    F = dx * scipy.special.erf(z) + s * np.exp(-1 * z * z) / np.sqrt(np.pi / 2)
+    y = (F * (b - a) + dx * (b + a)) / 2 + Y0
+
+    return y
+
+
+def gaussian_quad_turn(x, X0, Y0, a, b, s, c, d):
+    '''
+    Muzzy Gaussian Quadratic Turn curve for fitting Tg data
+    '''
+    dx = x - X0
+    z = dx / s / np.sqrt(2)
+    F = dx * scipy.special.erf(z) + s * np.exp(-1 * z * z) / np.sqrt(np.pi / 2)
+    y = (F * (b - a) + F * dx * (d - c) + dx * (b + a) + dx * dx * (d + c)) / 2 + Y0
+    return y
+
+
+def edge_tan_intersect(x, y, N=1):
+    '''
+    Discrete derivative tangent lines at edge(N steps from)
+    Returns analytical intersections between tangent lines
+    '''
+    yp = np.gradient(y, x)
+    xi = (-y[N] + y[-N] + x[N] * yp[N] - x[-N] * yp[-N]) / (yp[N] - yp[-N])
+    yi = yp[N] * (xi - x[N]) + y[N]
+    return xi, yi
+
+
 class MixingRule():
     def __init__(self, style='add'):
         """
@@ -285,33 +322,35 @@ class MixingRule():
             'sixth_epsilon': self._sixth_epsilon,
             'sixth_sigma': self._sixth_sigma,
         }
-    def __call__(self,*args, **kwargs):
+
+    def __call__(self, *args, **kwargs):
         return self._method_map[self.style](*args, **kwargs)
 
-    def _add(self,*args):
+    def _add(self, *args):
         return sum(args)
 
-    def _diameter(self,*args):
-        return sum(args)/2
+    def _diameter(self, *args):
+        return sum(args) / 2
 
-    def _arithmetic(self,*args):
-        return sum(args)/len(args)
+    def _arithmetic(self, *args):
+        return sum(args) / len(args)
 
-    def _geometric(self,*args):
-        return np.power(np.prod(args),1/len(args))
+    def _geometric(self, *args):
+        return np.power(np.prod(args), 1 / len(args))
 
-    def _sixth_epsilon(self,*args):
+    def _sixth_epsilon(self, *args):
         """
         LAMMPS mix sixthpower function for epsilon.
         Assumes ep1, sig1 ep2, sig2 ordering
         """
-        return 2*np.sqrt(args[0],args[2])*args[1]**3*args[3]**3/(args[1]**6+args[3]**6)
-    def _sixth_sigma(self,*args):
+        return 2 * np.sqrt(args[0], args[2]) * args[1] ** 3 * args[3] ** 3 / (args[1] ** 6 + args[3] ** 6)
+
+    def _sixth_sigma(self, *args):
         if len(args) == 2:
             sig1, sig2 = args
-        elif len(args) == 4: # order from above function
+        elif len(args) == 4:  # order from above function
             sig1 = args[1]
             sig2 = args[3]
         else:
             raise Exception()
-        return np.power(0.5*(sig1**6+sig2**6),1/6)
+        return np.power(0.5 * (sig1 ** 6 + sig2 ** 6), 1 / 6)

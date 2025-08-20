@@ -3,9 +3,6 @@ from typing import Optional, List, Tuple
 import warnings
 import numpy as np
 from lmfit import Model, Parameters
-import matplotlib.pyplot as plt
-
-from mooonpy.tools.math_utils import hyperbola
 
 
 class CurveFit:
@@ -120,39 +117,3 @@ class CurveFit:
             return self.result.eval(x=x)
 
 
-class HyperbolaFit(CurveFit):
-    def __init__(self, x, y, name=None, function=hyperbola, ic=None, limits=None):
-        super().__init__(x, y, name, function, ic, limits)
-
-    def guess_ic(self,guess=None):
-        if self.function is hyperbola:
-            slope_guess = (self.y[-1] - self.y[0]) / (self.x[-1] - self.x[0])
-            if 'X0' not in self.ic:
-                self.ic['X0'] = np.mean(self.x)
-            if 'Y0' not in self.ic:
-                self.ic['Y0'] = np.mean(self.y)
-            if 'a' not in self.ic:
-                self.ic['a'] = slope_guess
-            if 'b' not in self.ic:
-                self.ic['b'] = slope_guess
-            if 'c' not in self.ic:
-                self.ic['c'] = abs(self.x[-1] - self.x[0]) / 10
-        else:
-            raise Exception('Model not guessable')
-
-    def guess_limit(self):
-        slope_guess = (self.y[-1] - self.y[0]) / (self.x[-1] - self.x[0])
-        if 'X0' not in self.limits:
-            self.limits['X0'] = (min(self.x), max(self.x))
-        if 'Y0' not in self.limits:
-            self.limits['Y0'] = (min(self.y), max(self.y))
-        if 'a' not in self.limits:
-            self.limits['a'] = (-10 * abs(slope_guess), 10 * abs(slope_guess))
-        if 'b' not in self.limits:
-            self.limits['b'] = (-10 * abs(slope_guess), 10 * abs(slope_guess))
-        if 'c' not in self.limits:
-            if 'c' in self.ic:
-                ic = float(self.ic['c'])
-            else:
-                ic = abs(self.x[-1] - self.x[0]) / 10
-            self.limits['c'] = (0.1 * ic, 10 * ic)

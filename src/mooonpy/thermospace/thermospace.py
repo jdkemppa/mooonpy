@@ -158,9 +158,9 @@ def readlog_basic(file: [Path, str], silence_error_line: bool = False) -> Thermo
             if not line:
                 continue
             elif not line[0].isdigit():  # single check is cheaper than 5
-                # if line.startswith('WARNING'):
-                #     continue
-                if line.startswith('ERROR'):
+                if line.startswith('WARNING'):
+                    continue # add warning logger to advanced version
+                elif line.startswith('ERROR'):
                     if not silence_error_line:
                         print('File {:} contains Error line, exiting read'.format(file))
                     break
