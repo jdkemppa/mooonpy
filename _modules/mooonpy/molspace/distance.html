@@ -1,0 +1,619 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.molspace.distance &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mooonpy.molspace.distance</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mooonpy.molspace.distance</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.molspace.topology</span><span class="w"> </span><span class="kn">import</span> <span class="n">Bonds</span><span class="p">,</span> <span class="n">Angles</span><span class="p">,</span> <span class="n">Dihedrals</span><span class="p">,</span> <span class="n">Impropers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.molspace.atoms</span><span class="w"> </span><span class="kn">import</span> <span class="n">Atoms</span>
+
+<span class="c1"># from ..tools.math_utils import MixingRule</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+
+<div class="viewcode-block" id="Domain">
+<a class="viewcode-back" href="../../../mooonpy.molspace.distance.html#mooonpy.molspace.distance.Domain">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Domain</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class to contain atoms within a domain as a list of atom IDs</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atom_list</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">atom_list</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">atom_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Domain</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">atom_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">neighbors</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span></div>
+
+
+
+<div class="viewcode-block" id="Pair">
+<a class="viewcode-back" href="../../../mooonpy.molspace.distance.html#mooonpy.molspace.distance.Pair">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Pair</span><span class="p">():</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span><span class="p">,</span> <span class="n">distance</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dx</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">dx</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dy</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">dy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dz</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">dz</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">distance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">distance</span></div>
+
+
+
+<div class="viewcode-block" id="Pairs">
+<a class="viewcode-back" href="../../../mooonpy.molspace.distance.html#mooonpy.molspace.distance.Pairs">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Pairs</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">to_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">from_dict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">(</span><span class="n">Pairs</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">(</span><span class="n">Pairs</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">from_dict</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Pairs.update_bonds">
+<a class="viewcode-back" href="../../../mooonpy.molspace.distance.html#mooonpy.molspace.distance.Pairs.update_bonds">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_bonds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bonds</span><span class="p">,</span> <span class="n">vect</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ignore_missing</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update Bonds with length attribute computed from pair interactions</span>
+
+<span class="sd">        :param bonds: Bonds object to update</span>
+<span class="sd">        :type bonds: Bonds</span>
+<span class="sd">        :param vect: If True, updates bond.vect, may be disabled for speed</span>
+<span class="sd">        :type vect: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">bond</span> <span class="ow">in</span> <span class="n">bonds</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">pair</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                <span class="n">bond</span><span class="o">.</span><span class="n">dist</span> <span class="o">=</span> <span class="n">pair</span><span class="o">.</span><span class="n">distance</span>
+                <span class="k">if</span> <span class="n">vect</span><span class="p">:</span>
+                    <span class="n">bond</span><span class="o">.</span><span class="n">vect</span> <span class="o">=</span> <span class="p">(</span><span class="n">pair</span><span class="o">.</span><span class="n">dx</span><span class="p">,</span> <span class="n">pair</span><span class="o">.</span><span class="n">dy</span><span class="p">,</span> <span class="n">pair</span><span class="o">.</span><span class="n">dz</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">ignore_missing</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">&#39;Bond has no matching key in Pairs, length exceeded or it may not exist&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Pairs.filter_cutoff">
+<a class="viewcode-back" href="../../../mooonpy.molspace.distance.html#mooonpy.molspace.distance.Pairs.filter_cutoff">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_cutoff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atoms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bonds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return modified Pairs list after rule, may also update atoms or bonds</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">Atoms</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;atoms must be a Atoms object&#39;</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="pairs_from_bonds">
+<a class="viewcode-back" href="../../../mooonpy.molspace.distance.html#mooonpy.molspace.distance.pairs_from_bonds">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">pairs_from_bonds</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">bonds</span><span class="p">,</span> <span class="n">periodicity</span><span class="o">=</span><span class="s1">&#39;ppp&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute pairs from bonds using minimum image convention</span>
+<span class="sd">    If bonds span more than half the box span in a periodic direction, the bond vector</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">Atoms</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;atoms must be a Atoms object&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bonds</span><span class="p">,</span> <span class="n">Bonds</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;bonds must be a Bond object&#39;</span><span class="p">)</span>
+
+    <span class="c1">## There may be a quicker way to do this, or one that works periodically for small cells</span>
+    <span class="n">box</span> <span class="o">=</span> <span class="n">atoms</span><span class="o">.</span><span class="n">box</span>
+    <span class="n">h</span><span class="p">,</span> <span class="n">h_inv</span><span class="p">,</span> <span class="n">boxlo</span><span class="p">,</span> <span class="n">boxhi</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">get_transformation_matrix</span><span class="p">()</span>
+    <span class="n">lx</span><span class="p">,</span> <span class="n">ly</span><span class="p">,</span> <span class="n">lz</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">get_lengths</span><span class="p">()</span>
+
+    <span class="n">fractionals</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">id_</span><span class="p">,</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">atoms</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">fractionals</span><span class="p">[</span><span class="n">id_</span><span class="p">]</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">pos2frac</span><span class="p">(</span><span class="n">atom</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="n">h_inv</span><span class="p">,</span> <span class="n">boxlo</span><span class="p">)</span>
+
+    <span class="n">pairs</span> <span class="o">=</span> <span class="n">Pairs</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">bond</span> <span class="ow">in</span> <span class="n">bonds</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">f_A</span> <span class="o">=</span> <span class="n">fractionals</span><span class="p">[</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+            <span class="n">f_B</span> <span class="o">=</span> <span class="n">fractionals</span><span class="p">[</span><span class="n">key</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Bond key </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1"> has no matching key in Atoms&#39;</span><span class="p">)</span>
+        <span class="n">du_x</span> <span class="o">=</span> <span class="n">f_B</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">f_A</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">du_y</span> <span class="o">=</span> <span class="n">f_B</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">f_A</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">du_z</span> <span class="o">=</span> <span class="n">f_B</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">f_A</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">periodicity</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;p&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">du_x</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">:</span>
+                <span class="n">du_x</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">du_x</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">:</span>
+                <span class="n">du_x</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">periodicity</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;p&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">du_y</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">:</span>
+                <span class="n">du_y</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">du_y</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">:</span>
+                <span class="n">du_y</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">periodicity</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;p&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">du_z</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">:</span>
+                <span class="n">du_z</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">du_z</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">:</span>
+                <span class="n">du_z</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1">## Transform fractional vector. not using function because no boxlo</span>
+        <span class="n">dx</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">du_x</span> <span class="o">+</span> <span class="n">h</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">*</span> <span class="n">du_y</span> <span class="o">+</span> <span class="n">h</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="n">du_z</span>
+        <span class="n">dy</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">du_y</span> <span class="o">+</span> <span class="n">h</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">du_z</span>
+        <span class="n">dz</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">du_z</span>
+
+        <span class="n">distance2</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">+</span> <span class="n">dy</span> <span class="o">*</span> <span class="n">dy</span> <span class="o">+</span> <span class="n">dz</span> <span class="o">*</span> <span class="n">dz</span>
+        <span class="n">pairs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">Pair</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">distance2</span><span class="p">))</span>
+
+    <span class="n">pairs</span><span class="o">.</span><span class="n">update_bonds</span><span class="p">(</span><span class="n">bonds</span><span class="p">)</span>  <span class="c1"># update bond object</span>
+    <span class="k">return</span> <span class="n">pairs</span></div>
+
+
+
+<div class="viewcode-block" id="pairs_from_domains">
+<a class="viewcode-back" href="../../../mooonpy.molspace.distance.html#mooonpy.molspace.distance.pairs_from_domains">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">pairs_from_domains</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">,</span> <span class="n">domains</span><span class="p">,</span> <span class="n">fractionals</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">Atoms</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;atoms must be a Atoms object&#39;</span><span class="p">)</span>
+    <span class="n">box</span> <span class="o">=</span> <span class="n">atoms</span><span class="o">.</span><span class="n">box</span>
+    <span class="n">h</span><span class="p">,</span> <span class="n">h_inv</span><span class="p">,</span> <span class="n">boxlo</span><span class="p">,</span> <span class="n">boxhi</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">get_transformation_matrix</span><span class="p">()</span>
+
+    <span class="c1"># pairs = {}</span>
+    <span class="n">pairs</span> <span class="o">=</span> <span class="n">Pairs</span><span class="p">()</span>
+    <span class="n">cutoff_pow2</span> <span class="o">=</span> <span class="n">cutoff</span> <span class="o">*</span> <span class="n">cutoff</span>
+
+    <span class="k">for</span> <span class="n">box_index</span><span class="p">,</span> <span class="n">domain</span> <span class="ow">in</span> <span class="n">domains</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>  <span class="c1"># this can be parallelized</span>
+        <span class="k">for</span> <span class="n">neighbor_index</span><span class="p">,</span> <span class="n">image_shift</span> <span class="ow">in</span> <span class="n">domain</span><span class="o">.</span><span class="n">neighbors</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">atom_A</span> <span class="ow">in</span> <span class="n">domain</span><span class="p">:</span>  <span class="c1"># in list</span>
+                <span class="c1">## setup 1 A atom at a time</span>
+                <span class="k">if</span> <span class="n">image_shift</span> <span class="o">==</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>  <span class="c1"># no shift, get positions skipping box steps</span>
+                    <span class="n">Atom_A</span> <span class="o">=</span> <span class="n">atoms</span><span class="p">[</span><span class="n">atom_A</span><span class="p">]</span>  <span class="c1"># get class instance</span>
+                    <span class="n">pos_x</span> <span class="o">=</span> <span class="n">Atom_A</span><span class="o">.</span><span class="n">x</span>
+                    <span class="n">pos_y</span> <span class="o">=</span> <span class="n">Atom_A</span><span class="o">.</span><span class="n">y</span>
+                    <span class="n">pos_z</span> <span class="o">=</span> <span class="n">Atom_A</span><span class="o">.</span><span class="n">z</span>
+                <span class="k">else</span><span class="p">:</span>  <span class="c1"># get positions after shift</span>
+                    <span class="n">ux</span><span class="p">,</span> <span class="n">uy</span><span class="p">,</span> <span class="n">uz</span> <span class="o">=</span> <span class="n">fractionals</span><span class="p">[</span><span class="n">atom_A</span><span class="p">]</span>
+                    <span class="n">ux</span> <span class="o">+=</span> <span class="n">image_shift</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">uy</span> <span class="o">+=</span> <span class="n">image_shift</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">uz</span> <span class="o">+=</span> <span class="n">image_shift</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                    <span class="n">pos_x</span><span class="p">,</span> <span class="n">pos_y</span><span class="p">,</span> <span class="n">pos_z</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">frac2pos</span><span class="p">(</span><span class="n">ux</span><span class="p">,</span> <span class="n">uy</span><span class="p">,</span> <span class="n">uz</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">boxlo</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">atom_B</span> <span class="ow">in</span> <span class="n">domains</span><span class="p">[</span><span class="n">neighbor_index</span><span class="p">]:</span>
+                    <span class="n">Atom_B</span> <span class="o">=</span> <span class="n">atoms</span><span class="p">[</span><span class="n">atom_B</span><span class="p">]</span>  <span class="c1"># get class instance</span>
+                    <span class="k">if</span> <span class="n">atom_A</span> <span class="o">==</span> <span class="n">atom_B</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="k">elif</span> <span class="n">atom_A</span> <span class="o">&lt;</span> <span class="n">atom_B</span><span class="p">:</span>  <span class="c1"># from low to high</span>
+                        <span class="n">dx</span> <span class="o">=</span> <span class="n">Atom_B</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">pos_x</span>
+                        <span class="n">dy</span> <span class="o">=</span> <span class="n">Atom_B</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">pos_y</span>
+                        <span class="n">dz</span> <span class="o">=</span> <span class="n">Atom_B</span><span class="o">.</span><span class="n">z</span> <span class="o">-</span> <span class="n">pos_z</span>
+                        <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">atom_A</span><span class="p">,</span> <span class="n">atom_B</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>  <span class="c1"># reverse vector</span>
+                        <span class="n">dx</span> <span class="o">=</span> <span class="n">pos_x</span> <span class="o">-</span> <span class="n">Atom_B</span><span class="o">.</span><span class="n">x</span>
+                        <span class="n">dy</span> <span class="o">=</span> <span class="n">pos_y</span> <span class="o">-</span> <span class="n">Atom_B</span><span class="o">.</span><span class="n">y</span>
+                        <span class="n">dz</span> <span class="o">=</span> <span class="n">pos_z</span> <span class="o">-</span> <span class="n">Atom_B</span><span class="o">.</span><span class="n">z</span>
+                        <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">atom_B</span><span class="p">,</span> <span class="n">atom_A</span><span class="p">)</span>
+                    <span class="n">distance2</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">+</span> <span class="n">dy</span> <span class="o">*</span> <span class="n">dy</span> <span class="o">+</span> <span class="n">dz</span> <span class="o">*</span> <span class="n">dz</span>
+                    <span class="k">if</span> <span class="n">distance2</span> <span class="o">&lt;</span> <span class="n">cutoff_pow2</span><span class="p">:</span>
+                        <span class="n">pairs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">Pair</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">distance2</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">pairs</span></div>
+
+
+
+<div class="viewcode-block" id="domain_decomp_13">
+<a class="viewcode-back" href="../../../mooonpy.molspace.distance.html#mooonpy.molspace.distance.domain_decomp_13">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">domain_decomp_13</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">,</span> <span class="n">whitelist</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">blacklist</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">periodicity</span><span class="o">=</span><span class="s1">&#39;ppp&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Setup domains for pairwise distance computation. This uses a 3x3x3 grid, where each domain checks self</span>
+<span class="sd">    and half of the 26 adjacent domains, hence 13 others. Checking order priority is -z, -x, -y (make image eventually)</span>
+<span class="sd">    This algorithm is optimized for short cutoffs under ~5 angstroms. Longer cutoffs would be faster with a</span>
+<span class="sd">    DD_62 algorithm similar to https://docs.lammps.org/Developer_par_neigh.html</span>
+
+
+<span class="sd">    ..warning :: Atoms must be correctly wrapped before calling this function.</span>
+<span class="sd">        Highly skewed triclinic does not currently set the minimum domain sizes correctly</span>
+
+<span class="sd">    ..TODO :: Validate triclinic minimum domains</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">Atoms</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;atoms must be a Atoms object&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">periodicity</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">periodicity</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;periodicity must be a string of form &quot;pp?&quot;&#39;</span><span class="p">)</span>
+
+    <span class="c1"># atoms = atoms.copy()</span>
+    <span class="c1"># atoms.wrap() # user should use these externally first</span>
+
+    <span class="c1">## Setup fractional conversions and domain sizes</span>
+    <span class="n">box</span> <span class="o">=</span> <span class="n">atoms</span><span class="o">.</span><span class="n">box</span>
+    <span class="n">h</span><span class="p">,</span> <span class="n">h_inv</span><span class="p">,</span> <span class="n">boxlo</span><span class="p">,</span> <span class="n">boxhi</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">get_transformation_matrix</span><span class="p">()</span>
+    <span class="n">lx</span><span class="p">,</span> <span class="n">ly</span><span class="p">,</span> <span class="n">lz</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">get_lengths</span><span class="p">()</span>
+
+    <span class="n">nx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">lx</span> <span class="o">//</span> <span class="n">cutoff</span><span class="p">)</span>  <span class="c1"># number of domains</span>
+    <span class="n">ny</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ly</span> <span class="o">//</span> <span class="n">cutoff</span><span class="p">)</span>
+    <span class="n">nz</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">lz</span> <span class="o">//</span> <span class="n">cutoff</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">nx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="n">nx</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">ny</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="n">ny</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">nz</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="n">nz</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="c1">## number of domains for skewed triclinic, needs testing and 3D checks</span>
+    <span class="c1"># nx = int(lx // (cutoff / math.cos(math.atan(box.xy / ly)) / math.cos(math.atan(box.xz / lz))))</span>
+    <span class="c1"># ny = int(ly // (cutoff / math.cos(math.atan(box.yz / lz))))</span>
+    <span class="c1"># nz = int(lz // cutoff)</span>
+
+    <span class="k">if</span> <span class="n">nx</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">periodicity</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;p&#39;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;cutoff </span><span class="si">{</span><span class="n">cutoff</span><span class="si">}</span><span class="s1"> is too large for box x </span><span class="si">{</span><span class="n">lx</span><span class="si">}</span><span class="s1"> to create 3 periodic domains in the x direction&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ny</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">periodicity</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;p&#39;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;cutoff </span><span class="si">{</span><span class="n">cutoff</span><span class="si">}</span><span class="s1"> is too large for box y </span><span class="si">{</span><span class="n">ly</span><span class="si">}</span><span class="s1"> to create 3 periodic domains in the y direction&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">nz</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">periodicity</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;p&#39;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;cutoff </span><span class="si">{</span><span class="n">cutoff</span><span class="si">}</span><span class="s1"> is too large for box z </span><span class="si">{</span><span class="n">lz</span><span class="si">}</span><span class="s1"> to create 3 periodic domains in the z direction&#39;</span><span class="p">)</span>
+
+    <span class="n">fx</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">nx</span>  <span class="c1"># use floor div later to get domain index</span>
+    <span class="n">fy</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">ny</span>
+    <span class="n">fz</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">nz</span>
+
+    <span class="c1">## fractionalize atoms and assign to domains</span>
+    <span class="n">fractionals</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">domains</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="n">Domain</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">id_</span><span class="p">,</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">atoms</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">whitelist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">id_</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">whitelist</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">elif</span> <span class="n">blacklist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">id_</span> <span class="ow">in</span> <span class="n">blacklist</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="n">frac</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">pos2frac</span><span class="p">(</span><span class="n">atom</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="n">h_inv</span><span class="p">,</span> <span class="n">boxlo</span><span class="p">)</span>
+        <span class="n">fractionals</span><span class="p">[</span><span class="n">id_</span><span class="p">]</span> <span class="o">=</span> <span class="n">frac</span>
+        <span class="n">dx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">frac</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="n">fx</span><span class="p">)</span>  <span class="c1"># box index [0,nx) exclusive if wrapped correctly</span>
+        <span class="n">dy</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">frac</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="n">fy</span><span class="p">)</span>
+        <span class="n">dz</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">frac</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">//</span> <span class="n">fz</span><span class="p">)</span>
+        <span class="n">box_index</span> <span class="o">=</span> <span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">min</span><span class="p">(</span><span class="n">box_index</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">dx</span> <span class="o">&gt;=</span> <span class="n">nx</span> <span class="ow">or</span> <span class="n">dy</span> <span class="o">&gt;=</span> <span class="n">ny</span> <span class="ow">or</span> <span class="n">dz</span> <span class="o">&gt;=</span> <span class="n">nz</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Domain index is out of bounds, use Atoms.wrap() before computation&#39;</span><span class="p">)</span>
+
+        <span class="n">domains</span><span class="p">[</span><span class="n">box_index</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">id_</span><span class="p">)</span>  <span class="c1"># this is the only problem spot if parallelized</span>
+
+    <span class="c1"># self+13 neighboring domains. down, east, south priority ordering.</span>
+    <span class="n">neighbor_shifts</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                       <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+
+    <span class="k">for</span> <span class="n">box_index</span><span class="p">,</span> <span class="n">domain</span> <span class="ow">in</span> <span class="n">domains</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="c1"># not sure about use case for these, but these are the lower corner positions</span>
+        <span class="n">domain</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">domain</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">domain</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">frac2pos</span><span class="p">(</span><span class="n">box_index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">nx</span><span class="p">,</span> <span class="n">box_index</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">ny</span><span class="p">,</span> <span class="n">box_index</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="n">nz</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">boxlo</span><span class="p">)</span>
+
+        <span class="c1">## Setup neighbor domains to loop through</span>
+        <span class="k">for</span> <span class="n">neighbor_shift</span> <span class="ow">in</span> <span class="n">neighbor_shifts</span><span class="p">:</span>
+            <span class="n">neighbor_index</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">image_shift</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="c1">## loop directions</span>
+            <span class="k">for</span> <span class="n">self_i</span><span class="p">,</span> <span class="n">shift_i</span><span class="p">,</span> <span class="n">n_i</span><span class="p">,</span> <span class="n">period_i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">box_index</span><span class="p">,</span> <span class="n">neighbor_shift</span><span class="p">,</span> <span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span><span class="p">),</span> <span class="n">periodicity</span><span class="p">):</span>
+                <span class="n">shifted</span> <span class="o">=</span> <span class="n">self_i</span> <span class="o">+</span> <span class="n">shift_i</span>
+                <span class="k">if</span> <span class="n">shifted</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">shifted</span> <span class="o">&lt;</span> <span class="n">n_i</span><span class="p">:</span>  <span class="c1"># middle of box or looking in</span>
+                    <span class="n">neighbor_index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shifted</span><span class="p">)</span>
+                    <span class="n">image_shift</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+                <span class="k">elif</span> <span class="n">period_i</span> <span class="o">!=</span> <span class="s1">&#39;p&#39;</span><span class="p">:</span>
+                    <span class="k">break</span>  <span class="c1"># non-periodic, so this neighbor is skipped</span>
+
+                <span class="k">elif</span> <span class="n">shifted</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">neighbor_index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n_i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># go to top</span>
+                    <span class="n">image_shift</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># add 1 box length in this direction when comparing</span>
+
+                <span class="k">else</span><span class="p">:</span>  <span class="c1"># shifted &gt;= n_i:</span>
+                    <span class="n">neighbor_index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># go to bottom</span>
+                    <span class="n">image_shift</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># subtract 1 box length</span>
+                <span class="c1"># else:</span>
+                <span class="c1">#     raise Exception(f&#39;Something went wrong, this should be unreachable&#39;)</span>
+
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># Skipped by break if non-periodic</span>
+                <span class="n">neighbor_index</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">neighbor_index</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">neighbor_index</span> <span class="ow">in</span> <span class="n">domains</span><span class="p">:</span>  <span class="c1"># skip empty domains later, faster for sparse boxes</span>
+                    <span class="c1"># save to this domain neighbors</span>
+                    <span class="n">domain</span><span class="o">.</span><span class="n">neighbors</span><span class="p">[</span><span class="n">neighbor_index</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">image_shift</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">domains</span><span class="p">,</span> <span class="n">fractionals</span></div>
+
+
+
+<div class="viewcode-block" id="ADI_from_bonds">
+<a class="viewcode-back" href="../../../mooonpy.molspace.distance.html#mooonpy.molspace.distance.ADI_from_bonds">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">ADI_from_bonds</span><span class="p">(</span><span class="n">bonds</span><span class="p">,</span> <span class="n">angles</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dihedrals</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">impropers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bonds</span><span class="p">,</span> <span class="n">Bonds</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;bonds must be a Bond object&#39;</span><span class="p">)</span>
+
+    <span class="n">vectors</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">bond</span> <span class="ow">in</span> <span class="n">bonds</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">bond</span><span class="p">,</span> <span class="s1">&#39;vect&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;bond has no computed vector, use &quot;compute_bond_length&quot; first&#39;</span><span class="p">)</span>
+        <span class="n">vectors</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">bond</span><span class="o">.</span><span class="n">vect</span><span class="p">)</span> <span class="o">/</span> <span class="n">bond</span><span class="o">.</span><span class="n">dist</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">Angles</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">angles</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">b1</span> <span class="o">=</span> <span class="n">bonds</span><span class="o">.</span><span class="n">key_rule</span><span class="p">(</span><span class="n">angle</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">angle</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># outward if keys match</span>
+            <span class="n">b2</span> <span class="o">=</span> <span class="n">bonds</span><span class="o">.</span><span class="n">key_rule</span><span class="p">(</span><span class="n">angle</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">angle</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>  <span class="c1"># may break if rules change. This will need tests</span>
+
+            <span class="n">v1</span> <span class="o">=</span> <span class="n">vectors</span><span class="p">[</span><span class="n">b1</span><span class="p">]</span>
+            <span class="n">v2</span> <span class="o">=</span> <span class="n">vectors</span><span class="p">[</span><span class="n">b2</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">b1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">angle</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="n">v1</span> <span class="o">=</span> <span class="o">-</span><span class="n">v1</span>  <span class="c1"># if tip is center mirror a copy</span>
+            <span class="k">if</span> <span class="n">b2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">angle</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="n">v2</span> <span class="o">=</span> <span class="o">-</span><span class="n">v2</span>  <span class="c1"># *= changes in the dict</span>
+
+            <span class="n">cross</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span> <span class="c1"># needed for later operations</span>
+            <span class="k">if</span> <span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">angle</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">cross</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span> <span class="c1"># later index uses key not ordered</span>
+            <span class="n">angle</span><span class="o">.</span><span class="n">normal</span> <span class="o">=</span> <span class="n">cross</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">cross</span><span class="p">)</span>
+            <span class="c1"># angle.theta = 180 - np.arcsin(np.linalg.norm(cross)) * 180 / np.pi # slower</span>
+
+            <span class="n">dot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span> <span class="c1"># / bonds[b1].dist / bonds[b2].dist # recomputing dot is faster than sqrt</span>
+            <span class="n">angle</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">dot</span><span class="p">)</span> <span class="o">*</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dihedrals</span><span class="p">,</span> <span class="n">Dihedrals</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">dihedral</span> <span class="ow">in</span> <span class="n">dihedrals</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># b1 = bonds.key_rule(dihedral.ordered[0], dihedral.ordered[1])</span>
+            <span class="n">b2</span> <span class="o">=</span> <span class="n">bonds</span><span class="o">.</span><span class="n">key_rule</span><span class="p">(</span><span class="n">dihedral</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">dihedral</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="c1"># b3 = bonds.key_rule(dihedral.ordered[2], dihedral.ordered[3])</span>
+
+            <span class="c1"># v1 = vectors[b1]</span>
+            <span class="n">v2</span> <span class="o">=</span> <span class="n">vectors</span><span class="p">[</span><span class="n">b2</span><span class="p">]</span>
+            <span class="c1"># v3 = vectors[b3]</span>
+            <span class="c1"># if b1[0] != dihedral.ordered[1]: v1 = -v1  # out from 1</span>
+            <span class="k">if</span> <span class="n">b2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">dihedral</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="n">v2</span> <span class="o">=</span> <span class="o">-</span><span class="n">v2</span>  <span class="c1"># out from 1</span>
+            <span class="c1"># if b3[0] != dihedral.ordered[2]: v3 = -v3  # out from 2</span>
+
+            <span class="c1">## Get existing normals</span>
+            <span class="n">a1</span> <span class="o">=</span> <span class="n">angles</span><span class="o">.</span><span class="n">key_rule</span><span class="p">(</span><span class="n">dihedral</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dihedral</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">dihedral</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">a2</span> <span class="o">=</span> <span class="n">angles</span><span class="o">.</span><span class="n">key_rule</span><span class="p">(</span><span class="n">dihedral</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">dihedral</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">dihedral</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+            <span class="n">vl</span> <span class="o">=</span> <span class="n">angles</span><span class="p">[</span><span class="n">a1</span><span class="p">]</span><span class="o">.</span><span class="n">normal</span>
+            <span class="n">vr</span> <span class="o">=</span> <span class="n">angles</span><span class="p">[</span><span class="n">a2</span><span class="p">]</span><span class="o">.</span><span class="n">normal</span>
+            <span class="k">if</span> <span class="n">a1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">dihedral</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">vl</span> <span class="o">=</span> <span class="o">-</span><span class="n">vl</span>
+            <span class="k">if</span> <span class="n">a2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">dihedral</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">vr</span> <span class="o">=</span> <span class="o">-</span><span class="n">vr</span>
+
+            <span class="c1"># vl = np.cross(v2, v1) # compute normals</span>
+            <span class="c1"># vr = np.cross(v2, v3)</span>
+            <span class="n">matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">vl</span><span class="p">,</span> <span class="n">vr</span><span class="p">,</span> <span class="n">v2</span><span class="p">])</span>
+            <span class="n">triple_product</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+            <span class="c1"># triple_product = (vl[0] * (vr[1] * v2[2] - vr[2] * v2[1]) -</span>
+            <span class="c1">#                   vl[1] * (vr[0] * v2[2] - vr[2] * v2[0]) +</span>
+            <span class="c1">#                   vl[2] * (vr[0] * v2[1] - vr[1] * v2[0])) # slower</span>
+
+            <span class="n">cos_theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">vl</span><span class="p">,</span> <span class="n">vr</span><span class="p">)</span>  <span class="c1"># not normalized, cancels out</span>
+            <span class="n">sin_theta</span> <span class="o">=</span> <span class="n">triple_product</span> <span class="c1"># / bonds[b2].dist # inv vl and inv vr would also be here</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="n">sin_theta</span><span class="p">,</span> <span class="n">cos_theta</span><span class="p">)</span> <span class="o">*</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+
+            <span class="n">dihedral</span><span class="o">.</span><span class="n">phi</span> <span class="o">=</span> <span class="n">a</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">impropers</span><span class="p">,</span> <span class="n">Impropers</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">improper</span> <span class="ow">in</span> <span class="n">impropers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">b1</span> <span class="o">=</span> <span class="n">bonds</span><span class="o">.</span><span class="n">key_rule</span><span class="p">(</span><span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">b2</span> <span class="o">=</span> <span class="n">bonds</span><span class="o">.</span><span class="n">key_rule</span><span class="p">(</span><span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">b3</span> <span class="o">=</span> <span class="n">bonds</span><span class="o">.</span><span class="n">key_rule</span><span class="p">(</span><span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+
+            <span class="n">v1</span> <span class="o">=</span> <span class="n">vectors</span><span class="p">[</span><span class="n">b1</span><span class="p">]</span>
+            <span class="n">v2</span> <span class="o">=</span> <span class="n">vectors</span><span class="p">[</span><span class="n">b2</span><span class="p">]</span>
+            <span class="n">v3</span> <span class="o">=</span> <span class="n">vectors</span><span class="p">[</span><span class="n">b3</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">b1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="n">v1</span> <span class="o">=</span> <span class="o">-</span><span class="n">v1</span>  <span class="c1"># all center out</span>
+            <span class="k">if</span> <span class="n">b2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="n">v2</span> <span class="o">=</span> <span class="o">-</span><span class="n">v2</span>
+            <span class="k">if</span> <span class="n">b3</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="n">v3</span> <span class="o">=</span> <span class="o">-</span><span class="n">v3</span>
+
+
+            <span class="n">a1</span> <span class="o">=</span> <span class="n">angles</span><span class="o">.</span><span class="n">key_rule</span><span class="p">(</span><span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+            <span class="n">a2</span> <span class="o">=</span> <span class="n">angles</span><span class="o">.</span><span class="n">key_rule</span><span class="p">(</span><span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+            <span class="n">a3</span> <span class="o">=</span> <span class="n">angles</span><span class="o">.</span><span class="n">key_rule</span><span class="p">(</span><span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+            <span class="n">norm1</span> <span class="o">=</span> <span class="n">angles</span><span class="p">[</span><span class="n">a1</span><span class="p">]</span><span class="o">.</span><span class="n">normal</span>
+            <span class="n">norm2</span> <span class="o">=</span> <span class="n">angles</span><span class="p">[</span><span class="n">a2</span><span class="p">]</span><span class="o">.</span><span class="n">normal</span>
+            <span class="n">norm3</span> <span class="o">=</span> <span class="n">angles</span><span class="p">[</span><span class="n">a3</span><span class="p">]</span><span class="o">.</span><span class="n">normal</span>
+
+            <span class="k">if</span> <span class="n">a1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">norm1</span> <span class="o">=</span> <span class="o">-</span><span class="n">norm1</span>
+            <span class="k">if</span> <span class="n">a2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">norm2</span> <span class="o">=</span> <span class="o">-</span><span class="n">norm2</span>
+            <span class="k">if</span> <span class="n">a3</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">norm3</span> <span class="o">=</span> <span class="o">-</span><span class="n">norm3</span>
+
+            <span class="c1">## Slow</span>
+            <span class="c1"># norm1 = np.cross(v2, v3)</span>
+            <span class="c1"># norm1 /= np.linalg.norm(norm1)</span>
+            <span class="c1"># norm2 = np.cross(v3, v1) # order matches LAMMPS class2.cpp</span>
+            <span class="c1"># norm2 /= np.linalg.norm(norm2)</span>
+            <span class="c1"># norm3 = np.cross(v1, v2)</span>
+            <span class="c1"># norm3 /= np.linalg.norm(norm3)</span>
+
+            <span class="n">ch1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">norm1</span><span class="p">,</span> <span class="n">v1</span><span class="p">))</span>
+            <span class="n">ch2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">norm2</span><span class="p">,</span> <span class="n">v2</span><span class="p">))</span>
+            <span class="n">ch3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">norm3</span><span class="p">,</span> <span class="n">v3</span><span class="p">))</span>
+
+            <span class="n">improper</span><span class="o">.</span><span class="n">chi</span> <span class="o">=</span> <span class="p">(</span><span class="n">ch1</span> <span class="o">+</span> <span class="n">ch2</span> <span class="o">+</span> <span class="n">ch3</span><span class="p">)</span> <span class="o">*</span> <span class="mi">180</span> <span class="o">/</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="BADI_by_type">
+<a class="viewcode-back" href="../../../mooonpy.molspace.distance.html#mooonpy.molspace.distance.BADI_by_type">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">BADI_by_type</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">type_label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">comp_bond</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">comp_angle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">comp_dihedral</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">comp_improper</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">comp_bond</span><span class="p">:</span>
+        <span class="n">bond_types</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">bond_coeffs</span>
+        <span class="k">if</span> <span class="n">type_label</span><span class="p">:</span>
+            <span class="n">bond_hist</span> <span class="o">=</span> <span class="p">{</span><span class="n">coeff</span><span class="o">.</span><span class="n">type_label</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">coeff</span> <span class="ow">in</span> <span class="n">bond_types</span><span class="o">.</span><span class="n">values</span><span class="p">()}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">bond_hist</span> <span class="o">=</span> <span class="p">{</span><span class="n">type_</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">type_</span> <span class="ow">in</span> <span class="n">bond_types</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+
+        <span class="k">for</span> <span class="n">bond</span> <span class="ow">in</span> <span class="n">mol</span><span class="o">.</span><span class="n">bonds</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">bond</span><span class="o">.</span><span class="n">type</span>
+            <span class="k">if</span> <span class="n">type_label</span><span class="p">:</span> <span class="n">key</span> <span class="o">=</span> <span class="n">bond_types</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">type_label</span>
+            <span class="n">bond_hist</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bond</span><span class="o">.</span><span class="n">dist</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">bond_hist</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">if</span> <span class="n">comp_angle</span><span class="p">:</span>
+        <span class="n">angle_types</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">angle_coeffs</span>
+        <span class="k">if</span> <span class="n">type_label</span><span class="p">:</span>
+            <span class="n">angle_hist</span> <span class="o">=</span> <span class="p">{</span><span class="n">coeff</span><span class="o">.</span><span class="n">type_label</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">coeff</span> <span class="ow">in</span> <span class="n">angle_types</span><span class="o">.</span><span class="n">values</span><span class="p">()}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">angle_hist</span> <span class="o">=</span> <span class="p">{</span><span class="n">type_</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">type_</span> <span class="ow">in</span> <span class="n">angle_types</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+
+        <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">mol</span><span class="o">.</span><span class="n">angles</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">angle</span><span class="o">.</span><span class="n">type</span>
+            <span class="k">if</span> <span class="n">type_label</span><span class="p">:</span> <span class="n">key</span> <span class="o">=</span> <span class="n">angle_types</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">type_label</span>
+            <span class="n">angle_hist</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">angle</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">angle_hist</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">if</span> <span class="n">comp_dihedral</span><span class="p">:</span>
+        <span class="n">dihedral_types</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">dihedral_coeffs</span>
+        <span class="k">if</span> <span class="n">type_label</span><span class="p">:</span>
+            <span class="n">dihedral_hist</span> <span class="o">=</span> <span class="n">dihedral_hist</span> <span class="o">=</span> <span class="p">{</span><span class="n">coeff</span><span class="o">.</span><span class="n">type_label</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">coeff</span> <span class="ow">in</span> <span class="n">dihedral_types</span><span class="o">.</span><span class="n">values</span><span class="p">()}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dihedral_hist</span> <span class="o">=</span> <span class="p">{</span><span class="n">type_</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">type_</span> <span class="ow">in</span> <span class="n">dihedral_types</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+
+        <span class="k">for</span> <span class="n">dihedral</span> <span class="ow">in</span> <span class="n">mol</span><span class="o">.</span><span class="n">dihedrals</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">dihedral</span><span class="o">.</span><span class="n">type</span>
+            <span class="k">if</span> <span class="n">type_label</span><span class="p">:</span> <span class="n">key</span> <span class="o">=</span> <span class="n">dihedral_types</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">type_label</span>
+            <span class="n">dihedral_hist</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dihedral</span><span class="o">.</span><span class="n">phi</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dihedral_hist</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">if</span> <span class="n">comp_improper</span><span class="p">:</span>
+        <span class="n">improper_types</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">improper_coeffs</span>
+        <span class="k">if</span> <span class="n">type_label</span><span class="p">:</span>
+            <span class="n">improper_hist</span> <span class="o">=</span> <span class="p">{</span><span class="n">coeff</span><span class="o">.</span><span class="n">type_label</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">coeff</span> <span class="ow">in</span> <span class="n">improper_types</span><span class="o">.</span><span class="n">values</span><span class="p">()}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">improper_hist</span> <span class="o">=</span> <span class="p">{</span><span class="n">type_</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">type_</span> <span class="ow">in</span> <span class="n">improper_types</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+
+        <span class="k">for</span> <span class="n">improper</span> <span class="ow">in</span> <span class="n">mol</span><span class="o">.</span><span class="n">impropers</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">improper</span><span class="o">.</span><span class="n">type</span>
+            <span class="k">if</span> <span class="n">type_label</span><span class="p">:</span> <span class="n">key</span> <span class="o">=</span> <span class="n">improper_types</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">type_label</span>
+            <span class="n">improper_hist</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">improper</span><span class="o">.</span><span class="n">chi</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">improper_hist</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">return</span> <span class="n">bond_hist</span><span class="p">,</span> <span class="n">angle_hist</span><span class="p">,</span> <span class="n">dihedral_hist</span><span class="p">,</span> <span class="n">improper_hist</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

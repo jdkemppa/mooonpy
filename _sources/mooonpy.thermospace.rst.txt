@@ -1,0 +1,16 @@
+mooonpy.thermospace package
+===========================
+
+.. automodule:: mooonpy.thermospace
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 8
+
+   mooonpy.thermospace.plotting
+   mooonpy.thermospace.thermospace

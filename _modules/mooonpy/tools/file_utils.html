@@ -1,0 +1,533 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.tools.file_utils &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mooonpy.tools.file_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mooonpy.tools.file_utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">bz2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">gzip</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">lzma</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<div class="viewcode-block" id="Path">
+<a class="viewcode-back" href="../../../mooonpy.tools.file_utils.html#mooonpy.Path">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Path</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    *As computational scientists, half our jobs is file management and manipulation,</span>
+<span class="sd">    the Path class contains several aliases for the os.path and glob.glob modules</span>
+<span class="sd">    to make processing data easier. All mooonpy functions internally use this class</span>
+<span class="sd">    for inputs of files or folders. Relevant strings are converted to path on entering functions*</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    A copy of the code used in these examples is avalible in root\\mooonpy\\examples\\tools\\path_utils\\example_Path.py</span>
+
+<span class="sd">    **Basic Path Operations**</span>
+<span class="sd">        &gt;&gt;&gt; project_path = Path(&#39;Project/Data/Analysis&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; filename = Path(&#39;results.txt&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; full_path = project_path / filename</span>
+<span class="sd">        &gt;&gt;&gt; print(full_path)</span>
+<span class="sd">        Project\\Data\\Analysis\\results.txt</span>
+<span class="sd">        &gt;&gt;&gt; print(abs(full_path))</span>
+<span class="sd">        root\\mooonpy\\examples\\tools\\path_utils\\Project\\Data\\Analysis\\results.txt</span>
+
+<span class="sd">    **Path Parsing**</span>
+<span class="sd">        &gt;&gt;&gt; sample_path = Path(&#39;experiments/run_001/data.csv.gz&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; print(sample_path.dir())</span>
+<span class="sd">        experiments\\run_001</span>
+<span class="sd">        &gt;&gt;&gt; print(sample_path.basename())</span>
+<span class="sd">        data.csv.gz</span>
+<span class="sd">        &gt;&gt;&gt; print(sample_path.root())</span>
+<span class="sd">        data.csv</span>
+<span class="sd">        &gt;&gt;&gt; print(sample_path.ext())</span>
+<span class="sd">        .gz</span>
+
+<span class="sd">    **Extension Manipulation**</span>
+<span class="sd">        &gt;&gt;&gt; data_file = Path(&#39;analysis/results.txt&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; print(data_file.new_ext(&#39;.json&#39;))</span>
+<span class="sd">        analysis\\results.json</span>
+<span class="sd">        &gt;&gt;&gt; print(data_file.new_ext(&#39;.txt.gz&#39;))</span>
+<span class="sd">        analysis\\results.txt.gz</span>
+
+<span class="sd">    **File Existence**</span>
+<span class="sd">        &gt;&gt;&gt; current_file = Path(__file__)</span>
+<span class="sd">        &gt;&gt;&gt; fake_file = Path(&#39;nonexistent.txt&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; print(bool(current_file))</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; print(bool(fake_file))</span>
+<span class="sd">        False</span>
+
+<span class="sd">    **Wildcard Matching**</span>
+<span class="sd">        &gt;&gt;&gt; txt_pattern = Path(&#39;temp_dir/*.txt&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; print(txt_pattern.matches())</span>
+<span class="sd">        [&#39;test1.txt&#39;, &#39;test2.txt&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; for file in Path(&#39;temp_dir/*&#39;):</span>
+<span class="sd">        ...     print(file.basename())</span>
+<span class="sd">        data.csv</span>
+<span class="sd">        readme.md</span>
+<span class="sd">        test1.txt</span>
+<span class="sd">        test2.txt</span>
+
+<span class="sd">    **Recent File Finding**</span>
+<span class="sd">        &gt;&gt;&gt; pattern = Path(&#39;temp_dir/*.txt&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; print(pattern.recent())</span>
+<span class="sd">        newest_file.txt</span>
+<span class="sd">        &gt;&gt;&gt; print(pattern.recent(oldest=True))</span>
+<span class="sd">        old_file.txt</span>
+
+<span class="sd">    **Smart File Opening**</span>
+<span class="sd">        &gt;&gt;&gt; mypath = Path(&#39;data.txt&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; with mypath.open(&#39;w&#39;) as f:</span>
+<span class="sd">        ...     f.write(&#39;Hello World&#39;)</span>
+<span class="sd">        # Creates regular file</span>
+<span class="sd">        &gt;&gt;&gt; compressed_path = Path(&#39;data.txt.gz&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; # compressed_path.open() would use gzip automatically</span>
+<span class="sd">        # Would automatically handle gzip compression</span>
+<span class="sd">        ** Absolute Path Conversion **</span>
+<span class="sd">        &gt;&gt;&gt; rel_path = Path(&#39;data/file.txt&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; print(abs(rel_path))</span>
+<span class="sd">        root\\mooonpy\\examples\\tools\\path_utils\\data\\file.txt</span>
+
+<span class="sd">    .. TODO::</span>
+<span class="sd">        __truediv__ __bool__ __abs__ and __iter__ docstrings in config?</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__fspath__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c1"># Mostly fixes type hints</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">string</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;Path&#39;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;Path&#39;</span><span class="p">:</span>  <span class="c1">## this is before init somehow</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">string</span><span class="p">))</span>  <span class="c1"># Typing is confused here</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__truediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;Path&#39;</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Join paths with subdirectory delimiter (ie /).</span>
+
+<span class="sd">        Alias for os.path.join.</span>
+
+<span class="sd">        :param other: Path to join on right</span>
+<span class="sd">        :type other: str or Path</span>
+<span class="sd">        :param self: Path to join on left</span>
+<span class="sd">        :return: Joined Path</span>
+<span class="sd">        :rtype: Path</span>
+
+<span class="sd">        :Example:</span>
+<span class="sd">            &gt;&gt;&gt; from mooonpy.tools import Path</span>
+<span class="sd">            &gt;&gt;&gt; MyDir = Path(&#39;Project/Monomers&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; MyFile = Path(&#39;DETDA.mol&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; print(MyDir / MyFile)</span>
+<span class="sd">            &#39;Project\\Monomers\\DETDA.mol&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># return Path(os.path.join(self, other)) # does not work in Linux or Mac</span>
+        <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">other</span><span class="p">)))</span> <span class="c1"># fixes</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if the path points to a file or directory.</span>
+
+<span class="sd">        Alias for os.path.exists.</span>
+
+<span class="sd">        :return: Boolean True/False</span>
+<span class="sd">        :rtype: bool</span>
+
+<span class="sd">        :Example:</span>
+<span class="sd">            &gt;&gt;&gt; from mooonpy.tools import Path</span>
+<span class="sd">            &gt;&gt;&gt; MyFile1 = Path(&#39;DETDA.mol&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; print(is MyFile1)</span>
+<span class="sd">            True</span>
+<span class="sd">            &gt;&gt;&gt; MyFile2 = Path(&#39;doesnotexist.mol&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; print(is MyFile2)</span>
+<span class="sd">            False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__abs__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Path&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Absolute path to file or directory.</span>
+
+<span class="sd">        Alias for os.path.abspath.</span>
+
+<span class="sd">        :return: Absolute path to file or directory</span>
+<span class="sd">        :rtype: Path</span>
+
+<span class="sd">        :Example:</span>
+<span class="sd">            &gt;&gt;&gt; from mooonpy import Path</span>
+<span class="sd">            &gt;&gt;&gt; MyFile = Path(&#39;DETDA.mol&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; print(abs(MyFile))</span>
+<span class="sd">            &#39;C:\\Users\\You\\Desktop\\DETDA.mol&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">iter</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Iterates through matching paths with a * (asterisk) wildcard character.</span>
+
+<span class="sd">        :return: iter object of List of matching Paths</span>
+
+<span class="sd">        :rtype: iter</span>
+
+<span class="sd">        .. note:: This overrides string iteration through characters, convert back to string</span>
+<span class="sd">        before passing into a function if this causes issues.</span>
+
+<span class="sd">        :Example:</span>
+<span class="sd">            &gt;&gt;&gt; from mooonpy import Path</span>
+<span class="sd">            &gt;&gt;&gt; MyWildcard = Path(&#39;*.mol&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; for MyMatch in MyWildcard:</span>
+<span class="sd">            &gt;&gt;&gt;     print(MyMatch)</span>
+<span class="sd">            &#39;DETDA.mol&#39;</span>
+<span class="sd">            &#39;DEGBF.mol&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matches</span><span class="p">())</span>
+
+<div class="viewcode-block" id="Path.basename">
+<a class="viewcode-back" href="../../../mooonpy.tools.file_utils.html#mooonpy.Path.basename">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">basename</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Path&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Split Path to filename and extention.</span>
+
+<span class="sd">        Alias for os.path.basename</span>
+
+<span class="sd">        :return: Path of file</span>
+<span class="sd">        :rtype: Path</span>
+
+<span class="sd">        :Example:</span>
+<span class="sd">            &gt;&gt;&gt; from mooonpy import Path</span>
+<span class="sd">            &gt;&gt;&gt; MyPath = Path(&#39;Project/Monomers/DETDA.mol&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; print(MyPath.basename())</span>
+<span class="sd">            &#39;DETDA.mol&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Path.dir">
+<a class="viewcode-back" href="../../../mooonpy.tools.file_utils.html#mooonpy.Path.dir">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dir</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Path&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Split Path to directory.</span>
+
+<span class="sd">        Alias for os.path.dirname.</span>
+
+<span class="sd">        :return: Path to directory</span>
+<span class="sd">        :rtype: Path</span>
+
+<span class="sd">        :Example:</span>
+<span class="sd">            &gt;&gt;&gt; from mooonpy import Path</span>
+<span class="sd">            &gt;&gt;&gt; MyPath = Path(&#39;Project/Monomers/DETDA.mol&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; print(MyPath.dir())</span>
+<span class="sd">            &#39;Project\\Monomers&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Path.ext">
+<a class="viewcode-back" href="../../../mooonpy.tools.file_utils.html#mooonpy.Path.ext">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ext</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Path&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Split Path to just extention.</span>
+
+<span class="sd">        Alias for os.path.basename and os.path.splitext.</span>
+
+<span class="sd">        :return: extention as Path</span>
+<span class="sd">        :rtype: Path</span>
+
+<span class="sd">        :Example:</span>
+<span class="sd">            &gt;&gt;&gt; from mooonpy import Path</span>
+<span class="sd">            &gt;&gt;&gt; MyPath = Path(&#39;Project/Monomers/DETDA.mol&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; print(MyPath.ext())</span>
+<span class="sd">            &#39;.mol&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basename</span><span class="p">())[</span><span class="mi">1</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="Path.matches">
+<a class="viewcode-back" href="../../../mooonpy.tools.file_utils.html#mooonpy.Path.matches">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">matches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">whitelist_ext</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">blacklist_ext</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;Path&#39;</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Finds matching paths with a * (asterisk) wildcard character.</span>
+
+<span class="sd">        :return: List of matching Paths</span>
+<span class="sd">        :rtype: List[Path]</span>
+
+<span class="sd">        :Example:</span>
+<span class="sd">            &gt;&gt;&gt; from mooonpy import Path</span>
+<span class="sd">            &gt;&gt;&gt; MyWildcard = Path(&#39;*.mol&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; print(Path.matches(MyWildcard))</span>
+<span class="sd">            [Path(&#39;DETDA.mol&#39;), Path(&#39;DEGBF.mol&#39;)]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="bp">self</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="n">blacklist_ext</span><span class="p">:</span>
+            <span class="n">matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">match</span> <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">matches</span> <span class="k">if</span> <span class="n">match</span><span class="o">.</span><span class="n">ext</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">blacklist_ext</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">whitelist_ext</span><span class="p">:</span>
+            <span class="n">matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">match</span> <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">matches</span> <span class="k">if</span> <span class="n">match</span><span class="o">.</span><span class="n">ext</span><span class="p">()</span> <span class="ow">in</span> <span class="n">whitelist_ext</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">matches</span></div>
+
+
+
+<div class="viewcode-block" id="Path.new_ext">
+<a class="viewcode-back" href="../../../mooonpy.tools.file_utils.html#mooonpy.Path.new_ext">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">new_ext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ext</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s1">&#39;Path&#39;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;Path&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Replace extension on a Path with a new extension.</span>
+
+<span class="sd">        :param ext: new extension including delimeter.</span>
+
+<span class="sd">        :type ext: str or Path</span>
+<span class="sd">        :return: replaced Path</span>
+<span class="sd">        :rtype: Path</span>
+
+<span class="sd">        :Example:</span>
+<span class="sd">            &gt;&gt;&gt; from mooonpy import Path</span>
+<span class="sd">            &gt;&gt;&gt; MyPath = Path(&#39;Project/Monomers/DETDA.mol&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; print(MyPath.new_ext(&#39;.data&#39;))</span>
+<span class="sd">            &#39;Project/Monomers/DETDA.data&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="bp">self</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">ext</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Path.open">
+<a class="viewcode-back" href="../../../mooonpy.tools.file_utils.html#mooonpy.Path.open">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Open path with smart_open</span>
+
+<span class="sd">        :param mode: Open mode, usually &#39;r&#39; or &#39;a&#39;</span>
+<span class="sd">        :type mode: str</span>
+<span class="sd">        :param encoding: File encoding</span>
+<span class="sd">        :type encoding: str</span>
+<span class="sd">        :return: opened file as object</span>
+<span class="sd">        :rtype: File Object</span>
+
+<span class="sd">        :Example:</span>
+<span class="sd">            &gt;&gt;&gt; from mooonpy import Path</span>
+<span class="sd">            &gt;&gt;&gt; MyPath = Path(&#39;Project/Monomers/DETDA.mol&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; MyFileObj = MyPath.open(mode=&#39;r&#39;)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">smart_open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Path.recent">
+<a class="viewcode-back" href="../../../mooonpy.tools.file_utils.html#mooonpy.Path.recent">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">recent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">oldest</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">&#39;Path&#39;</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find wildcard matches and return the Path of the most recently modified file.</span>
+
+<span class="sd">        :param oldest: Reverses direction and finds least recently modified file.</span>
+<span class="sd">        :type oldest: bool</span>
+<span class="sd">        :return: Path of most recently modified file</span>
+<span class="sd">        :rtype: Path</span>
+
+<span class="sd">        :Example:</span>
+<span class="sd">            &gt;&gt;&gt; from mooonpy import Path</span>
+<span class="sd">            &gt;&gt;&gt; MyWildcard = Path(&#39;Template_*.lmpmol&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; print(Path.recent())</span>
+<span class="sd">            &#39;Template_1_v10_final_realthistime.lmpmol&#39;</span>
+<span class="sd">            &gt;&gt;&gt; print(Path.recent(oldest=True))</span>
+<span class="sd">            &#39;Template_1.lmpmol&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">times</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">times</span><span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">file</span><span class="p">)]</span> <span class="o">=</span> <span class="n">file</span>
+        <span class="k">if</span> <span class="n">times</span><span class="p">:</span>
+            <span class="n">sorted_time</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">times</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+            <span class="k">if</span> <span class="n">oldest</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">times</span><span class="p">[</span><span class="n">sorted_time</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">times</span><span class="p">[</span><span class="n">sorted_time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Path.root">
+<a class="viewcode-back" href="../../../mooonpy.tools.file_utils.html#mooonpy.Path.root">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">root</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Path&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Split Path to filename with no extention.</span>
+
+<span class="sd">        Alias for os.path.basename and os.path.splitext.</span>
+
+<span class="sd">        :return: Path of filename</span>
+<span class="sd">        :rtype: Path</span>
+
+<span class="sd">        :Example:</span>
+<span class="sd">            &gt;&gt;&gt; from mooonpy import Path</span>
+<span class="sd">            &gt;&gt;&gt; MyPath = Path(&#39;Project/Monomers/DETDA.mol&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; print(MyPath.root())</span>
+<span class="sd">            &#39;DETDA&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basename</span><span class="p">())[</span><span class="mi">0</span><span class="p">])</span></div>
+</div>
+
+
+<span class="c1"># End of Path</span>
+
+<span class="c1">#%% Misc file tools</span>
+<div class="viewcode-block" id="smart_open">
+<a class="viewcode-back" href="../../../mooonpy.tools.file_utils.html#mooonpy.smart_open">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">smart_open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Open file with appropriate decompression based on extension</span>
+
+<span class="sd">    **Supported extensions: Use substring in filename**</span>
+<span class="sd">        - .gz: Uses gzip module</span>
+<span class="sd">        - .bz2: Uses bzip2 module</span>
+<span class="sd">        - .xz: Uses lzma module</span>
+<span class="sd">        - .lzma: Uses lzma module</span>
+<span class="sd">        - Other extensions use the builtin open function</span>
+
+
+<span class="sd">    :param filename: Path to file</span>
+<span class="sd">    :type filename: Path or str</span>
+<span class="sd">    :param mode: Open mode, usually &#39;r&#39;, &#39;w&#39; or &#39;a&#39;</span>
+<span class="sd">    :type mode: str</span>
+<span class="sd">    :param encoding: File encoding</span>
+<span class="sd">    :type encoding: str</span>
+
+<span class="sd">    :return: opened file as object</span>
+<span class="sd">    :rtype: File Object</span>
+<span class="sd">    :Example:</span>
+<span class="sd">        &gt;&gt;&gt; from mooonpy.tools.file_utils import smart_open</span>
+<span class="sd">        &gt;&gt;&gt; MyFileObj = smart_open(&#39;Project/Monomers/DETDA.data.gz&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">&#39;.gz&#39;</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="n">mode</span> <span class="o">+</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s1">&#39;.bz2&#39;</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">bz2</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="n">mode</span> <span class="o">+</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s1">&#39;.xz&#39;</span> <span class="ow">in</span> <span class="n">filename</span> <span class="ow">or</span> <span class="s1">&#39;.lzma&#39;</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">lzma</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="n">mode</span> <span class="o">+</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+
+        <span class="k">pass</span>  <span class="c1"># compressed filename did not work</span>
+    <span class="k">return</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="n">mode</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>  <span class="c1"># try regular read</span></div>
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
