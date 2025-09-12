@@ -2,6 +2,7 @@
 import importlib
 
 __all__ = ['read_lmp_data',
+            'read_lmp_dump',
            'write_lmp_data',
            'write_lmp_ff_script'
 ]

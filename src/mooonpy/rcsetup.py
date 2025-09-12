@@ -55,6 +55,7 @@ class RCParams(MutableMapping):
 
 # Default parameters
 _defaults = {'molspace.read.dsect': ['Atoms', 'Bonds', 'Angles', 'Dihedrals', 'Impropers', 'Velocities'],
+             'molspace.read.steps': None,
              'molspace.write.data.astyle': 'full',
              'molspace.astyles': ['all'],
              

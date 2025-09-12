@@ -1,0 +1,127 @@
+
+
+Running cell_builder v1.10 / 4 October 2024
+Using Python version 3.11.5 (tags/v3.11.5:cce6ba9, Aug 24 2023, 14:38:34) [MSC v.1936 64 bit (AMD64)]
+
+
+
+----------------------------------------------
+        Random molecule insertion info
+----------------------------------------------
+Using 8 x 8 x 8 sub domains of size 3.47 x 3.47 x 3.47 to perform domain decomposition
+Finding domain to use cell linked list algorithm for interatomic distance calculations ...
+    progress: 50 %
+    progress: 100 %
+Finding cell linked graph for interatomic distance calculations ...
+    progress: 50 %
+    progress: 100 %
+Time in seconds to generate domain and domain connectivity: 0.020740747451782227
+
+
+Attempting to insert each molecule 1000 times
+Using tolerance: 2.0
+
+
+Generating new simulation cell ....
+    progress:  8  %,  time:     0.0000 seconds,  density: 0.02431 g/cc,  failed:   0,  attempts (min;max;avg): 1;1;1.00
+    progress: 16  %,  time:     0.0000 seconds,  density: 0.04862 g/cc,  failed:   0,  attempts (min;max;avg): 1;1;1.00
+    progress: 25  %,  time:     0.0000 seconds,  density: 0.07294 g/cc,  failed:   0,  attempts (min;max;avg): 1;1;1.00
+    progress: 33  %,  time:     0.0000 seconds,  density: 0.09725 g/cc,  failed:   0,  attempts (min;max;avg): 1;1;1.00
+    progress: 41  %,  time:     0.0000 seconds,  density: 0.12156 g/cc,  failed:   0,  attempts (min;max;avg): 2;2;2.00
+    progress: 50  %,  time:     0.0000 seconds,  density: 0.14587 g/cc,  failed:   0,  attempts (min;max;avg): 6;6;6.00
+    progress: 58  %,  time:     0.0000 seconds,  density: 0.17018 g/cc,  failed:   0,  attempts (min;max;avg): 2;2;2.00
+    progress: 66  %,  time:     0.0000 seconds,  density: 0.19450 g/cc,  failed:   0,  attempts (min;max;avg): 2;2;2.00
+    progress: 75  %,  time:     0.0158 seconds,  density: 0.20837 g/cc,  failed:   0,  attempts (min;max;avg): 7;7;7.00
+    progress: 83  %,  time:     0.0158 seconds,  density: 0.22225 g/cc,  failed:   0,  attempts (min;max;avg): 5;5;5.00
+    progress: 91  %,  time:     0.0158 seconds,  density: 0.23612 g/cc,  failed:   0,  attempts (min;max;avg): 3;3;3.00
+    progress: 100 %,  time:     0.0158 seconds,  density: 0.25000 g/cc,  failed:   0,  attempts (min;max;avg): 4;4;4.00
+Time in seconds to insert molecules into simulation cell: 0.015805959701538086
+Inserted 4 of 4 molecules from EXAMPLES/cell_builder/system1_detda_typed_IFF_merged_qty=1.data
+Inserted 8 of 8 molecules from EXAMPLES/cell_builder/system1_dgebf_typed_IFF_merged_qty=2.data
+
+
+Finding energy coeffs ....
+
+
+
+-----------------------------------------------------
+   Cell building and randomization parameters used
+-----------------------------------------------------
+unwrap atoms by iflags:                  True
+locally group atoms:                    False
+force field joining:                     none
+distance scale:                           1.2
+duplicate:                                  4
+max rotations:             {'x': 360.0, 'y': 360.0, 'z': 360.0}
+seed:                                   12345
+domain:                    27.7352A x 27.7352A x 27.7352A
+System files used:        
+   EXAMPLES/cell_builder/system1_detda_typed_IFF_merged_qty=1.data qty: 1
+       atom TypeIDs offset      0
+       bond TypeIDs offset      0
+       angle TypeIDs offset     0
+       dihedral TypeIDs offset  0
+       improper TypeIDs offset  0
+   EXAMPLES/cell_builder/system1_dgebf_typed_IFF_merged_qty=2.data qty: 2
+       atom TypeIDs offset      0
+       bond TypeIDs offset      0
+       angle TypeIDs offset     0
+       dihedral TypeIDs offset  0
+       improper TypeIDs offset  0
+
+
+Finding new molids ....
+--------------------------------------------------------------------------Cluster Analysis-------------------------------------------------------------------
+molID     Size       Mass      X-center   Y-center   Z-center        phi (°)      theta (°)        psi (°)         Filename         
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+  1        43       312.37         1.43       5.03      -3.87         170.60         300.10           4.10       system1_dgebf_typed_IFF_merged_qty=2.data
+  2        43       312.37        -5.57       5.33      -7.47         110.60         231.80         178.60       system1_dgebf_typed_IFF_merged_qty=2.data
+  3        43       312.37        -4.87      -4.27       4.33         358.00         177.30         106.90       system1_dgebf_typed_IFF_merged_qty=2.data
+  4        43       312.37        13.33       7.33      12.03         302.30         300.10          37.30       system1_dgebf_typed_IFF_merged_qty=2.data
+  5        43       312.37         3.53     -12.47      12.33         131.90           9.60         187.90       system1_dgebf_typed_IFF_merged_qty=2.data
+  6        43       312.37        -7.17     -11.67      -5.37         241.00         177.60         212.20       system1_dgebf_typed_IFF_merged_qty=2.data
+  7        43       312.37        -5.77       5.93       2.73         143.20         220.80         140.00       system1_dgebf_typed_IFF_merged_qty=2.data
+  8        43       312.37       -13.27       5.03      -2.77         327.30          73.50         323.10       system1_dgebf_typed_IFF_merged_qty=2.data
+  9        31       178.28        -8.87      -0.27      12.03         342.10         248.80         327.00       system1_detda_typed_IFF_merged_qty=1.data
+  10       31       178.28        -3.87      -3.47      -6.87          27.70         263.60         188.60       system1_detda_typed_IFF_merged_qty=1.data
+  11       31       178.28        12.63      13.63      -8.27          18.00         149.00         327.30       system1_detda_typed_IFF_merged_qty=1.data
+  12       31       178.28       -12.27      -2.57       3.83          20.60         108.50         182.50       system1_detda_typed_IFF_merged_qty=1.data
+
+
+
+--------------------------------------
+Atoms/Bonds/Angles/Dihedrals/Impropers
+--------------------------------------
+natoms:             468 
+nbonds:             492 
+nangles:            872 
+ndihedrals:        1168 
+nimpropers:         432 
+
+
+---------------------------------------
+System Unit cell, volume, mass, density
+---------------------------------------
+Lx:         27.73520  angstrom  
+Ly:         27.73520  angstrom  
+Lz:         27.73520  angstrom  
+volume:    2.1335E-20 cm^3      
+mass:      5.3338E-21 grams     
+density:    0.25000   g/cc      
+
+
+Writing small_epon script
+
+
+All outputs can be found in C:\Users\jdkem\Desktop\LUNAR\..\lmp_dump directory
+
+
+Normal program termination
+
+
+Execution time in seconds: 0.06251788139343262
+
+
+Number of WARNING(s) and ERROR(s)
+  0 WARNING(s)
+  0 ERROR(s)

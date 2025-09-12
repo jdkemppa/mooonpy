@@ -2,8 +2,10 @@
 from mooonpy.molspace import _files_io as _files_io
 from mooonpy.molspace.atoms import Atoms
 from mooonpy.molspace.topology import Bonds, Angles, Dihedrals, Impropers
+from mooonpy.molspace.clusters import Clusters
 from mooonpy.molspace.force_field import ForceField
-from mooonpy.molspace.distance import domain_decomp_13, pairs_from_bonds, pairs_from_domains, ADI_from_bonds, BADI_by_type
+from mooonpy.molspace.distance import domain_decomp_13, pairs_from_bonds, pairs_from_domains, ADI_from_bonds, \
+    BADI_by_type
 from mooonpy.molspace.graph_theory import interface, ring_analysis
 from mooonpy.molspace.periodic_table import Elements as Ptable
 from mooonpy.molspace.bonds_from_distances import find as find_bonds_from_distances
@@ -11,7 +13,8 @@ from mooonpy.molspace.bonds_from_distances import find as find_bonds_from_distan
 from mooonpy.tools.file_utils import Path
 
 from mooonpy.rcsetup import rcParams
-
+from copy import deepcopy
+import warnings
 import os
 
 
@@ -70,6 +73,7 @@ class Molspace(object):
 
         self.astyles = kwargs.pop('astyles', rcParams['molspace.astyles'])
         self.dsect = kwargs.pop('dsect', rcParams['molspace.read.dsect'])
+        self.steps = kwargs.pop('steps', rcParams['molspace.read.steps'])
 
         # print(kwargs)
 
@@ -79,29 +83,77 @@ class Molspace(object):
         self.angles: Angles = Angles()
         self.dihedrals: Dihedrals = Dihedrals()
         self.impropers: Impropers = Impropers()
+        self.clusters: Clusters = Clusters(self)
         self.ff: ForceField = ForceField()
         self.ptable: Ptable = Ptable()
 
-        # Handle file initilaizations
+        # Handle file initializations
         self.filename = filename
         self.header = ''
         if filename != '' and filename is not None:
             filename = Path(filename)
-            if not bool(filename): # check existence
+            if not bool(filename):  # check existence
                 raise FileNotFoundError(f'{filename} was not found or is a directory')
 
-            self.read_files(filename, dsect=self.dsect)
+            self.read_files(filename, dsect=self.dsect, steps=self.steps)
+            if filename.endswith('.dump') and type(self.steps) != int:
+                warnings.warn(
+                    f'WARNING: Cannot init from a dump file with multiple steps specified. This returned the last step probably')
 
             # keys = self.bonds
 
-    def read_files(self, filename, dsect=['all']):
+    def copy(self):
+        return deepcopy(self)
+        ## This is absurdly slow, not sure why?
+
+    def __str__(self):
+        populated = []
+        if self.bonds:
+            populated.append('Bonds')
+        if self.ff:
+            populated.append('FF')
+        ## Continue this for important attributes
+        return f'Molspace with {len(self.atoms)} atoms and {populated} attributes)'
+
+    def read_files(self, filename, dsect=['all'], steps=...):
+        """
+        Read files into Molspace
+        Currently supports .data and .dump files.
+
+        :param filename: path to file to read
+        :type filename: str or Path
+        :param dsect: Sections of data file to read, see mooonpy.molspace._files_io.read_lmp_data for more details
+        :type dsect: list
+        :param steps: Steps in dump file to read see mooonpy.molspace._files_io.read_lmp_dump for more details
+        :type steps: list or int
+
+        :return: Modifies self in-place if data or single step, returns dict if multiple steps
+        :rtype: None or dict
+
+        :Example:
+            >>> from mooonpy import Molspace
+            >>> MyPath = Path('Project/Monomers/DETDA.data')
+            >>> mol = Molspace(MyPath, dsect=['all'])
+            >>> MyPath2 = Path('Project/Monomers/DETDA.dump')
+            >>> series = Molspace(MyPath2, steps=None)
+        """
         root, ext = os.path.splitext(filename)
         if filename.endswith('.data'):
             if 'all' in dsect:
                 dsect = ['Atoms', 'Bonds', 'Angles', 'Dihedrals', 'Impropers', 'Velocities']
             _files_io.read_lmp_data.read(self, filename, dsect)
+            return None
 
-        return None
+        elif filename.endswith('.dump'):
+            if steps is ...:  # none means all, ellipsis means to pull default from creation or rcParams
+                steps = self.steps
+            out_steps = _files_io.read_lmp_dump.read(filename, steps=steps, mol=self)
+            if type(steps) is int: # if single, modify self with data
+                self.atoms = out_steps.atoms
+            return out_steps
+
+        else:
+            raise FileNotFoundError(f'{filename} was not found or is a directory')
 
     def write_files(self, filename, atom_style='full'):
         root, ext = os.path.splitext(filename)
@@ -128,19 +180,27 @@ class Molspace(object):
     def compute_ADI(self):
         return ADI_from_bonds(self.bonds, self.angles, self.dihedrals, self.impropers)
 
-    def compute_BADI_by_type(self,periodicity='ppp',comp_bond=True, comp_angle=True, comp_dihedral=True, comp_improper=True):
+    def compute_BADI_by_type(self, periodicity='ppp', comp_bond=True, comp_angle=True, comp_dihedral=True,
+                             comp_improper=True):
         if comp_bond:
             pairs_from_bonds(self.atoms, self.bonds, periodicity)
 
-        if comp_angle: angles = self.angles
-        else: angles = None
-        if comp_dihedral: dihedrals = self.dihedrals
-        else: dihedrals = None
-        if comp_improper: impropers = self.impropers
-        else: impropers = None
+        if comp_angle:
+            angles = self.angles
+        else:
+            angles = None
+        if comp_dihedral:
+            dihedrals = self.dihedrals
+        else:
+            dihedrals = None
+        if comp_improper:
+            impropers = self.impropers
+        else:
+            impropers = None
 
         ADI_from_bonds(self.bonds, angles, dihedrals, impropers)
-        bond_hist, angle_hist, dihedral_hist, improper_hist = BADI_by_type(self, self.ff.has_type_labels,comp_bond,comp_angle,comp_dihedral,comp_improper)
+        bond_hist, angle_hist, dihedral_hist, improper_hist = BADI_by_type(self, self.ff.has_type_labels, comp_bond,
+                                                                           comp_angle, comp_dihedral, comp_improper)
         return bond_hist, angle_hist, dihedral_hist, improper_hist
 
     def add_type_labels(self, labels):
@@ -211,11 +271,11 @@ class Molspace(object):
             ff.improper_coeffs[type_].type_label = label
 
         ff.has_type_labels = True
-        
+
     def generate_graph(self):
         return interface.generate_graph(self)
-        
-    def find_rings(self, ring_sizes: tuple[int]=(3,4,5,6,7)):
+
+    def find_rings(self, ring_sizes: tuple[int] = (3, 4, 5, 6, 7)):
         """
         Finds all rings in the current Molspace instance. The size of rings searched for is
         set in the in the ring_sizes parameter.
@@ -238,10 +298,10 @@ class Molspace(object):
         """
         graph = self.generate_graph()
         return ring_analysis.find_rings(graph, ring_sizes)
-    
+
     def find_cumulative_neighs(self):
         return
-    
+
     def update_elements(self, type2mass=None, type2element=None):
         """
         Updates every per-atom .element attribute with the element type for that atom.
@@ -262,16 +322,16 @@ class Molspace(object):
         :rtype: None
         """
         if type2mass is None:
-            type2mass = {i:self.ff.masses[i].coeffs[0] for i in self.ff.masses}
+            type2mass = {i: self.ff.masses[i].coeffs[0] for i in self.ff.masses}
         if type2element is None:
-            type2element = {i:self.ptable.mass2element(type2mass[i]) for i in type2mass}
+            type2element = {i: self.ptable.mass2element(type2mass[i]) for i in type2mass}
         for atom_type, mass in self.ff.masses.items():
             mass.element = type2element[atom_type]
         for atom_id, atom in self.atoms.items():
             atom.element = type2element[atom.type]
         return
-    
-    def bonds_from_distances(self, periodicity: str='ppp'):
+
+    def bonds_from_distances(self, periodicity: str = 'ppp'):
         """
         Resets the bonds in a molecular system, based in interatomic distances and valences of atoms. 
         The cutoff distances are set based on the summation of vdw radii per element involved in the
@@ -294,5 +354,30 @@ class Molspace(object):
         """
         find_bonds_from_distances(self, periodicity)
         return
-    
-    
+
+    def remove_atoms(self, atom_ids):
+        """ make smart and remove from some?"""
+        atom_ids = set(atom_ids)
+        for id_ in list(self.atoms.keys()):  # cant change size in dict loop, cache keys
+            if id_ in atom_ids:  # set inclusion is O(1)
+                del self.atoms[id_]
+        for key in list(self.bonds.keys()):
+            for key_id in key:
+                if key_id in atom_ids:
+                    del self.bonds[key]
+                    break  # later ids would break
+        for key in list(self.angles.keys()):
+            for key_id in key:
+                if key_id in atom_ids:
+                    del self.angles[key]
+                    break
+        for key in list(self.dihedrals.keys()):
+            for key_id in key:
+                if key_id in atom_ids:
+                    del self.dihedrals[key]
+                    break
+        for key in list(self.impropers.keys()):
+            for key_id in key:
+                if key_id in atom_ids:
+                    del self.impropers[key]
+                    break

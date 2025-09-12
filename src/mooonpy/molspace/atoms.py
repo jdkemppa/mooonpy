@@ -2,6 +2,8 @@
 """
 This module provides a class to organize atoms information
 """
+from copy import deepcopy
+
 from .box import Box
 from .atom_styles import Styles
 
@@ -19,6 +21,9 @@ class Atoms(dict):
 
     def shift(self, sx=0, sy=0, sz=0):
         return
+
+    def copy(self):
+        return deepcopy(self)
 
     def wrap(self):
         """
