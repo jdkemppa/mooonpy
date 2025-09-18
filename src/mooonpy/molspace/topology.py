@@ -26,6 +26,13 @@ def _make_class(class_name, slots, defaults=None):
             for name in self.__slots__:
                 setattr(self, name, merged.get(name))
 
+        def __repr__(self):
+            """
+            Changes debugger object descriptions?
+            """
+            pass
+            # return '{} Object'.format(self.__name__)
+
     Dynamic.__name__ = class_name
     return Dynamic
 

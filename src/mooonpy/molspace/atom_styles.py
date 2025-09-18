@@ -110,6 +110,7 @@ class Styles:
                     'comment': '',
                     'element': '',
                     'name': '',
+                    'BO_total': 0.0,
                     })
 
     # Set the function aliases on how to convert a string from a file
@@ -180,6 +181,7 @@ class Styles:
                         'comment': str,
                         'element': str,
                         'name': str,
+                        'BO_total': float,
                         })
 
     styles = {}  # {'style' : (attr1, attr2, ...) }      -> (attr1, attr2, ...) sets attr name (e.g. 'id' 'x')
@@ -226,9 +228,12 @@ class Styles:
 
     styles['hybrid'] = ('id', 'type', 'x', 'y', 'z',
                         'sub_styleN')  # WARNING 'sub_styleN', needs to be expanded to 'sub_style1', 'sub_style2', ... so 'hybrid' NOT TRULY SUPPORTED
+    styles['reax'] = ('BO_total',)
+    styles['box'] = ('xu', 'yu', 'zu',)
+    styles['force'] = ('fx', 'fy', 'fz',)
     styles['custom'] = ()
 
-    styles['_random'] = ('comment', 'element', 'name', 'vx', 'vy', 'vz', 'fx', 'fy', 'fz', 'xu', 'yu', 'zu')
+    styles['_random'] = ('comment', 'element', 'name', 'vx', 'vy', 'vz',)
 
     # self.styles['_chemistry']     = ('hybrid', 'element', 'rings') # attribute groupings
     ## These are class attributes so they may be used as a lookup externally
