@@ -278,7 +278,7 @@ class Molspace(object):
     def find_rings(self, ring_sizes: tuple[int] = (3, 4, 5, 6, 7)):
         """
         Finds all rings in the current Molspace instance. The size of rings searched for is
-        set in the in the ring_sizes parameter.
+        set in the ring_sizes parameter.
         
         :Example:
         >>> import mooonpy
