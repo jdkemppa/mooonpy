@@ -1,0 +1,570 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.molspace.atom_styles &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mooonpy.molspace.atom_styles</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mooonpy.molspace.atom_styles</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_float</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="n">float_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^-?\d+(\.\d+)?([eE][-+]?\d+)?$&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">float_re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">string</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_int_str</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">string</span><span class="o">.</span><span class="n">isnumeric</span><span class="p">():</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">string</span>
+
+    
+<span class="k">def</span><span class="w"> </span><span class="nf">_int_str_float</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">string</span><span class="o">.</span><span class="n">isnumeric</span><span class="p">():</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">_is_float</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">string</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_make_class</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="n">slots</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">defaults</span> <span class="o">=</span> <span class="n">defaults</span> <span class="ow">or</span> <span class="p">{}</span>
+    
+    <span class="k">class</span><span class="w"> </span><span class="nc">Dynamic</span><span class="p">:</span>
+        <span class="vm">__slots__</span> <span class="o">=</span> <span class="n">slots</span>
+        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">values</span> <span class="ow">or</span> <span class="p">{}</span>
+            <span class="n">merged</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">defaults</span><span class="p">,</span> <span class="o">**</span><span class="n">values</span><span class="p">}</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">merged</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="n">Dynamic</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="n">class_name</span>
+    <span class="k">return</span> <span class="n">Dynamic</span>
+
+
+<div class="viewcode-block" id="Styles">
+<a class="viewcode-back" href="../../../mooonpy.molspace.atom_styles.html#mooonpy.molspace.atom_styles.Styles">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Styles</span><span class="p">:</span>
+    <span class="c1"># Setup the default values per each attribute</span>
+    <span class="n">defaults</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">defaults</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;q&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;x0&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;y0&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;z0&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;vx&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;vy&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;vz&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;ix&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;iy&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;iz&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;fx&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;fy&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;fz&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;xu&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;yu&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;zu&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;cv&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;ed&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;em&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;sp&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;spx&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;spy&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;spz&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;mux&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;muy&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;muz&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;rho&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;ccN&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;etag&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;esph&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;area&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;mass&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;cs_re&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;cs_im&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;molid&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;espin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;theta&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;energy&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;volume&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;edpd_cv&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;density&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;epsilon&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;eradius&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;kradius&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;cradius&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;molecule&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;bodyflag&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;lineflag&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;diameter&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;curvature&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;edpd_temp&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;triangleflag&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;ellipsoidflag&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;template_atom&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;template_index&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;sub_styleN&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="s1">&#39;comment&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;element&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;BO_total&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="p">})</span>
+
+    <span class="c1"># Set the function aliases on how to convert a string from a file</span>
+    <span class="c1"># to a python data type, during the reading of a file.</span>
+    <span class="n">func_aliases</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>
+    <span class="n">func_aliases</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                        <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;q&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;x0&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;y0&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;z0&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;vx&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;vy&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;vz&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;ix&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                        <span class="s1">&#39;iy&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                        <span class="s1">&#39;iz&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                        <span class="s1">&#39;fx&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;fy&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;fz&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;xu&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;yu&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;zu&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;cv&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;ed&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;em&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;sp&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;spx&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;spy&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;spz&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;mux&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;muy&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;muz&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;rho&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;ccN&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">_int_str</span><span class="p">,</span>
+                        <span class="s1">&#39;etag&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                        <span class="s1">&#39;esph&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;area&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;mass&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;cs_re&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;cs_im&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;molid&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                        <span class="s1">&#39;espin&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                        <span class="s1">&#39;theta&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;energy&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                        <span class="s1">&#39;volume&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;edpd_cv&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;density&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;epsilon&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;eradius&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;kradius&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;cradius&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;molecule&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                        <span class="s1">&#39;bodyflag&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                        <span class="s1">&#39;lineflag&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                        <span class="s1">&#39;diameter&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;curvature&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;edpd_temp&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="s1">&#39;triangleflag&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                        <span class="s1">&#39;ellipsoidflag&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                        <span class="s1">&#39;template_atom&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                        <span class="s1">&#39;template_index&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                        <span class="s1">&#39;sub_styleN&#39;</span><span class="p">:</span> <span class="n">_int_str_float</span><span class="p">,</span>
+                        <span class="s1">&#39;comment&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                        <span class="s1">&#39;element&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                        <span class="s1">&#39;BO_total&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                        <span class="p">})</span>
+
+    <span class="n">styles</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># {&#39;style&#39; : (attr1, attr2, ...) }      -&gt; (attr1, attr2, ...) sets attr name (e.g. &#39;id&#39; &#39;x&#39;)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;angle&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;molid&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;atomic&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;body&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;bodyflag&#39;</span><span class="p">,</span> <span class="s1">&#39;mass&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;bond&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;molid&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;bpm/sphere&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;molid&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;diameter&#39;</span><span class="p">,</span> <span class="s1">&#39;density&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;charge&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;dielectric&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;mux&#39;</span><span class="p">,</span> <span class="s1">&#39;muy&#39;</span><span class="p">,</span> <span class="s1">&#39;muz&#39;</span><span class="p">,</span> <span class="s1">&#39;area&#39;</span><span class="p">,</span> <span class="s1">&#39;ed&#39;</span><span class="p">,</span> <span class="s1">&#39;em&#39;</span><span class="p">,</span> <span class="s1">&#39;epsilon&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;curvature&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;dipole&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;mux&#39;</span><span class="p">,</span> <span class="s1">&#39;muy&#39;</span><span class="p">,</span> <span class="s1">&#39;muz&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;dpd&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;theta&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;edpd&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;edpd_temp&#39;</span><span class="p">,</span> <span class="s1">&#39;edpd_cv&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;electron&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;espin&#39;</span><span class="p">,</span> <span class="s1">&#39;eradius&#39;</span><span class="p">,</span> <span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;ellipsoid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;ellipsoidflag&#39;</span><span class="p">,</span> <span class="s1">&#39;density&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;full&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;molid&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;line&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;molid&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;lineflag&#39;</span><span class="p">,</span> <span class="s1">&#39;density&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;mdpd&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;molecular&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;molid&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;peri&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;volume&#39;</span><span class="p">,</span> <span class="s1">&#39;density&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;rheo&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;rheo/thermal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">,</span> <span class="s1">&#39;energy&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;smd&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;molecule&#39;</span><span class="p">,</span> <span class="s1">&#39;volume&#39;</span><span class="p">,</span> <span class="s1">&#39;mass&#39;</span><span class="p">,</span> <span class="s1">&#39;kradius&#39;</span><span class="p">,</span> <span class="s1">&#39;cradius&#39;</span><span class="p">,</span> <span class="s1">&#39;x0&#39;</span><span class="p">,</span> <span class="s1">&#39;y0&#39;</span><span class="p">,</span> <span class="s1">&#39;z0&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;sph&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">,</span> <span class="s1">&#39;esph&#39;</span><span class="p">,</span> <span class="s1">&#39;cv&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;sphere&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;diameter&#39;</span><span class="p">,</span> <span class="s1">&#39;density&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;spin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;spx&#39;</span><span class="p">,</span> <span class="s1">&#39;spy&#39;</span><span class="p">,</span> <span class="s1">&#39;spz&#39;</span><span class="p">,</span> <span class="s1">&#39;sp&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;tdpd&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;ccN&#39;</span><span class="p">)</span>  <span class="c1"># WARNING &#39;ccN&#39;, needs to be expanded to &#39;cc1&#39;, &#39;cc2&#39;, ... so &#39;tdpd&#39; NOT TRULY SUPPORTED</span>
+
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;template&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;molid&#39;</span><span class="p">,</span> <span class="s1">&#39;template_index&#39;</span><span class="p">,</span> <span class="s1">&#39;template_atom&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;tri&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;molid&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;triangleflag&#39;</span><span class="p">,</span> <span class="s1">&#39;density&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span> <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;wavepacket&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="s1">&#39;espin&#39;</span><span class="p">,</span> <span class="s1">&#39;eradius&#39;</span><span class="p">,</span> <span class="s1">&#39;etag&#39;</span><span class="p">,</span> <span class="s1">&#39;cs_re&#39;</span><span class="p">,</span> <span class="s1">&#39;cs_im&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;ix&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;iy&#39;</span><span class="p">,</span> <span class="s1">&#39;iz&#39;</span><span class="p">)</span>
+
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;hybrid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;sub_styleN&#39;</span><span class="p">)</span>  <span class="c1"># WARNING &#39;sub_styleN&#39;, needs to be expanded to &#39;sub_style1&#39;, &#39;sub_style2&#39;, ... so &#39;hybrid&#39; NOT TRULY SUPPORTED</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;reax&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;BO_total&#39;</span><span class="p">,)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;box&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;xu&#39;</span><span class="p">,</span> <span class="s1">&#39;yu&#39;</span><span class="p">,</span> <span class="s1">&#39;zu&#39;</span><span class="p">,)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;force&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;fx&#39;</span><span class="p">,</span> <span class="s1">&#39;fy&#39;</span><span class="p">,</span> <span class="s1">&#39;fz&#39;</span><span class="p">,)</span>
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;custom&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span>
+
+    <span class="n">styles</span><span class="p">[</span><span class="s1">&#39;_random&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;comment&#39;</span><span class="p">,</span> <span class="s1">&#39;element&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;vx&#39;</span><span class="p">,</span> <span class="s1">&#39;vy&#39;</span><span class="p">,</span> <span class="s1">&#39;vz&#39;</span><span class="p">,)</span>
+
+    <span class="c1"># self.styles[&#39;_chemistry&#39;]     = (&#39;hybrid&#39;, &#39;element&#39;, &#39;rings&#39;) # attribute groupings</span>
+    <span class="c1">## These are class attributes so they may be used as a lookup externally</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">astyles</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set up supported styles for LAMMPS and other file formats (NOTE: for the LAMMPS &#39;type&#39; attributes they can be an</span>
+<span class="sd">        int or str due to type labels in a LAMMPS datafile or LAMMPS molecule file - so need to use _int_str function).</span>
+
+<span class="sd">        The self.read, self.styles, and self.defaults dictionaries are meant to provide very easy general purpose way</span>
+<span class="sd">        to extend the ability to read and write LAMMPS styles. However, due to the general purpose nature they are not</span>
+<span class="sd">        as quick as they could be. Therefore, &quot;hard coded&quot; ways to read and write for speed purposes can be added. These</span>
+<span class="sd">        will be set as functions with the names:</span>
+<span class="sd">           def read_STYLE(self, atom, style, data_lst):</span>
+<span class="sd">           def line_STYLE(self, atom, style):</span>
+<span class="sd">        where STYLE in def *_STYLE() is a LAMMPS style (e.g. def read_full(), will be the hard coded reader to the</span>
+<span class="sd">        LAMMPS &#39;full&#39; atom style). *NOTE: to support any LAMMPS style that style key needs to be in self.read, self.styles,</span>
+<span class="sd">        and self.defaults dictionaries, even if &quot;hard coded&quot; readers and writers are generated - this is because this</span>
+<span class="sd">        will tell the code how to generate an instance of the Atom class, with necessary __slots__ and defaults.*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Build the dictionaries mapping each key/value pair from above into each style </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read</span> <span class="o">=</span> <span class="p">{}</span>     <span class="c1"># {&#39;style&#39; : (int or float or str)}     -&gt; (int or float or str) sets how to read string</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># {&#39;style&#39; : (default1, default2, ...)} -&gt; (default1, default2, ...) sets default value for each attr</span>
+        <span class="k">for</span> <span class="n">style</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">styles</span><span class="p">:</span>
+            <span class="n">_defaults</span><span class="p">,</span> <span class="n">_func_aliases</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">styles</span><span class="p">[</span><span class="n">style</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">Styles</span><span class="o">.</span><span class="n">defaults</span><span class="p">:</span>
+                    <span class="n">default</span> <span class="o">=</span> <span class="n">Styles</span><span class="o">.</span><span class="n">defaults</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">default</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">WARNING </span><span class="si">{</span><span class="vm">__file__</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;is setting a general default: &quot;</span><span class="si">{</span><span class="n">default</span><span class="si">}</span><span class="s1">&quot; for per-atom attribute: &quot;</span><span class="si">{</span><span class="n">attr</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span> 
+                <span class="n">_defaults</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
+                    
+                <span class="k">if</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">func_aliases</span><span class="p">:</span>
+                    <span class="n">func_alias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">func_aliases</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">func_alias</span> <span class="o">=</span> <span class="n">_int_str_float</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">WARNING </span><span class="si">{</span><span class="vm">__file__</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;is setting a general function alias for data type conversions: &quot;</span><span class="si">{</span><span class="n">func_alias</span><span class="si">}</span><span class="s1">&quot; for per-atom attribute: &quot;</span><span class="si">{</span><span class="n">attr</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span> 
+                <span class="n">_func_aliases</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func_alias</span><span class="p">)</span>
+                
+            <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="p">[</span><span class="n">style</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">_defaults</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">[</span><span class="n">style</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">_func_aliases</span><span class="p">)</span>
+        
+        
+        <span class="c1"># Setup which styles should be built when an atom is generated</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">astyles</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+            <span class="n">build</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">astyles</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">build</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([</span><span class="n">astyles</span><span class="p">])</span>
+
+        
+        <span class="c1"># Consolidate all attrs and defaults into a dict and tuple to </span>
+        <span class="c1"># be able to initialize an Atom() object as quickly as possible</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_defaults</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># {&#39;attr-name&#39;:default-value}</span>
+        <span class="c1">#print(&#39;Generating atom styles: &#39;)</span>
+        <span class="k">for</span> <span class="n">style</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">styles</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">style</span> <span class="ow">in</span> <span class="n">build</span> <span class="ow">or</span> <span class="s1">&#39;all&#39;</span> <span class="ow">in</span> <span class="n">build</span> <span class="ow">or</span> <span class="n">style</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">):</span>
+                <span class="c1">#print(&#39; - Building atom style: &#39;, style)</span>
+                <span class="n">attrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">styles</span><span class="p">[</span><span class="n">style</span><span class="p">]</span>
+                <span class="n">defaults</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="p">[</span><span class="n">style</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">attr</span><span class="p">,</span> <span class="n">default</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">attrs</span><span class="p">,</span> <span class="n">defaults</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">all_defaults</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="n">default</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_per_atom</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_defaults</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+        
+        <span class="c1"># Generate an Atom class with necessary slots and defaults, which will</span>
+        <span class="c1"># be used by atom_factory() method to generate an instance of this class</span>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="s1">&#39;Atom&#39;</span>
+        <span class="n">slots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_per_atom</span>
+        <span class="n">defaults</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_defaults</span>
+        <span class="c1"># print(&#39;slots&#39;, slots)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Atom</span> <span class="o">=</span> <span class="n">_make_class</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="n">slots</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="n">defaults</span><span class="p">)</span>
+
+        
+<div class="viewcode-block" id="Styles.update_astyles">
+<a class="viewcode-back" href="../../../mooonpy.molspace.atom_styles.html#mooonpy.molspace.atom_styles.Styles.update_astyles">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_astyles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">astyles</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># Update defaults</span>
+        <span class="k">if</span> <span class="n">astyles</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">astyles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">styles</span>
+        <span class="k">for</span> <span class="n">style</span> <span class="ow">in</span> <span class="n">astyles</span><span class="p">:</span>
+            <span class="n">attrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">styles</span><span class="p">[</span><span class="n">style</span><span class="p">]</span>
+            <span class="n">defaults</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">style</span><span class="p">,</span><span class="n">Styles</span><span class="o">.</span><span class="n">defaults</span><span class="p">[</span><span class="n">style</span><span class="p">])</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">style</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">defaults</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">attr</span><span class="p">,</span> <span class="n">default</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">attrs</span><span class="p">,</span> <span class="n">defaults</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">all_defaults</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="n">default</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_per_atom</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_defaults</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="c1"># print(self.all_per_atom)</span>
+        <span class="c1"># Re-generate the Atom class with the new defaults</span>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="s1">&#39;Atom&#39;</span>
+        <span class="n">slots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_per_atom</span>
+        <span class="n">defaults</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_defaults</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Atom</span> <span class="o">=</span> <span class="n">_make_class</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="n">slots</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="n">defaults</span><span class="p">)</span>
+        <span class="k">return</span></div>
+
+        
+<div class="viewcode-block" id="Styles.atom_factory">
+<a class="viewcode-back" href="../../../mooonpy.molspace.atom_styles.html#mooonpy.molspace.atom_styles.Styles.atom_factory">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">atom_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Atom</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="Styles.atom_fill">
+<a class="viewcode-back" href="../../../mooonpy.molspace.atom_styles.html#mooonpy.molspace.atom_styles.Styles.atom_fill">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">atom_fill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atom</span><span class="p">,</span> <span class="n">style</span><span class="p">,</span> <span class="n">data_lst</span><span class="p">):</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">[</span><span class="n">style</span><span class="p">]</span>
+        <span class="n">attrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">styles</span><span class="p">[</span><span class="n">style</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">string</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">func</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data_lst</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">reader</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">atom</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">atom</span></div>
+
+    
+<div class="viewcode-block" id="Styles.read_full">
+<a class="viewcode-back" href="../../../mooonpy.molspace.atom_styles.html#mooonpy.molspace.atom_styles.Styles.read_full">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_full</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atom</span><span class="p">,</span> <span class="n">style</span><span class="p">,</span> <span class="n">data_lst</span><span class="p">):</span>
+        <span class="n">atom</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_lst</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">atom</span><span class="o">.</span><span class="n">molid</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_lst</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">atom</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_lst</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">atom</span><span class="o">.</span><span class="n">q</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">data_lst</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+        <span class="n">atom</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">data_lst</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+        <span class="n">atom</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">data_lst</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+        <span class="n">atom</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">data_lst</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">atom</span><span class="o">.</span><span class="n">ix</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_lst</span><span class="p">[</span><span class="mi">7</span><span class="p">])</span>
+            <span class="n">atom</span><span class="o">.</span><span class="n">iy</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_lst</span><span class="p">[</span><span class="mi">8</span><span class="p">])</span>
+            <span class="n">atom</span><span class="o">.</span><span class="n">iz</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_lst</span><span class="p">[</span><span class="mi">9</span><span class="p">])</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">atom</span><span class="o">.</span><span class="n">ix</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">atom</span><span class="o">.</span><span class="n">iy</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">atom</span><span class="o">.</span><span class="n">iz</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">atom</span></div>
+
+    
+<div class="viewcode-block" id="Styles.read_charge">
+<a class="viewcode-back" href="../../../mooonpy.molspace.atom_styles.html#mooonpy.molspace.atom_styles.Styles.read_charge">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_charge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atom</span><span class="p">,</span> <span class="n">style</span><span class="p">,</span> <span class="n">data_lst</span><span class="p">):</span>
+        <span class="n">atom</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_lst</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">atom</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_lst</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">atom</span><span class="o">.</span><span class="n">q</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">data_lst</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">atom</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">data_lst</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+        <span class="n">atom</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">data_lst</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+        <span class="n">atom</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">data_lst</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">atom</span><span class="o">.</span><span class="n">ix</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_lst</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span>
+            <span class="n">atom</span><span class="o">.</span><span class="n">iy</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_lst</span><span class="p">[</span><span class="mi">7</span><span class="p">])</span>
+            <span class="n">atom</span><span class="o">.</span><span class="n">iz</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_lst</span><span class="p">[</span><span class="mi">8</span><span class="p">])</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">atom</span><span class="o">.</span><span class="n">ix</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">atom</span><span class="o">.</span><span class="n">iy</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">atom</span><span class="o">.</span><span class="n">iz</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">atom</span></div>
+
+    
+<div class="viewcode-block" id="Styles.atom_line">
+<a class="viewcode-back" href="../../../mooonpy.molspace.atom_styles.html#mooonpy.molspace.atom_styles.Styles.atom_line">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">atom_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atom</span><span class="p">,</span> <span class="n">style</span><span class="p">):</span>
+        <span class="n">attrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">styles</span><span class="p">[</span><span class="n">style</span><span class="p">]</span>
+        <span class="n">buffer</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">atom</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">)):</span>
+                <span class="n">nchars</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                <span class="n">space</span> <span class="o">=</span> <span class="n">nchars</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">buffer</span>
+                <span class="n">string</span> <span class="o">=</span> <span class="s1">&#39;{text:^</span><span class="si">{s}</span><span class="s1">}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">space</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:.16f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="n">nchars</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                <span class="n">space</span> <span class="o">=</span> <span class="n">nchars</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">buffer</span>
+                <span class="n">string</span> <span class="o">=</span> <span class="s1">&#39;{text:^</span><span class="si">{s}</span><span class="s1">}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">space</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">string</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>  
+            <span class="n">line</span> <span class="o">+=</span> <span class="n">string</span>
+        <span class="k">return</span> <span class="n">line</span></div>
+
+    
+<div class="viewcode-block" id="Styles.line_full">
+<a class="viewcode-back" href="../../../mooonpy.molspace.atom_styles.html#mooonpy.molspace.atom_styles.Styles.line_full">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">line_full</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atom</span><span class="p">,</span> <span class="n">style</span><span class="p">):</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:^24.16f}</span><span class="s1"> </span><span class="si">{:^24.16f}</span><span class="s1"> </span><span class="si">{:^24.16f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">atom</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:^2}</span><span class="s1"> </span><span class="si">{:^2}</span><span class="s1"> </span><span class="si">{:^2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">atom</span><span class="o">.</span><span class="n">ix</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">iy</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">iz</span><span class="p">)</span>
+        
+        <span class="n">line</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:^6}</span><span class="s1"> </span><span class="si">{:^4}</span><span class="s1"> </span><span class="si">{:^2}</span><span class="s1"> </span><span class="si">{:^20.16f}</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">atom</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">molid</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">q</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">line</span></div>
+
+    
+<div class="viewcode-block" id="Styles.line_charge">
+<a class="viewcode-back" href="../../../mooonpy.molspace.atom_styles.html#mooonpy.molspace.atom_styles.Styles.line_charge">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">line_charge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atom</span><span class="p">,</span> <span class="n">style</span><span class="p">):</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:^24.16f}</span><span class="s1"> </span><span class="si">{:^24.16f}</span><span class="s1"> </span><span class="si">{:^24.16f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">atom</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">z</span><span class="p">)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:^2}</span><span class="s1"> </span><span class="si">{:^2}</span><span class="s1"> </span><span class="si">{:^2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">atom</span><span class="o">.</span><span class="n">ix</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">iy</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">iz</span><span class="p">)</span>
+        
+        <span class="n">line</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:^6}</span><span class="s1"> </span><span class="si">{:^4}</span><span class="s1"> </span><span class="si">{:^20.16f}</span><span class="s1"> </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">atom</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">q</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">line</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

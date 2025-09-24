@@ -1,0 +1,301 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.molspace.clusters &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mooonpy.molspace.clusters</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mooonpy.molspace.clusters</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="c1"># from mooonpy.molspace.molspace import Molspace # cannot circular import. only need for types</span>
+
+<div class="viewcode-block" id="Cluster">
+<a class="viewcode-back" href="../../../mooonpy.molspace.clusters.html#mooonpy.molspace.clusters.Cluster">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Cluster</span><span class="p">():</span>
+    <span class="c1"># could inherit member as set?</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">,</span> <span class="s1">&#39;mass&#39;</span><span class="p">,</span> <span class="s1">&#39;composition&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_set</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">in_set</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">members</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">members</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">in_set</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">composition</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>  <span class="c1"># default 0 for default dict</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;Cluster object with </span><span class="si">{}</span><span class="s1"> members&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">members</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="Clusters">
+<a class="viewcode-back" href="../../../mooonpy.molspace.clusters.html#mooonpy.molspace.clusters.Clusters">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Clusters</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">molspace</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_molspace</span> <span class="o">=</span> <span class="n">molspace</span>  <span class="c1"># reference to parent? only use internally</span>
+        <span class="c1"># dont compute here, molspace is mostly empty when initialized</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Modify variable explorer label&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s1">&#39;Clusters class of </span><span class="si">{}</span><span class="s1"> Cluster objects&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+<div class="viewcode-block" id="Clusters.dict">
+<a class="viewcode-back" href="../../../mooonpy.molspace.clusters.html#mooonpy.molspace.clusters.Clusters.dict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a dict of the cluster member sets</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">out_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">molid</span><span class="p">,</span> <span class="n">cluster</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">out_dict</span><span class="p">[</span><span class="n">molid</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">members</span>
+        <span class="k">return</span> <span class="n">out_dict</span></div>
+
+
+<div class="viewcode-block" id="Clusters.mass_dict">
+<a class="viewcode-back" href="../../../mooonpy.molspace.clusters.html#mooonpy.molspace.clusters.Clusters.mass_dict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mass_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns dict of {molid:mass}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">molid</span><span class="p">:</span> <span class="n">cluster</span><span class="o">.</span><span class="n">mass</span> <span class="k">for</span> <span class="n">molid</span><span class="p">,</span> <span class="n">cluster</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span></div>
+
+
+<div class="viewcode-block" id="Clusters.assign_clusters">
+<a class="viewcode-back" href="../../../mooonpy.molspace.clusters.html#mooonpy.molspace.clusters.Clusters.assign_clusters">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">assign_clusters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read molid from atom objects to populate clusters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">_id</span><span class="p">,</span> <span class="n">atom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molspace</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">molid</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">molid</span>
+            <span class="k">if</span> <span class="n">molid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+                <span class="bp">self</span><span class="p">[</span><span class="n">molid</span><span class="p">]</span> <span class="o">=</span> <span class="n">Cluster</span><span class="p">()</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">molid</span><span class="p">]</span><span class="o">.</span><span class="n">members</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="Clusters.compute_clusters">
+<a class="viewcode-back" href="../../../mooonpy.molspace.clusters.html#mooonpy.molspace.clusters.Clusters.compute_clusters">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_clusters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute molid from bond connectivity</span>
+<span class="sd">        Note, this clears the object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">neighbors</span> <span class="o">=</span> <span class="n">first_neighbor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_molspace</span><span class="p">)</span>
+        <span class="n">loop_molid</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">lenatoms</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_molspace</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">unsorted</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+        <span class="n">checked</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">id_</span><span class="p">,</span> <span class="n">atom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molspace</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">id_</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">checked</span><span class="p">:</span>
+                <span class="n">loop_molid</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># start at 1</span>
+                <span class="n">checked</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">id_</span><span class="p">)</span>
+                <span class="n">walking</span> <span class="o">=</span> <span class="p">[</span><span class="n">id_</span><span class="p">]</span>  <span class="c1"># depth 0 search</span>
+                <span class="n">unsorted</span><span class="p">[</span><span class="n">loop_molid</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">id_</span><span class="p">)</span> <span class="c1"># save start atom</span>
+                <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">walking</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">to_walk</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="k">for</span> <span class="n">w_id</span> <span class="ow">in</span> <span class="n">walking</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">n_id</span> <span class="ow">in</span> <span class="n">neighbors</span><span class="p">[</span><span class="n">w_id</span><span class="p">]:</span>
+                            <span class="k">if</span> <span class="n">n_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">checked</span><span class="p">:</span>
+                                <span class="n">checked</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">n_id</span><span class="p">)</span>
+                                <span class="n">unsorted</span><span class="p">[</span><span class="n">loop_molid</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">n_id</span><span class="p">)</span>
+                                <span class="n">to_walk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n_id</span><span class="p">)</span>  <span class="c1"># N+1 depth search</span>
+                    <span class="n">walking</span> <span class="o">=</span> <span class="n">to_walk</span>  <span class="c1"># next depth of search</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">checked</span><span class="p">)</span> <span class="o">==</span> <span class="n">lenatoms</span><span class="p">:</span>
+                    <span class="k">break</span>  <span class="c1"># exit if all clusters explored</span>
+
+        <span class="c1"># sorted_molid = {molid: unsorted[molid] for molid in</span>
+        <span class="c1">#                 sorted(unsorted, key=lambda molid: len(unsorted[molid]), reverse=True)}</span>
+
+        <span class="n">sorted_molid</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">unsorted</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+        <span class="c1"># Note this is not deterministic if multiple clusters of the same size exist</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">new_molid</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">molid</span><span class="p">,</span> <span class="n">members</span> <span class="ow">in</span> <span class="n">sorted_molid</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">new_molid</span> <span class="o">+=</span><span class="mi">1</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">new_molid</span><span class="p">]</span> <span class="o">=</span> <span class="n">Cluster</span><span class="p">(</span><span class="n">members</span><span class="p">)</span>
+            <span class="c1">## update per-atom molid</span>
+            <span class="k">for</span> <span class="n">id_</span> <span class="ow">in</span> <span class="n">members</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_molspace</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">id_</span><span class="p">]</span><span class="o">.</span><span class="n">molid</span> <span class="o">=</span> <span class="n">new_molid</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="Clusters.compute_info">
+<a class="viewcode-back" href="../../../mooonpy.molspace.clusters.html#mooonpy.molspace.clusters.Clusters.compute_info">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the count of atom types in each cluster, and total mass</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">mass_lookup</span> <span class="o">=</span> <span class="p">{</span><span class="n">type_</span><span class="p">:</span> <span class="n">param</span><span class="o">.</span><span class="n">coeffs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">type_</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molspace</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">masses</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">mass_lookup</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">molid</span><span class="p">,</span> <span class="n">cluster</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">cluster</span><span class="o">.</span><span class="n">composition</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">id_</span> <span class="ow">in</span> <span class="n">cluster</span><span class="o">.</span><span class="n">members</span><span class="p">:</span>
+                <span class="n">type_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_molspace</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">id_</span><span class="p">]</span><span class="o">.</span><span class="n">type</span>
+                <span class="n">cluster</span><span class="o">.</span><span class="n">composition</span><span class="p">[</span><span class="n">type_</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="n">cluster</span><span class="o">.</span><span class="n">mass</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">for</span> <span class="n">type_</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">cluster</span><span class="o">.</span><span class="n">composition</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">mass_lookup</span><span class="p">:</span>  <span class="c1"># skips if not assigned</span>
+                    <span class="n">cluster</span><span class="o">.</span><span class="n">mass</span> <span class="o">+=</span> <span class="n">mass_lookup</span><span class="p">[</span><span class="n">type_</span><span class="p">]</span> <span class="o">*</span> <span class="n">count</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="first_neighbor">
+<a class="viewcode-back" href="../../../mooonpy.molspace.clusters.html#mooonpy.molspace.clusters.first_neighbor">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">first_neighbor</span><span class="p">(</span><span class="n">molspace</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to compute single step per-atom graph</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># neighbors = defaultdict(list) # or set? gor for ease not speed here</span>
+    <span class="n">neighbors</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">id_</span><span class="p">,</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">molspace</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>  <span class="c1"># need loop here for lone atoms</span>
+        <span class="c1"># neighbors[id_] = []</span>
+        <span class="n">neighbors</span><span class="p">[</span><span class="n">id_</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="n">bond</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># dummy</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">bond</span> <span class="ow">in</span> <span class="n">molspace</span><span class="o">.</span><span class="n">bonds</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="c1"># neighbors[bond[1]].append(bond[0])</span>
+            <span class="c1"># neighbors[bond[0]].append(bond[1])</span>
+            <span class="n">neighbors</span><span class="p">[</span><span class="n">bond</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bond</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">neighbors</span><span class="p">[</span><span class="n">bond</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bond</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Bond </span><span class="si">{</span><span class="n">bond</span><span class="si">}</span><span class="s1"> does not have associated atoms&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">neighbors</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

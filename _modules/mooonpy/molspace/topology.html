@@ -1,0 +1,350 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.molspace.topology &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mooonpy.molspace.topology</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mooonpy.molspace.topology</h1><div class="highlight"><pre>
+<span></span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">..note:: the keys usef for all of these classes use the ordering rules below,</span>
+<span class="sd">    so only 1 permutation is saved or searched for, and the original order is saved in the &#39;ordered&#39; attribute,</span>
+<span class="sd">        - Bonds: key = (id1, id2) # id1 &lt; id2</span>
+<span class="sd">        - Angles: key = (id1, id2, id3) # id1 &lt; id3</span>
+<span class="sd">        - Dihedrals: key = (id1, id2, id3, id4) # id1 &lt; id4</span>
+<span class="sd">        - Impropers: key = (id1, id2, id3, id4) # id1 &lt; id3 &lt; id4 # center atom is always id2, sort others</span>
+
+<span class="sd">..TODO:: methods for safe lookup and __set__ with autocorrected order - 7-Jul-25</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_make_class</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="n">slots</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">defaults</span> <span class="o">=</span> <span class="n">defaults</span> <span class="ow">or</span> <span class="p">{}</span>
+
+    <span class="k">class</span><span class="w"> </span><span class="nc">Dynamic</span><span class="p">:</span>
+        <span class="vm">__slots__</span> <span class="o">=</span> <span class="n">slots</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">values</span> <span class="ow">or</span> <span class="p">{}</span>
+            <span class="n">merged</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">defaults</span><span class="p">,</span> <span class="o">**</span><span class="n">values</span><span class="p">}</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__slots__</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">merged</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Changes debugger object descriptions?</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">pass</span>
+            <span class="c1"># return &#39;{} Object&#39;.format(self.__name__)</span>
+
+    <span class="n">Dynamic</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="n">class_name</span>
+    <span class="k">return</span> <span class="n">Dynamic</span>
+
+
+<div class="viewcode-block" id="Bonds">
+<a class="viewcode-back" href="../../../mooonpy.molspace.topology.html#mooonpy.molspace.topology.Bonds">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Bonds</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="c1"># Generate an Bond class with necessary slots and defaults, which will</span>
+        <span class="c1"># be used by bond_factory() method to generate an instance of this class</span>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="s1">&#39;Bond&#39;</span>
+        <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;bo&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;ordered&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;comment&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;dist&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;vect&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="n">slots</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">defaults</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Bond</span> <span class="o">=</span> <span class="n">_make_class</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="n">slots</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="n">defaults</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Bonds.bond_factory">
+<a class="viewcode-back" href="../../../mooonpy.molspace.topology.html#mooonpy.molspace.topology.Bonds.bond_factory">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bond_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Bond</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Bonds.key_rule">
+<a class="viewcode-back" href="../../../mooonpy.molspace.topology.html#mooonpy.molspace.topology.Bonds.key_rule">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">key_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">):</span>
+        <span class="c1">## Some switch statement for format in self?</span>
+        <span class="k">if</span> <span class="n">id1</span> <span class="o">&lt;</span> <span class="n">id2</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">id2</span><span class="p">,</span> <span class="n">id1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">key</span></div>
+
+
+<div class="viewcode-block" id="Bonds.id_get">
+<a class="viewcode-back" href="../../../mooonpy.molspace.topology.html#mooonpy.molspace.topology.Bonds.id_get">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">id_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">):</span>
+        <span class="c1"># technically which rule used could come from self?</span>
+        <span class="c1"># if you already know order just use self[key]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key_rule</span><span class="p">(</span><span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">))</span>  <span class="c1"># could also do a safe return get? default kwarg or factory?</span></div>
+
+
+<div class="viewcode-block" id="Bonds.id_set">
+<a class="viewcode-back" href="../../../mooonpy.molspace.topology.html#mooonpy.molspace.topology.Bonds.id_set">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">id_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">key_rule</span><span class="p">(</span><span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">)]</span> <span class="o">=</span> <span class="n">value</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Angles">
+<a class="viewcode-back" href="../../../mooonpy.molspace.topology.html#mooonpy.molspace.topology.Angles">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Angles</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="c1"># Generate an Angle class with necessary slots and defaults, which will</span>
+        <span class="c1"># be used by angle_factory() method to generate an instance of this class</span>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="s1">&#39;Angle&#39;</span>
+        <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;ordered&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;comment&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;theta&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;normal&#39;</span><span class="p">:</span><span class="kc">None</span><span class="p">}</span>
+        <span class="n">slots</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">defaults</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Angle</span> <span class="o">=</span> <span class="n">_make_class</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="n">slots</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="n">defaults</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Angles.angle_factory">
+<a class="viewcode-back" href="../../../mooonpy.molspace.topology.html#mooonpy.molspace.topology.Angles.angle_factory">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">angle_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Angle</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Angles.key_rule">
+<a class="viewcode-back" href="../../../mooonpy.molspace.topology.html#mooonpy.molspace.topology.Angles.key_rule">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">key_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">id3</span><span class="p">):</span>
+        <span class="c1">## Some switch statement for format in self?</span>
+        <span class="k">if</span> <span class="n">id1</span> <span class="o">&lt;</span> <span class="n">id3</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">id3</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">id3</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">id1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">key</span></div>
+
+
+<div class="viewcode-block" id="Angles.id_get">
+<a class="viewcode-back" href="../../../mooonpy.molspace.topology.html#mooonpy.molspace.topology.Angles.id_get">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">id_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">id3</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key_rule</span><span class="p">(</span><span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">id3</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Angles.id_set">
+<a class="viewcode-back" href="../../../mooonpy.molspace.topology.html#mooonpy.molspace.topology.Angles.id_set">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">id_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">id3</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">key_rule</span><span class="p">(</span><span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">id3</span><span class="p">)]</span> <span class="o">=</span> <span class="n">value</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Dihedrals">
+<a class="viewcode-back" href="../../../mooonpy.molspace.topology.html#mooonpy.molspace.topology.Dihedrals">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Dihedrals</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="c1"># Generate an Dihedral class with necessary slots and defaults, which will</span>
+        <span class="c1"># be used by dihedral_factory() method to generate an instance of this class</span>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="s1">&#39;Dihedral&#39;</span>
+        <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;ordered&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;comment&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;phi&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="n">slots</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">defaults</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Dihedral</span> <span class="o">=</span> <span class="n">_make_class</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="n">slots</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="n">defaults</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Dihedrals.dihedral_factory">
+<a class="viewcode-back" href="../../../mooonpy.molspace.topology.html#mooonpy.molspace.topology.Dihedrals.dihedral_factory">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dihedral_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Dihedral</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Dihedrals.key_rule">
+<a class="viewcode-back" href="../../../mooonpy.molspace.topology.html#mooonpy.molspace.topology.Dihedrals.key_rule">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">key_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">id3</span><span class="p">,</span> <span class="n">id4</span><span class="p">):</span>
+        <span class="c1">## Some switch statement for format in self?</span>
+        <span class="k">if</span> <span class="n">id1</span> <span class="o">&lt;</span> <span class="n">id4</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">id3</span><span class="p">,</span> <span class="n">id4</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">id4</span><span class="p">,</span> <span class="n">id3</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">id1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">key</span></div>
+
+
+<div class="viewcode-block" id="Dihedrals.id_get">
+<a class="viewcode-back" href="../../../mooonpy.molspace.topology.html#mooonpy.molspace.topology.Dihedrals.id_get">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">id_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">id3</span><span class="p">,</span> <span class="n">id4</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key_rule</span><span class="p">(</span><span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">id3</span><span class="p">,</span> <span class="n">id4</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Dihedrals.id_set">
+<a class="viewcode-back" href="../../../mooonpy.molspace.topology.html#mooonpy.molspace.topology.Dihedrals.id_set">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">id_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">id3</span><span class="p">,</span> <span class="n">id4</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">key_rule</span><span class="p">(</span><span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">id3</span><span class="p">,</span> <span class="n">id4</span><span class="p">)]</span> <span class="o">=</span> <span class="n">value</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Impropers">
+<a class="viewcode-back" href="../../../mooonpy.molspace.topology.html#mooonpy.molspace.topology.Impropers">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Impropers</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="c1"># Generate an Improper class with necessary slots and defaults, which will</span>
+        <span class="c1"># be used by improper_factory() method to generate an instance of this class</span>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="s1">&#39;Improper&#39;</span>
+        <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;ordered&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;comment&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;chi&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;nb&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+        <span class="n">slots</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">defaults</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Improper</span> <span class="o">=</span> <span class="n">_make_class</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="n">slots</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="n">defaults</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Impropers.improper_factory">
+<a class="viewcode-back" href="../../../mooonpy.molspace.topology.html#mooonpy.molspace.topology.Impropers.improper_factory">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">improper_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Improper</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Impropers.key_rule">
+<a class="viewcode-back" href="../../../mooonpy.molspace.topology.html#mooonpy.molspace.topology.Impropers.key_rule">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">key_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">id3</span><span class="p">,</span> <span class="n">id4</span><span class="p">):</span>
+        <span class="c1">## Some switch statement for format in self?</span>
+        <span class="n">outers</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">id1</span><span class="p">,</span> <span class="n">id3</span><span class="p">,</span> <span class="n">id4</span><span class="p">])</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">outers</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">id2</span><span class="p">,</span> <span class="n">outers</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">outers</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">key</span></div>
+
+
+<div class="viewcode-block" id="Impropers.id_get">
+<a class="viewcode-back" href="../../../mooonpy.molspace.topology.html#mooonpy.molspace.topology.Impropers.id_get">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">id_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">id3</span><span class="p">,</span> <span class="n">id4</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key_rule</span><span class="p">(</span><span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">id3</span><span class="p">,</span> <span class="n">id4</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Impropers.id_set">
+<a class="viewcode-back" href="../../../mooonpy.molspace.topology.html#mooonpy.molspace.topology.Impropers.id_set">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">id_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">id3</span><span class="p">,</span> <span class="n">id4</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">key_rule</span><span class="p">(</span><span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">,</span> <span class="n">id3</span><span class="p">,</span> <span class="n">id4</span><span class="p">)]</span> <span class="o">=</span> <span class="n">value</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
