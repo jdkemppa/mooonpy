@@ -136,10 +136,19 @@ class Table(object):
 
         if headers:
             if self.x_column is not None:
+                col_flag = False
                 x_column = self.x_column
-                x = self.col(x_column)
+                if type(x_column) is list or type(x_column) is np.ndarray:
+                    x = x_column
+                    col_flag = True
+                else:
+                    x = self.col(x_column)
+
                 for header in headers:
-                    if header == x_column: continue
+                    if col_flag:
+                        pass
+                    elif header == x_column:
+                        continue
                     axs.plot(x, self.col(header), label=header)
                 axs.set_xlabel(x_column)
                 axs.legend()
@@ -199,7 +208,7 @@ class Table(object):
             if left_flag:
                 line += cell.format(self.rowlabels()[row_index]) + delim
             for col_index in range(shape[1]):
-                if isinstance(self, ListListTable): # weird indexing error with rowcol here so it was hardcoded out
+                if isinstance(self, ListListTable):  # weird indexing error with rowcol here so it was hardcoded out
                     value = self.grid[row_index][col_index]
                 else:
                     value = self.rowcol(row_index, col_index)
@@ -339,6 +348,9 @@ class ListListTable(Table):
         else:
             self.rows = None
 
+    def __iter__(self):
+        return iter(self.grid)
+
     def append(self, row):
         """Append to ehd of grid"""
         self.grid.append(row)
@@ -447,7 +459,10 @@ class ListListTable(Table):
                                 columns.pop(-1)  # remove trailing comma
                         else:
                             rows = None
-                        continue # no data
+                            columns = [key.strip() for key in splits]
+                            if columns[-1] == '':
+                                columns.pop(-1)  # remove trailing comma
+                        continue  # no data
 
                 this_row = []
                 if rowlabels:
@@ -462,7 +477,8 @@ class ListListTable(Table):
         except:
             raise Exception(f'ERROR: CSV line {ii} :{line} could not read from {file}')
 
-        return ListListTable(from_listlist=row_list, cornerlabel=corner, rows=rows,collabels=columns)
+        return ListListTable(from_listlist=row_list, cornerlabel=corner, rows=rows, collabels=columns)
+
 
 class ColTable(Table):
     def __init__(self, from_dict=None, rows=None, title=None, cornerlabel=None, default=...):
@@ -586,7 +602,7 @@ class ColTable(Table):
                             rows = []
                         else:
                             keys = list(range(len(splits)))
-                    if keys[-1] == '': keys.pop(-1) # remove trailing comma
+                    if keys[-1] == '': keys.pop(-1)  # remove trailing comma
                     columns = {key: list() for key in keys}
                 else:
                     if rowlabels:
