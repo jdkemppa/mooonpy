@@ -1,0 +1,7 @@
+mooonpy.molspace.atom\_styles module
+====================================
+
+.. automodule:: mooonpy.molspace.atom_styles
+   :members:
+   :show-inheritance:
+   :undoc-members:

@@ -1,0 +1,519 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.tools.math_utils &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mooonpy.tools.math_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mooonpy.tools.math_utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.signal</span><span class="w"> </span><span class="kn">import</span> <span class="n">find_peaks</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">numbers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Number</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="n">Array1D</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="aggregate_fun">
+<a class="viewcode-back" href="../../../mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.aggregate_fun">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">aggregate_fun</span><span class="p">(</span><span class="n">fun_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">vector</span><span class="p">:</span> <span class="n">Array1D</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Number</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Apply generic aggregate functions to a vector, similar to the bottom row of a spreadsheet.</span>
+<span class="sd">    Modes control values to be ignored in operation, by slicing the vector before the operation.</span>
+
+<span class="sd">    Note that operating on an empty sclice will return a np.nan.</span>
+
+<span class="sd">    **Currently supported Operators: fun_name must start with one of these substrings**</span>
+<span class="sd">        - sum: Summation</span>
+<span class="sd">        - avg: Arithmetic mean</span>
+<span class="sd">        - std: Standard Deviation</span>
+
+<span class="sd">    **Currently supported Modes: if fun_name ends with one of these substrings, the rule is applied**</span>
+<span class="sd">        -0: Ignores 0&#39;s</span>
+<span class="sd">        -None: Ignores None or nan</span>
+
+<span class="sd">    :param fun_name: Selection of Function and Mode.</span>
+<span class="sd">    :type fun_name: str</span>
+<span class="sd">    :param vector: row or column vector to operate on.</span>
+<span class="sd">    :type vector: list or numpy array</span>
+<span class="sd">    :return: Result of operation.</span>
+<span class="sd">    :rtype: Number</span>
+
+<span class="sd">    :Example:</span>
+<span class="sd">        &gt;&gt;&gt; from mooonpy.tools import aggregate_fun</span>
+<span class="sd">        &gt;&gt;&gt; MyVect = [0,1,2]</span>
+<span class="sd">        &gt;&gt;&gt; avg_no0 = aggregate_fun(&#39;avg0&#39;, MyVect)</span>
+<span class="sd">        1.5</span>
+<span class="sd">        &gt;&gt;&gt; avg_all = aggregate_fun(&#39;avg&#39;, MyVect)</span>
+<span class="sd">        1.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Do sclicing for Mode rules</span>
+    <span class="k">if</span> <span class="n">fun_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">):</span>
+        <span class="n">slice_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">vector</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">slice_</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="k">elif</span> <span class="n">fun_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;None&#39;</span><span class="p">):</span>
+        <span class="n">slice_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">vector</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">slice_</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">slice_</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># Compute aggregate</span>
+    <span class="k">if</span> <span class="n">fun_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;sum&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">vector</span><span class="p">[</span><span class="n">slice_</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">fun_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;avg&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">vector</span><span class="p">[</span><span class="n">slice_</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">fun_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;std&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">vector</span><span class="p">[</span><span class="n">slice_</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;ERROR: fun_name </span><span class="si">{</span><span class="n">fun_name</span><span class="si">}</span><span class="s1"> not recognized&#39;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="find_peaks_and_valleys">
+<a class="viewcode-back" href="../../../mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.find_peaks_and_valleys">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_peaks_and_valleys</span><span class="p">(</span><span class="n">xdata</span><span class="p">:</span> <span class="n">Array1D</span><span class="p">,</span> <span class="n">ydata</span><span class="p">:</span> <span class="n">Array1D</span><span class="p">,</span> <span class="n">prominence</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Number</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the peaks and valleys of a curve using a specified prominence for cutoff.</span>
+
+<span class="sd">    :param xdata: Array of x values. Must be increasing monotonically.</span>
+<span class="sd">    :type xdata: Array1D</span>
+<span class="sd">    :param ydata: Array of y values.</span>
+<span class="sd">    :type ydata: Array1D</span>
+<span class="sd">    :param prominence: Prominence for cutoff</span>
+<span class="sd">    :type prominence: Number or None</span>
+
+<span class="sd">    :return: X peaks, Y peaks, X valleys, Y valleys</span>
+<span class="sd">    :rtype: Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]</span>
+
+<span class="sd">    .. TODO::</span>
+<span class="sd">        make an example image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Find peaks</span>
+    <span class="n">peaks</span><span class="p">,</span> <span class="n">properties</span> <span class="o">=</span> <span class="n">find_peaks</span><span class="p">(</span><span class="n">ydata</span><span class="p">,</span> <span class="n">prominence</span><span class="o">=</span><span class="n">prominence</span><span class="p">)</span>
+    <span class="n">xpeaks</span> <span class="o">=</span> <span class="n">xdata</span><span class="p">[</span><span class="n">peaks</span><span class="p">]</span>
+    <span class="n">ypeaks</span> <span class="o">=</span> <span class="n">ydata</span><span class="p">[</span><span class="n">peaks</span><span class="p">]</span>
+
+    <span class="c1"># Find valleys</span>
+    <span class="n">xvalleys</span><span class="p">,</span> <span class="n">yvalleys</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">xpeaks</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">ypeaks</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">peaks</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">lo</span> <span class="o">=</span> <span class="n">peaks</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">hi</span> <span class="o">=</span> <span class="n">peaks</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">between_peaksx</span> <span class="o">=</span> <span class="n">xdata</span><span class="p">[</span><span class="n">lo</span><span class="p">:</span><span class="n">hi</span><span class="p">]</span>
+            <span class="n">between_peaksy</span> <span class="o">=</span> <span class="n">ydata</span><span class="p">[</span><span class="n">lo</span><span class="p">:</span><span class="n">hi</span><span class="p">]</span>
+            <span class="n">minimum_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">between_peaksy</span> <span class="o">==</span> <span class="n">between_peaksy</span><span class="o">.</span><span class="n">min</span><span class="p">())[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">xvalleys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">between_peaksx</span><span class="p">[</span><span class="n">minimum_index</span><span class="p">])</span>
+            <span class="n">yvalleys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">between_peaksy</span><span class="p">[</span><span class="n">minimum_index</span><span class="p">])</span>
+    <span class="n">xvalleys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xvalleys</span><span class="p">)</span>
+    <span class="n">yvalleys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">yvalleys</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">xpeaks</span><span class="p">,</span> <span class="n">ypeaks</span><span class="p">,</span> <span class="n">xvalleys</span><span class="p">,</span> <span class="n">yvalleys</span></div>
+
+
+
+<div class="viewcode-block" id="compute_derivative">
+<a class="viewcode-back" href="../../../mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.compute_derivative">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_derivative</span><span class="p">(</span><span class="n">xdata</span><span class="p">:</span> <span class="n">Array1D</span><span class="p">,</span> <span class="n">ydata</span><span class="p">:</span> <span class="n">Array1D</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to compute the 1st and 2nd order central derivatives.</span>
+<span class="sd">    Edges are not considered, so trimmed x array is returned.</span>
+
+<span class="sd">    :param xdata: Array of x values.</span>
+<span class="sd">    :type xdata: Array1D</span>
+<span class="sd">    :param ydata: Array of y values.</span>
+<span class="sd">    :type ydata: Array1D</span>
+<span class="sd">    :return: Trimmed x, 1st derivative, 2nd derivative</span>
+<span class="sd">    :rtype: Tuple[np.ndarray, np.ndarray, np.ndarray</span>
+
+<span class="sd">    .. TODO::</span>
+<span class="sd">        make an example image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dxn</span> <span class="o">=</span> <span class="n">xdata</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># ignore first and last point</span>
+    <span class="n">dxn</span> <span class="o">=</span> <span class="n">dxn</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">dy1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">dxn</span><span class="p">)</span>
+    <span class="n">dy2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">dxn</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">xdata</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">ydata</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">xdata</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">dx</span> <span class="o">=</span> <span class="p">(</span><span class="n">xdata</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">xdata</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="k">if</span> <span class="n">dx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="s1">&#39;WARNING finite difference dx was zero at x=</span><span class="si">{}</span><span class="s1">. Derivative was set to zero to avoid infinite derivative.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">xdata</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dy1</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ydata</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ydata</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dx</span><span class="p">)</span>
+                <span class="n">dy2</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ydata</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">ydata</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">ydata</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">dx</span> <span class="o">*</span> <span class="n">dx</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ERROR (compute_derivative) inconsistent number of data points between X and Y arrays&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dxn</span><span class="p">,</span> <span class="n">dy1</span><span class="p">,</span> <span class="n">dy2</span></div>
+
+
+
+<div class="viewcode-block" id="compute_fringe_slope">
+<a class="viewcode-back" href="../../../mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.compute_fringe_slope">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_fringe_slope</span><span class="p">(</span><span class="n">strain</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">stress</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">min_strain</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Number</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                         <span class="n">max_strain</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Number</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">direction</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;forward&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute fringe slope</span>
+
+<span class="sd">    .. TODO::</span>
+<span class="sd">        Most concise writeup and a link to the paper</span>
+
+<span class="sd">    :param strain: Strain</span>
+<span class="sd">    :type strain: Array1D</span>
+<span class="sd">    :param stress: Stress</span>
+<span class="sd">    :type stress: Array1D</span>
+<span class="sd">    :param min_strain: Minimum strain, defaults to None to use minimum index</span>
+<span class="sd">    :type min_strain: Optional(Number)</span>
+<span class="sd">    :param max_strain: Maximum strain, defaults to None to use maximum index</span>
+<span class="sd">    :type max_strain: Optional(Number)</span>
+<span class="sd">    :param direction: Direction, Must be &#39;forward&#39; or &#39;backward&#39;, flips both vectors, defaults to &#39;forward&#39;.</span>
+<span class="sd">    :type direction: str</span>
+
+<span class="sd">    :return: Fringe slope X and Y</span>
+<span class="sd">    :rtype: Tuple[np.ndarray, np.ndarray]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Set direction</span>
+    <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;forward&#39;</span><span class="p">:</span>
+        <span class="n">strain</span> <span class="o">=</span> <span class="n">strain</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">stress</span> <span class="o">=</span> <span class="n">stress</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;reverse&#39;</span><span class="p">:</span>
+        <span class="n">strain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">strain</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="n">stress</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">stress</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;ERROR direction=</span><span class="si">{</span><span class="n">direction</span><span class="si">}</span><span class="s1"> is not supported. Supported directions are &quot;forward&quot; or &quot;reverse&quot;&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Set defaults if min_strain or max_strain are None</span>
+    <span class="k">if</span> <span class="n">min_strain</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">min_strain</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">strain</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">max_strain</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">max_strain</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">strain</span><span class="p">)</span>
+
+    <span class="c1">## Vectorized is much quicker but there&#39;s an off by 1 error</span>
+    <span class="c1">#</span>
+    <span class="c1"># n = np.arange(0, len(strain))</span>
+    <span class="c1"># slice_ = (min_strain &lt;= strain) &amp; (strain &lt;= max_strain) &amp; (n &gt;= 4)</span>
+    <span class="c1">#</span>
+    <span class="c1"># sum_xi = np.cumsum(strain)</span>
+    <span class="c1"># sum_yi = np.cumsum(stress)</span>
+    <span class="c1"># sum_xi_2 = np.cumsum(strain*strain)</span>
+    <span class="c1"># sum_yi_2 = np.cumsum(stress*stress)</span>
+    <span class="c1"># sum_xi_yi = np.cumsum(strain*stress)</span>
+    <span class="c1">#</span>
+    <span class="c1"># sum_xi = sum_xi[slice_]</span>
+    <span class="c1"># sum_yi = sum_yi[slice_]</span>
+    <span class="c1"># sum_xi_2 = sum_xi_2[slice_]</span>
+    <span class="c1"># sum_yi_2 = sum_yi_2[slice_]</span>
+    <span class="c1"># sum_xi_yi = sum_xi_yi[slice_]</span>
+    <span class="c1"># n = n[slice_]</span>
+    <span class="c1"># fringe = strain[slice_]</span>
+    <span class="c1">#</span>
+    <span class="c1"># SSxy = sum_xi_yi - (sum_xi * sum_yi / n)</span>
+    <span class="c1"># SSxx = sum_xi_2 - (sum_xi * sum_xi / n)</span>
+    <span class="c1"># slopes = SSxy / SSxx</span>
+    <span class="c1">#</span>
+    <span class="c1"># return fringe, slopes</span>
+
+    <span class="c1">## Original non-vectorized</span>
+    <span class="c1"># Start the walked linear regression method</span>
+    <span class="n">slopes</span><span class="p">,</span> <span class="n">fringe</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="n">sum_xi</span><span class="p">,</span> <span class="n">sum_yi</span><span class="p">,</span> <span class="n">sum_xi_2</span><span class="p">,</span> <span class="n">sum_yi_2</span><span class="p">,</span> <span class="n">sum_xi_yi</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">strain</span><span class="p">,</span> <span class="n">stress</span><span class="p">):</span>
+        <span class="c1"># Compute cumulative linear regression parameters</span>
+        <span class="n">sum_xi</span> <span class="o">+=</span> <span class="n">x</span>
+        <span class="n">sum_yi</span> <span class="o">+=</span> <span class="n">y</span>
+        <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">sum_xi_2</span> <span class="o">+=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+        <span class="n">sum_yi_2</span> <span class="o">+=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">y</span>
+        <span class="n">sum_xi_yi</span> <span class="o">+=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span>
+
+        <span class="c1"># Need at least 2 points to perform linear regression</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">3</span><span class="p">:</span> <span class="k">continue</span>
+
+        <span class="c1"># Only compute outputs if x is in the desired range</span>
+        <span class="k">if</span> <span class="n">min_strain</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">max_strain</span><span class="p">:</span>
+            <span class="n">SSxy</span> <span class="o">=</span> <span class="n">sum_xi_yi</span> <span class="o">-</span> <span class="p">(</span><span class="n">sum_xi</span> <span class="o">*</span> <span class="n">sum_yi</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
+            <span class="n">SSxx</span> <span class="o">=</span> <span class="n">sum_xi_2</span> <span class="o">-</span> <span class="p">(</span><span class="n">sum_xi</span> <span class="o">*</span> <span class="n">sum_xi</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
+            <span class="n">b1</span> <span class="o">=</span> <span class="n">SSxy</span> <span class="o">/</span> <span class="n">SSxx</span>
+
+            <span class="n">slopes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b1</span><span class="p">)</span>
+            <span class="n">fringe</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fringe</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">slopes</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="first_value_cross">
+<a class="viewcode-back" href="../../../mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.first_value_cross">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">first_value_cross</span><span class="p">(</span><span class="n">xdata</span><span class="p">:</span> <span class="n">Array1D</span><span class="p">,</span> <span class="n">ydata</span><span class="p">:</span> <span class="n">Array1D</span><span class="p">,</span> <span class="n">cross</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Number</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find x location of the first time the y data crosses a value of the y data.</span>
+
+<span class="sd">    :param xdata: X data</span>
+<span class="sd">    :type xdata: Array1D</span>
+<span class="sd">    :param ydata: Y data</span>
+<span class="sd">    :type ydata: Array1D</span>
+<span class="sd">    :param cross: Value to compare against, defaults to None, which uses the mean value of ydata</span>
+<span class="sd">    :type cross: Number</span>
+<span class="sd">    :return: First x location</span>
+<span class="sd">    :rtype: Number</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">cross</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cross</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ydata</span><span class="p">)</span>
+    <span class="n">x_cross</span> <span class="o">=</span> <span class="n">xdata</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">ydata</span> <span class="o">&lt;</span> <span class="n">cross</span><span class="p">)[</span><span class="mi">0</span><span class="p">])]</span>
+    <span class="k">return</span> <span class="n">x_cross</span></div>
+
+
+
+<div class="viewcode-block" id="hyperbola">
+<a class="viewcode-back" href="../../../mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.hyperbola">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">hyperbola</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">X0</span><span class="p">,</span> <span class="n">Y0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Patrone Hyperbola fit method</span>
+
+<span class="sd">    :param x: X data</span>
+<span class="sd">    :type x: Array1D</span>
+<span class="sd">    :param X0: center x coordinate</span>
+<span class="sd">    :type X0: Number</span>
+<span class="sd">    :param Y0: center y coordinate</span>
+<span class="sd">    :type Y0: Number</span>
+<span class="sd">    :param a: slope left of turn</span>
+<span class="sd">    :type a: Number</span>
+<span class="sd">    :param b: slope increase after turn</span>
+<span class="sd">    :type b: Number</span>
+<span class="sd">    :param c: slope curvature parameter</span>
+<span class="sd">    :type c: Number</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">X0</span>
+    <span class="n">h0</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">dx</span> <span class="o">*</span> <span class="n">dx</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">Y0</span> <span class="o">+</span> <span class="n">a</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="n">h0</span>
+    <span class="k">return</span> <span class="n">p</span></div>
+
+
+
+<div class="viewcode-block" id="gaussian_turn">
+<a class="viewcode-back" href="../../../mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.gaussian_turn">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">gaussian_turn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">X0</span><span class="p">,</span> <span class="n">Y0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Muzzy Gaussian Turn curve for fitting Tg data</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">X0</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">/</span> <span class="n">s</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">erf</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">+</span> <span class="n">s</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">z</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">F</span> <span class="o">*</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="n">dx</span> <span class="o">*</span> <span class="p">(</span><span class="n">b</span> <span class="o">+</span> <span class="n">a</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">Y0</span>
+
+    <span class="k">return</span> <span class="n">y</span></div>
+
+
+
+<div class="viewcode-block" id="gaussian_quad_turn">
+<a class="viewcode-back" href="../../../mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.gaussian_quad_turn">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">gaussian_quad_turn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">X0</span><span class="p">,</span> <span class="n">Y0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Muzzy Gaussian Quadratic Turn curve for fitting Tg data</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">X0</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">/</span> <span class="n">s</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">erf</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">+</span> <span class="n">s</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">z</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">F</span> <span class="o">*</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="n">F</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">*</span> <span class="p">(</span><span class="n">d</span> <span class="o">-</span> <span class="n">c</span><span class="p">)</span> <span class="o">+</span> <span class="n">dx</span> <span class="o">*</span> <span class="p">(</span><span class="n">b</span> <span class="o">+</span> <span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">*</span> <span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="n">c</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">Y0</span>
+    <span class="k">return</span> <span class="n">y</span></div>
+
+
+
+<div class="viewcode-block" id="edge_tan_intersect">
+<a class="viewcode-back" href="../../../mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.edge_tan_intersect">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">edge_tan_intersect</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Discrete derivative tangent lines at edge(N steps from)</span>
+<span class="sd">    Returns analytical intersections between tangent lines</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">yp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">xi</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">y</span><span class="p">[</span><span class="n">N</span><span class="p">]</span> <span class="o">+</span> <span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="n">N</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="n">N</span><span class="p">]</span> <span class="o">*</span> <span class="n">yp</span><span class="p">[</span><span class="n">N</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="n">N</span><span class="p">]</span> <span class="o">*</span> <span class="n">yp</span><span class="p">[</span><span class="o">-</span><span class="n">N</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">yp</span><span class="p">[</span><span class="n">N</span><span class="p">]</span> <span class="o">-</span> <span class="n">yp</span><span class="p">[</span><span class="o">-</span><span class="n">N</span><span class="p">])</span>
+    <span class="n">yi</span> <span class="o">=</span> <span class="n">yp</span><span class="p">[</span><span class="n">N</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">xi</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">N</span><span class="p">])</span> <span class="o">+</span> <span class="n">y</span><span class="p">[</span><span class="n">N</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">xi</span><span class="p">,</span> <span class="n">yi</span></div>
+
+
+
+<div class="viewcode-block" id="MixingRule">
+<a class="viewcode-back" href="../../../mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.MixingRule">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MixingRule</span><span class="p">():</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;add&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the mixing rule with a specific method name.</span>
+
+<span class="sd">        :param style: The name of the addition method to use</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">style</span> <span class="o">=</span> <span class="n">style</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_method_map</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;add&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arithmetic</span><span class="p">,</span>
+            <span class="s1">&#39;diameter&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_diameter</span><span class="p">,</span>
+            <span class="s1">&#39;arithmetic&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arithmetic</span><span class="p">,</span>
+            <span class="s1">&#39;geometric&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_geometric</span><span class="p">,</span>
+            <span class="s1">&#39;sixth_epsilon&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sixth_epsilon</span><span class="p">,</span>
+            <span class="s1">&#39;sixth_sigma&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sixth_sigma</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_method_map</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">](</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_diameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_arithmetic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_geometric</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">args</span><span class="p">),</span> <span class="mi">1</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_sixth_epsilon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        LAMMPS mix sixthpower function for epsilon.</span>
+<span class="sd">        Assumes ep1, sig1 ep2, sig2 ordering</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">*</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">args</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">6</span> <span class="o">+</span> <span class="n">args</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">**</span> <span class="mi">6</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_sixth_sigma</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">sig1</span><span class="p">,</span> <span class="n">sig2</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>  <span class="c1"># order from above function</span>
+            <span class="n">sig1</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">sig2</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">sig1</span> <span class="o">**</span> <span class="mi">6</span> <span class="o">+</span> <span class="n">sig2</span> <span class="o">**</span> <span class="mi">6</span><span class="p">),</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">6</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

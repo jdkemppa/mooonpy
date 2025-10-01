@@ -1,0 +1,224 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.programs.regression_fringe_response module &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7026087e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="mooonpy.guis package" href="mooonpy.guis.html" />
+    <link rel="prev" title="mooonpy.programs.program module" href="mooonpy.programs.program.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="mooonpy.programs.html">mooonpy.programs package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="mooonpy.programs.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.programs.program.html">mooonpy.programs.program module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">mooonpy.programs.regression_fringe_response module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mooonpy.programs.regression_fringe_response.RFR_tensile_analysis"><code class="docutils literal notranslate"><span class="pre">RFR_tensile_analysis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mooonpy.programs.regression_fringe_response.rfr_labeler"><code class="docutils literal notranslate"><span class="pre">rfr_labeler()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mooonpy.programs.regression_fringe_response.rfr_plotter"><code class="docutils literal notranslate"><span class="pre">rfr_plotter()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="mooonpy.programs.html">mooonpy.programs package</a></li>
+      <li class="breadcrumb-item active">mooonpy.programs.regression_fringe_response module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mooonpy.programs.regression_fringe_response.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mooonpy.programs.regression_fringe_response">
+<span id="mooonpy-programs-regression-fringe-response-module"></span><h1>mooonpy.programs.regression_fringe_response module<a class="headerlink" href="#module-mooonpy.programs.regression_fringe_response" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="mooonpy.programs.regression_fringe_response.RFR_tensile_analysis">
+<span class="sig-prename descclassname"><span class="pre">mooonpy.programs.regression_fringe_response.</span></span><span class="sig-name descname"><span class="pre">RFR_tensile_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stress</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trans_1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trans_2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_xhi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Number</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_xhi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Number</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Number</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'PSD'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Number</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'msr'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mooonpy.programs.program.html#mooonpy.programs.program.ProgramResults" title="mooonpy.programs.program.ProgramResults"><span class="pre">ProgramResults</span></a></span></span><a class="reference internal" href="_modules/mooonpy/programs/regression_fringe_response.html#RFR_tensile_analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.programs.regression_fringe_response.RFR_tensile_analysis" title="Link to this definition"></a></dt>
+<dd><p>Implementation of the Regression Fringe Response Modulus Method Tensile Analysis.</p>
+<p>Returns results in a Program object as attributes</p>
+<dl class="simple">
+<dt><strong>Result Attributes</strong></dt><dd><ul class="simple">
+<li><p>program_name: str</p></li>
+<li><p>program_version: str</p></li>
+<li><p>log: Log object</p></li>
+<li><p>stress_wn: float. Cutoff used for stress filter</p></li>
+<li><p>stress_qm: str. quadrant mirror setting used for stress filter</p></li>
+<li><p>offset: float. Offset of stress after filtering</p></li>
+<li><p>stress_filt: vector. Filtered stress signal</p></li>
+<li><p>lox: float. Lower bound of linear region strain</p></li>
+<li><p>loy: float. Lower bound of linear region stress</p></li>
+<li><p>midx: float. First pass FBF strain</p></li>
+<li><p>midy: float. First pass FBF stress</p></li>
+<li><p>hix: float. Higher bound of linear region strain</p></li>
+<li><p>hiy: float. Higher bound of linear region stress</p></li>
+<li><p>lo_index: int. index of lower bound</p></li>
+<li><p>hi_index: int. index of higher bound</p></li>
+<li><p>x_intercept: float. Intercept of linear region</p></li>
+<li><p>youngs_modulus: float. Young’s modulus from linear region</p></li>
+<li><p>dstrain: vector. x values from derivative of fringe slope</p></li>
+<li><p>dslopes1: vector. 1st derivative 2nd forward of fringe slope</p></li>
+<li><p>dslopes2: vector. 2nd derivative 2nd forward of fringe slope</p></li>
+<li><p>yield_index: int. index of yield. Falls back to linear region upper bound.</p></li>
+<li><p>yield_x: float. yield strain, will be None if not found</p></li>
+<li><p>yield_y: float. yield stress, will be None if not found</p></li>
+<li><p>figs: dict. Dictionary of matplotlib fig objects.</p></li>
+<li><p>axies: dict. Dictionary of matplotlib axes objects.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strain</strong> (<em>np.ndarray</em>) – Strain</p></li>
+<li><p><strong>stress</strong> (<em>np.ndarray</em>) – Stress</p></li>
+<li><p><strong>trans_1</strong> (<em>np.ndarray</em>) – Transverse strain 1</p></li>
+<li><p><strong>trans_2</strong> (<em>np.ndarray</em>) – Transverse strain 2</p></li>
+<li><p><strong>min_xhi</strong> (<em>Number</em>) – Minimum value of xhi, or the smallest span of the elastic region. default None -&gt; min(strain)</p></li>
+<li><p><strong>max_xhi</strong> (<em>Number</em><em> | </em><em>str</em>) – Maximum value of xhi, considered for the elastic region. default None -&gt; max(strain)</p></li>
+<li><p><strong>wn</strong> (<em>Number</em>) – Butterworth lowpass filter cutoff. default ‘PSD’ to use optimization method. may also be ‘off’ to disable.</p></li>
+<li><p><strong>order</strong> (<em>Number</em>) – Order of the Butterworth lowpass filter. default 2</p></li>
+<li><p><strong>qm</strong> (<em>str</em>) – Quadrant Mirror padding setting, as ‘1,1’ as outlined in extend_data. default ‘msr’ to use optimization method.</p></li>
+<li><p><strong>log</strong> (<em>list</em>) – Currently not implemented.</p></li>
+<li><p><strong>plots</strong> (<em>str</em><em> | </em><em>list</em>) – ‘all’ to plot all plots in individual frames, or ‘quad’ to plot 4 figures in one frame. lists of figure stings select which plots to use.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Object containing results of Tensile Analysis</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="mooonpy.programs.program.html#mooonpy.programs.program.ProgramResults" title="mooonpy.programs.program.ProgramResults">ProgramResults</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mooonpy.programs.regression_fringe_response.rfr_labeler">
+<span class="sig-prename descclassname"><span class="pre">mooonpy.programs.regression_fringe_response.</span></span><span class="sig-name descname"><span class="pre">rfr_labeler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axies</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/programs/regression_fringe_response.html#rfr_labeler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.programs.regression_fringe_response.rfr_labeler" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mooonpy.programs.regression_fringe_response.rfr_plotter">
+<span class="sig-prename descclassname"><span class="pre">mooonpy.programs.regression_fringe_response.</span></span><span class="sig-name descname"><span class="pre">rfr_plotter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plots</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/programs/regression_fringe_response.html#rfr_plotter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.programs.regression_fringe_response.rfr_plotter" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mooonpy.programs.program.html" class="btn btn-neutral float-left" title="mooonpy.programs.program module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mooonpy.guis.html" class="btn btn-neutral float-right" title="mooonpy.guis package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

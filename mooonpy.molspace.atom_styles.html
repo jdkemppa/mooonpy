@@ -1,0 +1,238 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.molspace.atom_styles module &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7026087e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="mooonpy.molspace.atoms module" href="mooonpy.molspace.atoms.html" />
+    <link rel="prev" title="mooonpy.molspace.graph_theory.ring_analysis module" href="mooonpy.molspace.graph_theory.ring_analysis.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="mooonpy.molspace.html">mooonpy.molspace package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.molspace.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="mooonpy.molspace.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">mooonpy.molspace.atom_styles module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mooonpy.molspace.atom_styles.Styles"><code class="docutils literal notranslate"><span class="pre">Styles</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.atoms.html">mooonpy.molspace.atoms module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.bonds_from_distances.html">mooonpy.molspace.bonds_from_distances module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.box.html">mooonpy.molspace.box module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.clusters.html">mooonpy.molspace.clusters module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.distance.html">mooonpy.molspace.distance module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.doc_examples.html">mooonpy.molspace.doc_examples module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.force_field.html">mooonpy.molspace.force_field module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.molspace.html">mooonpy.molspace.molspace module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.periodic_table.html">mooonpy.molspace.periodic_table module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.reaxff.html">mooonpy.molspace.reaxff module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.topology.html">mooonpy.molspace.topology module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="mooonpy.molspace.html">mooonpy.molspace package</a></li>
+      <li class="breadcrumb-item active">mooonpy.molspace.atom_styles module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mooonpy.molspace.atom_styles.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mooonpy.molspace.atom_styles">
+<span id="mooonpy-molspace-atom-styles-module"></span><h1>mooonpy.molspace.atom_styles module<a class="headerlink" href="#module-mooonpy.molspace.atom_styles" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mooonpy.molspace.atom_styles.Styles">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mooonpy.molspace.atom_styles.</span></span><span class="sig-name descname"><span class="pre">Styles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">astyles</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/atom_styles.html#Styles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.atom_styles.Styles" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Set up supported styles for LAMMPS and other file formats (NOTE: for the LAMMPS ‘type’ attributes they can be an
+int or str due to type labels in a LAMMPS datafile or LAMMPS molecule file - so need to use _int_str function).</p>
+<p>The self.read, self.styles, and self.defaults dictionaries are meant to provide very easy general purpose way
+to extend the ability to read and write LAMMPS styles. However, due to the general purpose nature they are not
+as quick as they could be. Therefore, “hard coded” ways to read and write for speed purposes can be added. These
+will be set as functions with the names:</p>
+<blockquote>
+<div><p>def read_STYLE(self, atom, style, data_lst):
+def line_STYLE(self, atom, style):</p>
+</div></blockquote>
+<p>where STYLE in def <em>_STYLE() is a LAMMPS style (e.g. def read_full(), will be the hard coded reader to the
+LAMMPS ‘full’ atom style). *NOTE: to support any LAMMPS style that style key needs to be in self.read, self.styles,
+and self.defaults dictionaries, even if “hard coded” readers and writers are generated - this is because this
+will tell the code how to generate an instance of the Atom class, with necessary __slots__ and defaults.</em></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.atom_styles.Styles.atom_factory">
+<span class="sig-name descname"><span class="pre">atom_factory</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/atom_styles.html#Styles.atom_factory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.atom_styles.Styles.atom_factory" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.atom_styles.Styles.atom_fill">
+<span class="sig-name descname"><span class="pre">atom_fill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_lst</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/atom_styles.html#Styles.atom_fill"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.atom_styles.Styles.atom_fill" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.atom_styles.Styles.atom_line">
+<span class="sig-name descname"><span class="pre">atom_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/atom_styles.html#Styles.atom_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.atom_styles.Styles.atom_line" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mooonpy.molspace.atom_styles.Styles.defaults">
+<span class="sig-name descname"><span class="pre">defaults</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'BO_total':</span> <span class="pre">0.0,</span> <span class="pre">'area':</span> <span class="pre">0.0,</span> <span class="pre">'bodyflag':</span> <span class="pre">0,</span> <span class="pre">'ccN':</span> <span class="pre">0.0,</span> <span class="pre">'comment':</span> <span class="pre">'',</span> <span class="pre">'cradius':</span> <span class="pre">0.0,</span> <span class="pre">'cs_im':</span> <span class="pre">0.0,</span> <span class="pre">'cs_re':</span> <span class="pre">0.0,</span> <span class="pre">'curvature':</span> <span class="pre">0.0,</span> <span class="pre">'cv':</span> <span class="pre">0.0,</span> <span class="pre">'density':</span> <span class="pre">0.0,</span> <span class="pre">'diameter':</span> <span class="pre">0.0,</span> <span class="pre">'ed':</span> <span class="pre">0.0,</span> <span class="pre">'edpd_cv':</span> <span class="pre">0.0,</span> <span class="pre">'edpd_temp':</span> <span class="pre">0.0,</span> <span class="pre">'element':</span> <span class="pre">'',</span> <span class="pre">'ellipsoidflag':</span> <span class="pre">0,</span> <span class="pre">'em':</span> <span class="pre">0.0,</span> <span class="pre">'energy':</span> <span class="pre">0.0,</span> <span class="pre">'epsilon':</span> <span class="pre">0.0,</span> <span class="pre">'eradius':</span> <span class="pre">0.0,</span> <span class="pre">'esph':</span> <span class="pre">0.0,</span> <span class="pre">'espin':</span> <span class="pre">0,</span> <span class="pre">'etag':</span> <span class="pre">0,</span> <span class="pre">'fx':</span> <span class="pre">0.0,</span> <span class="pre">'fy':</span> <span class="pre">0.0,</span> <span class="pre">'fz':</span> <span class="pre">0.0,</span> <span class="pre">'id':</span> <span class="pre">0,</span> <span class="pre">'ix':</span> <span class="pre">0,</span> <span class="pre">'iy':</span> <span class="pre">0,</span> <span class="pre">'iz':</span> <span class="pre">0,</span> <span class="pre">'kradius':</span> <span class="pre">0.0,</span> <span class="pre">'lineflag':</span> <span class="pre">0,</span> <span class="pre">'mass':</span> <span class="pre">0.0,</span> <span class="pre">'molecule':</span> <span class="pre">0,</span> <span class="pre">'molid':</span> <span class="pre">0,</span> <span class="pre">'mux':</span> <span class="pre">0.0,</span> <span class="pre">'muy':</span> <span class="pre">0.0,</span> <span class="pre">'muz':</span> <span class="pre">0.0,</span> <span class="pre">'name':</span> <span class="pre">'',</span> <span class="pre">'q':</span> <span class="pre">0.0,</span> <span class="pre">'rho':</span> <span class="pre">0.0,</span> <span class="pre">'sp':</span> <span class="pre">0.0,</span> <span class="pre">'spx':</span> <span class="pre">0.0,</span> <span class="pre">'spy':</span> <span class="pre">0.0,</span> <span class="pre">'spz':</span> <span class="pre">0.0,</span> <span class="pre">'status':</span> <span class="pre">0,</span> <span class="pre">'sub_styleN':</span> <span class="pre">0.0,</span> <span class="pre">'template_atom':</span> <span class="pre">0,</span> <span class="pre">'template_index':</span> <span class="pre">0,</span> <span class="pre">'theta':</span> <span class="pre">0.0,</span> <span class="pre">'triangleflag':</span> <span class="pre">0,</span> <span class="pre">'type':</span> <span class="pre">0,</span> <span class="pre">'volume':</span> <span class="pre">0.0,</span> <span class="pre">'vx':</span> <span class="pre">0.0,</span> <span class="pre">'vy':</span> <span class="pre">0.0,</span> <span class="pre">'vz':</span> <span class="pre">0.0,</span> <span class="pre">'x':</span> <span class="pre">0.0,</span> <span class="pre">'x0':</span> <span class="pre">0.0,</span> <span class="pre">'xu':</span> <span class="pre">0.0,</span> <span class="pre">'y':</span> <span class="pre">0.0,</span> <span class="pre">'y0':</span> <span class="pre">0.0,</span> <span class="pre">'yu':</span> <span class="pre">0.0,</span> <span class="pre">'z':</span> <span class="pre">0.0,</span> <span class="pre">'z0':</span> <span class="pre">0.0,</span> <span class="pre">'zu':</span> <span class="pre">0.0}</span></em><a class="headerlink" href="#mooonpy.molspace.atom_styles.Styles.defaults" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mooonpy.molspace.atom_styles.Styles.func_aliases">
+<span class="sig-name descname"><span class="pre">func_aliases</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'BO_total':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'area':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'bodyflag':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'ccN':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'comment':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'cradius':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'cs_im':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'cs_re':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'curvature':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'cv':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'density':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'diameter':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'ed':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'edpd_cv':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'edpd_temp':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'element':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'ellipsoidflag':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'em':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'energy':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'epsilon':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'eradius':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'esph':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'espin':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'etag':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'fx':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'fy':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'fz':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'id':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'ix':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'iy':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'iz':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'kradius':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'lineflag':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'mass':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'molecule':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'molid':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'mux':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'muy':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'muz':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'name':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'q':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'rho':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'sp':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'spx':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'spy':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'spz':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'status':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'sub_styleN':</span> <span class="pre">&lt;function</span> <span class="pre">_int_str_float&gt;,</span> <span class="pre">'template_atom':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'template_index':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'theta':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'triangleflag':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'type':</span> <span class="pre">&lt;function</span> <span class="pre">_int_str&gt;,</span> <span class="pre">'volume':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'vx':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'vy':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'vz':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'x':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'x0':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'xu':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'y':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'y0':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'yu':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'z':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'z0':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'zu':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;}</span></em><a class="headerlink" href="#mooonpy.molspace.atom_styles.Styles.func_aliases" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.atom_styles.Styles.line_charge">
+<span class="sig-name descname"><span class="pre">line_charge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/atom_styles.html#Styles.line_charge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.atom_styles.Styles.line_charge" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.atom_styles.Styles.line_full">
+<span class="sig-name descname"><span class="pre">line_full</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/atom_styles.html#Styles.line_full"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.atom_styles.Styles.line_full" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.atom_styles.Styles.read_charge">
+<span class="sig-name descname"><span class="pre">read_charge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_lst</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/atom_styles.html#Styles.read_charge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.atom_styles.Styles.read_charge" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.atom_styles.Styles.read_full">
+<span class="sig-name descname"><span class="pre">read_full</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_lst</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/atom_styles.html#Styles.read_full"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.atom_styles.Styles.read_full" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mooonpy.molspace.atom_styles.Styles.styles">
+<span class="sig-name descname"><span class="pre">styles</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'_random':</span> <span class="pre">('comment',</span> <span class="pre">'element',</span> <span class="pre">'name',</span> <span class="pre">'vx',</span> <span class="pre">'vy',</span> <span class="pre">'vz'),</span> <span class="pre">'angle':</span> <span class="pre">('id',</span> <span class="pre">'molid',</span> <span class="pre">'type',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'atomic':</span> <span class="pre">('id',</span> <span class="pre">'type',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'body':</span> <span class="pre">('id',</span> <span class="pre">'type',</span> <span class="pre">'bodyflag',</span> <span class="pre">'mass',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'bond':</span> <span class="pre">('id',</span> <span class="pre">'molid',</span> <span class="pre">'type',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'box':</span> <span class="pre">('xu',</span> <span class="pre">'yu',</span> <span class="pre">'zu'),</span> <span class="pre">'bpm/sphere':</span> <span class="pre">('id',</span> <span class="pre">'molid',</span> <span class="pre">'type',</span> <span class="pre">'diameter',</span> <span class="pre">'density',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'charge':</span> <span class="pre">('id',</span> <span class="pre">'type',</span> <span class="pre">'q',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'custom':</span> <span class="pre">(),</span> <span class="pre">'dielectric':</span> <span class="pre">('id',</span> <span class="pre">'type',</span> <span class="pre">'q',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'mux',</span> <span class="pre">'muy',</span> <span class="pre">'muz',</span> <span class="pre">'area',</span> <span class="pre">'ed',</span> <span class="pre">'em',</span> <span class="pre">'epsilon',</span> <span class="pre">'curvature',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'dipole':</span> <span class="pre">('id',</span> <span class="pre">'type',</span> <span class="pre">'q',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'mux',</span> <span class="pre">'muy',</span> <span class="pre">'muz',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'dpd':</span> <span class="pre">('id',</span> <span class="pre">'type',</span> <span class="pre">'theta',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'edpd':</span> <span class="pre">('id',</span> <span class="pre">'type',</span> <span class="pre">'edpd_temp',</span> <span class="pre">'edpd_cv',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'electron':</span> <span class="pre">('id',</span> <span class="pre">'type',</span> <span class="pre">'espin',</span> <span class="pre">'eradius',</span> <span class="pre">'q',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'ellipsoid':</span> <span class="pre">('id',</span> <span class="pre">'type',</span> <span class="pre">'ellipsoidflag',</span> <span class="pre">'density',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'force':</span> <span class="pre">('fx',</span> <span class="pre">'fy',</span> <span class="pre">'fz'),</span> <span class="pre">'full':</span> <span class="pre">('id',</span> <span class="pre">'molid',</span> <span class="pre">'type',</span> <span class="pre">'q',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'hybrid':</span> <span class="pre">('id',</span> <span class="pre">'type',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'sub_styleN'),</span> <span class="pre">'line':</span> <span class="pre">('id',</span> <span class="pre">'molid',</span> <span class="pre">'type',</span> <span class="pre">'lineflag',</span> <span class="pre">'density',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'mdpd':</span> <span class="pre">('id',</span> <span class="pre">'type',</span> <span class="pre">'rho',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'molecular':</span> <span class="pre">('id',</span> <span class="pre">'molid',</span> <span class="pre">'type',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'peri':</span> <span class="pre">('id',</span> <span class="pre">'type',</span> <span class="pre">'volume',</span> <span class="pre">'density',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'reax':</span> <span class="pre">('BO_total',),</span> <span class="pre">'rheo':</span> <span class="pre">('id',</span> <span class="pre">'type',</span> <span class="pre">'status',</span> <span class="pre">'rho',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'rheo/thermal':</span> <span class="pre">('id',</span> <span class="pre">'type',</span> <span class="pre">'status',</span> <span class="pre">'rho',</span> <span class="pre">'energy',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'smd':</span> <span class="pre">('id',</span> <span class="pre">'type',</span> <span class="pre">'molecule',</span> <span class="pre">'volume',</span> <span class="pre">'mass',</span> <span class="pre">'kradius',</span> <span class="pre">'cradius',</span> <span class="pre">'x0',</span> <span class="pre">'y0',</span> <span class="pre">'z0',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'sph':</span> <span class="pre">('id',</span> <span class="pre">'type',</span> <span class="pre">'rho',</span> <span class="pre">'esph',</span> <span class="pre">'cv',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'sphere':</span> <span class="pre">('id',</span> <span class="pre">'type',</span> <span class="pre">'diameter',</span> <span class="pre">'density',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'spin':</span> <span class="pre">('id',</span> <span class="pre">'type',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'spx',</span> <span class="pre">'spy',</span> <span class="pre">'spz',</span> <span class="pre">'sp',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'tdpd':</span> <span class="pre">('id',</span> <span class="pre">'type',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ccN'),</span> <span class="pre">'template':</span> <span class="pre">('id',</span> <span class="pre">'type',</span> <span class="pre">'molid',</span> <span class="pre">'template_index',</span> <span class="pre">'template_atom',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'tri':</span> <span class="pre">('id',</span> <span class="pre">'molid',</span> <span class="pre">'type',</span> <span class="pre">'triangleflag',</span> <span class="pre">'density',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz'),</span> <span class="pre">'wavepacket':</span> <span class="pre">('id',</span> <span class="pre">'type',</span> <span class="pre">'q',</span> <span class="pre">'espin',</span> <span class="pre">'eradius',</span> <span class="pre">'etag',</span> <span class="pre">'cs_re',</span> <span class="pre">'cs_im',</span> <span class="pre">'x',</span> <span class="pre">'y',</span> <span class="pre">'z',</span> <span class="pre">'ix',</span> <span class="pre">'iy',</span> <span class="pre">'iz')}</span></em><a class="headerlink" href="#mooonpy.molspace.atom_styles.Styles.styles" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.atom_styles.Styles.update_astyles">
+<span class="sig-name descname"><span class="pre">update_astyles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">astyles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/atom_styles.html#Styles.update_astyles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.atom_styles.Styles.update_astyles" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mooonpy.molspace.graph_theory.ring_analysis.html" class="btn btn-neutral float-left" title="mooonpy.molspace.graph_theory.ring_analysis module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mooonpy.molspace.atoms.html" class="btn btn-neutral float-right" title="mooonpy.molspace.atoms module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,407 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.molspace.molspace module &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7026087e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="mooonpy.molspace.periodic_table module" href="mooonpy.molspace.periodic_table.html" />
+    <link rel="prev" title="mooonpy.molspace.force_field module" href="mooonpy.molspace.force_field.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="mooonpy.molspace.html">mooonpy.molspace package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.molspace.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="mooonpy.molspace.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.atom_styles.html">mooonpy.molspace.atom_styles module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.atoms.html">mooonpy.molspace.atoms module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.bonds_from_distances.html">mooonpy.molspace.bonds_from_distances module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.box.html">mooonpy.molspace.box module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.clusters.html">mooonpy.molspace.clusters module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.distance.html">mooonpy.molspace.distance module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.doc_examples.html">mooonpy.molspace.doc_examples module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.force_field.html">mooonpy.molspace.force_field module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">mooonpy.molspace.molspace module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mooonpy.molspace.molspace.Molspace"><code class="docutils literal notranslate"><span class="pre">Molspace</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.periodic_table.html">mooonpy.molspace.periodic_table module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.reaxff.html">mooonpy.molspace.reaxff module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.molspace.topology.html">mooonpy.molspace.topology module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="mooonpy.molspace.html">mooonpy.molspace package</a></li>
+      <li class="breadcrumb-item active">mooonpy.molspace.molspace module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mooonpy.molspace.molspace.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mooonpy.molspace.molspace">
+<span id="mooonpy-molspace-molspace-module"></span><h1>mooonpy.molspace.molspace module<a class="headerlink" href="#module-mooonpy.molspace.molspace" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mooonpy.molspace.molspace.Molspace">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mooonpy.molspace.molspace.</span></span><span class="sig-name descname"><span class="pre">Molspace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/molspace.html#Molspace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.molspace.Molspace" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<section id="initializes-a-molspace-instance">
+<h2>Initializes a Molspace instance<a class="headerlink" href="#initializes-a-molspace-instance" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>This class can be called via:</dt><dd><ul class="simple">
+<li><p>Full namespace syntax    : <code class="docutils literal notranslate"><span class="pre">mooonpy.molspace.molspace.Molspace()</span></code></p></li>
+<li><p>Aliased namespace syntax : <code class="docutils literal notranslate"><span class="pre">mooonpy.Molspace()</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="initialization-parameters">
+<h2>Initialization Parameters<a class="headerlink" href="#initialization-parameters" title="Link to this heading"></a></h2>
+<dl>
+<dt>filename<span class="classifier">str, optional</span></dt><dd><p>An optional filename to read and initialize a Molspace() instance
+with molecular system information (e.g. atoms, bonds, force field
+parameters …). Supported file extensions:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>LAMMPS datafile <code class="docutils literal notranslate"><span class="pre">.data</span></code></p></li>
+<li><p>Tripos mol2 file <code class="docutils literal notranslate"><span class="pre">.mol2</span></code></p></li>
+<li><p>SYBL mol file <code class="docutils literal notranslate"><span class="pre">.mol</span></code></p></li>
+</ul>
+</div></blockquote>
+<p>If no filename is provided the Molspace instance will be generated
+with no molecular system information.</p>
+</dd>
+</dl>
+</section>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>N<span class="classifier">int</span></dt><dd><p>The order of the filter. For ‘bandpass’ and ‘bandstop’ filters,
+the resulting order of the final second-order sections (‘sos’)
+matrix is <code class="docutils literal notranslate"><span class="pre">2*N</span></code>, with <cite>N</cite> the number of biquad sections
+of the desired system.</p>
+</dd>
+<dt>Wn<span class="classifier">array_like</span></dt><dd><p>The critical frequency or frequencies. For lowpass and highpass
+filters, Wn is a scalar; for bandpass and bandstop filters,
+Wn is a length-2 sequence.</p>
+</dd>
+</dl>
+</section>
+<section id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>N<span class="classifier">int</span></dt><dd><p>The order of the filter. For ‘bandpass’ and ‘bandstop’ filters,
+the resulting order of the final second-order sections (‘sos’)
+matrix is <code class="docutils literal notranslate"><span class="pre">2*N</span></code>, with <cite>N</cite> the number of biquad sections
+of the desired system.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.molspace.Molspace.add_type_labels">
+<span class="sig-name descname"><span class="pre">add_type_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/molspace.html#Molspace.add_type_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.molspace.Molspace.add_type_labels" title="Link to this definition"></a></dt>
+<dd><p>Adds type labels for atom types and use 1st instance for each BADI type label</p>
+<p>could refactor the composition to a function somewhere</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.molspace.Molspace.bonds_from_distances">
+<span class="sig-name descname"><span class="pre">bonds_from_distances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">periodicity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ppp'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/molspace.html#Molspace.bonds_from_distances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.molspace.Molspace.bonds_from_distances" title="Link to this definition"></a></dt>
+<dd><p>Resets the bonds in a molecular system, based in interatomic distances and valences of atoms. 
+The cutoff distances are set based on the summation of vdw radii per element involved in the
+bond. Each atom’s valence is respected (e.g. the maximum number of allowable bonded atoms to
+a carbon atom is 4).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">mooonpy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_molecule</span> <span class="o">=</span> <span class="n">mooonpy</span><span class="o">.</span><span class="n">molspace</span><span class="p">(</span><span class="s1">&#39;detda.data&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_molecule</span><span class="o">.</span><span class="n">bonds_from_distances</span><span class="p">(</span><span class="n">periodicity</span><span class="o">=</span><span class="s1">&#39;fff&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Before using this command the element per-atom info and element per-mass info need to be updated by
+running “my_molecule.update_elements()”.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>periodicity</strong> (<em>str</em>) – Optional for setting the periodicity of the model, where f=fixed and p=periodic. Each position is a face (e.g. periodicity=’fpp’ is fixed on X-faces and periodic in Y- and Z-faces)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.molspace.Molspace.compute_ADI">
+<span class="sig-name descname"><span class="pre">compute_ADI</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/molspace.html#Molspace.compute_ADI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.molspace.Molspace.compute_ADI" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.molspace.Molspace.compute_BADI_by_type">
+<span class="sig-name descname"><span class="pre">compute_BADI_by_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">periodicity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ppp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comp_bond</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comp_angle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comp_dihedral</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comp_improper</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/molspace.html#Molspace.compute_BADI_by_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.molspace.Molspace.compute_BADI_by_type" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.molspace.Molspace.compute_bond_length">
+<span class="sig-name descname"><span class="pre">compute_bond_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">periodicity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ppp'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/molspace.html#Molspace.compute_bond_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.molspace.Molspace.compute_bond_length" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.molspace.Molspace.compute_pairs">
+<span class="sig-name descname"><span class="pre">compute_pairs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cutoff</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">whitelist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blacklist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'DD_13'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodicity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ppp'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/molspace.html#Molspace.compute_pairs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.molspace.Molspace.compute_pairs" title="Link to this definition"></a></dt>
+<dd><p>Compute pairwise distances within cutoff between atoms</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.molspace.Molspace.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/molspace.html#Molspace.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.molspace.Molspace.copy" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.molspace.Molspace.find_cumulative_neighs">
+<span class="sig-name descname"><span class="pre">find_cumulative_neighs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/molspace.html#Molspace.find_cumulative_neighs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.molspace.Molspace.find_cumulative_neighs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.molspace.Molspace.find_rings">
+<span class="sig-name descname"><span class="pre">find_rings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ring_sizes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">7)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/molspace.html#Molspace.find_rings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.molspace.Molspace.find_rings" title="Link to this definition"></a></dt>
+<dd><p>Finds all rings in the current Molspace instance. The size of rings searched for is
+set in the ring_sizes parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">mooonpy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_molecule</span> <span class="o">=</span> <span class="n">mooonpy</span><span class="o">.</span><span class="n">molspace</span><span class="p">(</span><span class="s1">&#39;detda.mol2&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rings</span> <span class="o">=</span> <span class="n">my_molecule</span><span class="o">.</span><span class="n">find_rings</span><span class="p">(</span><span class="n">ring_sizes</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">rings</span><span class="p">)</span>
+<span class="go">[(1, 2, 3, 4, 5, 6)]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Each ring will be sorted in the order it was traversed in the graph and
+will be in the canonical form (e.g., canonical=(1,2,3) vs non_canonical=(2,3,1)).</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ring_sizes</strong> (<em>tuple</em><em>[</em><em>int</em><em>]</em>) – Tuple containing ring sizes to search for in graph</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>rings</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[tuple[int]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.molspace.Molspace.generate_graph">
+<span class="sig-name descname"><span class="pre">generate_graph</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/molspace.html#Molspace.generate_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.molspace.Molspace.generate_graph" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.molspace.Molspace.read_files">
+<span class="sig-name descname"><span class="pre">read_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dsect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['all']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Ellipsis</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/molspace.html#Molspace.read_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.molspace.Molspace.read_files" title="Link to this definition"></a></dt>
+<dd><p>Read files into Molspace
+Currently supports .data and .dump files.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em><em> or </em><a class="reference internal" href="mooonpy.html#mooonpy.Path" title="mooonpy.Path"><em>Path</em></a>) – path to file to read</p></li>
+<li><p><strong>dsect</strong> (<em>list</em>) – Sections of data file to read, see mooonpy.molspace._files_io.read_lmp_data for more details</p></li>
+<li><p><strong>steps</strong> (<em>list</em><em> or </em><em>int</em>) – Steps in dump file to read see mooonpy.molspace._files_io.read_lmp_dump for more details</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Modifies self in-place if data or single step, returns dict if multiple steps</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None or dict</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Molspace</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">MyPath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;Project/Monomers/DETDA.data&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mol</span> <span class="o">=</span> <span class="n">Molspace</span><span class="p">(</span><span class="n">MyPath</span><span class="p">,</span> <span class="n">dsect</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;all&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">MyPath2</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;Project/Monomers/DETDA.dump&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">series</span> <span class="o">=</span> <span class="n">Molspace</span><span class="p">(</span><span class="n">MyPath2</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.molspace.Molspace.remove_atoms">
+<span class="sig-name descname"><span class="pre">remove_atoms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom_ids</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/molspace.html#Molspace.remove_atoms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.molspace.Molspace.remove_atoms" title="Link to this definition"></a></dt>
+<dd><p>make smart and remove from some?</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.molspace.Molspace.update_elements">
+<span class="sig-name descname"><span class="pre">update_elements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type2mass</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type2element</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/molspace.html#Molspace.update_elements"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.molspace.Molspace.update_elements" title="Link to this definition"></a></dt>
+<dd><p>Updates every per-atom .element attribute with the element type for that atom.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">mooonpy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_molecule</span> <span class="o">=</span> <span class="n">mooonpy</span><span class="o">.</span><span class="n">molspace</span><span class="p">(</span><span class="s1">&#39;detda.data&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_molecule</span><span class="o">.</span><span class="n">update_elements</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This will also update the per-mass .element attribute in ff.masses dictionary as well.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>type2mass</strong> (<em>dict</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em>) – Optional for setting the atom type to mass map (e.g. type2mass={1: 12.01115, 2: 1.008}). If not provided this will be generated from the masses section.</p></li>
+<li><p><strong>type2element</strong> (<em>dict</em><em>[</em><em>int</em><em>, </em><em>str</em><em>]</em>) – Optional for setting the atom type to mass map (e.g. type2element={1: ‘C’, 2: ‘H’}). If not provided this will be generated from the masses section and interally defined periodic table.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.molspace.molspace.Molspace.write_files">
+<span class="sig-name descname"><span class="pre">write_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'full'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/molspace/molspace.html#Molspace.write_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.molspace.molspace.Molspace.write_files" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mooonpy.molspace.force_field.html" class="btn btn-neutral float-left" title="mooonpy.molspace.force_field module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mooonpy.molspace.periodic_table.html" class="btn btn-neutral float-right" title="mooonpy.molspace.periodic_table module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

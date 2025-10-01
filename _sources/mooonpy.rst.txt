@@ -1,0 +1,29 @@
+mooonpy package
+===============
+
+.. automodule:: mooonpy
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 8
+
+   mooonpy.fitting
+   mooonpy.guis
+   mooonpy.molspace
+   mooonpy.programs
+   mooonpy.thermospace
+   mooonpy.tools
+   mooonpy.xrdspace
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 8
+
+   mooonpy.rcsetup

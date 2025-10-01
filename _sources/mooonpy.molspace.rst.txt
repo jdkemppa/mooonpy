@@ -1,0 +1,34 @@
+mooonpy.molspace package
+========================
+
+.. automodule:: mooonpy.molspace
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 8
+
+   mooonpy.molspace.graph_theory
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 8
+
+   mooonpy.molspace.atom_styles
+   mooonpy.molspace.atoms
+   mooonpy.molspace.bonds_from_distances
+   mooonpy.molspace.box
+   mooonpy.molspace.clusters
+   mooonpy.molspace.distance
+   mooonpy.molspace.doc_examples
+   mooonpy.molspace.force_field
+   mooonpy.molspace.molspace
+   mooonpy.molspace.periodic_table
+   mooonpy.molspace.reaxff
+   mooonpy.molspace.topology

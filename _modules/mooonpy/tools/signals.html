@@ -1,0 +1,451 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.tools.signals &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mooonpy.tools.signals</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mooonpy.tools.signals</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">numbers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Number</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.tools.math_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">first_value_cross</span>
+
+<span class="n">Array1D</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="compute_PSD">
+<a class="viewcode-back" href="../../../mooonpy.tools.signals.html#mooonpy.tools.signals.compute_PSD">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_PSD</span><span class="p">(</span><span class="n">xdata</span><span class="p">:</span> <span class="n">Array1D</span><span class="p">,</span> <span class="n">ydata</span><span class="p">:</span> <span class="n">Array1D</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Array1D</span><span class="p">,</span> <span class="n">Array1D</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the Power Spectral Density (PSD) with the X-values being the normalized frequencies.</span>
+
+<span class="sd">    Returns the normalized frequencies (Omega N / Wn) and power spectral density (PSD) as a tuple of arrays.</span>
+
+<span class="sd">    :param xdata: Array of x values.</span>
+<span class="sd">    :type xdata: Array1D</span>
+<span class="sd">    :param ydata: Array of y values.</span>
+<span class="sd">    :type ydata: Array1D</span>
+<span class="sd">    :return: wn&#39;s, PDS&#39;s</span>
+<span class="sd">    :rtype: Tuple(Array1D, Array1D)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Define sampling rate and number of data points</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">xdata</span><span class="p">)))</span>
+    <span class="k">if</span> <span class="n">dx</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">fs</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">dx</span>  <span class="c1"># sampling rate</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fs</span> <span class="o">=</span> <span class="n">xdata</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">xdata</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">xdata</span><span class="p">))</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">xdata</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># number of data points</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">fs</span>  <span class="c1"># sampling space</span>
+
+    <span class="c1"># Perform one sided FFT</span>
+    <span class="n">fft_response</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">ydata</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s1">&#39;backward&#39;</span><span class="p">)</span>
+    <span class="n">x_fft</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfftfreq</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">y_fft</span> <span class="o">=</span> <span class="n">fft_response</span>
+
+    <span class="c1"># Compute the final PSD and normalized cutoff frequencies</span>
+    <span class="n">psd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">((</span><span class="n">y_fft</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">conjugate</span><span class="p">(</span><span class="n">y_fft</span><span class="p">))</span> <span class="o">/</span> <span class="n">N</span><span class="p">)</span>
+    <span class="n">wns</span> <span class="o">=</span> <span class="n">x_fft</span> <span class="o">/</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">fs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wns</span><span class="p">,</span> <span class="n">psd</span></div>
+
+
+
+<div class="viewcode-block" id="power_to_db">
+<a class="viewcode-back" href="../../../mooonpy.tools.signals.html#mooonpy.tools.signals.power_to_db">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">power_to_db</span><span class="p">(</span><span class="n">power</span><span class="p">:</span> <span class="n">Array1D</span><span class="p">,</span> <span class="n">ref_power</span><span class="p">:</span> <span class="n">Number</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert power to decibels (dB).</span>
+
+<span class="sd">    :param power: Power to convert.</span>
+<span class="sd">    :type power: Array1D</span>
+<span class="sd">    :param ref_power: Reference power.</span>
+<span class="sd">    :type ref_power: Number</span>
+<span class="sd">    :return: Converted power.</span>
+<span class="sd">    :rtype: Array1D</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">power_in_dB</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">power</span> <span class="o">/</span> <span class="n">ref_power</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">power_in_dB</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_butter</span><span class="p">(</span><span class="n">ydata</span><span class="p">:</span> <span class="n">Array1D</span><span class="p">,</span> <span class="n">wn</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">order</span><span class="p">:</span> <span class="n">Number</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Alias for scipy&#39;s butterworth low-pass filter.</span>
+
+<span class="sd">    :param ydata: Y data</span>
+<span class="sd">    :type ydata: Array1D</span>
+<span class="sd">    :param wn: Normalized Cutoff frequency, defaults to &#39;PSD&#39; optimization</span>
+<span class="sd">    :type wn: Number</span>
+<span class="sd">    :param order: Order of filter, defaults to 2</span>
+<span class="sd">    :type order: Number</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sos</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">butter</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="n">wn</span><span class="p">,</span> <span class="n">btype</span><span class="o">=</span><span class="s1">&#39;low&#39;</span><span class="p">,</span> <span class="n">analog</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s1">&#39;sos&#39;</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">y_filt</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">sosfiltfilt</span><span class="p">(</span><span class="n">sos</span><span class="p">,</span> <span class="n">ydata</span><span class="p">,</span> <span class="n">padtype</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">y_filt</span>
+
+
+<div class="viewcode-block" id="butter_lowpass">
+<a class="viewcode-back" href="../../../mooonpy.tools.signals.html#mooonpy.tools.signals.butter_lowpass">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">butter_lowpass</span><span class="p">(</span><span class="n">xdata</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Array1D</span><span class="p">],</span> <span class="n">ydata</span><span class="p">:</span> <span class="n">Array1D</span><span class="p">,</span> <span class="n">wn</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Number</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;PSD&#39;</span><span class="p">,</span> <span class="n">quadrant</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;msr&#39;</span><span class="p">,</span>
+                   <span class="n">order</span><span class="p">:</span> <span class="n">Number</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span><span class="n">Number</span><span class="p">,</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Call butterworth low-pass filter with Quadrant Mirroring padding.</span>
+<span class="sd">    The original image region is returned fully filtered.</span>
+
+<span class="sd">    Cutoff frequency may be input as a number, or can be chosen using an optimizer style</span>
+
+<span class="sd">    If the quadrant is &#39;msr&#39; the lowest residual low and high data_extension is used,</span>
+<span class="sd">    or the quadrants are specified with a comma separated string of &#39;2,3&#39; for left and right extension.</span>
+
+<span class="sd">    :param xdata: Array of x values. Only used for PSD optimization</span>
+<span class="sd">    :type xdata: Array1D</span>
+<span class="sd">    :param ydata: Y data to filter.</span>
+<span class="sd">    :type ydata: Array1D</span>
+<span class="sd">    :param wn: Normalized Cutoff frequency, defaults to 0.1.</span>
+<span class="sd">    :type wn: Number</span>
+<span class="sd">    :param quadrant: Quadrants, defaults to &#39;msr&#39; optimization.</span>
+<span class="sd">    :type quadrant: str</span>
+<span class="sd">    :param order: Order of filter, defaults to 2</span>
+<span class="sd">    :type order: Number</span>
+
+<span class="sd">    :return: Filtered data, wn used, qm string used</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Scrub inputs</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="k">if</span> <span class="n">xdata</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">xdata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ydata</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">xdata</span> <span class="o">=</span> <span class="n">xdata</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">ydata</span> <span class="o">=</span> <span class="n">ydata</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">wn</span> <span class="o">==</span> <span class="s1">&#39;PSD&#39;</span><span class="p">:</span>
+        <span class="n">wns</span><span class="p">,</span> <span class="n">psd</span> <span class="o">=</span> <span class="n">compute_PSD</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">)</span>
+        <span class="n">wn</span> <span class="o">=</span> <span class="n">first_value_cross</span><span class="p">(</span><span class="n">wns</span><span class="p">,</span> <span class="n">psd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">wn</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="n">wn</span><span class="o">=</span><span class="n">wns</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># use the lowest allowed value</span>
+
+    <span class="k">if</span> <span class="n">quadrant</span> <span class="o">==</span> <span class="s1">&#39;msr&#39;</span><span class="p">:</span>
+        <span class="n">quad_lo</span><span class="p">,</span> <span class="n">quad_hi</span> <span class="o">=</span> <span class="n">determine_mirroring_locations</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">,</span> <span class="n">wn</span><span class="p">,</span> <span class="n">order</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">quadrant</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="s1">&#39;,&#39;</span> <span class="ow">in</span> <span class="n">quadrant</span><span class="p">:</span>
+        <span class="n">splits</span> <span class="o">=</span> <span class="n">quadrant</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        <span class="n">quad_lo</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">splits</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">quad_hi</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">splits</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">quadrant</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">quad_lo</span><span class="p">,</span> <span class="n">quad_hi</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">quadrant</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">quadrant</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># works for tuple or string</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;quadrant </span><span class="si">{</span><span class="n">quadrant</span><span class="si">}</span><span class="s1"> must be either &quot;msr&quot; or comma-separated quadrants i.e. &quot;1,3&quot;&#39;</span><span class="p">)</span>
+
+    <span class="c1"># do filtering</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">,</span> <span class="n">lo_trim</span><span class="p">,</span> <span class="n">hi_trim</span> <span class="o">=</span> <span class="n">data_extension</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">,</span> <span class="n">quad_lo</span><span class="p">,</span> <span class="n">quad_hi</span><span class="p">)</span>
+
+    <span class="n">y_butter</span> <span class="o">=</span> <span class="n">_butter</span><span class="p">(</span><span class="n">ydata</span><span class="p">,</span> <span class="n">wn</span><span class="p">,</span> <span class="n">order</span><span class="p">)</span>
+    <span class="n">y_filt</span> <span class="o">=</span> <span class="n">y_butter</span><span class="p">[</span><span class="n">lo_trim</span><span class="p">:</span><span class="n">hi_trim</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">y_filt</span><span class="p">,</span> <span class="n">wn</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">quad_lo</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">quad_hi</span><span class="si">}</span><span class="s1">&#39;</span></div>
+
+
+
+<div class="viewcode-block" id="determine_mirroring_locations">
+<a class="viewcode-back" href="../../../mooonpy.tools.signals.html#mooonpy.tools.signals.determine_mirroring_locations">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">determine_mirroring_locations</span><span class="p">(</span><span class="n">xdata</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Array1D</span><span class="p">],</span> <span class="n">ydata</span><span class="p">:</span> <span class="n">Array1D</span><span class="p">,</span> <span class="n">wn</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Number</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;PSD&#39;</span><span class="p">,</span>
+                                  <span class="n">order</span><span class="p">:</span> <span class="n">Number</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compare 4 mirror images at both ends of dataset.</span>
+<span class="sd">    The combination with the lowest residual^2 after filtering is returned.</span>
+
+<span class="sd">    :param xdata: X data</span>
+<span class="sd">    :type xdata: Array1D</span>
+<span class="sd">    :param ydata: Y data</span>
+<span class="sd">    :type ydata: Array1D</span>
+<span class="sd">    :param wn: Normalized Cutoff frequency, defaults to &#39;PSD&#39; optimization.</span>
+<span class="sd">    :type wn: Number or str</span>
+<span class="sd">    :param order: Order of filter, defaults to 2</span>
+<span class="sd">    :type order: Number</span>
+
+<span class="sd">    :return: Lowest residual and Highest residual.</span>
+<span class="sd">    :rtype: Tuple(int, int)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">xdata</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">xdata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ydata</span><span class="p">))</span>
+    <span class="c1"># Determine half_data to only check for residuals</span>
+    <span class="c1"># either from lo-half_data or half_data-hi</span>
+    <span class="n">half_data</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">xdata</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Determine optimal wn with PSD method. Used as constant between all mirrors</span>
+    <span class="k">if</span> <span class="n">wn</span> <span class="o">==</span> <span class="s1">&#39;PSD&#39;</span><span class="p">:</span>
+        <span class="n">wns</span><span class="p">,</span> <span class="n">psd</span> <span class="o">=</span> <span class="n">compute_PSD</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">)</span>
+        <span class="n">wn</span> <span class="o">=</span> <span class="n">first_value_cross</span><span class="p">(</span><span class="n">wns</span><span class="p">,</span> <span class="n">psd</span><span class="p">,</span> <span class="n">cross</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>  <span class="c1"># use mean with default</span>
+
+    <span class="c1"># ------------------------------------</span>
+    <span class="c1"># First: Optimize the &quot;lo&quot; end</span>
+    <span class="n">lo_quads2test</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">];</span>
+    <span class="n">lo_summed_residuals2</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># {quadrant_mirror:sum-of-residuals-squared}</span>
+    <span class="k">for</span> <span class="n">quad</span> <span class="ow">in</span> <span class="n">lo_quads2test</span><span class="p">:</span>
+        <span class="n">x_quad</span><span class="p">,</span> <span class="n">y_quad</span><span class="p">,</span> <span class="n">lo_ind</span><span class="p">,</span> <span class="n">hi_ind</span> <span class="o">=</span> <span class="n">data_extension</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">,</span> <span class="n">quad</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">y_butter</span> <span class="o">=</span> <span class="n">_butter</span><span class="p">(</span><span class="n">y_quad</span><span class="p">,</span> <span class="n">wn</span><span class="p">,</span> <span class="n">order</span><span class="p">)</span>
+        <span class="n">y_filt</span> <span class="o">=</span> <span class="n">y_butter</span><span class="p">[</span><span class="n">lo_ind</span><span class="p">:</span><span class="n">hi_ind</span><span class="p">]</span>  <span class="c1"># get original slice</span>
+        <span class="n">residuals</span> <span class="o">=</span> <span class="n">ydata</span> <span class="o">-</span> <span class="n">y_filt</span>
+        <span class="n">residuals</span> <span class="o">=</span> <span class="n">residuals</span><span class="p">[:</span><span class="n">half_data</span><span class="p">]</span>  <span class="c1"># we only care about the first half fit</span>
+        <span class="n">lo_summed_residuals2</span><span class="p">[</span><span class="n">quad</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">residuals</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Find minimized sum of residuals squared</span>
+    <span class="n">lo</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">lo_summed_residuals2</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">lo_summed_residuals2</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------</span>
+    <span class="c1"># Second: Optimize the &quot;hi&quot; end</span>
+    <span class="n">hi_quads2test</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">];</span>
+    <span class="n">hi_summed_residuals2</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># {quadrant_mirror:sum-of-residuals-squared}</span>
+    <span class="k">for</span> <span class="n">quad</span> <span class="ow">in</span> <span class="n">hi_quads2test</span><span class="p">:</span>
+        <span class="n">x_quad</span><span class="p">,</span> <span class="n">y_quad</span><span class="p">,</span> <span class="n">lo_ind</span><span class="p">,</span> <span class="n">hi_ind</span> <span class="o">=</span> <span class="n">data_extension</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">quad</span><span class="p">)</span>
+        <span class="n">y_butter</span> <span class="o">=</span> <span class="n">_butter</span><span class="p">(</span><span class="n">y_quad</span><span class="p">,</span> <span class="n">wn</span><span class="p">,</span> <span class="n">order</span><span class="p">)</span>
+        <span class="n">y_filt</span> <span class="o">=</span> <span class="n">y_butter</span><span class="p">[</span><span class="n">lo_ind</span><span class="p">:</span><span class="n">hi_ind</span><span class="p">]</span>  <span class="c1"># get original slice</span>
+        <span class="n">residuals</span> <span class="o">=</span> <span class="n">ydata</span> <span class="o">-</span> <span class="n">y_filt</span>
+        <span class="n">residuals</span> <span class="o">=</span> <span class="n">residuals</span><span class="p">[</span><span class="n">half_data</span><span class="p">:]</span>  <span class="c1"># we only care about the last half fit</span>
+        <span class="n">hi_summed_residuals2</span><span class="p">[</span><span class="n">quad</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">residuals</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># account for 1 being shorter</span>
+
+    <span class="c1"># Find minimized sum of residuals squared</span>
+    <span class="n">hi</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">hi_summed_residuals2</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">hi_summed_residuals2</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+
+    <span class="c1"># ------------------------------------#</span>
+    <span class="c1"># return optimal quadrant_mirror</span>
+    <span class="k">return</span> <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span></div>
+
+
+
+<div class="viewcode-block" id="data_extension">
+<a class="viewcode-back" href="../../../mooonpy.tools.signals.html#mooonpy.tools.signals.data_extension">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">data_extension</span><span class="p">(</span><span class="n">xdata</span><span class="p">:</span> <span class="n">Array1D</span><span class="p">,</span> <span class="n">ydata</span><span class="p">:</span> <span class="n">Array1D</span><span class="p">,</span> <span class="n">lo</span><span class="p">:</span> <span class="n">Number</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">hi</span><span class="p">:</span> <span class="n">Number</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to extend data at the &quot;lo&quot; and &quot;hi&quot; end. This function assumes xdata is increasing and</span>
+<span class="sd">    ydata is the dependent variable. This function replaces the usage of scipy&#39;s &quot;signal.filtfilt&quot;</span>
+<span class="sd">    or &quot;signal.sosfiltfilt&quot; padtype=&lt;&#39;odd&#39; or &#39;even&#39; or &#39;const&#39; or None&gt;, with greater functionality.</span>
+
+<span class="sd">    For example the padtype=&lt;&#39;odd&#39; or &#39;even&#39; or &#39;const&#39; or None&gt; implementation assumes that the</span>
+<span class="sd">    padding on the &quot;lo X-end&quot; will be the same as the padding that should be used on the &quot;hi X-end&quot;,</span>
+<span class="sd">    however for stress-strain data, this is usually not the case.</span>
+
+<span class="sd">    lo/hi integer meanings can be thought of as quadrant numbers for &quot;lo&quot; and have the same meaning</span>
+<span class="sd">    for &quot;hi&quot;, but at the tail end of the data. For example:</span>
+
+<span class="sd">        - 1 = means shut off data mirroring</span>
+<span class="sd">        - 2 = means mirror data (lo=mirrored into quadrant 2)</span>
+<span class="sd">        - 3 = means apply 180-degree rotation (lo=mirrored into quadrant 3)</span>
+<span class="sd">        - 4 = means flip the Y-data and append at the end of the Y-data</span>
+
+<span class="sd">    :param xdata: X data</span>
+<span class="sd">    :type xdata: Array1D</span>
+<span class="sd">    :param ydata: Y data</span>
+<span class="sd">    :type ydata: Array1D</span>
+<span class="sd">    :param lo: Left side quadrant setting, defaults to 1.</span>
+<span class="sd">    :type lo: Number</span>
+<span class="sd">    :param hi: Right side quadrant setting, defaults to 1.</span>
+<span class="sd">    :type hi: Number</span>
+<span class="sd">    :return: Extended data as X / Y, and lo_trim / hi_trim slicing index to access original data within the extension.</span>
+<span class="sd">    :rtype: Tuple[np.ndarray, np.ndarray, int, int]</span>
+
+<span class="sd">    .. TODO:: Make example images</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Setup number of data points based on index mirroring</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># mirroring index (0=means mirror at first data point at low and end last data point on hi end)</span>
+    <span class="n">ndata</span> <span class="o">=</span> <span class="n">xdata</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Perform lo padding operations</span>
+    <span class="k">if</span> <span class="n">lo</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">lo_xdata</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">xdata</span><span class="p">)</span> <span class="o">+</span> <span class="n">xdata</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">-</span> <span class="n">xdata</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="n">lo_ydata</span> <span class="o">=</span> <span class="n">ydata</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+    <span class="k">elif</span> <span class="n">lo</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">lo_xdata</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">xdata</span><span class="p">)</span> <span class="o">+</span> <span class="n">xdata</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">-</span> <span class="n">xdata</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="n">lo_ydata</span> <span class="o">=</span> <span class="n">ydata</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">-</span> <span class="n">ydata</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+    <span class="k">elif</span> <span class="n">lo</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">lo_xdata</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">xdata</span><span class="p">)</span> <span class="o">+</span> <span class="n">xdata</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">-</span> <span class="n">xdata</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="n">lo_ydata</span> <span class="o">=</span> <span class="n">ydata</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="p">(</span><span class="n">ydata</span><span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">-</span> <span class="n">ydata</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">lo_xdata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+        <span class="n">lo_ydata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+
+    <span class="c1"># Perform hi padding operations</span>
+    <span class="k">if</span> <span class="n">hi</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">hi_xdata</span> <span class="o">=</span> <span class="o">-</span><span class="nb">min</span><span class="p">(</span><span class="n">xdata</span><span class="p">)</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="n">xdata</span><span class="p">)</span> <span class="o">+</span> <span class="n">xdata</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="n">hi_ydata</span> <span class="o">=</span> <span class="n">ydata</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+    <span class="k">elif</span> <span class="n">hi</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">hi_xdata</span> <span class="o">=</span> <span class="o">-</span><span class="nb">min</span><span class="p">(</span><span class="n">xdata</span><span class="p">)</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="n">xdata</span><span class="p">)</span> <span class="o">+</span> <span class="n">xdata</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="n">hi_ydata</span> <span class="o">=</span> <span class="n">ydata</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">-</span> <span class="n">ydata</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">ydata</span><span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="n">ydata</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">hi</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">hi_xdata</span> <span class="o">=</span> <span class="o">-</span><span class="nb">min</span><span class="p">(</span><span class="n">xdata</span><span class="p">)</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="n">xdata</span><span class="p">)</span> <span class="o">+</span> <span class="n">xdata</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="n">hi_ydata</span> <span class="o">=</span> <span class="n">ydata</span><span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="n">ydata</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">hi_xdata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+        <span class="n">hi_ydata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+
+    <span class="c1"># Assemble data</span>
+    <span class="k">if</span> <span class="n">lo</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="ow">and</span> <span class="n">hi</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]:</span>
+        <span class="n">xdata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">lo_xdata</span><span class="p">,</span> <span class="n">xdata</span><span class="p">,</span> <span class="n">hi_xdata</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">ydata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">lo_ydata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">,</span> <span class="n">hi_ydata</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">lo_trim</span> <span class="o">=</span> <span class="n">ndata</span>
+        <span class="n">hi_trim</span> <span class="o">=</span> <span class="o">-</span><span class="n">ndata</span>
+    <span class="k">elif</span> <span class="n">lo</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="ow">and</span> <span class="n">hi</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">xdata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">lo_xdata</span><span class="p">,</span> <span class="n">xdata</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">ydata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">lo_ydata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">lo_trim</span> <span class="o">=</span> <span class="n">ndata</span>
+        <span class="n">hi_trim</span> <span class="o">=</span> <span class="n">xdata</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">lo</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">hi</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]:</span>
+        <span class="n">xdata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">xdata</span><span class="p">,</span> <span class="n">hi_xdata</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">ydata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">ydata</span><span class="p">,</span> <span class="n">hi_ydata</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">lo_trim</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">hi_trim</span> <span class="o">=</span> <span class="o">-</span><span class="n">ndata</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">lo_trim</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">hi_trim</span> <span class="o">=</span> <span class="n">xdata</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">,</span> <span class="n">lo_trim</span><span class="p">,</span> <span class="n">hi_trim</span></div>
+
+
+<div class="viewcode-block" id="sparse_eye_diff">
+<a class="viewcode-back" href="../../../mooonpy.tools.signals.html#mooonpy.tools.signals.sparse_eye_diff">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">sparse_eye_diff</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;csc&#39;</span><span class="p">):</span>
+    <span class="n">diagonals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">d</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">diagonals</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+        <span class="n">diagonals</span> <span class="o">=</span> <span class="n">diagonals</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">diagonals</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">offsets</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sp</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">diags</span><span class="p">(</span><span class="n">diagonals</span><span class="p">,</span> <span class="n">offsets</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">m</span><span class="o">-</span><span class="n">d</span><span class="p">,</span> <span class="n">m</span><span class="p">),</span> <span class="nb">format</span><span class="o">=</span><span class="nb">format</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="whitt_smooth">
+<a class="viewcode-back" href="../../../mooonpy.tools.signals.html#mooonpy.tools.signals.whitt_smooth">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">whitt_smooth</span><span class="p">(</span><span class="n">ydata</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">lambda_</span><span class="p">):</span>
+    <span class="c1"># Base Whittaker Eilers smoother</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ydata</span><span class="p">)</span>
+    <span class="n">E</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;csc&#39;</span><span class="p">)</span>
+    <span class="n">D</span> <span class="o">=</span> <span class="n">sparse_eye_diff</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;csc&#39;</span><span class="p">)</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="n">E</span> <span class="o">+</span> <span class="n">lambda_</span> <span class="o">*</span> <span class="n">D</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">spsolve</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">ydata</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">z</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

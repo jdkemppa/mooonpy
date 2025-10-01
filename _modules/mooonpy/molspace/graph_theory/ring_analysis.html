@@ -1,0 +1,242 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.molspace.graph_theory.ring_analysis &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/plot_directive.css" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mooonpy.molspace.graph_theory.ring_analysis</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mooonpy.molspace.graph_theory.ring_analysis</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module provides basic support for finding cycles/rings in</span>
+<span class="sd">an undirected graph.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.interface</span><span class="w"> </span><span class="kn">import</span> <span class="n">find_cumulative_neighs</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_reduced_graph</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">max_depth</span><span class="p">):</span>
+    <span class="c1"># We need one additionaly neighbor to generate a graph that terminates after</span>
+    <span class="c1"># the max_depth cutoff, hence the &quot;max_depth+1&quot; in find_cumulative_neighs()    </span>
+    <span class="n">neighs</span> <span class="o">=</span> <span class="n">find_cumulative_neighs</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">max_depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">rgraph</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="p">:</span> <span class="n">graph</span><span class="p">[</span><span class="n">node</span><span class="p">]}</span>  <span class="c1"># {atomID : [bonded-neighbors] }</span>
+    <span class="k">for</span> <span class="n">depth</span> <span class="ow">in</span> <span class="n">neighs</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">neighs</span><span class="p">[</span><span class="n">depth</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">depth</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">neighs</span><span class="p">):</span>
+                <span class="n">rgraph</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">graph</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">rgraph</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># graph termination</span>
+    <span class="k">return</span> <span class="n">rgraph</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_dfs_cycles</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">max_ring</span><span class="p">):</span>
+    <span class="n">stack</span> <span class="o">=</span> <span class="p">[(</span><span class="n">start</span><span class="p">,</span> <span class="p">[</span><span class="n">start</span><span class="p">],</span> <span class="p">{</span><span class="n">start</span><span class="p">})]</span>
+    <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+        <span class="n">current</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">visited</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="n">path_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">[</span><span class="n">current</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">neighbor</span> <span class="o">==</span> <span class="n">start</span> <span class="ow">and</span> <span class="n">path_size</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">path</span>
+            <span class="k">elif</span> <span class="n">neighbor</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span> <span class="ow">and</span> <span class="n">neighbor</span> <span class="o">&gt;=</span> <span class="n">start</span><span class="p">:</span>
+                <span class="n">new_path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="p">[</span><span class="n">neighbor</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_path</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_ring</span><span class="p">:</span> <span class="k">continue</span>
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">neighbor</span><span class="p">,</span> <span class="n">new_path</span><span class="p">,</span> <span class="n">visited</span> <span class="o">|</span> <span class="p">{</span><span class="n">neighbor</span><span class="p">}))</span>
+
+
+<div class="viewcode-block" id="ring_canonical">
+<a class="viewcode-back" href="../../../../mooonpy.molspace.graph_theory.ring_analysis.html#mooonpy.molspace.graph_theory.ring_analysis.ring_canonical">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">ring_canonical</span><span class="p">(</span><span class="n">ring</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sort list of ring ID&#39;s to canonical form of &quot;lowest ID, lower neighbor-wise&quot;</span>
+<span class="sd">    ie [5,254,6,12,4,3] -&gt; (3,4,12,6,254,5)</span>
+<span class="sd">    with 3 as lowest, and 4 as the lower of 4 and 5, reversing the direction</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">min_index</span> <span class="o">=</span> <span class="n">ring</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">ring</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">ring</span><span class="p">[</span><span class="n">min_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">ring</span><span class="p">[</span><span class="n">min_index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+        <span class="n">canonical</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">ring</span><span class="p">[</span><span class="n">min_index</span><span class="p">:]</span> <span class="o">+</span> <span class="n">ring</span><span class="p">[:</span><span class="n">min_index</span><span class="p">])</span>  <span class="c1"># forward shift</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ring</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+        <span class="n">min_index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ring</span><span class="p">)</span> <span class="o">-</span> <span class="n">min_index</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">canonical</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">ring</span><span class="p">[</span><span class="n">min_index</span><span class="p">:]</span> <span class="o">+</span> <span class="n">ring</span><span class="p">[:</span><span class="n">min_index</span><span class="p">])</span>  <span class="c1"># reverse then shift</span>
+    <span class="k">return</span> <span class="n">canonical</span></div>
+
+
+
+<div class="viewcode-block" id="find_rings">
+<a class="viewcode-back" href="../../../../mooonpy.molspace.graph_theory.ring_analysis.html#mooonpy.molspace.graph_theory.ring_analysis.find_rings">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_rings</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">ring_sizes</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">)):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Finds all cycles/rings in a graph that are specified in the ring_sizes</span>
+<span class="sd">    parameter.</span>
+<span class="sd">    </span>
+<span class="sd">    .. note::</span>
+<span class="sd">        Each ring will be sorted in the order it was traversed in the graph and</span>
+<span class="sd">        will be in the canonical form (e.g., canonical=(1,2,3) vs non_canonical=(2,3,1)).</span>
+
+<span class="sd">    :param graph: An undirected graph</span>
+<span class="sd">    :type graph: dict[int, list[int]]</span>
+<span class="sd">    :param ring_sizes: Tuple containing ring sizes to search for in graph</span>
+<span class="sd">    :type ring_sizes: tuple[int]</span>
+<span class="sd">    :return: rings</span>
+<span class="sd">    :rtype: list[tuple[int]]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Find the maximum depth we need to search based on the largest ring we expect. </span>
+    <span class="c1"># We only need to search a depth of half of the largest ring we want to find </span>
+    <span class="c1"># since the ring is symmetric about that many neighbors. It is also quicker to</span>
+    <span class="c1"># use the &quot;in&quot; keyword on a set, so convert ring_sizes to a set for performance</span>
+    <span class="n">max_ring</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ring_sizes</span><span class="p">)</span>
+    <span class="n">max_depth</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_ring</span><span class="p">))</span>
+    <span class="n">rings2check</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">ring_sizes</span><span class="p">)</span>
+
+    <span class="c1"># Start walking around the graph to find the rings. We will need to keep</span>
+    <span class="c1"># track of rings and permutations of the atomIDs in each ring that where</span>
+    <span class="c1"># already walked along, which will be accomplished by sorting the atomIDs</span>
+    <span class="c1"># and logging the ring into sorted_rings. The return value will be unique</span>
+    <span class="c1"># rings where the atomIDs are ordered in the direction they were walked.</span>
+    <span class="n">sorted_rings</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">rings</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">[</span><span class="n">node</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span> <span class="k">continue</span>
+
+        <span class="c1"># Reduce graph for performance to smallest possible</span>
+        <span class="c1"># adjacency list for quickest possible dfs traversal</span>
+        <span class="n">rgraph</span> <span class="o">=</span> <span class="n">_reduced_graph</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">max_depth</span><span class="p">)</span>
+
+        <span class="c1"># Use a depth first search traversal on the reduced graph</span>
+        <span class="k">for</span> <span class="n">ring</span> <span class="ow">in</span> <span class="n">_dfs_cycles</span><span class="p">(</span><span class="n">rgraph</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">max_ring</span><span class="p">):</span>
+            <span class="n">sorted_ring</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">ring</span><span class="p">))</span>
+            <span class="n">ring_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ring</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ring_size</span> <span class="ow">in</span> <span class="n">rings2check</span> <span class="ow">and</span> <span class="n">sorted_ring</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sorted_rings</span><span class="p">:</span>
+                <span class="n">canonical</span> <span class="o">=</span> <span class="n">ring_canonical</span><span class="p">(</span><span class="n">ring</span><span class="p">)</span>
+
+                <span class="c1"># print(ring, canonical)</span>
+                <span class="n">rings</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">canonical</span><span class="p">)</span>
+                <span class="n">sorted_rings</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">sorted_ring</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">rings</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">x</span><span class="p">))</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

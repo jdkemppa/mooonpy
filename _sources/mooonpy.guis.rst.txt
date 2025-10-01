@@ -1,0 +1,15 @@
+mooonpy.guis package
+====================
+
+.. automodule:: mooonpy.guis
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 8
+
+   mooonpy.guis.hw

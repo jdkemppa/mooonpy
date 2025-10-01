@@ -1,0 +1,16 @@
+mooonpy.molspace.graph\_theory package
+======================================
+
+.. automodule:: mooonpy.molspace.graph_theory
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 8
+
+   mooonpy.molspace.graph_theory.interface
+   mooonpy.molspace.graph_theory.ring_analysis

@@ -1,0 +1,16 @@
+mooonpy.programs package
+========================
+
+.. automodule:: mooonpy.programs
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 8
+
+   mooonpy.programs.program
+   mooonpy.programs.regression_fringe_response

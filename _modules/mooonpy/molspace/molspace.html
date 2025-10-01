@@ -1,0 +1,561 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.molspace.molspace &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mooonpy.molspace.molspace</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mooonpy.molspace.molspace</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.molspace</span><span class="w"> </span><span class="kn">import</span> <span class="n">_files_io</span> <span class="k">as</span> <span class="n">_files_io</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.molspace.atoms</span><span class="w"> </span><span class="kn">import</span> <span class="n">Atoms</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.molspace.topology</span><span class="w"> </span><span class="kn">import</span> <span class="n">Bonds</span><span class="p">,</span> <span class="n">Angles</span><span class="p">,</span> <span class="n">Dihedrals</span><span class="p">,</span> <span class="n">Impropers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.molspace.clusters</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clusters</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.molspace.force_field</span><span class="w"> </span><span class="kn">import</span> <span class="n">ForceField</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.molspace.distance</span><span class="w"> </span><span class="kn">import</span> <span class="n">domain_decomp_13</span><span class="p">,</span> <span class="n">pairs_from_bonds</span><span class="p">,</span> <span class="n">pairs_from_domains</span><span class="p">,</span> <span class="n">ADI_from_bonds</span><span class="p">,</span> \
+    <span class="n">BADI_by_type</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.molspace.graph_theory</span><span class="w"> </span><span class="kn">import</span> <span class="n">interface</span><span class="p">,</span> <span class="n">ring_analysis</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.molspace.periodic_table</span><span class="w"> </span><span class="kn">import</span> <span class="n">Elements</span> <span class="k">as</span> <span class="n">Ptable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.molspace.bonds_from_distances</span><span class="w"> </span><span class="kn">import</span> <span class="n">find</span> <span class="k">as</span> <span class="n">find_bonds_from_distances</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.tools.file_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.rcsetup</span><span class="w"> </span><span class="kn">import</span> <span class="n">rcParams</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+
+<div class="viewcode-block" id="Molspace">
+<a class="viewcode-back" href="../../../mooonpy.molspace.molspace.html#mooonpy.Molspace">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Molspace</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initializes a Molspace instance</span>
+<span class="sd">    -------------------------------</span>
+<span class="sd">    </span>
+<span class="sd">    This class can be called via:</span>
+<span class="sd">      * Full namespace syntax    : ``mooonpy.molspace.molspace.Molspace()``</span>
+<span class="sd">      * Aliased namespace syntax : ``mooonpy.Molspace()``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;        </span>
+<span class="sd">        Initialization Parameters</span>
+<span class="sd">        -------------------------</span>
+<span class="sd">        filename : str, optional</span>
+<span class="sd">            An optional filename to read and initialize a Molspace() instance</span>
+<span class="sd">            with molecular system information (e.g. atoms, bonds, force field</span>
+<span class="sd">            parameters ...). Supported file extensions:</span>
+<span class="sd">                </span>
+<span class="sd">              * LAMMPS datafile ``.data``</span>
+<span class="sd">              * Tripos mol2 file ``.mol2``</span>
+<span class="sd">              * SYBL mol file ``.mol``</span>
+<span class="sd">        </span>
+<span class="sd">            If no filename is provided the Molspace instance will be generated</span>
+<span class="sd">            with no molecular system information.</span>
+<span class="sd">            </span>
+<span class="sd">            </span>
+<span class="sd">        Attributes</span>
+<span class="sd">        ----------</span>
+<span class="sd">        N : int</span>
+<span class="sd">            The order of the filter. For &#39;bandpass&#39; and &#39;bandstop&#39; filters,</span>
+<span class="sd">            the resulting order of the final second-order sections (&#39;sos&#39;)</span>
+<span class="sd">            matrix is ``2*N``, with `N` the number of biquad sections</span>
+<span class="sd">            of the desired system.</span>
+<span class="sd">        Wn : array_like</span>
+<span class="sd">            The critical frequency or frequencies. For lowpass and highpass</span>
+<span class="sd">            filters, Wn is a scalar; for bandpass and bandstop filters,</span>
+<span class="sd">            Wn is a length-2 sequence.</span>
+<span class="sd">            </span>
+<span class="sd">        Methods</span>
+<span class="sd">        -------</span>
+<span class="sd">        N : int</span>
+<span class="sd">            The order of the filter. For &#39;bandpass&#39; and &#39;bandstop&#39; filters,</span>
+<span class="sd">            the resulting order of the final second-order sections (&#39;sos&#39;)</span>
+<span class="sd">            matrix is ``2*N``, with `N` the number of biquad sections</span>
+<span class="sd">            of the desired system.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># print(rcParams)</span>
+
+        <span class="c1"># Get some basic config options from kwargs or setup defaults</span>
+        <span class="c1"># print(kwargs)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">astyles</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;astyles&#39;</span><span class="p">,</span> <span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;molspace.astyles&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dsect</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;dsect&#39;</span><span class="p">,</span> <span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;molspace.read.dsect&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">steps</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;steps&#39;</span><span class="p">,</span> <span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;molspace.read.steps&#39;</span><span class="p">])</span>
+
+        <span class="c1"># print(kwargs)</span>
+
+        <span class="c1"># Build this object with some composition</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">:</span> <span class="n">Atoms</span> <span class="o">=</span> <span class="n">Atoms</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">astyles</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bonds</span><span class="p">:</span> <span class="n">Bonds</span> <span class="o">=</span> <span class="n">Bonds</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">:</span> <span class="n">Angles</span> <span class="o">=</span> <span class="n">Angles</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dihedrals</span><span class="p">:</span> <span class="n">Dihedrals</span> <span class="o">=</span> <span class="n">Dihedrals</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">impropers</span><span class="p">:</span> <span class="n">Impropers</span> <span class="o">=</span> <span class="n">Impropers</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clusters</span><span class="p">:</span> <span class="n">Clusters</span> <span class="o">=</span> <span class="n">Clusters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">:</span> <span class="n">ForceField</span> <span class="o">=</span> <span class="n">ForceField</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ptable</span><span class="p">:</span> <span class="n">Ptable</span> <span class="o">=</span> <span class="n">Ptable</span><span class="p">()</span>
+
+        <span class="c1"># Handle file initializations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>  <span class="c1"># check existence</span>
+                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1"> was not found or is a directory&#39;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">read_files</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dsect</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dsect</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">steps</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.dump&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">steps</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s1">&#39;WARNING: Cannot init from a dump file with multiple steps specified. This returned the last step probably&#39;</span><span class="p">)</span>
+
+            <span class="c1"># keys = self.bonds</span>
+
+<div class="viewcode-block" id="Molspace.copy">
+<a class="viewcode-back" href="../../../mooonpy.molspace.molspace.html#mooonpy.Molspace.copy">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+        <span class="c1">## This is absurdly slow, not sure why?</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">populated</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bonds</span><span class="p">:</span>
+            <span class="n">populated</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;Bonds&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="p">:</span>
+            <span class="n">populated</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;FF&#39;</span><span class="p">)</span>
+        <span class="c1">## Continue this for important attributes</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;Molspace with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span><span class="si">}</span><span class="s1"> atoms and </span><span class="si">{</span><span class="n">populated</span><span class="si">}</span><span class="s1"> attributes)&#39;</span>
+
+<div class="viewcode-block" id="Molspace.read_files">
+<a class="viewcode-back" href="../../../mooonpy.molspace.molspace.html#mooonpy.Molspace.read_files">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">dsect</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;all&#39;</span><span class="p">],</span> <span class="n">steps</span><span class="o">=...</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read files into Molspace</span>
+<span class="sd">        Currently supports .data and .dump files.</span>
+
+<span class="sd">        :param filename: path to file to read</span>
+<span class="sd">        :type filename: str or Path</span>
+<span class="sd">        :param dsect: Sections of data file to read, see mooonpy.molspace._files_io.read_lmp_data for more details</span>
+<span class="sd">        :type dsect: list</span>
+<span class="sd">        :param steps: Steps in dump file to read see mooonpy.molspace._files_io.read_lmp_dump for more details</span>
+<span class="sd">        :type steps: list or int</span>
+
+<span class="sd">        :return: Modifies self in-place if data or single step, returns dict if multiple steps</span>
+<span class="sd">        :rtype: None or dict</span>
+
+<span class="sd">        :Example:</span>
+<span class="sd">            &gt;&gt;&gt; from mooonpy import Molspace</span>
+<span class="sd">            &gt;&gt;&gt; MyPath = Path(&#39;Project/Monomers/DETDA.data&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; mol = Molspace(MyPath, dsect=[&#39;all&#39;])</span>
+<span class="sd">            &gt;&gt;&gt; MyPath2 = Path(&#39;Project/Monomers/DETDA.dump&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; series = Molspace(MyPath2, steps=None)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">root</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.data&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="s1">&#39;all&#39;</span> <span class="ow">in</span> <span class="n">dsect</span><span class="p">:</span>
+                <span class="n">dsect</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Atoms&#39;</span><span class="p">,</span> <span class="s1">&#39;Bonds&#39;</span><span class="p">,</span> <span class="s1">&#39;Angles&#39;</span><span class="p">,</span> <span class="s1">&#39;Dihedrals&#39;</span><span class="p">,</span> <span class="s1">&#39;Impropers&#39;</span><span class="p">,</span> <span class="s1">&#39;Velocities&#39;</span><span class="p">]</span>
+            <span class="n">_files_io</span><span class="o">.</span><span class="n">read_lmp_data</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">dsect</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">elif</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.dump&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">steps</span> <span class="ow">is</span> <span class="o">...</span><span class="p">:</span>  <span class="c1"># none means all, ellipsis means to pull default from creation or rcParams</span>
+                <span class="n">steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">steps</span>
+            <span class="n">out_steps</span> <span class="o">=</span> <span class="n">_files_io</span><span class="o">.</span><span class="n">read_lmp_dump</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="n">steps</span><span class="p">,</span> <span class="n">mol</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">steps</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">int</span><span class="p">:</span> <span class="c1"># if single, modify self with data</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="o">=</span> <span class="n">out_steps</span><span class="o">.</span><span class="n">atoms</span>
+            <span class="k">return</span> <span class="n">out_steps</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1"> was not found or is a directory&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Molspace.write_files">
+<a class="viewcode-back" href="../../../mooonpy.molspace.molspace.html#mooonpy.Molspace.write_files">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">atom_style</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">):</span>
+        <span class="n">root</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.data&#39;</span><span class="p">):</span>
+            <span class="n">_files_io</span><span class="o">.</span><span class="n">write_lmp_data</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">atom_style</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.ff.script&#39;</span><span class="p">):</span>
+            <span class="n">_files_io</span><span class="o">.</span><span class="n">write_lmp_ff_script</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Molspace.compute_pairs">
+<a class="viewcode-back" href="../../../mooonpy.molspace.molspace.html#mooonpy.Molspace.compute_pairs">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_pairs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">,</span> <span class="n">whitelist</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">blacklist</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;DD_13&#39;</span><span class="p">,</span> <span class="n">periodicity</span><span class="o">=</span><span class="s1">&#39;ppp&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute pairwise distances within cutoff between atoms</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;DD_13&#39;</span><span class="p">:</span>
+            <span class="n">domains</span><span class="p">,</span> <span class="n">fractionals</span> <span class="o">=</span> <span class="n">domain_decomp_13</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">,</span> <span class="n">whitelist</span><span class="p">,</span> <span class="n">blacklist</span><span class="p">,</span> <span class="n">periodicity</span><span class="p">)</span>
+            <span class="n">pairs</span> <span class="o">=</span> <span class="n">pairs_from_domains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">,</span> <span class="n">domains</span><span class="p">,</span> <span class="n">fractionals</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Algorithm must be DD_13&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">domains</span><span class="p">,</span> <span class="n">pairs</span></div>
+
+
+<div class="viewcode-block" id="Molspace.compute_bond_length">
+<a class="viewcode-back" href="../../../mooonpy.molspace.molspace.html#mooonpy.Molspace.compute_bond_length">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_bond_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">periodicity</span><span class="o">=</span><span class="s1">&#39;ppp&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">pairs_from_bonds</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bonds</span><span class="p">,</span> <span class="s1">&#39;ppp&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Molspace.compute_ADI">
+<a class="viewcode-back" href="../../../mooonpy.molspace.molspace.html#mooonpy.Molspace.compute_ADI">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_ADI</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ADI_from_bonds</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bonds</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dihedrals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">impropers</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Molspace.compute_BADI_by_type">
+<a class="viewcode-back" href="../../../mooonpy.molspace.molspace.html#mooonpy.Molspace.compute_BADI_by_type">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_BADI_by_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">periodicity</span><span class="o">=</span><span class="s1">&#39;ppp&#39;</span><span class="p">,</span> <span class="n">comp_bond</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">comp_angle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">comp_dihedral</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                             <span class="n">comp_improper</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">comp_bond</span><span class="p">:</span>
+            <span class="n">pairs_from_bonds</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bonds</span><span class="p">,</span> <span class="n">periodicity</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">comp_angle</span><span class="p">:</span>
+            <span class="n">angles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">angles</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">angles</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">comp_dihedral</span><span class="p">:</span>
+            <span class="n">dihedrals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dihedrals</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dihedrals</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">comp_improper</span><span class="p">:</span>
+            <span class="n">impropers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">impropers</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">impropers</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">ADI_from_bonds</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bonds</span><span class="p">,</span> <span class="n">angles</span><span class="p">,</span> <span class="n">dihedrals</span><span class="p">,</span> <span class="n">impropers</span><span class="p">)</span>
+        <span class="n">bond_hist</span><span class="p">,</span> <span class="n">angle_hist</span><span class="p">,</span> <span class="n">dihedral_hist</span><span class="p">,</span> <span class="n">improper_hist</span> <span class="o">=</span> <span class="n">BADI_by_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">has_type_labels</span><span class="p">,</span> <span class="n">comp_bond</span><span class="p">,</span>
+                                                                           <span class="n">comp_angle</span><span class="p">,</span> <span class="n">comp_dihedral</span><span class="p">,</span> <span class="n">comp_improper</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">bond_hist</span><span class="p">,</span> <span class="n">angle_hist</span><span class="p">,</span> <span class="n">dihedral_hist</span><span class="p">,</span> <span class="n">improper_hist</span></div>
+
+
+<div class="viewcode-block" id="Molspace.add_type_labels">
+<a class="viewcode-back" href="../../../mooonpy.molspace.molspace.html#mooonpy.Molspace.add_type_labels">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_type_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds type labels for atom types and use 1st instance for each BADI type label</span>
+
+<span class="sd">        could refactor the composition to a function somewhere</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span>
+        <span class="c1">## Atom types</span>
+        <span class="k">for</span> <span class="n">atom_type</span><span class="p">,</span> <span class="n">coeff</span> <span class="ow">in</span> <span class="n">ff</span><span class="o">.</span><span class="n">masses</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">atom_type</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">:</span>
+                <span class="n">coeff</span><span class="o">.</span><span class="n">type_label</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="n">atom_type</span><span class="p">]</span>
+                <span class="n">ff</span><span class="o">.</span><span class="n">pair_coeffs</span><span class="p">[</span><span class="n">atom_type</span><span class="p">]</span><span class="o">.</span><span class="n">type_label</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="n">atom_type</span><span class="p">]</span>  <span class="c1"># does this always exist</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Type label </span><span class="si">{</span><span class="n">atom_type</span><span class="si">}</span><span class="s1"> is not defined in input dictionary&#39;</span><span class="p">)</span>
+
+        <span class="c1">## Bond Types from example</span>
+        <span class="n">bond_types</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">bond</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bonds</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">bond</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">bond_types</span><span class="p">:</span> <span class="k">continue</span>
+            <span class="n">tl1</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">bond</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>  <span class="c1"># use load order for label</span>
+            <span class="n">tl2</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">bond</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
+            <span class="n">bond_types</span><span class="p">[</span><span class="n">bond</span><span class="o">.</span><span class="n">type</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tl1</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">tl2</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bond_types</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">ff</span><span class="o">.</span><span class="n">bond_coeffs</span><span class="p">):</span> <span class="k">break</span>  <span class="c1"># found all examples</span>
+        <span class="c1"># else: not every type has an example</span>
+
+        <span class="k">for</span> <span class="n">type_</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">bond_types</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">ff</span><span class="o">.</span><span class="n">bond_coeffs</span><span class="p">[</span><span class="n">type_</span><span class="p">]</span><span class="o">.</span><span class="n">type_label</span> <span class="o">=</span> <span class="n">label</span>
+            <span class="c1">## also cross terms?</span>
+
+        <span class="n">angle_types</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">angle</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">angle</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">angle_types</span><span class="p">:</span> <span class="k">continue</span>
+            <span class="n">tl1</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">angle</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
+            <span class="n">tl2</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">angle</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
+            <span class="n">tl3</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">angle</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
+            <span class="n">angle_types</span><span class="p">[</span><span class="n">angle</span><span class="o">.</span><span class="n">type</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tl1</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">tl2</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">tl3</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">angle_types</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">ff</span><span class="o">.</span><span class="n">angle_coeffs</span><span class="p">):</span> <span class="k">break</span>
+
+        <span class="k">for</span> <span class="n">type_</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">angle_types</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">ff</span><span class="o">.</span><span class="n">angle_coeffs</span><span class="p">[</span><span class="n">type_</span><span class="p">]</span><span class="o">.</span><span class="n">type_label</span> <span class="o">=</span> <span class="n">label</span>
+
+        <span class="n">dihedral_types</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">dihedral</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dihedrals</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">dihedral</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">dihedral_types</span><span class="p">:</span> <span class="k">continue</span>
+            <span class="n">tl1</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">dihedral</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
+            <span class="n">tl2</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">dihedral</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
+            <span class="n">tl3</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">dihedral</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
+            <span class="n">tl4</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">dihedral</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
+            <span class="n">dihedral_types</span><span class="p">[</span><span class="n">dihedral</span><span class="o">.</span><span class="n">type</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tl1</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">tl2</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">tl3</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">tl4</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dihedral_types</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">ff</span><span class="o">.</span><span class="n">dihedral_coeffs</span><span class="p">):</span> <span class="k">break</span>
+
+        <span class="k">for</span> <span class="n">type_</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">dihedral_types</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">ff</span><span class="o">.</span><span class="n">dihedral_coeffs</span><span class="p">[</span><span class="n">type_</span><span class="p">]</span><span class="o">.</span><span class="n">type_label</span> <span class="o">=</span> <span class="n">label</span>
+
+        <span class="n">improper_types</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">improper</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">impropers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">improper</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="n">improper_types</span><span class="p">:</span> <span class="k">continue</span>
+            <span class="n">tl1</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
+            <span class="n">tl2</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
+            <span class="n">tl3</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
+            <span class="n">tl4</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">improper</span><span class="o">.</span><span class="n">ordered</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
+            <span class="n">improper_types</span><span class="p">[</span><span class="n">improper</span><span class="o">.</span><span class="n">type</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tl1</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">tl2</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">tl3</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">tl4</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">improper_types</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">ff</span><span class="o">.</span><span class="n">improper_coeffs</span><span class="p">):</span> <span class="k">break</span>
+
+        <span class="k">for</span> <span class="n">type_</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">improper_types</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">ff</span><span class="o">.</span><span class="n">improper_coeffs</span><span class="p">[</span><span class="n">type_</span><span class="p">]</span><span class="o">.</span><span class="n">type_label</span> <span class="o">=</span> <span class="n">label</span>
+
+        <span class="n">ff</span><span class="o">.</span><span class="n">has_type_labels</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="Molspace.generate_graph">
+<a class="viewcode-back" href="../../../mooonpy.molspace.molspace.html#mooonpy.Molspace.generate_graph">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">generate_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Molspace.find_rings">
+<a class="viewcode-back" href="../../../mooonpy.molspace.molspace.html#mooonpy.Molspace.find_rings">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">find_rings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ring_sizes</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">)):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Finds all rings in the current Molspace instance. The size of rings searched for is</span>
+<span class="sd">        set in the ring_sizes parameter.</span>
+<span class="sd">        </span>
+<span class="sd">        :Example:</span>
+<span class="sd">        &gt;&gt;&gt; import mooonpy</span>
+<span class="sd">        &gt;&gt;&gt; my_molecule = mooonpy.molspace(&#39;detda.mol2&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; rings = my_molecule.find_rings(ring_sizes=(3,4,5,6,7))</span>
+<span class="sd">        &gt;&gt;&gt; print(rings)</span>
+<span class="sd">        [(1, 2, 3, 4, 5, 6)]</span>
+<span class="sd">        </span>
+<span class="sd">        .. note::</span>
+<span class="sd">            Each ring will be sorted in the order it was traversed in the graph and</span>
+<span class="sd">            will be in the canonical form (e.g., canonical=(1,2,3) vs non_canonical=(2,3,1)).</span>
+
+<span class="sd">        :param ring_sizes: Tuple containing ring sizes to search for in graph</span>
+<span class="sd">        :type ring_sizes: tuple[int]</span>
+<span class="sd">        :return: rings</span>
+<span class="sd">        :rtype: list[tuple[int]]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">graph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_graph</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">ring_analysis</span><span class="o">.</span><span class="n">find_rings</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">ring_sizes</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Molspace.find_cumulative_neighs">
+<a class="viewcode-back" href="../../../mooonpy.molspace.molspace.html#mooonpy.Molspace.find_cumulative_neighs">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">find_cumulative_neighs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="Molspace.update_elements">
+<a class="viewcode-back" href="../../../mooonpy.molspace.molspace.html#mooonpy.Molspace.update_elements">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_elements</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">type2mass</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">type2element</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates every per-atom .element attribute with the element type for that atom.</span>
+<span class="sd">        </span>
+<span class="sd">        :Example:</span>
+<span class="sd">        &gt;&gt;&gt; import mooonpy</span>
+<span class="sd">        &gt;&gt;&gt; my_molecule = mooonpy.molspace(&#39;detda.data&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; my_molecule.update_elements()</span>
+<span class="sd">        </span>
+<span class="sd">        .. note::</span>
+<span class="sd">            This will also update the per-mass .element attribute in ff.masses dictionary as well.</span>
+
+<span class="sd">        :param type2mass: Optional for setting the atom type to mass map (e.g. type2mass={1: 12.01115, 2: 1.008}). If not provided this will be generated from the masses section.</span>
+<span class="sd">        :type type2mass: dict[int, float]</span>
+<span class="sd">        :param type2element: Optional for setting the atom type to mass map (e.g. type2element={1: &#39;C&#39;, 2: &#39;H&#39;}). If not provided this will be generated from the masses section and interally defined periodic table.</span>
+<span class="sd">        :type type2element: dict[int, str]</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">type2mass</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">type2mass</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">masses</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">coeffs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">masses</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">type2element</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">type2element</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ptable</span><span class="o">.</span><span class="n">mass2element</span><span class="p">(</span><span class="n">type2mass</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">type2mass</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">atom_type</span><span class="p">,</span> <span class="n">mass</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">masses</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">mass</span><span class="o">.</span><span class="n">element</span> <span class="o">=</span> <span class="n">type2element</span><span class="p">[</span><span class="n">atom_type</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">atom_id</span><span class="p">,</span> <span class="n">atom</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">atom</span><span class="o">.</span><span class="n">element</span> <span class="o">=</span> <span class="n">type2element</span><span class="p">[</span><span class="n">atom</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
+        <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="Molspace.bonds_from_distances">
+<a class="viewcode-back" href="../../../mooonpy.molspace.molspace.html#mooonpy.Molspace.bonds_from_distances">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bonds_from_distances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">periodicity</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;ppp&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resets the bonds in a molecular system, based in interatomic distances and valences of atoms. </span>
+<span class="sd">        The cutoff distances are set based on the summation of vdw radii per element involved in the</span>
+<span class="sd">        bond. Each atom&#39;s valence is respected (e.g. the maximum number of allowable bonded atoms to</span>
+<span class="sd">        a carbon atom is 4).</span>
+<span class="sd">        </span>
+<span class="sd">        :Example:</span>
+<span class="sd">        &gt;&gt;&gt; import mooonpy</span>
+<span class="sd">        &gt;&gt;&gt; my_molecule = mooonpy.molspace(&#39;detda.data&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; my_molecule.bonds_from_distances(periodicity=&#39;fff&#39;)</span>
+<span class="sd">        </span>
+<span class="sd">        .. note::</span>
+<span class="sd">            Before using this command the element per-atom info and element per-mass info need to be updated by</span>
+<span class="sd">            running &quot;my_molecule.update_elements()&quot;.</span>
+
+<span class="sd">        :param periodicity: Optional for setting the periodicity of the model, where f=fixed and p=periodic. Each position is a face (e.g. periodicity=&#39;fpp&#39; is fixed on X-faces and periodic in Y- and Z-faces)</span>
+<span class="sd">        :type periodicity: str</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">find_bonds_from_distances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">periodicity</span><span class="p">)</span>
+        <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="Molspace.remove_atoms">
+<a class="viewcode-back" href="../../../mooonpy.molspace.molspace.html#mooonpy.Molspace.remove_atoms">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_atoms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atom_ids</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; make smart and remove from some?&quot;&quot;&quot;</span>
+        <span class="n">atom_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">atom_ids</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">id_</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>  <span class="c1"># cant change size in dict loop, cache keys</span>
+            <span class="k">if</span> <span class="n">id_</span> <span class="ow">in</span> <span class="n">atom_ids</span><span class="p">:</span>  <span class="c1"># set inclusion is O(1)</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">id_</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bonds</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="k">for</span> <span class="n">key_id</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">key_id</span> <span class="ow">in</span> <span class="n">atom_ids</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">bonds</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                    <span class="k">break</span>  <span class="c1"># later ids would break</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="k">for</span> <span class="n">key_id</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">key_id</span> <span class="ow">in</span> <span class="n">atom_ids</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                    <span class="k">break</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dihedrals</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="k">for</span> <span class="n">key_id</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">key_id</span> <span class="ow">in</span> <span class="n">atom_ids</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">dihedrals</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                    <span class="k">break</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">impropers</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="k">for</span> <span class="n">key_id</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">key_id</span> <span class="ow">in</span> <span class="n">atom_ids</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">impropers</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                    <span class="k">break</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

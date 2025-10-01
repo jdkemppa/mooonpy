@@ -1,0 +1,245 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.molspace.periodic_table &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mooonpy.molspace.periodic_table</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mooonpy.molspace.periodic_table</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on Fri Jun 27 10:40:21 2025</span>
+
+<span class="sd">@author: jdkem</span>
+
+<span class="sd">https://ptable.com/?lang=en#Properties</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Element">
+<a class="viewcode-back" href="../../../mooonpy.molspace.periodic_table.html#mooonpy.molspace.periodic_table.Element">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Element</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># mass are in AMU&#39;s</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">masses</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
+        
+        <span class="c1"># Values are in angstrom&#39;s</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radii</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;calculated&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                                   <span class="s1">&#39;empirical&#39;</span><span class="p">:</span>  <span class="mf">0.0</span><span class="p">,</span>
+                                   <span class="s1">&#39;covalent&#39;</span><span class="p">:</span>   <span class="mf">0.0</span><span class="p">,</span>
+                                   <span class="s1">&#39;vdw&#39;</span><span class="p">:</span>        <span class="mf">0.0</span><span class="p">,</span>
+                                   <span class="s1">&#39;ff.ReaxFF&#39;</span><span class="p">:</span>  <span class="mf">0.0</span><span class="p">,</span>
+                                   <span class="s1">&#39;ff.REBO&#39;</span><span class="p">:</span>    <span class="mf">0.0</span><span class="p">}</span>
+        
+        <span class="c1"># Valence number </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valence</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+        
+        <span class="c1"># Might not really care about this info</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elevels</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span></div>
+
+        
+<span class="c1"># https://ptable.com/?lang=en#Properties</span>
+<div class="viewcode-block" id="Elements">
+<a class="viewcode-back" href="../../../mooonpy.molspace.periodic_table.html#mooonpy.molspace.periodic_table.Elements">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Elements</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elements</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># {&#39;element&#39;: Element-object}</span>
+        
+        <span class="n">carbon</span> <span class="o">=</span> <span class="n">Element</span><span class="p">()</span>
+        <span class="n">carbon</span><span class="o">.</span><span class="n">masses</span> <span class="o">=</span> <span class="p">[</span><span class="mf">12.011</span><span class="p">]</span> <span class="c1"># Firt index will be the formal mass used when getting a mass per element</span>
+        <span class="n">carbon</span><span class="o">.</span><span class="n">masses</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mf">12.01115</span><span class="p">,</span> <span class="mf">10.01115</span><span class="p">])</span>  <span class="c1"># Other FF masses (10.01115 is for IFF&#39;s cg1/cge atom types)</span>
+        <span class="n">carbon</span><span class="o">.</span><span class="n">radii</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;calculated&#39;</span><span class="p">:</span> <span class="mf">0.67</span><span class="p">,</span>
+                        <span class="s1">&#39;empirical&#39;</span><span class="p">:</span>  <span class="mf">0.70</span><span class="p">,</span>
+                        <span class="s1">&#39;covalent&#39;</span><span class="p">:</span>   <span class="mf">0.77</span><span class="p">,</span>
+                        <span class="s1">&#39;vdw&#39;</span><span class="p">:</span>        <span class="mf">1.70</span><span class="p">}</span>
+        <span class="n">carbon</span><span class="o">.</span><span class="n">valence</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">carbon</span>
+        
+        
+        <span class="n">hydrogen</span> <span class="o">=</span> <span class="n">Element</span><span class="p">()</span>
+        <span class="n">hydrogen</span><span class="o">.</span><span class="n">masses</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.008</span><span class="p">]</span> <span class="c1"># Firt index will be the formal mass used when getting a mass per element</span>
+        <span class="n">hydrogen</span><span class="o">.</span><span class="n">masses</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.00782</span><span class="p">,</span> <span class="mf">1.00797</span><span class="p">,</span> <span class="mf">1.008</span><span class="p">,</span> <span class="mf">2.014</span><span class="p">])</span>  <span class="c1"># Other FF masses (1.0 is for IFF&#39;s cg1/cge atom types)</span>
+        <span class="n">hydrogen</span><span class="o">.</span><span class="n">radii</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;calculated&#39;</span><span class="p">:</span> <span class="mf">0.53</span><span class="p">,</span>
+                          <span class="s1">&#39;empirical&#39;</span><span class="p">:</span>  <span class="mf">0.25</span><span class="p">,</span>
+                          <span class="s1">&#39;covalent&#39;</span><span class="p">:</span>   <span class="mf">0.37</span><span class="p">,</span>
+                          <span class="s1">&#39;vdw&#39;</span><span class="p">:</span>        <span class="mf">1.20</span><span class="p">}</span>
+        <span class="n">hydrogen</span><span class="o">.</span><span class="n">valence</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hydrogen</span>
+        
+        <span class="n">oxygen</span> <span class="o">=</span> <span class="n">Element</span><span class="p">()</span>
+        <span class="n">oxygen</span><span class="o">.</span><span class="n">masses</span> <span class="o">=</span> <span class="p">[</span><span class="mf">15.999</span><span class="p">]</span> <span class="c1"># Firt index will be the formal mass used when getting a mass per element</span>
+        <span class="n">oxygen</span><span class="o">.</span><span class="n">masses</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mf">14.9994</span><span class="p">,</span> <span class="mf">15.99491</span><span class="p">,</span> <span class="mf">15.9994</span><span class="p">,</span> <span class="mf">16.0</span><span class="p">])</span>  <span class="c1"># Other FF masses</span>
+        <span class="n">oxygen</span><span class="o">.</span><span class="n">radii</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;calculated&#39;</span><span class="p">:</span> <span class="mf">0.48</span><span class="p">,</span>
+                        <span class="s1">&#39;empirical&#39;</span><span class="p">:</span>  <span class="mf">0.60</span><span class="p">,</span>
+                        <span class="s1">&#39;covalent&#39;</span><span class="p">:</span>   <span class="mf">0.73</span><span class="p">,</span>
+                        <span class="s1">&#39;vdw&#39;</span><span class="p">:</span>        <span class="mf">1.52</span><span class="p">}</span>
+        <span class="n">oxygen</span><span class="o">.</span><span class="n">valence</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="s1">&#39;O&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">oxygen</span>
+        
+        <span class="n">nitrogen</span> <span class="o">=</span> <span class="n">Element</span><span class="p">()</span>
+        <span class="n">nitrogen</span><span class="o">.</span><span class="n">masses</span> <span class="o">=</span> <span class="p">[</span><span class="mf">14.007</span><span class="p">]</span> <span class="c1"># Firt index will be the formal mass used when getting a mass per element</span>
+        <span class="n">nitrogen</span><span class="o">.</span><span class="n">masses</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mf">14.0067</span><span class="p">,</span> <span class="mf">14.00674</span><span class="p">,</span> <span class="mf">14.01</span><span class="p">,</span> <span class="mf">14.0</span><span class="p">])</span>  <span class="c1"># Other FF masses</span>
+        <span class="n">nitrogen</span><span class="o">.</span><span class="n">radii</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;calculated&#39;</span><span class="p">:</span> <span class="mf">0.56</span><span class="p">,</span>
+                          <span class="s1">&#39;empirical&#39;</span><span class="p">:</span>  <span class="mf">0.65</span><span class="p">,</span>
+                          <span class="s1">&#39;covalent&#39;</span><span class="p">:</span>   <span class="mf">0.75</span><span class="p">,</span>
+                          <span class="s1">&#39;vdw&#39;</span><span class="p">:</span>        <span class="mf">1.55</span><span class="p">}</span>
+        <span class="n">nitrogen</span><span class="o">.</span><span class="n">valence</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nitrogen</span>
+        
+<div class="viewcode-block" id="Elements.mass2element">
+<a class="viewcode-back" href="../../../mooonpy.molspace.periodic_table.html#mooonpy.molspace.periodic_table.Elements.mass2element">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mass2element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mass</span><span class="p">):</span>
+        <span class="n">mass_diffs</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># {&#39;element&#39;:minimum-difference in masses}</span>
+        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">:</span>
+            <span class="n">masses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="n">elem</span><span class="p">]</span><span class="o">.</span><span class="n">masses</span>
+            <span class="n">diffs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">mass</span> <span class="o">-</span> <span class="n">elem_mass</span><span class="p">)</span> <span class="k">for</span> <span class="n">elem_mass</span> <span class="ow">in</span> <span class="n">masses</span><span class="p">]</span>
+            <span class="n">mass_diffs</span><span class="p">[</span><span class="n">elem</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">diffs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">mass_diffs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">mass_diffs</span><span class="o">.</span><span class="n">get</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="Elements.element2mass">
+<a class="viewcode-back" href="../../../mooonpy.molspace.periodic_table.html#mooonpy.molspace.periodic_table.Elements.element2mass">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">element2mass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="n">element</span><span class="p">]</span><span class="o">.</span><span class="n">masses</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+    
+<div class="viewcode-block" id="Elements.element2radii">
+<a class="viewcode-back" href="../../../mooonpy.molspace.periodic_table.html#mooonpy.molspace.periodic_table.Elements.element2radii">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">element2radii</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;vdw&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="n">element</span><span class="p">]</span><span class="o">.</span><span class="n">radii</span><span class="p">[</span><span class="n">method</span><span class="p">]</span></div>
+</div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">pt</span> <span class="o">=</span> <span class="n">Elements</span><span class="p">()</span>
+    <span class="n">carbon</span> <span class="o">=</span> <span class="n">pt</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">carbon</span><span class="o">.</span><span class="n">masses</span><span class="p">,</span> <span class="n">carbon</span><span class="o">.</span><span class="n">radii</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">Mapping mass to element&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pt</span><span class="o">.</span><span class="n">mass2element</span><span class="p">(</span><span class="mi">12</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pt</span><span class="o">.</span><span class="n">element2mass</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pt</span><span class="o">.</span><span class="n">element2radii</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">))</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

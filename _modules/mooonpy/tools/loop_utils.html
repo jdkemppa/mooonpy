@@ -1,0 +1,503 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.tools.loop_utils &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mooonpy.tools.loop_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mooonpy.tools.loop_utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">product</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Iterable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.tools.file_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+
+<div class="viewcode-block" id="DimensionEntry">
+<a class="viewcode-back" href="../../../mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.DimensionEntry">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DimensionEntry</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents a single entry in a dimension with its parsing information.&quot;&quot;&quot;</span>
+    <span class="n">cart_key</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">condition</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">iterable</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="DimensionInfo">
+<a class="viewcode-back" href="../../../mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.DimensionInfo">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DimensionInfo</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Information about a parsed dimension including base and conditional entries.&quot;&quot;&quot;</span>
+    <span class="n">base</span><span class="p">:</span> <span class="n">DimensionEntry</span>
+    <span class="n">conditionals</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">DimensionEntry</span><span class="p">]</span>
+    <span class="n">parallels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">DimensionEntry</span><span class="p">]</span>
+    <span class="n">size</span><span class="p">:</span> <span class="nb">int</span></div>
+
+
+
+<div class="viewcode-block" id="IndexInfo">
+<a class="viewcode-back" href="../../../mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.IndexInfo">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">IndexInfo</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Index information for a generated permutation.&quot;&quot;&quot;</span>
+    <span class="n">global_idx</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">dimensions</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+    <span class="n">combined</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="CartesianResult">
+<a class="viewcode-back" href="../../../mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.CartesianResult">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CartesianResult</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Result dictionary with index information as attributes.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+                 <span class="n">global_idx</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">dimension_indices</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">combined_indices</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize CartesianResult.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            values: The main result dictionary {name: value}</span>
+<span class="sd">            global_idx: Global permutation index</span>
+<span class="sd">            dimension_indices: Per-dimension indices</span>
+<span class="sd">            combined_indices: Combined dimension indices</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">global_idx</span> <span class="o">=</span> <span class="n">global_idx</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dimension_indices</span> <span class="o">=</span> <span class="n">dimension_indices</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">combined_indices</span> <span class="o">=</span> <span class="n">combined_indices</span> <span class="ow">or</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="CartesianResult.string_format">
+<a class="viewcode-back" href="../../../mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.CartesianResult.string_format">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">string_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strings</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span>
+        <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Format strings with {var} using the CartesianResult dict.</span>
+<span class="sd">        Strings may be a single string, list of strings, or dict of strings.</span>
+<span class="sd">        Path objects are preserved as paths.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">Path</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="n">strings</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">strings</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">strings</span><span class="p">:</span>
+                <span class="n">formatted</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">Path</span><span class="p">):</span>
+                    <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">formatted</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">formatted</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">out</span>
+
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">strings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">formatted</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">Path</span><span class="p">):</span>
+                    <span class="n">out</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">formatted</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">out</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">formatted</span>
+            <span class="k">return</span> <span class="n">out</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;strings must be str or Path, and datastructure must be str, list or dict&#39;</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Cartesian">
+<a class="viewcode-back" href="../../../mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.Cartesian">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Cartesian</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enhanced cartesian product generator with index tracking and conditional dimensions.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cartesian_sets</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">delim</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize Cartesian generator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cartesian_sets: Dictionary of cart_key: iterable pairs</span>
+<span class="sd">            delim: Delimiter for parsing dimension.condition.name syntax</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cartesian_sets</span> <span class="o">=</span> <span class="n">cartesian_sets</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delim</span> <span class="o">=</span> <span class="n">delim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DimensionInfo</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dimension_sizes</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parse_cartesian_sets</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_cartesian_sets</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse cartesian_sets into organized dimension structure.&quot;&quot;&quot;</span>
+        <span class="c1"># Group by dimensions and parse conditions</span>
+        <span class="n">dim_groups</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">DimensionEntry</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">cart_key</span><span class="p">,</span> <span class="n">iterable</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cartesian_sets</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># Ensure iterable</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">pass</span>  <span class="c1"># keep as a str</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+                    <span class="n">iterable</span> <span class="o">=</span> <span class="p">[</span><span class="n">iterable</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">iterable</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>  <span class="c1"># Convert to list for consistent indexing</span>
+
+            <span class="c1"># Parse cart_key</span>
+            <span class="n">parts</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">cart_key</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delim</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="c1"># Simple case: dimension and name are the same</span>
+                <span class="n">dimension</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">condition</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dimension</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">condition</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="kc">None</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="n">entry</span> <span class="o">=</span> <span class="n">DimensionEntry</span><span class="p">(</span>
+                <span class="n">cart_key</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">cart_key</span><span class="p">),</span>
+                <span class="n">condition</span><span class="o">=</span><span class="n">condition</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">iterable</span><span class="o">=</span><span class="n">iterable</span>
+            <span class="p">)</span>
+            <span class="n">dim_groups</span><span class="p">[</span><span class="n">dimension</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+
+        <span class="c1"># Sort dimensions for consistent ordering</span>
+        <span class="n">sorted_dims</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dim_groups</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+
+        <span class="c1"># Build dimension structure</span>
+        <span class="k">for</span> <span class="n">dimension</span> <span class="ow">in</span> <span class="n">sorted_dims</span><span class="p">:</span>
+            <span class="n">entries</span> <span class="o">=</span> <span class="n">dim_groups</span><span class="p">[</span><span class="n">dimension</span><span class="p">]</span>
+
+            <span class="c1"># Find base entry (no condition) and conditional entries</span>
+            <span class="n">base_entry</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DimensionEntry</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">conditional_entries</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">DimensionEntry</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">parallel_entries</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">DimensionEntry</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">entry</span><span class="o">.</span><span class="n">condition</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">conditional_entries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">entry</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="n">entry</span><span class="o">.</span><span class="n">cart_key</span><span class="p">:</span>
+                    <span class="n">parallel_entries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">base_entry</span> <span class="o">=</span> <span class="n">entry</span>
+
+            <span class="k">if</span> <span class="n">base_entry</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dimension &#39;</span><span class="si">{</span><span class="n">dimension</span><span class="si">}</span><span class="s2">&#39; must have at least one unconditional entry&quot;</span><span class="p">)</span>
+
+            <span class="n">dim_info</span> <span class="o">=</span> <span class="n">DimensionInfo</span><span class="p">(</span>
+                <span class="n">base</span><span class="o">=</span><span class="n">base_entry</span><span class="p">,</span>
+                <span class="n">conditionals</span><span class="o">=</span><span class="n">conditional_entries</span><span class="p">,</span>
+                <span class="n">parallels</span><span class="o">=</span><span class="n">parallel_entries</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">base_entry</span><span class="o">.</span><span class="n">iterable</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">[</span><span class="n">dimension</span><span class="p">]</span> <span class="o">=</span> <span class="n">dim_info</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dimension_sizes</span><span class="p">[</span><span class="n">dimension</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">base_entry</span><span class="o">.</span><span class="n">iterable</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">return_combined_indices</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">CartesianResult</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Call generator function. &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">return_combined_indices</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Cartesian.generate">
+<a class="viewcode-back" href="../../../mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.Cartesian.generate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">return_combined_indices</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">CartesianResult</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate cartesian product permutations.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            return_combined_indices: List of dimension name tuples for combined indexing</span>
+<span class="sd">                                   e.g., [(&#39;R&#39;, &#39;dir&#39;)] to get combined R+dir index</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            CartesianResult containing {name: value} pairs with index attributes populated</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get dimension names in sorted order</span>
+        <span class="n">dim_names</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+
+        <span class="c1"># Validate combined index requests</span>
+        <span class="k">if</span> <span class="n">return_combined_indices</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">dim_combo</span> <span class="ow">in</span> <span class="n">return_combined_indices</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">dim</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span> <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="n">dim_combo</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown dimensions in combination: </span><span class="si">{</span><span class="n">dim_combo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Generate all combinations of dimension indices</span>
+        <span class="n">dim_ranges</span> <span class="o">=</span> <span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="n">dim_names</span><span class="p">]</span>
+
+        <span class="n">global_idx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">dim_indices</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">dim_ranges</span><span class="p">):</span>
+            <span class="c1"># Build dimension index mapping</span>
+            <span class="n">dim_index_map</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">dim_names</span><span class="p">,</span> <span class="n">dim_indices</span><span class="p">))</span>
+
+            <span class="c1"># Build result dictionary</span>
+            <span class="n">result</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+            <span class="c1"># Track if any conditionals were triggered</span>
+            <span class="n">conditional_results</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="k">for</span> <span class="n">dim_name</span><span class="p">,</span> <span class="n">dim_idx</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dim_names</span><span class="p">,</span> <span class="n">dim_indices</span><span class="p">):</span>
+                <span class="n">dim_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">[</span><span class="n">dim_name</span><span class="p">]</span>
+
+                <span class="c1"># Add base values</span>
+                <span class="n">base_entry</span> <span class="o">=</span> <span class="n">dim_info</span><span class="o">.</span><span class="n">base</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">base_entry</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">base_entry</span><span class="o">.</span><span class="n">iterable</span><span class="p">[</span><span class="n">dim_idx</span><span class="p">]</span>
+
+                <span class="c1"># Add parallel values</span>
+                <span class="k">for</span> <span class="n">para</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">[</span><span class="n">dim_name</span><span class="p">]</span><span class="o">.</span><span class="n">parallels</span><span class="p">:</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">para</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">para</span><span class="o">.</span><span class="n">iterable</span><span class="p">[</span><span class="n">dim_idx</span><span class="p">]</span>
+
+                <span class="c1"># Check for conditional values</span>
+                <span class="n">triggered_conditionals</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">DimensionEntry</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">cond_entry</span> <span class="ow">in</span> <span class="n">dim_info</span><span class="o">.</span><span class="n">conditionals</span><span class="p">:</span>
+                    <span class="n">condition</span> <span class="o">=</span> <span class="n">cond_entry</span><span class="o">.</span><span class="n">condition</span>
+                    <span class="k">if</span> <span class="n">condition</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">dim_idx</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">condition</span><span class="p">):</span>
+                        <span class="n">triggered_conditionals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cond_entry</span><span class="p">)</span>
+
+                <span class="c1"># If conditionals are triggered, generate combinations</span>
+                <span class="k">if</span> <span class="n">triggered_conditionals</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">conditional_results</span><span class="p">:</span>
+                        <span class="n">conditional_results</span> <span class="o">=</span> <span class="p">[{}]</span>
+
+                    <span class="n">new_conditional_results</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="k">for</span> <span class="n">cond_entry</span> <span class="ow">in</span> <span class="n">triggered_conditionals</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">existing_result</span> <span class="ow">in</span> <span class="n">conditional_results</span><span class="p">:</span>
+                            <span class="k">for</span> <span class="n">cond_value</span> <span class="ow">in</span> <span class="n">cond_entry</span><span class="o">.</span><span class="n">iterable</span><span class="p">:</span>
+                                <span class="n">new_result</span> <span class="o">=</span> <span class="n">existing_result</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                                <span class="n">new_result</span><span class="p">[</span><span class="n">cond_entry</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">cond_value</span>
+                                <span class="n">new_conditional_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_result</span><span class="p">)</span>
+                    <span class="n">conditional_results</span> <span class="o">=</span> <span class="n">new_conditional_results</span>
+
+            <span class="c1"># Yield results</span>
+            <span class="k">if</span> <span class="n">conditional_results</span><span class="p">:</span>
+                <span class="c1"># Yield each conditional combination</span>
+                <span class="k">for</span> <span class="n">cond_result</span> <span class="ow">in</span> <span class="n">conditional_results</span><span class="p">:</span>
+                    <span class="n">final_result</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">result</span><span class="p">,</span> <span class="o">**</span><span class="n">cond_result</span><span class="p">}</span>
+                    <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_result</span><span class="p">(</span>
+                        <span class="n">final_result</span><span class="p">,</span>
+                        <span class="n">global_idx</span><span class="p">,</span>
+                        <span class="n">dim_index_map</span><span class="p">,</span>
+                        <span class="n">return_combined_indices</span>
+                    <span class="p">)</span>
+                    <span class="n">global_idx</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Yield main result (no conditionals triggered)</span>
+                <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_result</span><span class="p">(</span>
+                    <span class="n">result</span><span class="p">,</span>
+                    <span class="n">global_idx</span><span class="p">,</span>
+                    <span class="n">dim_index_map</span><span class="p">,</span>
+                    <span class="n">return_combined_indices</span>
+                <span class="p">)</span>
+                <span class="n">global_idx</span> <span class="o">+=</span> <span class="mi">1</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                       <span class="n">result</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+                       <span class="n">global_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                       <span class="n">dim_index_map</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+                       <span class="n">return_combined_indices</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]]])</span> <span class="o">-&gt;</span> <span class="n">CartesianResult</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create CartesianResult with index information.&quot;&quot;&quot;</span>
+        <span class="c1"># Build combined indices if requested</span>
+        <span class="n">combined_indices</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">return_combined_indices</span><span class="p">:</span>
+            <span class="n">combined_indices</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">dim_combo</span> <span class="ow">in</span> <span class="n">return_combined_indices</span><span class="p">:</span>
+                <span class="c1"># Calculate combined index</span>
+                <span class="n">combined_idx</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">multiplier</span> <span class="o">=</span> <span class="mi">1</span>
+
+                <span class="c1"># Process dimensions in reverse order for proper indexing</span>
+                <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">dim_combo</span><span class="p">):</span>
+                    <span class="n">combined_idx</span> <span class="o">+=</span> <span class="n">dim_index_map</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">*</span> <span class="n">multiplier</span>
+                    <span class="n">multiplier</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimension_sizes</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span>
+
+                <span class="n">combined_indices</span><span class="p">[</span><span class="n">dim_combo</span><span class="p">]</span> <span class="o">=</span> <span class="n">combined_idx</span>
+
+        <span class="c1"># Always create result with index information</span>
+        <span class="k">return</span> <span class="n">CartesianResult</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">=</span><span class="n">result</span><span class="p">,</span>
+            <span class="n">global_idx</span><span class="o">=</span><span class="n">global_idx</span><span class="p">,</span>
+            <span class="n">dimension_indices</span><span class="o">=</span><span class="n">dim_index_map</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span>
+            <span class="n">combined_indices</span><span class="o">=</span><span class="n">combined_indices</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="Cartesian.get_combined_index">
+<a class="viewcode-back" href="../../../mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.Cartesian.get_combined_index">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_combined_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimension_combo</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">value_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate combined index for given dimensions from a value dictionary.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dimension_combo: Tuple of dimension names</span>
+<span class="sd">            value_dict: Dictionary of {name: value} pairs</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Combined index for the specified dimensions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">dim</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span> <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="n">dimension_combo</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown dimensions: </span><span class="si">{</span><span class="n">dimension_combo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">combined_idx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">multiplier</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">dimension_combo</span><span class="p">):</span>
+            <span class="n">dim_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span>
+            <span class="n">base_entry</span> <span class="o">=</span> <span class="n">dim_info</span><span class="o">.</span><span class="n">base</span>
+
+            <span class="c1"># Find index of value in dimension</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">dim_idx</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">base_entry</span><span class="o">.</span><span class="n">iterable</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">value_dict</span><span class="p">[</span><span class="n">base_entry</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Value not found for dimension </span><span class="si">{</span><span class="n">dim</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="n">combined_idx</span> <span class="o">+=</span> <span class="n">dim_idx</span> <span class="o">*</span> <span class="n">multiplier</span>
+            <span class="n">multiplier</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimension_sizes</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">combined_idx</span></div>
+
+
+<div class="viewcode-block" id="Cartesian.generate_list">
+<a class="viewcode-back" href="../../../mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.Cartesian.generate_list">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">CartesianResult</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate full list of permutations (convenience method).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">))</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute Length By generating all results&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">generate_list</span><span class="p">())</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get information about parsed dimensions.&quot;&quot;&quot;</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Cartesian Product with </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dimension_sizes</span><span class="si">}</span><span class="s2"> dimension sizes&quot;</span>
+        <span class="k">return</span> <span class="n">info</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
