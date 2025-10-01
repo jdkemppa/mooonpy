@@ -20,6 +20,7 @@ class Thermospace(ColTable):
         self.sections = {}
 
     def sect(self, sect_string: Optional[Union[str,range,list,int]]=None,priority='off') -> ColTable:
+        priority = priority.lower()
         if isinstance(sect_string, str):  # TODO
             if sect_string in self.sections:
                 sections = [sect_string]
@@ -40,7 +41,11 @@ class Thermospace(ColTable):
             out_table.default = self.default
 
         for key, col in self.grid.items():
-            sect_ranges = [self.sections[section] for section in sections]
+            sect_ranges = []
+            for section in sections:
+                sect_id = self.sections.get(section)
+                if sect_id is not None:
+                    sect_ranges.append(sect_id)
             slices = []
             for ii, sect_range in enumerate(sect_ranges):
                 if priority == 'first' and ii > 0:

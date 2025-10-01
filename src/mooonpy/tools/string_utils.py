@@ -33,6 +33,9 @@ def string2digit(string: str) -> Union[int, str, float]:
     else:
         return string
 
+def list2digit(string_list):
+    return [string2digit(string) for string in string_list]
+
 def _col_convert(column,skip_int=False):
     try:
         column = np.array(column, float)  ## convert from string. This is about half the runtime

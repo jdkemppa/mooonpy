@@ -352,7 +352,7 @@ class ListListTable(Table):
         return iter(self.grid)
 
     def append(self, row):
-        """Append to ehd of grid"""
+        """Append to end of grid"""
         self.grid.append(row)
 
     def shape(self) -> Tuple[Optional[int], Optional[int]]:
