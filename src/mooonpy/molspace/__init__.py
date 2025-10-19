@@ -8,6 +8,7 @@ __all__ = ['atoms',
            'graph_theory',
            'molspace',
            'force_field',
+           'clusters',
 ]
 
 for name in __all__:

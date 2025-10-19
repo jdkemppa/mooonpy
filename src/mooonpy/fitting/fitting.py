@@ -3,6 +3,7 @@ from typing import Optional, List, Tuple
 import warnings
 import numpy as np
 from lmfit import Model, Parameters
+from lmfit.models import LinearModel
 
 
 class CurveFit:
@@ -117,3 +118,23 @@ class CurveFit:
             return self.result.eval(x=x)
 
 
+
+class Linear(CurveFit):
+    """
+    Linear Function Fit
+    """
+    def __init__(self, x, y, name=None, function=None, ic=None, limits=None, ):
+        self.x = x
+        self.y = y
+        self.name = name
+        self.model = LinearModel()
+
+        self.function = function
+        self.params = Parameters()
+        self.fitted_params = None
+
+        result = self.model.fit(y, x=x)
+        self.result = result
+
+        fitted_params = self.get_fit_params()
+        self.fitted_params = fitted_params
