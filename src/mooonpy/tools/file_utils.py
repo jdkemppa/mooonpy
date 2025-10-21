@@ -114,6 +114,53 @@ class Path(str):
         # return Path(os.path.join(self, other)) # does not work in Linux or Mac
         return Path(os.path.join(str(self), str(other))) # fixes
 
+    def __sub__(self, template: Union[str, 'Path']):
+        """
+        Returns value of glob wildcard (*) characters from a filename-template pair using '-'
+        
+        :param other: template with glob wildcards
+        :type template: str or Path with wildcards
+        :param self: Path or str without wildcards
+        :return: list of wildcards
+        :rtype: list
+
+        :Example:
+          >>> from mooonpy.tools import Path
+          >>> myfilename = Path('filename_step10_temp300.data')
+          >>> mytemplate = Path('filename_step*_temp*.data')
+          >>> print(myfilename - mytemplate)
+          ['10', '300']
+        """
+        # import built-in matching tools
+        import fnmatch, re
+
+        def match(self, template):
+          # convert paths to strings for easier treatment
+          real_file = str(self).replace('/', '\\') # fix dash for linux compatability
+          template_file = str(template).replace('/', '\\')
+          # check if template matches the tested file
+          if fnmatch.fnmatch(real_file, template_file):
+            # build a regrex expression, then pull a re match out
+            to_match = fnmatch.translate(template_file) # convert to regular expression
+            to_match = to_match.replace('\\Z(?ms)', r'\Z')
+            to_match = to_match.replace('.*', '(.*?)') # allow un-greedy capturable regrex
+            compiled = re.compile(to_match, re.S | re.IGNORECASE) # compile regrex string into object
+            matched  = compiled.match(real_file)
+            return matched
+          else:
+            # return nothing if no match was found
+            return None 
+ 
+        # try matching path to template
+        matched = match(self, template)
+        if matched == None:
+          longer_matched = match(self, Path('*') / template)
+          if longer_matched == None: return None
+          else: return list(longer_matched.groups()) # try again, prepending a */
+        else:
+          return list(matched.groups())
+
+
     def __bool__(self) -> bool:
         """
         Check if the path points to a file or directory.
