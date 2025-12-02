@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 def RFR_tensile_analysis(strain: np.ndarray, stress: np.ndarray, trans_1: Optional[np.ndarray] = None,
                          trans_2: Optional[np.ndarray] = None, min_xhi: Optional[Number] = None,
                          max_xhi: Optional[Number] = None, wn: Union[Number, str] = 'PSD', order: Number = 2,
-                         qm: str = 'msr', log: Optional[list] = None, plots: Union[str,List] = 'all') -> ProgramResults:
+                         qm: str = 'msr', log: Optional[list] = None, plots: Union[str,List,None] = 'all') -> ProgramResults:
     """
     Implementation of the Regression Fringe Response Modulus Method Tensile Analysis.
 
@@ -203,8 +203,8 @@ def RFR_tensile_analysis(strain: np.ndarray, stress: np.ndarray, trans_1: Option
                 axies['plt_trans'].plot(trans_1_x, trans_1_y, 'bo--',
                                         label='Transverse 1 Fit: nu = {:2.3f}'.format(-trans_1_coeff[1]))
         else:
-            trans_1_coeff = [None, None]
-        results.trans_1_poi = -trans_1_coeff[1]
+            trans_1_coeff = [np.nan, np.nan]
+        # results.trans_1_poi = -trans_1_coeff[1]
 
         if trans_2 is not None:
             trans_2_filt, wn, qm = butter_lowpass(strain, trans_2)
@@ -218,7 +218,7 @@ def RFR_tensile_analysis(strain: np.ndarray, stress: np.ndarray, trans_1: Option
                 axies['plt_trans'].plot(trans_2_x, trans_2_y, 'ro--',
                                         label='Transverse 2 Fit: nu = {:2.3f}'.format(-trans_2_coeff[1]))
         else:
-            trans_2_coeff = [None, None]
+            trans_2_coeff = [np.nan, np.nan]
         results.trans_2_poi = -trans_2_coeff[1]
 
         # --------------------------------------------
