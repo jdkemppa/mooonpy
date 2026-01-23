@@ -12,12 +12,15 @@ class Thermospace(ColTable):
     """
     Class to hold data found in LAMMPS logs.
     Data is organized into columns
-
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self,filename=None, **kwargs):
         super(Thermospace, self).__init__(**kwargs)
         self.sections = {}
+
+        if filename is not None: # populate from file
+            readlog_basic(filename,out=self)
+
 
     def sect(self, sect_string: Optional[Union[str,range,list,int]]=None,priority='off') -> ColTable:
         priority = priority.lower()
@@ -110,7 +113,7 @@ class Thermospace(ColTable):
         # !!!
 
 ## This should be refactored into _files_io but imports are being weird
-def readlog_basic(file: [Path, str], silence_error_line: bool = False) -> Thermospace:
+def readlog_basic(file: [Path, str], silence_error_line: bool = False, out:Thermospace=None) -> Thermospace:
     """
     Read a single log file into a Thermospace object.
     Only reads thermo table, no timing or variable information.
@@ -225,7 +228,8 @@ def readlog_basic(file: [Path, str], silence_error_line: bool = False) -> Thermo
         columns[key] = _col_convert(col, nan)
     if len(columns) == 0 and not silence_error_line:
         warnings.warn(f'File {file} Contains no thermo data.')
-    out = Thermospace()  ## may change with init?
+    if not isinstance(out,Thermospace) or out is None:
+        out = Thermospace()  ## may change with init?
     out.grid = columns
     out.title = file
     out.sections = sections

@@ -2,7 +2,10 @@ from numbers import Number
 from typing import Tuple, Union, Optional
 
 import numpy as np
-import scipy as sp
+# import scipy as sp
+from scipy.signal import butter, sosfiltfilt
+from scipy.sparse import eye, diags
+from scipy.sparse.linalg import spsolve
 
 from mooonpy.tools.math_utils import first_value_cross
 
@@ -68,8 +71,8 @@ def _butter(ydata: Array1D, wn: float, order: Number) -> np.ndarray:
     :param order: Order of filter, defaults to 2
     :type order: Number
     """
-    sos = sp.signal.butter(order, wn, btype='low', analog=False, output='sos', fs=None)
-    y_filt = sp.signal.sosfiltfilt(sos, ydata, padtype=None)
+    sos = butter(order, wn, btype='low', analog=False, output='sos', fs=None)
+    y_filt = sosfiltfilt(sos, ydata, padtype=None)
     return y_filt
 
 
@@ -161,7 +164,7 @@ def determine_mirroring_locations(xdata: Optional[Array1D], ydata: Array1D, wn: 
 
     # ------------------------------------
     # First: Optimize the "lo" end
-    lo_quads2test = [1, 2, 3, 4];
+    lo_quads2test = [1, 2, 3, 4]
     lo_summed_residuals2 = {}  # {quadrant_mirror:sum-of-residuals-squared}
     for quad in lo_quads2test:
         x_quad, y_quad, lo_ind, hi_ind = data_extension(xdata, ydata, quad, 1)
@@ -176,7 +179,7 @@ def determine_mirroring_locations(xdata: Optional[Array1D], ydata: Array1D, wn: 
 
     # ------------------------------------
     # Second: Optimize the "hi" end
-    hi_quads2test = [1, 2, 3, 4];
+    hi_quads2test = [1, 2, 3, 4]
     hi_summed_residuals2 = {}  # {quadrant_mirror:sum-of-residuals-squared}
     for quad in hi_quads2test:
         x_quad, y_quad, lo_ind, hi_ind = data_extension(xdata, ydata, 1, quad)
@@ -285,13 +288,13 @@ def sparse_eye_diff(m, d, format='csc'):
     for i in range(d):
         diagonals = diagonals[:-1] - diagonals[1:]
     offsets = np.arange(d+1)
-    return sp.sparse.diags(diagonals, offsets, shape=(m-d, m), format=format)
+    return diags(diagonals, offsets, shape=(m-d, m), format=format)
 
 def whitt_smooth(ydata, order, lambda_):
     # Base Whittaker Eilers smoother
     m = len(ydata)
-    E = sp.sparse.eye(m, dtype=int, format='csc')
+    E = eye(m, dtype=int, format='csc')
     D = sparse_eye_diff(m, order, format='csc')
     C = E + lambda_ * D.conj().T.dot(D)
-    z = sp.sparse.linalg.spsolve(C, ydata)
+    z = spsolve(C, ydata)
     return z

@@ -81,6 +81,7 @@ def read(filename: Union[str, Path], steps: Optional[int|list]=None, mol=None):
                 elif 'ATOMS' in string:
                     section = 'ATOMS'
                     fields = string.strip().split()[2:]
+                    fields = [_clean_field(field) for field in fields]
                     functions = [style.func_aliases[field] for field in fields]
                     # print(fields,functions)
                 else:
@@ -105,7 +106,7 @@ def read(filename: Union[str, Path], steps: Optional[int|list]=None, mol=None):
 
                 for field, value in atom_dict.items():
                     try:
-                        setattr(atom, field, value)
+                        setattr(atom, field, value) # TODO make this work for compute vectors
                     except:
                         raise Exception('Unknown field {}. Add to Styles defaults'.format(field))
                 current_mol.atoms[id_] = atom
@@ -169,6 +170,15 @@ def read(filename: Union[str, Path], steps: Optional[int|list]=None, mol=None):
             return None
     return out_mols
 
+def _clean_field(field):
+    """
+    Make field names safe for use as attributes
+    str.isidentifier()
+    """
+    if isinstance(field, str):
+        return field.replace('[', '_').replace(']', '_')
+    else:
+        return [_clean_field(field) for field in field]
 
 if __name__ == '__main__':
     from mooonpy.molspace.molspace import Molspace

@@ -1,14 +1,32 @@
 # -*- coding: utf-8 -*-
-
-
+## mess with lazy imports here?
 import numpy as np
-import scipy
+# import scipy
 from scipy.signal import find_peaks
-
+from scipy.special import erf
 from numbers import Number
 from typing import Union, Tuple, Optional
 
 Array1D = Union[np.ndarray, list]
+
+
+class HistBins:
+    """
+    Alias around np.histogram to make bin centered plots instead of step
+    """
+
+    def __init__(self, values, bin_scale):
+        self.values = values
+        self.bin_scale = bin_scale
+
+        self.bins = round(len(values) / self.bin_scale)
+        self.hist, self.bin_edges = np.histogram(values, bins=self.bins, density=False)  # one sided bins
+        self.bin_width = self.bin_edges[1] - self.bin_edges[0]
+        self.bin_centers = (self.bin_edges[:-1] + self.bin_edges[1:]) / 2
+        self.bin_edges = np.repeat(self.bin_edges, 2)  # overwrite with both edges
+        self.hist_edges = np.concatenate([[0], np.repeat(self.hist, 2), [0]])  # copy to make step histogram
+
+        ## make plot tool?
 
 
 def aggregate_fun(fun_name: str, vector: Array1D) -> Number:
@@ -83,6 +101,39 @@ def find_peaks_and_valleys(xdata: Array1D, ydata: Array1D, prominence: Optional[
     .. TODO::
         make an example image
     """
+
+    # Find peaks
+    peaks, properties = find_peaks(ydata, prominence=prominence)
+    xpeaks = xdata[peaks]
+    ypeaks = ydata[peaks]
+
+    # Find valleys
+    valleys, properties = find_peaks(-ydata, prominence=prominence)
+    xvalleys = xdata[valleys]
+    yvalleys = ydata[valleys]
+
+    return xpeaks, ypeaks, xvalleys, yvalleys
+
+
+def find_peaks_and_minima(xdata: Array1D, ydata: Array1D, prominence: Optional[Number] = None) -> Tuple[
+    np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Compute the peaks (and minima between them) of a curve using a specified prominence for cutoff.
+
+    :param xdata: Array of x values. Must be increasing monotonically.
+    :type xdata: Array1D
+    :param ydata: Array of y values.
+    :type ydata: Array1D
+    :param prominence: Prominence for cutoff
+    :type prominence: Number or None
+
+    :return: X peaks, Y peaks, X valleys, Y valleys
+    :rtype: Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]
+
+    .. TODO::
+        make an example image
+    """
+
     # Find peaks
     peaks, properties = find_peaks(ydata, prominence=prominence)
     xpeaks = xdata[peaks]
@@ -139,7 +190,7 @@ def compute_derivative(xdata: Array1D, ydata: Array1D) -> Tuple[np.ndarray, np.n
 
 
 def compute_fringe_slope(strain: np.ndarray, stress: np.ndarray, min_strain: Optional[Number] = None,
-                         max_strain: Optional[Number] = None, direction: str = 'forward') -> Tuple[
+                         max_strain: Optional[Number] = None, direction: str = 'forward', out=['slopes']) -> Tuple[
     np.ndarray, np.ndarray]:
     """
     Compute fringe slope
@@ -203,7 +254,7 @@ def compute_fringe_slope(strain: np.ndarray, stress: np.ndarray, min_strain: Opt
 
     ## Original non-vectorized
     # Start the walked linear regression method
-    slopes, fringe = [], []
+    slopes, fringe, R2 = [], [], []
     sum_xi, sum_yi, sum_xi_2, sum_yi_2, sum_xi_yi, n = 0, 0, 0, 0, 0, 0
     for x, y in zip(strain, stress):
         # Compute cumulative linear regression parameters
@@ -219,14 +270,35 @@ def compute_fringe_slope(strain: np.ndarray, stress: np.ndarray, min_strain: Opt
 
         # Only compute outputs if x is in the desired range
         if min_strain <= x <= max_strain:
-            SSxy = sum_xi_yi - (sum_xi * sum_yi / n)
-            SSxx = sum_xi_2 - (sum_xi * sum_xi / n)
+            y_bar = sum_yi / n
+            x_bar = sum_xi / n
+            SSxy = sum_xi_yi - (sum_xi * y_bar)
+            SSxx = sum_xi_2 - (sum_xi * x_bar)
             b1 = SSxy / SSxx
+
+            SStotal = sum_yi_2 - (sum_yi * sum_yi / n)
+            # MStotal = SStotal / (n - 1)
+            # x_bar = sum_xi / n
+            # y_bar = sum_yi / n
+            # b0 = y_bar - (b1 * x_bar)
+            # SSres = SStotal - (b1 * b1 * SSxx)
+            SSreg = b1 * b1 * SSxx
+            # MSres = SSres / (n - 2)
+            r2 = SSreg / SStotal
+            # r2_adj = 1.0 - (MSres / MStotal)
+            # b0_variance = MSres * ((1 / n) + (x_bar * x_bar / SSxx))
+            # b1_variance = MSres / SSxx
 
             slopes.append(b1)
             fringe.append(x)
+            R2.append(r2)
 
-    return np.array(fringe), np.array(slopes)
+    out_values = [np.array(fringe)]
+    if 'slopes' in out:
+        out_values.append(np.array(slopes))
+    if 'R2' in out:
+        out_values.append(np.array(R2))
+    return out_values
 
 
 def first_value_cross(xdata: Array1D, ydata: Array1D, cross: Optional[Number] = None):
@@ -277,7 +349,7 @@ def gaussian_turn(x, X0, Y0, a, b, s):
     '''
     dx = x - X0
     z = dx / s / np.sqrt(2)
-    F = dx * scipy.special.erf(z) + s * np.exp(-1 * z * z) / np.sqrt(np.pi / 2)
+    F = dx * erf(z) + s * np.exp(-1 * z * z) / np.sqrt(np.pi / 2)
     y = (F * (b - a) + dx * (b + a)) / 2 + Y0
 
     return y
@@ -289,7 +361,7 @@ def gaussian_quad_turn(x, X0, Y0, a, b, s, c, d):
     '''
     dx = x - X0
     z = dx / s / np.sqrt(2)
-    F = dx * scipy.special.erf(z) + s * np.exp(-1 * z * z) / np.sqrt(np.pi / 2)
+    F = dx * erf(z) + s * np.exp(-1 * z * z) / np.sqrt(np.pi / 2)
     y = (F * (b - a) + F * dx * (d - c) + dx * (b + a) + dx * dx * (d + c)) / 2 + Y0
     return y
 

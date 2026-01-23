@@ -3,12 +3,14 @@ import re
 from typing import Union
 import numpy as np
 
+
 def is_float(string: str) -> bool:
     """
     regex to check if a string is a float
     """
     float_re = re.compile(r'^-?\d+(\.\d+)?([eE][-+]?\d+)?$')
     return bool(float_re.match(string))
+
 
 def string2digit(string: str) -> Union[int, str, float]:
     """
@@ -33,21 +35,26 @@ def string2digit(string: str) -> Union[int, str, float]:
     else:
         return string
 
+
 def list2digit(string_list):
     return [string2digit(string) for string in string_list]
 
-def _col_convert(column,skip_int=False):
+
+def _col_convert(column, skip_int=False):
     try:
-        column = np.array(column, float)  ## convert from string. This is about half the runtime
+        # column = np.array(column, float)  ## convert from string. This is about half the runtime
+        column = np.array([float(x) if x != '' else np.nan for x in column])
     except:
         raise Exception(f'Column not convertable to floats: {column}')
-    if skip_int: return column # cannot convert to int, throws warning if the next line executes with a nan
-    col_int = column.astype(int)  # convert to int array. exact up to 9 quadrillion
-    if np.all(column == col_int): # can't find a faster way to do this, it gets all truth values first, but it really should have a breakout for first float found, but the C functions are fast
-        return col_int
-    else:
+    if skip_int: return column  # cannot convert to int, throws warning if the next line executes with a nan
+    # Use nanmin/nanmax to check if all non-nan values are integers
+    if np.all(np.isnan(column)) or len(column) == 0:
         return column
-    # for f_col,i_col in zip(column,col_int): # not faster, probably loop setup
-    #     if f_col != i_col:
-    #         return column
-    # return col_int
+
+    # Only convert to int if there are no nans (since int arrays can't hold nan)
+    if not np.any(np.isnan(column)):
+        col_int = column.astype(int)
+        if np.all(column == col_int):
+            return col_int
+
+    return column

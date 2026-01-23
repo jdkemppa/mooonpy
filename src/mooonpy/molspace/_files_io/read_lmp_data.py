@@ -164,7 +164,12 @@ def read(mol, filename, sections):
                 digits = [string2digit(string) for string in data_lst]
                 typeID = digits[0]
                 coeffs = digits[1:]
-                
+
+                if len(coeffs) == 0:
+                    ff_coeffs = None
+                    continue
+                    # exit for dummy bond FF
+
                 # Some Coeffs section can be in the following format:
                 #   Bond Coeffs  # morse class2
                 #  
@@ -175,6 +180,7 @@ def read(mol, filename, sections):
                 # In which case we will "strip" out the hydrid styles so read-in
                 # coeffs are purely numeric and we will check for hybrid styles when
                 # write the LAMMPS datafile or LAMMPS script file.
+
                 if isinstance(coeffs[0], str):
                     style = coeffs[0]
                     del coeffs[0]

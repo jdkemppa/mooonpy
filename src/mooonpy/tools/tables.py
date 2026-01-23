@@ -501,6 +501,15 @@ class ColTable(Table):
     def __contains__(self, key):
         return key in self.grid
 
+    def items(self):
+        return self.grid.items()
+
+    def keys(self):
+        return self.grid.keys()
+
+    def values(self):
+        return self.grid.values()
+
     def shape(self) -> Tuple[Optional[int], Optional[int]]:
         n_cols = len(self.grid)  # will always exist >= 0
         if self.rows is not None:
@@ -577,7 +586,7 @@ class ColTable(Table):
         Read csv file into columns
         """
         file = Path(file)
-        file_obj = file.open(mode='r')
+        file_obj = file.open(mode='r',encoding="utf-8-sig")
         columns = {}
         corner = None
         rows = None
@@ -614,12 +623,15 @@ class ColTable(Table):
                             columns[key].append(value.strip())
         except:
             raise Exception(f'ERROR: CSV line {ii} :{line} could not read from {file}')
+        finally:
+            file_obj.close()
 
         for ii, (key, vector) in enumerate(columns.items()):
             if ii in keep_list or key in keep_list: continue
             try:
                 columns[key] = _col_convert(vector)  # string to float converter
             except:
+                # print(key)
                 pass  # keep as list of strings
 
         return ColTable(from_dict=columns, cornerlabel=corner, rows=rows)

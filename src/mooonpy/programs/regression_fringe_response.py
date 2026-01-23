@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-from mooonpy.tools.math_utils import compute_fringe_slope, compute_derivative, find_peaks_and_valleys
+from mooonpy.tools.math_utils import compute_fringe_slope, compute_derivative, find_peaks_and_minima
 from mooonpy.tools.signals import butter_lowpass, compute_PSD
 from mooonpy.programs.program import ProgramResults
+from mooonpy.tools.misc_utils import reset_axis_limits
 
 from numbers import Number
 from typing import Union, Optional, List
@@ -13,7 +14,9 @@ import matplotlib.pyplot as plt
 def RFR_tensile_analysis(strain: np.ndarray, stress: np.ndarray, trans_1: Optional[np.ndarray] = None,
                          trans_2: Optional[np.ndarray] = None, min_xhi: Optional[Number] = None,
                          max_xhi: Optional[Number] = None, wn: Union[Number, str] = 'PSD', order: Number = 2,
-                         qm: str = 'msr', log: Optional[list] = None, plots: Union[str,List,None] = 'all') -> ProgramResults:
+                         qm: str = 'msr', log: Optional[list] = None,
+                         plots: Union[str, List,None] = 'all', incremented_search=True) -> ProgramResults:
+
     """
     Implementation of the Regression Fringe Response Modulus Method Tensile Analysis.
 
@@ -76,7 +79,7 @@ def RFR_tensile_analysis(strain: np.ndarray, stress: np.ndarray, trans_1: Option
         # --------------------------------------------
         # Setup
         results = ProgramResults('RFR_tensile_analysis')
-        results.program_version = '1.1: 03-Jul-25'
+        results.program_version = '1.2: 13-Nov-25'
         if log is None:
             log = ProgramResults.new_log()  # just a list currently
 
@@ -110,17 +113,17 @@ def RFR_tensile_analysis(strain: np.ndarray, stress: np.ndarray, trans_1: Option
         results.stress_filt = stress_filt
 
         if axies['plt_stress'] is not None:
-            axies['plt_stress'].plot(strain, stress, alpha=0.25, label='Raw stress')
-            axies['plt_stress'].plot(strain, stress_filt, linewidth=2, label='Filtered stress')
+            axies['plt_stress'].plot(strain, stress, color='blue', alpha=0.25, label='Raw stress')
+            axies['plt_stress'].plot(strain, stress_filt, color='blue', linewidth=2, label='Filtered stress')
 
         # --------------------------------------------
         # Determine Linear region
         lo, mid, hi, fr2_fringe, fr2_slopes = _forward_backward_forward(strain, stress_filt, min_xhi, max_xhi,
-                                                                        _plt_fbf=axies['plt_fbf'])
+                                                                        _plt_fbf=axies['plt_fbf'], results=results)
         results.lox = lo[0]
         results.loy = lo[1]
         results.midx = mid[0]
-        results.mixy = mid[1]
+        results.midy = mid[1]
         results.hix = hi[0]
         results.hiy = hi[1]
 
@@ -155,11 +158,24 @@ def RFR_tensile_analysis(strain: np.ndarray, stress: np.ndarray, trans_1: Option
         results.dslopes2 = dslopes2
 
         # Step2: Find peaks and valleys of the 2nd derivative using tuned standard deviations
-        prominence = np.std(dslopes2) / 3
-        xpeaks, ypeaks, xvalleys, yvalleys = find_peaks_and_valleys(dstrain, dslopes2, prominence=prominence)
+        if incremented_search:
+            # somewhat arbitrary, but this is the qualifier for choosing prominence values for peaks
+            # 1/3 std works reasonably well (incremented_search=False), but has no strong justification to use over
+            # any other method. If 1/3 std cannot find peaks, weaker prominence up to 1/30 is tested (True)
+            # Refactor this to use a function that user can override?
+            std_dev = np.std(dslopes2)
+            for ii in range(1, 34):
+                prominence = std_dev / (ii * 3)  # 1/3, 1/9 ... 1/99
+                xpeaks, ypeaks, xvalleys, yvalleys = find_peaks_and_minima(dstrain, dslopes2, prominence=prominence)
+                if len(xvalleys) >= 2:
+                    print(ii,len(xvalleys))
+                    break
+        else:
+            prominence = np.std(dslopes2) / 3
+            xpeaks, ypeaks, xvalleys, yvalleys = find_peaks_and_minima(dstrain, dslopes2, prominence=prominence)
 
         if axies['plt_peaks'] is not None:
-            axies['plt_peaks'].plot(dstrain, dslopes2, label='2nd Derivative of Fringe Slopes')
+            axies['plt_peaks'].plot(dstrain, dslopes2, color='blue', label='2nd Derivative of Fringe Slopes')
 
         # Step3: Use first valley with respect to strain as the yield point (if any valleys exist)
         yield_index, x_yield, y_yield, x_yield_d2, y_yield_d2 = None, None, None, None, None
@@ -196,11 +212,11 @@ def RFR_tensile_analysis(strain: np.ndarray, stress: np.ndarray, trans_1: Option
             reduced_trans_1 = trans_1_filt[lo_index:yield_index + 1]
             trans_1_coeff = polyfit(redused_strain, reduced_trans_1, 1)
             if axies['plt_trans'] is not None:
-                axies['plt_trans'].plot(strain, trans_1, 'b-', alpha=0.25, label='Raw Transverse 1')
-                axies['plt_trans'].plot(strain, trans_1_filt, 'b-.', label='Filtered Transverse 1')
+                axies['plt_trans'].plot(strain, trans_1, 'g-', alpha=0.25, label='Raw Transverse 1')
+                axies['plt_trans'].plot(strain, trans_1_filt, 'g-', label='Filtered Transverse 1')
                 trans_1_x = np.array([redused_strain[0], redused_strain[-1]])
                 trans_1_y = trans_1_coeff[1] * trans_1_x + trans_1_coeff[0]
-                axies['plt_trans'].plot(trans_1_x, trans_1_y, 'bo--',
+                axies['plt_trans'].plot(trans_1_x, trans_1_y, 'go--',
                                         label='Transverse 1 Fit: nu = {:2.3f}'.format(-trans_1_coeff[1]))
         else:
             trans_1_coeff = [np.nan, np.nan]
@@ -212,7 +228,7 @@ def RFR_tensile_analysis(strain: np.ndarray, stress: np.ndarray, trans_1: Option
             trans_2_coeff = polyfit(redused_strain, reduced_trans_2, 1)
             if axies['plt_trans'] is not None:
                 axies['plt_trans'].plot(strain, trans_2, 'r-', alpha=0.25, label='Raw Transverse 2')
-                axies['plt_trans'].plot(strain, trans_2_filt, 'r-.', label='Filtered Transverse 2')
+                axies['plt_trans'].plot(strain, trans_2_filt, 'r-', label='Filtered Transverse 2')
                 trans_2_x = np.array([redused_strain[0], redused_strain[-1]])
                 trans_2_y = trans_2_coeff[1] * trans_2_x + trans_2_coeff[0]
                 axies['plt_trans'].plot(trans_2_x, trans_2_y, 'ro--',
@@ -224,6 +240,8 @@ def RFR_tensile_analysis(strain: np.ndarray, stress: np.ndarray, trans_1: Option
         # --------------------------------------------
         # Cleanup
         rfr_labeler(axies)
+        for f in figs.values():
+            f.tight_layout()
         results.log = log
         results.figs = figs
         results.axies = axies
@@ -248,7 +266,7 @@ def rfr_plotter(plots='all'):
         else:
             plots = plots[1:]
         if len(plots) == 4:
-            fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
+            fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, sharex=True)
             for plot, ax in zip(plots, [ax1, ax2, ax3, ax4]):
                 figs[plot] = fig  # copy
                 axies[plot] = ax  # reference
@@ -275,31 +293,30 @@ def rfr_labeler(axies):
                 ax.set_xlabel('Fringe')  # load units from rcParams?
                 ax.set_ylabel('Slope')
                 ax.title.set_text('Forward-Backward-Forward Fringe response')
-                ax.legend()
-                ax.grid()
+
             elif plot == 'plt_stress':
                 ax.set_xlabel('Strain')  # load units from rcParams?
                 ax.set_ylabel('Stress')
                 ax.title.set_text('Stress-Strain')
-                ax.legend()
-                ax.grid()
+                reset_axis_limits(ax, y=False)
             elif plot == 'plt_peaks':
                 ax.set_xlabel('Fringe')  # load units from rcParams?
                 ax.set_ylabel('Slope 2nd Derivative')
-                ax.title.set_text('2nd Derivative of Fringe response')
-                ax.legend()
-                ax.grid()
+                ax.title.set_text('2nd Derivative of 2nd Forward Fringe response')
+
             elif plot == 'plt_trans':
                 ax.set_xlabel('Strain')  # load units from rcParams?
                 ax.set_ylabel('Transverse strain')
                 ax.title.set_text("Poisson's calculation")
-                ax.legend()
-                ax.grid()
+            else:
+                continue
+            ax.legend()
+            ax.grid()
         except:  # ignore legend errors
             pass
 
 
-def _forward_backward_forward(strain, stress, min_xhi, max_xhi, _plt_fbf=None, maximize=True):
+def _forward_backward_forward(strain, stress, min_xhi, max_xhi, _plt_fbf=None, maximize=True, results=None):
     # --------------------------------------------------------
     # Compute the forward-backwards-forwards fringe response
     # --------------------------------------------------------
@@ -316,10 +333,14 @@ def _forward_backward_forward(strain, stress, min_xhi, max_xhi, _plt_fbf=None, m
         fr1_max_index = np.argmin(fr1_slopes)
     fr1_max_slope = fr1_slopes[fr1_max_index]
     fr1_max_fringe = fr1_fringe[fr1_max_index]
+    if results is not None:
+        results.fr1_fringe = fr1_fringe
+        results.fr1_slopes = fr1_slopes
+        results.fr1_max_index = fr1_max_index
 
     if _plt_fbf:
-        _plt_fbf.plot(fr1_fringe, fr1_slopes, label='Forward 1')
-        _plt_fbf.scatter(fr1_max_fringe, fr1_max_slope)
+        _plt_fbf.plot(fr1_fringe, fr1_slopes, color='blue', label='Forward 1')
+        _plt_fbf.scatter(fr1_max_fringe, fr1_max_slope, color='blue')
 
     # Step2: First backwards response (br1 - applying minxhi and maxxhi accordingly)
     min_strain_br1 = min(strain)
@@ -334,13 +355,19 @@ def _forward_backward_forward(strain, stress, min_xhi, max_xhi, _plt_fbf=None, m
         br1_max_index = np.argmax(br1_slopes)
     else:
         br1_max_index = np.argmin(br1_slopes)
+
+    if results is not None:
+        results.br1_fringe = br1_fringe
+        results.br1_slopes = br1_slopes
+        results.br1_max_index = br1_max_index
+
     br1_max_slope = br1_slopes[br1_max_index]
     br1_max_fringe = br1_fringe[br1_max_index]
     br1_max_index_absolute = np.argmin(np.abs(strain - br1_max_fringe))  # equivalent to .index
 
     if _plt_fbf:
-        _plt_fbf.plot(br1_fringe, br1_slopes, label='Backward 1')
-        _plt_fbf.scatter(br1_max_fringe, br1_max_slope)
+        _plt_fbf.plot(br1_fringe, br1_slopes, color='green', label='Backward 1')
+        _plt_fbf.scatter(br1_max_fringe, br1_max_slope, color='green')
 
     # Step3: Second forward response (fr2 - applying minxhi and maxxhi accordingly)
     min_strain_fr2 = min_strain_fr1 + br1_max_fringe
@@ -353,13 +380,19 @@ def _forward_backward_forward(strain, stress, min_xhi, max_xhi, _plt_fbf=None, m
         fr2_max_index = np.argmax(fr2_slopes)
     else:
         fr2_max_index = np.argmin(fr2_slopes)
+
+    if results is not None:
+        results.fr2_fringe = fr2_fringe
+        results.fr2_slopes = fr2_slopes
+        results.fr2_max_index = fr2_max_index
+
     fr2_max_slope = fr2_slopes[fr2_max_index]
     fr2_max_fringe = fr2_fringe[fr2_max_index]
     fr2_max_index_absolute = np.argmin(np.abs(strain - fr2_max_fringe))  # equivalent to .index
 
     if _plt_fbf:
-        _plt_fbf.plot(fr2_fringe, fr2_slopes, label='Forward 2')
-        _plt_fbf.scatter(fr2_max_fringe, fr2_max_slope)
+        _plt_fbf.plot(fr2_fringe, fr2_slopes, color='red', label='Forward 2')
+        _plt_fbf.scatter(fr2_max_fringe, fr2_max_slope, color='red')
 
     # Set linear region bounds xlo and xhi from the 3 step FBF method
     xlo = br1_max_fringe

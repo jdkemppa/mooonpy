@@ -179,7 +179,7 @@ class Path(str):
             >>> print(is MyFile2)
             False
         """
-        return os.path.exists(self)
+        return os.path.exists(str(self))
 
     def __abs__(self) -> 'Path':
         """
@@ -218,6 +218,38 @@ class Path(str):
             'DEGBF.mol'
         """
         return iter(self.matches())
+
+    def __sub__(self, template: Union[str, 'Path']):
+        """
+        Returns value of glob wildcard (*) characters from a filename-template pair
+
+        :param other: template with glob wildcards
+        :type template: str or Path with wildcards
+        :param self: Path or str without wildcards
+        :return: list of wildcards
+        :rtype: list
+
+        :Example:
+          >>> from mooonpy.tools import Path
+          >>> myfilename = Path('filename_step10_temp300.data')
+          >>> mytemplate = Path('filename_step*_temp*.data')
+          >>> print(myfilename - mytemplate)
+          ['10', '300']
+        """
+        # import built-in matching tools
+        import fnmatch, re
+        to_match = fnmatch.translate(str(template))  # convert to regular expression
+        # to_match = fnmatch.translate(str('*\\' + template))  # convert to regular expression
+        # not sure what the front padding is for?
+
+        to_match = to_match.replace(".*", "(.*)")  # allow capturable regrex
+        to_match = to_match.replace(r"\Z", "")
+        compiled = re.compile(to_match)  # compile regrex string into object
+        match = compiled.match(str(self))
+        if match is None:
+            return []
+        else:
+            return list(match.groups())
 
     def basename(self) -> 'Path':
         """
@@ -374,6 +406,9 @@ class Path(str):
             'DETDA'
         """
         return Path(os.path.splitext(self.basename())[0])
+
+    def format(self, *args, **kwargs):
+        return Path(str(self).format(*args, **kwargs))
 
 # End of Path
 
