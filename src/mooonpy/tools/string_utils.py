@@ -43,7 +43,7 @@ def list2digit(string_list):
 def _col_convert(column, skip_int=False):
     try:
         # column = np.array(column, float)  ## convert from string. This is about half the runtime
-        column = np.array([float(x) if x != '' else np.nan for x in column])
+        column = np.array([float(x) if x is not None else np.nan for x in column])
     except:
         raise Exception(f'Column not convertable to floats: {column}')
     if skip_int: return column  # cannot convert to int, throws warning if the next line executes with a nan
