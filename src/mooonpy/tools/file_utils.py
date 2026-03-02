@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-import bz2
-import glob
-import gzip
-import lzma
-import os
+from bz2 import open as bz2_open
+from glob import glob
+from gzip import open as gzip_open
+from lzma import open as lzma_open
+from os.path import normpath, join, exists, abspath, basename, dirname, splitext, getmtime
 from typing import List, Optional, Union
 
 class Path(str):
@@ -90,7 +90,7 @@ class Path(str):
         return str(self)  # Mostly fixes type hints
 
     def __new__(cls, string: Union[str, 'Path']) -> 'Path':  ## this is before init somehow
-        return super().__new__(cls, os.path.normpath(string))  # Typing is confused here
+        return super().__new__(cls, normpath(string))  # Typing is confused here
 
     def __truediv__(self, other: Union[str, 'Path']):
         """
@@ -111,8 +111,8 @@ class Path(str):
             >>> print(MyDir / MyFile)
             'Project\\Monomers\\DETDA.mol'
         """
-        # return Path(os.path.join(self, other)) # does not work in Linux or Mac
-        return Path(os.path.join(str(self), str(other))) # fixes
+        # return Path(join(self, other)) # does not work in Linux or Mac
+        return Path(join(str(self), str(other))) # fixes
 
     def __sub__(self, template: Union[str, 'Path']):
         """
@@ -179,7 +179,7 @@ class Path(str):
             >>> print(is MyFile2)
             False
         """
-        return os.path.exists(str(self))
+        return exists(str(self))
 
     def __abs__(self) -> 'Path':
         """
@@ -196,7 +196,7 @@ class Path(str):
             >>> print(abs(MyFile))
             'C:\\Users\\You\\Desktop\\DETDA.mol'
         """
-        return Path(os.path.abspath(self))
+        return Path(abspath(self))
 
     def __iter__(self) -> iter:
         """
@@ -266,7 +266,7 @@ class Path(str):
             >>> print(MyPath.basename())
             'DETDA.mol'
         """
-        return Path(os.path.basename(self))
+        return Path(basename(self))
 
     def dir(self) -> 'Path':
         """
@@ -283,13 +283,13 @@ class Path(str):
             >>> print(MyPath.dir())
             'Project\\Monomers'
         """
-        return Path(os.path.dirname(self))
+        return Path(dirname(self))
 
     def ext(self) -> 'Path':
         """
         Split Path to just extention.
 
-        Alias for os.path.basename and os.path.splitext.
+        Alias for os.path.basename and splitext.
 
         :return: extention as Path
         :rtype: Path
@@ -300,7 +300,7 @@ class Path(str):
             >>> print(MyPath.ext())
             '.mol'
         """
-        return Path(os.path.splitext(self.basename())[1])
+        return Path(splitext(self.basename())[1])
 
     def matches(self,whitelist_ext=None, blacklist_ext=None) -> List['Path']:
         """
@@ -315,7 +315,7 @@ class Path(str):
             >>> print(Path.matches(MyWildcard))
             [Path('DETDA.mol'), Path('DEGBF.mol')]
         """
-        matches = [Path(file) for file in glob.glob(self)]
+        matches = [Path(file) for file in glob(self)]
         if blacklist_ext:
             matches = [match for match in matches if match.ext() not in blacklist_ext]
         elif whitelist_ext:
@@ -340,7 +340,7 @@ class Path(str):
             >>> print(MyPath.new_ext('.data'))
             'Project/Monomers/DETDA.data'
         """
-        return Path(os.path.splitext(self)[0] + ext)
+        return Path(splitext(self)[0] + ext)
 
     def open(self, mode='r', encoding='utf-8'):
         """
@@ -380,7 +380,7 @@ class Path(str):
         """
         times = {}
         for file in self:
-            times[os.path.getmtime(file)] = file
+            times[getmtime(file)] = file
         if times:
             sorted_time = sorted(list(times.keys()))
             if oldest:
@@ -394,7 +394,7 @@ class Path(str):
         """
         Split Path to filename with no extention.
 
-        Alias for os.path.basename and os.path.splitext.
+        Alias for os.path.basename and splitext.
 
         :return: Path of filename
         :rtype: Path
@@ -405,7 +405,7 @@ class Path(str):
             >>> print(MyPath.root())
             'DETDA'
         """
-        return Path(os.path.splitext(self.basename())[0])
+        return Path(splitext(self.basename())[0])
 
     def format(self, *args, **kwargs):
         return Path(str(self).format(*args, **kwargs))
@@ -440,11 +440,11 @@ def smart_open(filename, mode='r', encoding='utf-8'):
     """
     try:
         if '.gz' in filename:
-            return gzip.open(str(filename), mode + 't', encoding=encoding)
+            return gzip_open(str(filename), mode + 't', encoding=encoding)
         elif '.bz2' in filename:
-            return bz2.open(str(filename), mode + 't', encoding=encoding)
+            return bz2_open(str(filename), mode + 't', encoding=encoding)
         elif '.xz' in filename or '.lzma' in filename:
-            return lzma.open(str(filename), mode + 't', encoding=encoding)
+            return lzma_open(str(filename), mode + 't', encoding=encoding)
     except:
 
         pass  # compressed filename did not work
