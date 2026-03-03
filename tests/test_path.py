@@ -526,3 +526,56 @@ class TestMultiDrivePath:
         prefix1, _ = two_drives
         with pytest.raises(RuntimeError, match="search_common"):
             Path.find_prefix(path=prefix1 / 'sims/output.log')
+
+    # ------------------------------------------------------------------
+    # Relative path resolution via CWD
+    # ------------------------------------------------------------------
+
+    def test_swap_prefix_relative_path(self, two_drives, monkeypatch):
+        """swap_prefix on a relative path resolves via CWD; subdirs under common are preserved."""
+        prefix1, prefix2 = two_drives
+        subdir = Path(prefix1) / 'sims' / 'run_001'
+        os.makedirs(str(subdir), exist_ok=True)
+
+        Path.search_prefixes = [prefix1, prefix2]
+        Path.search_common = 'research'
+
+        # Simulate CWD = prefix1/sims/run_001
+        monkeypatch.chdir(str(subdir))
+
+        result = Path('output.log').swap_prefix(1)
+        expected = Path(prefix2) / 'sims' / 'run_001' / 'output.log'
+        assert result == expected
+
+    def test_locate_relative_path(self, two_drives, monkeypatch):
+        """locate() on a relative path resolves via CWD and finds the file on another prefix."""
+        prefix1, prefix2 = two_drives
+        subdir = 'sims/run_001'
+        expected = self._make_file(prefix2, subdir + '/output.log')
+        # Create matching subdir on prefix1 so chdir succeeds (file only exists on prefix2)
+        os.makedirs(str(Path(prefix1) / subdir), exist_ok=True)
+
+        Path.search_prefixes = [prefix1, prefix2]
+        Path.search_common = 'research'
+
+        monkeypatch.chdir(str(Path(prefix1) / subdir))
+
+        result = Path('output.log').locate()
+        assert result == expected
+
+    def test_locate_all_relative_wildcard(self, two_drives, monkeypatch):
+        """locate_all() on a relative wildcard resolves via CWD and expands across all prefixes."""
+        prefix1, prefix2 = two_drives
+        subdir = 'sims/run_001'
+        f1 = self._make_file(prefix1, subdir + '/output.log')
+        f2 = self._make_file(prefix2, subdir + '/output.log')
+
+        Path.search_prefixes = [prefix1, prefix2]
+        Path.search_common = 'research'
+
+        monkeypatch.chdir(str(Path(prefix1) / subdir))
+
+        results = Path('out*.log').locate_all()
+        assert len(results) == 2
+        assert f1 in results
+        assert f2 in results

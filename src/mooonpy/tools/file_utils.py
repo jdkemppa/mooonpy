@@ -4,8 +4,9 @@ from glob import glob
 from gzip import open as gzip_open
 from lzma import open as lzma_open
 from os import sep
-from os.path import normpath, join, exists, abspath, basename, dirname, splitext, getmtime, isabs
+from os.path import normpath, join, exists, abspath, basename, dirname, splitext, getmtime
 from typing import List, Optional, Union
+
 
 class Path(str):
     """
@@ -88,7 +89,7 @@ class Path(str):
         __truediv__ __bool__ __abs__ and __iter__ docstrings in config?
     """
     search_prefixes = None  # Optional[List['Path']] — full paths up to and including common
-    search_common   = None  # Optional[str]          — common dir name for splitting abs paths
+    search_common = None  # Optional[str]          — common dir name for splitting abs paths
 
     def __fspath__(self) -> str:
         return str(self)  # Mostly fixes type hints
@@ -116,7 +117,7 @@ class Path(str):
             'Project\\Monomers\\DETDA.mol'
         """
         # return Path(join(self, other)) # does not work in Linux or Mac
-        return Path(join(str(self), str(other))) # fixes
+        return Path(join(str(self), str(other)))  # fixes
 
     def __sub__(self, template: Union[str, 'Path']):
         """
@@ -139,31 +140,33 @@ class Path(str):
         import fnmatch, re
 
         def match(self, template):
-          # convert paths to strings for easier treatment
-          real_file = str(self).replace('/', '\\') # fix dash for linux compatability
-          template_file = str(template).replace('/', '\\')
-          # check if template matches the tested file
-          if fnmatch.fnmatch(real_file, template_file):
-            # build a regrex expression, then pull a re match out
-            to_match = fnmatch.translate(template_file) # convert to regular expression
-            to_match = to_match.replace('\\Z(?ms)', r'\Z')
-            to_match = to_match.replace('.*', '(.*?)') # allow un-greedy capturable regrex
-            compiled = re.compile(to_match, re.S | re.IGNORECASE) # compile regrex string into object
-            matched  = compiled.match(real_file)
-            return matched
-          else:
-            # return nothing if no match was found
-            return None 
- 
-        # try matching path to template
+            # convert paths to strings for easier treatment
+            real_file = str(self).replace('/', '\\')  # fix dash for linux compatability
+            template_file = str(template).replace('/', '\\')
+            # check if template matches the tested file
+            if fnmatch.fnmatch(real_file, template_file):
+                # build a regrex expression, then pull a re match out
+                to_match = fnmatch.translate(template_file)  # convert to regular expression
+                to_match = to_match.replace('\\Z(?ms)', r'\Z')
+                to_match = to_match.replace('.*', '(.*?)')  # allow un-greedy capturable regrex
+                compiled = re.compile(to_match, re.S | re.IGNORECASE)  # compile regrex string into object
+                matched = compiled.match(real_file)
+                return matched
+            else:
+                # return nothing if no match was found
+                return None
+
+                # try matching path to template
+
         matched = match(self, template)
         if matched == None:
-          longer_matched = match(self, Path('*') / template)
-          if longer_matched == None: return None
-          else: return list(longer_matched.groups()) # try again, prepending a */
+            longer_matched = match(self, Path('*') / template)
+            if longer_matched == None:
+                return None
+            else:
+                return list(longer_matched.groups())  # try again, prepending a */
         else:
-          return list(matched.groups())
-
+            return list(matched.groups())
 
     def __bool__(self) -> bool:
         """
@@ -306,7 +309,7 @@ class Path(str):
         """
         return Path(splitext(self.basename())[1])
 
-    def matches(self,whitelist_ext=None, blacklist_ext=None) -> List['Path']:
+    def matches(self, whitelist_ext=None, blacklist_ext=None) -> List['Path']:
         """
         Finds matching paths with a * (asterisk) wildcard character.
 
@@ -326,7 +329,6 @@ class Path(str):
             matches = [match for match in matches if match.ext() in whitelist_ext]
 
         return matches
-
 
     def new_ext(self, ext: Union[str, 'Path']) -> 'Path':
         """
@@ -452,23 +454,21 @@ class Path(str):
         else:
             path = Path(path)
         if common is None:
-            common = cls.search_common   # reuse previously set value
+            common = cls.search_common  # reuse previously set value
         if common is None:
             raise RuntimeError(
                 "Path.search_common is not set — pass 'common' explicitly or call "
                 "Path.find_prefix() with a common directory name first."
             )
-        parts = normpath(str(path)).split(sep)
-        try:
-            idx = parts.index(str(common))
-        except ValueError:
-            return None
-        # Rebuild prefix up to and including common.
-        # On Windows os.path.join('C:', 'rest') produces 'C:rest' (relative),
-        # so always reconstruct as: first_part + sep + sep.join(remaining).
-        first = parts[0]
-        rest  = parts[1:idx + 1]
-        prefix = Path(first + sep + sep.join(rest)) if rest else Path(first + sep)
+        s = normpath(str(path))
+        before, found, _ = s.partition(sep + str(common) + sep)
+        if not found:
+            if s.endswith(sep + str(common)):  # common is the last component
+                prefix = Path(s)
+            else:
+                return None
+        else:
+            prefix = Path(before + sep + str(common))
         if cls.search_common is None:
             cls.search_common = str(common)
         if add:
@@ -478,27 +478,37 @@ class Path(str):
                 cls.search_prefixes.append(prefix)
         return prefix
 
-    def _relpath_from_common(self) -> 'Path':
-        """Return the portion of self after search_common, or self unchanged.
+    def _abspath_from_common(self, prefix) -> 'Path':
+        """Return *prefix* joined with the portion of self that follows search_common.
 
-        Used internally by :meth:`swap_prefix`, :meth:`locate`, and
-        :meth:`locate_all` to strip the drive-specific prefix from an absolute
-        path before cross-drive operations.
+        Resolves *self* to an absolute path via CWD first, so a relative path
+        passed from a script inside the common hierarchy automatically carries
+        its subdirectory context to the new prefix.
+
+        If common is not found in the resolved path (e.g. a plain relative tail
+        like ``'sims/run_001/out.log'`` used directly), *self* is treated as
+        already being the tail and is appended to *prefix* unchanged.
+
+        :param prefix: Target prefix to prepend (str or Path).
+        :return:       Absolute rewritten Path under *prefix*.
+        :rtype:        Path
         """
-        if isabs(str(self)):
-            if Path.search_common is None:
-                raise RuntimeError(
-                    "Path.search_common is not set — cannot strip the drive prefix "
-                    "from an absolute path.  Call Path.find_prefix() first."
-                )
-            parts = normpath(str(self)).split(sep)
-            try:
-                idx = parts.index(str(Path.search_common))
-                tail = parts[idx + 1:]
-                return Path(join(*tail)) if tail else Path('.')
-            except ValueError:
-                pass
-        return self
+        if Path.search_common is None:
+            raise RuntimeError(
+                "Path.search_common is not set — cannot strip the drive prefix.  "
+                "Call Path.find_prefix() first."
+            )
+        # Always resolve to absolute so relative paths inherit CWD context.
+        s = abs(self)
+        needle = sep + str(Path.search_common) + sep
+        needle_end = sep + str(Path.search_common)
+        _, found, tail = s.partition(needle)
+        if found:
+            return Path(prefix) / tail
+        if s.endswith(needle_end):  # common is the last component; no tail
+            return Path(prefix)
+        # common not found — treat self as an already-relative tail from common
+        return Path(prefix) / self
 
     def swap_prefix(self, target) -> Optional['Path']:
         """
@@ -523,14 +533,13 @@ class Path(str):
             >>> p.swap_prefix('D:/backups/research')
             Path('D:\\\\backups\\\\research\\\\sims\\\\run_001\\\\output.log')
         """
-        relpath = self._relpath_from_common()
         if isinstance(target, int):
             if Path.search_prefixes is None or target >= len(Path.search_prefixes):
                 return None
             prefix = Path.search_prefixes[target]
         else:
             prefix = Path(target)
-        return Path(prefix) / relpath
+        return self._abspath_from_common(prefix)
 
     def locate(self, recent=None) -> Optional['Path']:
         """
@@ -575,7 +584,7 @@ class Path(str):
             raise RuntimeError(
                 "Path.search_prefixes is not configured — call Path.find_prefix() first."
             )
-        if not Path.search_prefixes:   # configured but empty list → no matches possible
+        if not Path.search_prefixes:  # configured but empty list → no matches possible
             return None
         if recent is not None:
             all_matches = self.locate_all()
@@ -589,10 +598,10 @@ class Path(str):
             if candidate is None:
                 continue
             if has_wildcard:
-                if candidate.matches():   # any glob hits on this drive?
-                    return candidate      # return the pattern (still has *)
+                if candidate.matches():  # any glob hits on this drive?
+                    return candidate  # return the pattern (still has *)
             else:
-                if candidate:             # exact file exists?
+                if candidate:  # exact file exists?
                     return candidate
         return None
 
@@ -622,7 +631,7 @@ class Path(str):
             raise RuntimeError(
                 "Path.search_prefixes is not configured — call Path.find_prefix() first."
             )
-        if not Path.search_prefixes:   # configured but empty list
+        if not Path.search_prefixes:  # configured but empty list
             return []
         results = []
         for i in range(len(Path.search_prefixes)):
@@ -632,9 +641,10 @@ class Path(str):
                                                blacklist_ext=blacklist_ext))
         return results
 
+
 # End of Path
 
-#%% Misc file tools
+# %% Misc file tools
 def smart_open(filename, mode='r', encoding='utf-8'):
     """
     Open file with appropriate decompression based on extension
@@ -671,4 +681,3 @@ def smart_open(filename, mode='r', encoding='utf-8'):
 
         pass  # compressed filename did not work
     return open(str(filename), mode, encoding=encoding)  # try regular read
-
