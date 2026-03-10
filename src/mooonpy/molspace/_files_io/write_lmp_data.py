@@ -12,11 +12,11 @@ def string_parameters(coeff):
     string = ''
     for i in coeff:
         if isinstance(i, float):
-            string += '{:>16.10f}'.format(i)
+            string += '{: <16.10f} '.format(i)
         elif isinstance(i, int):
-            string += '{:>6}'.format(i)
+            string += '{: <16} '.format(i)
         else:
-            string += '{:>6}'.format(i)
+            string += '{: <16} '.format(i)
     return string
 
 

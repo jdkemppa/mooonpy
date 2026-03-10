@@ -6,9 +6,9 @@ and the graph data structure used in all the graph theory supported
 workflows.
 """
 #from ..molspace import Molspace
-from mooonpy.molspace.molspace import Molspace
+# from mooonpy.molspace.molspace import Molspace
 
-def generate_graph(mol: Molspace):
+def generate_graph(mol):
     """
     Generates an undirected graph from a Molspace instance.
     

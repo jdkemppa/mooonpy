@@ -148,7 +148,7 @@ class Molspace(object):
             if steps is ...:  # none means all, ellipsis means to pull default from creation or rcParams
                 steps = self.steps
             out_steps = _files_io.read_lmp_dump.read(filename, steps=steps, mol=self)
-            if type(steps) is int: # if single, modify self with data
+            if type(steps) is int:  # if single, modify self with data
                 self.atoms = out_steps.atoms
             return out_steps
 
@@ -182,6 +182,13 @@ class Molspace(object):
 
     def compute_BADI_by_type(self, periodicity='ppp', comp_bond=True, comp_angle=True, comp_dihedral=True,
                              comp_improper=True):
+        '''
+        Apply this command
+        mol.ff.has_type_labels = True
+        or
+        mol.add_type_labels(labels)
+        To make dict keys type labels
+        '''
         if comp_bond:
             pairs_from_bonds(self.atoms, self.bonds, periodicity)
 
@@ -243,6 +250,11 @@ class Molspace(object):
 
         for type_, label in angle_types.items():
             ff.angle_coeffs[type_].type_label = label
+        for type_, coeff in ff.bondbond_coeffs.items():
+            coeff.type_label = angle_types[type_]
+
+        for type_, coeff in ff.bondangle_coeffs.items():
+            coeff.type_label = angle_types[type_]
 
         dihedral_types = {}
         for key, dihedral in self.dihedrals.items():
@@ -256,6 +268,19 @@ class Molspace(object):
 
         for type_, label in dihedral_types.items():
             ff.dihedral_coeffs[type_].type_label = label
+
+        for type_, coeff in ff.angleangle_coeffs.items():
+            coeff.type_label = dihedral_types[type_]
+        for type_, coeff in ff.endbondtorsion_coeffs.items():
+            coeff.type_label = dihedral_types[type_]
+        for type_, coeff in ff.middlebondtorsion_coeffs.items():
+            coeff.type_label = dihedral_types[type_]
+        for type_, coeff in ff.bondbond13_coeffs.items():
+            coeff.type_label = dihedral_types[type_]
+        for type_, coeff in ff.angleangletorsion_coeffs.items():
+            coeff.type_label = dihedral_types[type_]
+        for type_, coeff in ff.angletorsion_coeffs.items():
+            coeff.type_label = dihedral_types[type_]
 
         improper_types = {}
         for key, improper in self.impropers.items():
@@ -381,3 +406,37 @@ class Molspace(object):
                 if key_id in atom_ids:
                     del self.impropers[key]
                     break
+
+    def update_atoms(self, atoms, whitelist=None, blacklist=None, box=True):
+        """
+        Map per atom information from other atoms instance to this molspace
+        """
+        if whitelist is None:
+            pass
+        elif isinstance(whitelist, str):
+            whitelist = [whitelist]
+        if blacklist is None:
+            blacklist = []
+        elif isinstance(blacklist, str):
+            blacklist = [blacklist]
+        if box:
+            self.atoms.box = atoms.box
+        for id_, atom in atoms.items():
+            for slot in atom.__slots__:
+                if slot in blacklist: continue
+                if whitelist is not None and slot not in whitelist: continue
+                setattr(self.atoms[id_], slot, getattr(atom, slot))
+
+    def KE(self):
+        ke = 0.0
+        for id_, atom in self.atoms.items():
+            mass = self.ff.masses[atom.type].coeffs[0]
+            v2 = atom.vx * atom.vx + atom.vy * atom.vy + atom.vz * atom.vz
+            ke += mass * v2
+        ke *= (2390.057361376673 / 2)
+        return ke  # kcal/mol
+
+    def temp(self):
+        kb = 0.001987204  # K*mol/kcal
+        # kb = 8.314457947414698e-07  # real units, derived with wikipedia values to machine precision
+        return self.KE() * 2 / (3 * (len(self.atoms) - 1) * kb)

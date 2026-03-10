@@ -2,13 +2,13 @@
 """
 miscellaneous utilities that do not belong anywhere else
 """
+from __future__ import annotations
 from mooonpy.tools.tables import ListListTable
 from mooonpy.tools.file_utils import Path
 import numpy as np
-from typing import Union, List, Optional
-from matplotlib.axes import Axes
-from matplotlib.ticker import MultipleLocator
-
+from typing import TYPE_CHECKING, Union, List, Optional
+if TYPE_CHECKING:
+    from matplotlib.axes import Axes
 
 class ColorMap(ListListTable):
     """
@@ -70,7 +70,7 @@ def inc_arrange(low, high, step):
 
 
 def auto_colorbar(fig, axs, colormap, step, low=None, high=None, shrink=None, pad=None,
-                  label='', orientation='vertical', **kwargs):
+                  label='', orientation='vertical', kwargs=None):
     from matplotlib.cm import ScalarMappable
     from matplotlib.colors import ListedColormap, BoundaryNorm
     if isinstance(colormap, str):
@@ -101,7 +101,8 @@ def auto_colorbar(fig, axs, colormap, step, low=None, high=None, shrink=None, pa
     norm = BoundaryNorm(bounds, cmap.N)
     sm = ScalarMappable(cmap=cmap, norm=norm)
     sm.set_array([])
-
+    if kwargs is None:
+        kwargs = {}
     if shrink is not None:
         kwargs['shrink'] = shrink
     if pad is not None:
@@ -235,6 +236,8 @@ def reset_axis_limits(
             ax.set_ylim(y_min, y_max)
 
     # Set tick spacing using MultipleLocator
+    if xtick_spacing is not None or ytick_spacing is not None:
+        from matplotlib.ticker import MultipleLocator
     if xtick_spacing is not None:
         ax.xaxis.set_major_locator(MultipleLocator(xtick_spacing))
     if ytick_spacing is not None:
@@ -282,7 +285,7 @@ def reset_axis_limits(
 
 def calculate_axis_ticks(data_min, data_max, ax=None, xaxis=True,
                          tick_range=(5, 9),
-                         allowed_spacings=None):
+                         allowed_spacings=None, raise_error=True):
     """
     Calculate optimal axis limits and tick positions.
 
@@ -345,31 +348,33 @@ def calculate_axis_ticks(data_min, data_max, ax=None, xaxis=True,
         # Largest possible data_max: largest spacing with max ticks
         max_data_max = data_min + (max_ticks - 1) * largest_spacing
 
-        # Determine which constraint is violated
-        if data_max > max_data_max:
-            # Data range too LARGE
-            raise ValueError(
-                f"No valid tick configuration found for data_min={data_min}, data_max={data_max} "
-                f"with tick_range={tick_range}.\n"
-                f"Data range too LARGE: maximum feasible data_max is {max_data_max:.4g}\n"
-                f"(using largest spacing={largest_spacing}, {max_ticks} ticks)"
-            )
-        elif data_max < min_data_max:
-            # Data range too SMALL
-            raise ValueError(
-                f"No valid tick configuration found for data_min={data_min}, data_max={data_max} "
-                f"with tick_range={tick_range}.\n"
-                f"Data range too SMALL: minimum feasible data_max is {min_data_max:.4g}\n"
-                f"(using smallest spacing={smallest_spacing}, {min_ticks} ticks)"
-            )
+        if raise_error:
+            # Determine which constraint is violated
+            if data_max > max_data_max:
+                # Data range too LARGE
+                raise ValueError(
+                    f"No valid tick configuration found for data_min={data_min}, data_max={data_max} "
+                    f"with tick_range={tick_range}.\n"
+                    f"Data range too LARGE: maximum feasible data_max is {max_data_max:.4g}\n"
+                    f"(using largest spacing={largest_spacing}, {max_ticks} ticks)"
+                )
+            elif data_max < min_data_max:
+                # Data range too SMALL
+                raise ValueError(
+                    f"No valid tick configuration found for data_min={data_min}, data_max={data_max} "
+                    f"with tick_range={tick_range}.\n"
+                    f"Data range too SMALL: minimum feasible data_max is {min_data_max:.4g}\n"
+                    f"(using smallest spacing={smallest_spacing}, {min_ticks} ticks)"
+                )
+            else:
+                raise ValueError(
+                    f"No valid tick configuration found for data_min={data_min}, data_max={data_max} "
+                    f"with tick_range={tick_range}.\n"
+                    f"Spacing infeasible:{allowed_spacings}\n"
+
+                )
         else:
-            raise ValueError(
-                f"No valid tick configuration found for data_min={data_min}, data_max={data_max} "
-                f"with tick_range={tick_range}.\n"
-                f"Spacing infeasible:{allowed_spacings}\n"
-
-            )
-
+            return None, None, None
     # Sort by gap (ascending), then by n_ticks (ascending) for tiebreaking
     valid_configs.sort(key=lambda x: (x['gap'], x['n_ticks']))
 

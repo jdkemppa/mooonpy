@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 from copy import deepcopy
-import matplotlib.pyplot as plt
 from typing import Optional, Tuple, List, Dict
 
 from .string_utils import _col_convert, string2digit
@@ -130,6 +129,7 @@ class Table(object):
                 out_file.write(line + '\n')
 
     def plot(self, **kwargs):
+        import matplotlib.pyplot as plt
         self.__dict__.update(kwargs)  # update with formatting kwargs
         fig, axs = plt.subplots()
         headers = self.headers()

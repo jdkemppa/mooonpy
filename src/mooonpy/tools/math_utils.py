@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-## mess with lazy imports here?
 import numpy as np
-# import scipy
-from scipy.signal import find_peaks
-from scipy.special import erf
 from numbers import Number
 from typing import Union, Tuple, Optional
 
@@ -15,12 +11,12 @@ class HistBins:
     Alias around np.histogram to make bin centered plots instead of step
     """
 
-    def __init__(self, values, bin_scale):
+    def __init__(self, values, bin_scale=10,density=False):
         self.values = values
         self.bin_scale = bin_scale
 
         self.bins = round(len(values) / self.bin_scale)
-        self.hist, self.bin_edges = np.histogram(values, bins=self.bins, density=False)  # one sided bins
+        self.hist, self.bin_edges = np.histogram(values, bins=self.bins, density=density)  # one sided bins
         self.bin_width = self.bin_edges[1] - self.bin_edges[0]
         self.bin_centers = (self.bin_edges[:-1] + self.bin_edges[1:]) / 2
         self.bin_edges = np.repeat(self.bin_edges, 2)  # overwrite with both edges
@@ -102,6 +98,7 @@ def find_peaks_and_valleys(xdata: Array1D, ydata: Array1D, prominence: Optional[
         make an example image
     """
 
+    from scipy.signal import find_peaks
     # Find peaks
     peaks, properties = find_peaks(ydata, prominence=prominence)
     xpeaks = xdata[peaks]
@@ -134,6 +131,7 @@ def find_peaks_and_minima(xdata: Array1D, ydata: Array1D, prominence: Optional[N
         make an example image
     """
 
+    from scipy.signal import find_peaks
     # Find peaks
     peaks, properties = find_peaks(ydata, prominence=prominence)
     xpeaks = xdata[peaks]
@@ -342,11 +340,17 @@ def hyperbola(x, X0, Y0, a, b, c):
     p = Y0 + a * dx + b * h0
     return p
 
+def bilinear(x, x0, y0, m1,m2):
+    y = np.full_like(x,y0,dtype=float)
+    dx = x - x0
+    y += np.where(dx<0, dx*m1,dx*m2)
+    return y
 
 def gaussian_turn(x, X0, Y0, a, b, s):
     '''
     Muzzy Gaussian Turn curve for fitting Tg data
     '''
+    from scipy.special import erf
     dx = x - X0
     z = dx / s / np.sqrt(2)
     F = dx * erf(z) + s * np.exp(-1 * z * z) / np.sqrt(np.pi / 2)
@@ -359,6 +363,7 @@ def gaussian_quad_turn(x, X0, Y0, a, b, s, c, d):
     '''
     Muzzy Gaussian Quadratic Turn curve for fitting Tg data
     '''
+    from scipy.special import erf
     dx = x - X0
     z = dx / s / np.sqrt(2)
     F = dx * erf(z) + s * np.exp(-1 * z * z) / np.sqrt(np.pi / 2)

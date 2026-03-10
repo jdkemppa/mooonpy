@@ -2,10 +2,6 @@ from numbers import Number
 from typing import Tuple, Union, Optional
 
 import numpy as np
-# import scipy as sp
-from scipy.signal import butter, sosfiltfilt
-from scipy.sparse import eye, diags
-from scipy.sparse.linalg import spsolve
 
 from mooonpy.tools.math_utils import first_value_cross
 
@@ -71,6 +67,7 @@ def _butter(ydata: Array1D, wn: float, order: Number) -> np.ndarray:
     :param order: Order of filter, defaults to 2
     :type order: Number
     """
+    from scipy.signal import butter, sosfiltfilt
     sos = butter(order, wn, btype='low', analog=False, output='sos', fs=None)
     y_filt = sosfiltfilt(sos, ydata, padtype=None)
     return y_filt
@@ -283,6 +280,7 @@ def data_extension(xdata: Array1D, ydata: Array1D, lo: Number = 1, hi: Number = 
     return xdata, ydata, lo_trim, hi_trim
 
 def sparse_eye_diff(m, d, format='csc'):
+    from scipy.sparse import diags
     diagonals = np.zeros(2*d + 1)
     diagonals[d] = 1
     for i in range(d):
@@ -291,6 +289,8 @@ def sparse_eye_diff(m, d, format='csc'):
     return diags(diagonals, offsets, shape=(m-d, m), format=format)
 
 def whitt_smooth(ydata, order, lambda_):
+    from scipy.sparse import eye
+    from scipy.sparse.linalg import spsolve
     # Base Whittaker Eilers smoother
     m = len(ydata)
     E = eye(m, dtype=int, format='csc')

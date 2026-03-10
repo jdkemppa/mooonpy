@@ -2,9 +2,7 @@
 from typing import Optional, List, Tuple
 import warnings
 import numpy as np
-from lmfit import Model, Parameters
-from lmfit.models import LinearModel
-
+from mooonpy.tools.math_utils import bilinear
 
 class CurveFit:
     """
@@ -24,6 +22,7 @@ class CurveFit:
         :param name: str
         :param model: lmfit.models.Model (or None)
         """
+        from lmfit import Model, Parameters
         self.x = x
         self.y = y
         self.name = name
@@ -51,6 +50,7 @@ class CurveFit:
         pass  # do nothing, can't guess. Subclass override
 
     def make_params(self):
+        from lmfit import Parameters
         params = Parameters()
         for param, value in self.ic.items():
             limit = self.limits.get(param, self.def_limit)
@@ -124,6 +124,8 @@ class Linear(CurveFit):
     Linear Function Fit
     """
     def __init__(self, x, y, name=None, function=None, ic=None, limits=None, ):
+        from lmfit import Parameters
+        from lmfit.models import LinearModel
         self.x = x
         self.y = y
         self.name = name
@@ -138,3 +140,46 @@ class Linear(CurveFit):
 
         fitted_params = self.get_fit_params()
         self.fitted_params = fitted_params
+
+class Bilinear(CurveFit):
+    """
+    Continuous Bilinear Function Fit
+    """
+    def __init__(self, x, y, name=None, function=None, ic=None, limits=None, ):
+        super().__init__(x, y, name, bilinear, ic, limits)
+
+    def guess_ic(self, guess=None):
+        if self.function is bilinear:
+            slope_guess = (self.y[-1] - self.y[0]) / (self.x[-1] - self.x[0])
+            if 'x0' not in self.ic:
+                self.ic['x0'] = np.mean(self.x)
+            if 'y0' not in self.ic:
+                self.ic['y0'] = np.mean(self.y)
+            if 'm1' not in self.ic:
+                self.ic['m1'] = slope_guess
+            if 'm2' not in self.ic:
+                self.ic['m2'] = slope_guess
+        else:
+            raise Exception('Model not guessable')
+
+# class Gaussian(CurveFit):
+#     """
+#     Gaussian Fit
+#     May input bin scale to convert to histogram
+#     """
+#     def __init__(self, x, y, name=None, function=None, ic=None, limits=None, bin_scale=0):
+#
+#         self.x = x
+#         self.y = y
+#         self.name = name
+#         self.model = GaussianModel()
+#
+#         self.function = function
+#         self.params = Parameters()
+#         self.fitted_params = None
+#
+#         result = self.model.fit(y, x=x)
+#         self.result = result
+#
+#         fitted_params = self.get_fit_params()
+#         self.fitted_params = fitted_params
