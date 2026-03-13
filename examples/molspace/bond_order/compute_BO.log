@@ -1,0 +1,154 @@
+LAMMPS (2 Aug 2023 - Update 2)
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\trist\AppData\Local\LAMMPS 64-bit 2Aug2023 with GUI\plugins
+## Compute BO in ReaxFF
+## Created 12-Mar-2026 by Tristan Muzzy
+## Updated 12-Mar-2026 by Tristan Muzzy
+
+## Local console command setup
+## SET OMP_NUM_THREADS=12
+## lmp -l compute_BO.log -in compute_BO.lmp
+
+if $(is_os(^Windows)) then 'package omp 0' 'suffix  omp' #'print "Using Windows"' else 'print "Using Linux"'
+if 0 then 'package omp 0' 'suffix  omp' 
+
+units           real
+timer 			full
+New timer settings: style=full  mode=nosync  timeout=off
+dimension       3
+boundary 		p p p
+timestep 		0.1
+newton			on
+atom_style 		charge
+
+read_data		../WRITE-reax.data
+Reading data file ...
+  orthogonal box = (-10 -10 -10) to (10 10 10)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  31 atoms
+  reading velocities ...
+  31 velocities
+  read_data CPU = 0.002 seconds
+pair_style 		reaxff NULL safezone 5.0 mincap 100
+pair_coeff * * ../../../../random/ffield_CHON_for_PAN_PBO.reax C H N
+fix 		field all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+
+
+run 1
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Your simulation uses code contributions which should be cited:
+
+- pair reaxff command: doi:10.1016/j.parco.2011.08.005
+
+@Article{Aktulga12,
+ author = {H. M. Aktulga and J. C. Fogarty and S. A. Pandit and A. Y. Grama},
+ title = {Parallel Reactive Molecular Dynamics: {N}umerical Methods and Algorithmic Techniques},
+ journal = {Parallel Computing},
+ year =    2012,
+ volume =  38,
+ number =  {4--5},
+ pages =   {245--259}
+}
+
+- fix qeq/reaxff command: doi:10.1016/j.parco.2011.08.005
+
+@Article{Aktulga12,
+ author = {H. M. Aktulga and J. C. Fogarty and S. A. Pandit and A. Y. Grama},
+ title = {Parallel Reactive Molecular Dynamics: {N}umerical Methods and Algorithmic Techniques},
+ journal = {Parallel Computing},
+ year =    2012,
+ volume =  38,
+ pages =   {245--259}
+}
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+WARNING: No fixes with time integration, atoms won't move (src/verlet.cpp:60)
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 12
+  ghost atom cutoff = 12
+  binsize = 6, bins = 4 4 4
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reaxff, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reaxff, perpetual, copy from (1)
+      attributes: half, newton off
+      pair build: copy
+      stencil: none
+      bin: none
+Per MPI rank memory allocation (min/avg/max) = 39.53 | 39.53 | 39.53 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         0   0             -3018.8208      0             -3018.8208      6105.2459    
+         1   0             -3018.8208      0             -3018.8208      6105.2446    
+Loop time of 0.002211 on 1 procs for 1 steps with 31 atoms
+
+Performance: 3.908 ns/day, 6.142 hours/ns, 452.284 timesteps/s, 14.021 katom-step/s
+706.7% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg|  %CPU | %total
+-----------------------------------------------------------------------
+Pair    | 0.001942   | 0.001942   | 0.001942   |   0.0 | 100.0 | 87.83
+Neigh   | 0          | 0          | 0          |   0.0 | 100.0 |  0.00
+Comm    | 4e-06      | 4e-06      | 4e-06      |   0.0 |   0.0 |  0.18
+Output  | 0.00015    | 0.00015    | 0.00015    |   0.0 |   0.0 |  6.78
+Modify  | 0.00011    | 0.00011    | 0.00011    |   0.0 |   0.0 |  4.98
+Other   |            | 5e-06      |            |       |       |  0.23
+
+Nlocal:             31 ave          31 max          31 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            557 ave         557 max         557 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:            465 ave         465 max         465 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 465
+Ave neighs/atom = 15
+Neighbor list builds = 0
+Dangerous builds = 0
+dump bonds all custom   1 WRITE-reax.dump id element x y z q
+dump_modify bonds element C H N pbc yes
+fix bonds all reaxff/bonds 1 WRITE-reax.bonds
+
+run 1
+WARNING: No fixes with time integration, atoms won't move (src/verlet.cpp:60)
+Per MPI rank memory allocation (min/avg/max) = 45.28 | 45.28 | 45.28 Mbytes
+   Step          Temp          E_pair         E_mol          TotEng         Press     
+         1   0             -3018.8208      0             -3018.8208      6105.2455    
+         2   0             -3018.8208      0             -3018.8208      6105.2442    
+Loop time of 0.002867 on 1 procs for 1 steps with 31 atoms
+
+Performance: 3.014 ns/day, 7.964 hours/ns, 348.797 timesteps/s, 10.813 katom-step/s
+0.0% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg|  %CPU | %total
+-----------------------------------------------------------------------
+Pair    | 0.002001   | 0.002001   | 0.002001   |   0.0 |   0.0 | 69.79
+Neigh   | 0          | 0          | 0          |   0.0 | 100.0 |  0.00
+Comm    | 4e-06      | 4e-06      | 4e-06      |   0.0 |   0.0 |  0.14
+Output  | 0.000268   | 0.000268   | 0.000268   |   0.0 |   0.0 |  9.35
+Modify  | 0.000588   | 0.000588   | 0.000588   |   0.0 |   0.0 | 20.51
+Other   |            | 6e-06      |            |       |       |  0.21
+
+Nlocal:             31 ave          31 max          31 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:            557 ave         557 max         557 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:            465 ave         465 max         465 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 465
+Ave neighs/atom = 15
+Neighbor list builds = 0
+Dangerous builds = 0
+Total wall time: 0:00:00

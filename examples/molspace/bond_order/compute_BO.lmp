@@ -1,0 +1,30 @@
+## Compute BO in ReaxFF
+## Created 12-Mar-2026 by Tristan Muzzy
+## Updated 12-Mar-2026 by Tristan Muzzy
+
+## Local console command setup
+## SET OMP_NUM_THREADS=12
+## lmp -l compute_BO.log -in compute_BO.lmp
+
+if $(is_os(^Windows)) then 'package omp 0' 'suffix  omp' #'print "Using Windows"' else 'print "Using Linux"'
+
+units           real 
+timer 			full
+dimension       3
+boundary 		p p p
+timestep 		0.1
+newton			on
+atom_style 		charge
+
+read_data		../WRITE-reax.data
+pair_style 		reaxff NULL safezone 5.0 mincap 100
+pair_coeff * * ../../../../random/ffield_CHON_for_PAN_PBO.reax C H N
+fix 		field all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff 
+
+
+run 1
+dump bonds all custom   1 WRITE-reax.dump id element x y z q
+dump_modify bonds element C H N pbc yes
+fix bonds all reaxff/bonds 1 WRITE-reax.bonds
+
+run 1

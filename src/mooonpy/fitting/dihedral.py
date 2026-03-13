@@ -112,12 +112,12 @@ class DihedralDist(CurveFit):
         'mu': (0, 180)
     }
 
-    def __init__(self, phi_angles, bin_scale=10, name=None, function=multi_symmetric_gaussian, ic=None, limits=None):
+    def __init__(self, phi_angles, bin_scale=10, name=None, function=multi_symmetric_gaussian, ic=None, limits=None,density=False):
         self.phi_angles = np.array(phi_angles)
         self.bin_scale = bin_scale
 
         self.bins = round(len(self.phi_angles) / self.bin_scale)  # count
-        self.hist, self.bin_edges = np.histogram(self.phi_angles, bins=self.bins, density=False)
+        self.hist, self.bin_edges = np.histogram(self.phi_angles, bins=self.bins, density=density)
         self.bin_width = self.bin_edges[1] - self.bin_edges[0]
 
         self.bin_centers = (self.bin_edges[:-1] + self.bin_edges[1:]) / 2
