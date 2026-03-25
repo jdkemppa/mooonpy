@@ -9,6 +9,7 @@ class ReaxFF:
     """
     Class for reading Reax force feild .ffield files, and computing bond orders from Molspace objects.
     """
+
     def __init__(self, topofile=None):
         """
         Initalizes a ReaxFF object and dataclass, read a file if argument given.
@@ -245,6 +246,10 @@ class ReaxFF:
             pass
         elif isinstance(base, str) or isinstance(base, Path):
             base = mp.Molspace(base)
+        elif isinstance(base, list):
+            ele_list = base
+            base = mp.Molspace()
+            base.ff.elements2mass(base.atoms, ele_list)
         else:
             raise TypeError('base is not a Molspace or Path')
         bond_factory = base.bonds.bond_factory
@@ -305,6 +310,9 @@ class ReaxFF:
             BO_avg = sum(BO_list) / len(BO_list)
             if BO_avg > 0.3:
                 bond_avg[key] = BO_avg  # bond creation cutoff
+            # if BO_avg > 0.3: continue
+            # if out_mol.atoms[key[0]].element == 'H' or out_mol.atoms[key[1]].element == 'H': continue
+            # print(key, BO_avg)
 
         bond_avg = dict(sorted(bond_avg.items(), key=lambda item: item[1], reverse=True))
         ## ^ high to low BO
@@ -321,6 +329,7 @@ class ReaxFF:
             # if atom_total[key[0]] > val1-BO or atom_total[key[1]] > val2-BO: continue # over valenced after this bond
 
             if len(atom_graph[key[0]]) < val1 and len(atom_graph[key[1]]) < val2:  # not over bonded
+            # if True:
                 atom_graph[key[0]].append(key[1])
                 atom_graph[key[1]].append(key[0])
                 atom_total[key[0]] += BO  # use attribute in atom object instead?

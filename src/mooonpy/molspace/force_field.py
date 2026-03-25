@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+import mooonpy.molspace.periodic_table
+import numpy as np
+from copy import deepcopy
+
+
 class Parameters(object):
     def __init__(self, coeffs):
         self.coeffs: list = coeffs
@@ -52,3 +57,69 @@ class ForceField(object):
             lines[i] = parameters.style
         return lines
 
+    def copy(self):
+        return deepcopy(self)
+
+    def elements2mass(self, atoms, elements=None, change_types=False):
+        """
+        Update masses Coefficients using per-atom element labels
+        :param Atoms: Input Atoms object to loop through
+        :param elements: list of elements to be used (1 indexed in dict output), if None, will loop through atoms and use periodic_table.py ordering
+        :param change_types: Bool, will update each Atom.type with the new type for each element
+        """
+        from mooonpy.molspace.atoms import Atoms
+        if not isinstance(atoms, Atoms):
+            raise TypeError('atoms must be a Atoms object')
+        pt = mooonpy.molspace.periodic_table.Elements()
+        if elements is None:
+            elements_used = set()
+            for atom in atoms.values():
+                elements_used.add(atom.element)
+            elements = []
+            for ele, Element in pt.elements.items():
+                if ele in elements_used:
+                    elements.append(ele)
+        # print(elements)
+        masses = self.masses
+        masses.clear()
+        ii = 0
+        type_map = {}
+        for ele in elements:
+            ii += 1
+            coeff = self.coeffs_factory()
+            coeff.element = ele
+            coeff.coeffs = [pt.elements[ele].masses[0]]
+            masses[ii] = coeff
+            type_map[ele] = ii
+        if change_types:
+            for id_, atom in atoms.items():
+                atom.type = type_map[atom.element]
+
+    def reax(self, elements=None, dummybond=False):
+        if elements is None:
+            elements = {}
+            for type_, param in self.masses.items():
+                ele = param.element
+                if ele not in elements:
+                    elements[ele] = param.coeffs
+
+        out_ff = ForceField()
+        masses = out_ff.masses
+        for ii, element in enumerate(elements):
+            ii += 1
+            masses[ii] = Parameters(elements[element])
+            masses[ii].element = ele
+
+        if dummybond:
+            out_ff.bond_coeffs[1] = self.coeffs_factory()
+
+        return out_ff
+
+
+## these may move somewhere else? or be callable from coeff class directly?
+def class2_dihedral(coeffs, angles):
+    energy = np.zeros_like(angles)
+    for ii in range(3):
+        if coeffs[ii * 2] != 0:
+            energy += coeffs[ii * 2] * (1 - np.cos(np.deg2rad((ii + 1) * angles - coeffs[ii * 2 + 1])))
+    return energy
