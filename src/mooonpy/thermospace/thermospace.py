@@ -15,11 +15,12 @@ class Thermospace(ColTable):
     """
 
     def __init__(self, filename=None, **kwargs):
+        silent = kwargs.pop('silence_error_line', False)
         super(Thermospace, self).__init__(**kwargs)
         self.sections = {}
 
         if filename is not None:  # populate from file
-            readlog_basic(filename, out=self)
+            readlog_basic(filename, out=self,silence_error_line=silent)
 
     def sect(self, sect_string: Optional[Union[str, range, list, int, np.ndarray]] = None, priority='off') -> ColTable:
         """
