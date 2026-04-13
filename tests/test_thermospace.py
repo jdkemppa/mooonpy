@@ -8,12 +8,12 @@ class TestThermospace:
     test_dir = Path(__file__).dir()
     def test_read(self):
         """Test logfile read"""
-        log = Thermospace(self.test_dir / Path('../examples/thermospace/dummy_log.txt'), True)
+        log = Thermospace(self.test_dir / Path('../examples/thermospace/dummy_log.txt'),  silence_error_line=True)
         assert log.shape() == (30, 7)
 
     def test_join(self):
         """Test joining two logfiles"""
-        log = Thermospace(self.test_dir / Path('../examples/thermospace/dummy_log.txt'), True)
+        log = Thermospace(self.test_dir / Path('../examples/thermospace/dummy_log.txt'),  silence_error_line=True)
         restart = Thermospace(self.test_dir / Path('../examples/thermospace/dummy_restart_log.txt'))
         log.join_restart(restart)
         sect = log.sect(None, 'first')
