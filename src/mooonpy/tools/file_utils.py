@@ -91,6 +91,19 @@ class Path(str):
     search_prefixes = None  # Optional[List['Path']] — full paths up to and including common
     search_common = None  # Optional[str]          — common dir name for splitting abs paths
 
+    # Column-wise natsort direction for __iter__ over wildcard matches.
+    #   True  — sort right-to-left: rightmost wildcard is the tiebreaker,
+    #           leftmost is the primary key (default).
+    #   False — sort left-to-right: leftmost wildcard is the tiebreaker,
+    #           rightmost is the primary key.
+    #   None  — disable natsort entirely; iterate in matches() order.
+    natsort_right_to_left = True
+    #   If True, drop matches whose value in the highest-priority wildcard
+    #   column is non-numeric (e.g. 'last', 'crashed'). Useful when such
+    #   matches are duplicates of a numbered run and should be excluded from
+    #   analysis. Default False — keep them, sorted after numeric values.
+    ignore_nonnumeric_priority_wild = False
+
     def __fspath__(self) -> str:
         return str(self)  # Mostly fixes type hints
 
@@ -209,54 +222,135 @@ class Path(str):
         """
         Iterates through matching paths with a * (asterisk) wildcard character.
 
-        :return: iter object of List of matching Paths
+        Matches are sorted column-by-column over the captured wildcard values
+        (as extracted by :meth:`__sub__`). The traversal direction is
+        controlled by :attr:`natsort_right_to_left`:
 
+        * ``True`` *(default)* — right-to-left: the rightmost wildcard is the
+          primary sort key, the leftmost is the final tiebreaker. This
+          matches the common case of ``run_*/step_*.data`` where the
+          trailing wildcard (``step``) is the dominant integer counter.
+        * ``False`` — left-to-right: the leftmost wildcard is the primary
+          sort key and the rightmost is the final tiebreaker.
+        * ``None`` — disable natsort; iterate in the order produced by
+          :meth:`matches` (lexicographic, from :func:`glob.glob`).
+
+        Within each column, values are sorted with all numeric values
+        (signed ints and floats) first in numeric order, followed by
+        non-numeric strings in lexicographic order. This lets mixed
+        columns like step values of ``1, 2, 10, 'last', 'crashed'``
+        sort cleanly as ``1, 2, 10, 'crashed', 'last'`` without
+        crashing or falling back to pure lex order. Blank captures sort
+        as the last float (via ``inf``) and the first non-numeric string
+        (empty string is lex-minimum).
+
+        If :attr:`ignore_nonnumeric_priority_wild` is ``True``, matches whose
+        value in the primary column (rightmost when ``natsort_right_to_left``
+        is ``True``, leftmost when ``False``) is non-numeric are dropped
+        entirely. This is useful when names like ``step_last.data`` are
+        duplicates of a numbered run and should be excluded from analysis.
+
+        :return: iter object of List of matching Paths
         :rtype: iter
 
-        .. note:: This overrides string iteration through characters, convert back to string
-        before passing into a function if this causes issues.
-
+        .. note:: This overrides string iteration through characters; convert
+            back to string before passing into a function if this causes issues.
+        .. note:: The natsort method used may not behave well if wildcards intended
+            as strings may be interpreted as floats, where file_nan.data
+            from file_*.data will be sorted as a float not string
         :Example:
             >>> from mooonpy import Path
-            >>> MyWildcard = Path('*.mol')
-            >>> for MyMatch in MyWildcard:
-            >>>     print(MyMatch)
-            'DETDA.mol'
-            'DEGBF.mol'
+            >>> for f in Path('temp_dir/output_*.data'):
+            ...     print(f.basename())
+            output_1.data
+            output_2.data
+            output_10.data
+            output_crashed.data
+            output_last.data
+
+            >>> Path.ignore_nonnumeric_priority_wild = True
+            >>> for f in Path('temp_dir/output_*.data'):
+            ...     print(f.basename())
+            output_1.data
+            output_2.data
+            output_10.data
+
+            >>> # Multiple wildcards, right-to-left (default):
+            >>> # primary key is step (rightmost), run breaks ties.
+            >>> for f in Path('run_*/step_*.data'):
+            ...     print(f)
         """
-        return iter(self.matches())
+        found = self.matches()
+        if (self.natsort_right_to_left is None
+                or '*' not in str(self)
+                or len(found) < 2):
+            return iter(found)
 
-    def __sub__(self, template: Union[str, 'Path']):
-        """
-        Returns value of glob wildcard (*) characters from a filename-template pair
+        # Pair each match with its captured wildcard tuple.
+        rows = []
+        for m in found:
+            groups = m - self # call __sub__ operator
+            if not groups:
+                from warnings import warn
+                warn('Path __sub__ operator failed in __iter__ operator call, returned unsorted matches')
+                return iter(found)
+            rows.append((tuple(groups), m))
 
-        :param other: template with glob wildcards
-        :type template: str or Path with wildcards
-        :param self: Path or str without wildcards
-        :return: list of wildcards
-        :rtype: list
+        ncols = len(rows[0][0])
+        if not all(len(r[0]) == ncols for r in rows):
+            from warnings import warn
+            warn('Path found uneven wildcards in __iter__ operator call, returned unsorted matches')
+            return iter(found)  # ragged captures; bail safely
 
-        :Example:
-          >>> from mooonpy.tools import Path
-          >>> myfilename = Path('filename_step10_temp300.data')
-          >>> mytemplate = Path('filename_step*_temp*.data')
-          >>> print(myfilename - mytemplate)
-          ['10', '300']
-        """
-        # import built-in matching tools
-        import fnmatch, re
-        to_match = fnmatch.translate(str(template))  # convert to regular expression
-        # to_match = fnmatch.translate(str('*\\' + template))  # convert to regular expression
-        # not sure what the front padding is for?
+        # Column priority order: right-to-left means we start at the rightmost
+        # column (it's the primary key), then walk leftward for tiebreakers.
+        col_order = (list(range(ncols - 1, -1, -1))
+                     if self.natsort_right_to_left
+                     else list(range(ncols)))
 
-        to_match = to_match.replace(".*", "(.*)")  # allow capturable regrex
-        to_match = to_match.replace(r"\Z", "")
-        compiled = re.compile(to_match)  # compile regrex string into object
-        match = compiled.match(str(self))
-        if match is None:
-            return []
-        else:
-            return list(match.groups())
+        def as_number(v):
+            if v == '':
+                return float('inf')
+            try:
+                num = float(v)
+            except ValueError:
+                return None
+            return num
+
+        def col_key(value: str):
+            # (0, num) for numeric values, (1, str) for non-numeric.
+            # Tuple ordering puts all numeric before all non-numeric, and
+            # within each group the second element orders them naturally.
+            num = as_number(value)
+            return (0, num) if num is not None else (1, value)
+
+        # Optionally drop rows whose primary-column value is non-numeric.
+        if self.ignore_nonnumeric_priority_wild:
+            primary = col_order[0]
+            rows = [r for r in rows if as_number(r[0][primary]) is not None]
+            if len(rows) < 2:
+                return iter([m for _, m in rows])
+
+        # Recursively sort: fix higher-priority columns first, then sort each
+        # group by the next column with numeric-before-string ordering.
+        def sort_rows(subset, depth):
+            if depth >= len(col_order) or len(subset) < 2:
+                return subset
+            col = col_order[depth]
+            subset = sorted(subset, key=lambda r: col_key(r[0][col]))
+            # Group by this column's value (post-sort) and recurse into each.
+            result = []
+            i = 0
+            while i < len(subset):
+                j = i + 1
+                key_i = subset[i][0][col]
+                while j < len(subset) and subset[j][0][col] == key_i:
+                    j += 1
+                result.extend(sort_rows(subset[i:j], depth + 1))
+                i = j
+            return result
+
+        return iter([m for _, m in sort_rows(rows, 0)])
 
     def basename(self) -> 'Path':
         """
@@ -385,8 +479,12 @@ class Path(str):
             'Template_1.lmpmol'
         """
         times = {}
-        for file in self:
-            times[getmtime(file)] = file
+        if self.search_prefixes:
+            for file in self.locate_all():
+                times[getmtime(file)] = file
+        else:
+            for file in self:
+                times[getmtime(file)] = file
         if times:
             sorted_time = sorted(list(times.keys()))
             if oldest:
@@ -681,3 +779,10 @@ def smart_open(filename, mode='r', encoding='utf-8'):
 
         pass  # compressed filename did not work
     return open(str(filename), mode, encoding=encoding)  # try regular read
+
+if __name__ == '__main__':
+    Path.natsort_right_to_left = True
+    Path.ignore_nonnumeric_priority_wild = True
+    files = Path('C:\\Users\\trist\\OneDrive\\Desktop\\research\\ReaxDev\\B_compress\\rep02\\B*_R0*n2_*_dodecane-ReaxDev.*.data')
+    for file in files:
+        print(file.basename())
