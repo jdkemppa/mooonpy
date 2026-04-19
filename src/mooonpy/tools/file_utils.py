@@ -779,10 +779,3 @@ def smart_open(filename, mode='r', encoding='utf-8'):
 
         pass  # compressed filename did not work
     return open(str(filename), mode, encoding=encoding)  # try regular read
-
-if __name__ == '__main__':
-    Path.natsort_right_to_left = True
-    Path.ignore_nonnumeric_priority_wild = True
-    files = Path('C:\\Users\\trist\\OneDrive\\Desktop\\research\\ReaxDev\\B_compress\\rep02\\B*_R0*n2_*_dodecane-ReaxDev.*.data')
-    for file in files:
-        print(file.basename())
