@@ -7,7 +7,7 @@ workflows.
 """
 #from ..molspace import Molspace
 # from mooonpy.molspace.molspace import Molspace
-
+from collections import defaultdict
 def generate_graph(mol):
     """
     Generates an undirected graph from a Molspace instance.
@@ -23,7 +23,8 @@ def generate_graph(mol):
     :return: graph
     :rtype: dict[int, list[int]]
     """
-    graph = {i:[] for i in mol.atoms} # {atomID : [bonded-neighbors] }
+    # graph = {i:[] for i in mol.atoms} # {atomID : [bonded-neighbors] }
+    graph = defaultdict(list) ## needed for missing atom systems
     for (id1, id2) in mol.bonds:
         graph[id1].append(id2)
         graph[id2].append(id1)

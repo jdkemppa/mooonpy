@@ -168,7 +168,7 @@ def RFR_tensile_analysis(strain: np.ndarray, stress: np.ndarray, trans_1: Option
                 prominence = std_dev / (ii * 3)  # 1/3, 1/9 ... 1/99
                 xpeaks, ypeaks, xvalleys, yvalleys = find_peaks_and_minima(dstrain, dslopes2, prominence=prominence)
                 if len(xvalleys) >= 2:
-                    print(ii,len(xvalleys))
+                    # print(ii,len(xvalleys))
                     break
         else:
             prominence = np.std(dslopes2) / 3
@@ -220,7 +220,7 @@ def RFR_tensile_analysis(strain: np.ndarray, stress: np.ndarray, trans_1: Option
                                         label='Transverse 1 Fit: nu = {:2.3f}'.format(-trans_1_coeff[1]))
         else:
             trans_1_coeff = [np.nan, np.nan]
-        # results.trans_1_poi = -trans_1_coeff[1]
+        results.trans_1_poi = -trans_1_coeff[1]
 
         if trans_2 is not None:
             trans_2_filt, wn, qm = butter_lowpass(strain, trans_2)

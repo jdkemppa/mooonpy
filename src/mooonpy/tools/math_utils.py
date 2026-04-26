@@ -11,7 +11,7 @@ class HistBins:
     Alias around np.histogram to make bin centered plots instead of step
     """
 
-    def __init__(self, values, bin_scale=10,density=False):
+    def __init__(self, values, bin_scale=10, density=False):
         self.values = values
         self.bin_scale = bin_scale
 
@@ -340,11 +340,13 @@ def hyperbola(x, X0, Y0, a, b, c):
     p = Y0 + a * dx + b * h0
     return p
 
-def bilinear(x, x0, y0, m1,m2):
-    y = np.full_like(x,y0,dtype=float)
+
+def bilinear(x, x0, y0, m1, m2):
+    y = np.full_like(x, y0, dtype=float)
     dx = x - x0
-    y += np.where(dx<0, dx*m1,dx*m2)
+    y += np.where(dx < 0, dx * m1, dx * m2)
     return y
+
 
 def gaussian_turn(x, X0, Y0, a, b, s):
     '''
@@ -380,6 +382,30 @@ def edge_tan_intersect(x, y, N=1):
     xi = (-y[N] + y[-N] + x[N] * yp[N] - x[-N] * yp[-N]) / (yp[N] - yp[-N])
     yi = yp[N] * (xi - x[N]) + y[N]
     return xi, yi
+
+
+def LJ_96(r, eps=1.0, sig=1.0):
+    '''
+    LAMMPS lj/class2 9-6 power potential function
+    '''
+    sig_r = sig / r
+    return eps * (2 * np.power(sig_r, 9) - 3 * np.power(sig_r, 6))
+
+
+def LJ_96_force(r, eps=1.0, sig=1.0):
+    '''
+    LAMMPS lj/class2 9-6 power force function
+    '''
+    sig_r = sig / r
+    return eps / sig * 18 * (np.power(sig_r, 10) - np.power(sig_r, 7))
+
+
+def Coulumb(r, q1, q2):
+    return 332.06371 * q1 * q2 / r  # from update.cpp
+
+
+def Coulumb_force(r, q1, q2):
+    return 332.06371 * q1 * q2 / (r ** 2)
 
 
 class MixingRule():
@@ -420,7 +446,7 @@ class MixingRule():
         LAMMPS mix sixthpower function for epsilon.
         Assumes ep1, sig1 ep2, sig2 ordering
         """
-        return 2 * np.sqrt(args[0], args[2]) * args[1] ** 3 * args[3] ** 3 / (args[1] ** 6 + args[3] ** 6)
+        return 2 * np.sqrt(args[0] * args[2]) * args[1] ** 3 * args[3] ** 3 / (args[1] ** 6 + args[3] ** 6)
 
     def _sixth_sigma(self, *args):
         if len(args) == 2:

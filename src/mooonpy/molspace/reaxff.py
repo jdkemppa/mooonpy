@@ -3,6 +3,7 @@ from collections import defaultdict
 from typing import Optional
 from mooonpy.tools.file_utils import Path, smart_open
 from math import sqrt, exp, log
+import numpy as np
 
 
 class ReaxFF:
@@ -12,7 +13,7 @@ class ReaxFF:
 
     def __init__(self, topofile=None):
         """
-        Initalizes a ReaxFF object and dataclass, read a file if argument given.
+        Initializes a ReaxFF object and dataclass, read a file if argument given.
         Currently does not support Angle or Dihedral parameter storage
         """
         self.name: str = topofile
@@ -226,6 +227,25 @@ class ReaxFF:
 
         return BO_s_prime, BO_p_prime, BO_pp_prime
 
+    def pair_vdw_prime(self, ele1, ele2, dist):
+        """
+        VDW energy and force calculation
+        No shielding or taper
+        """
+
+        bond_key = self.sort_ele([ele1, ele2])
+        params = self.bond_param[tuple(bond_key)]
+        r_vdW = params['r_vdW']
+        D = params['D']
+        alpha = params['alpha']
+
+        r = dist / r_vdW
+        e1 = np.exp(alpha * (1 - r))
+        e2 = np.exp(0.5 * alpha * (1 - r))
+        E_vdw = D * (e1 - 2 * e2)
+        force = D * alpha * (e1 - e2) / r_vdW
+        return E_vdw, force
+
     def BO_average(self, series, base=None, remove_single=False, remove_H2=False, steps=None, cutoff=3,
                    periodicity='ppp'):
         """
@@ -329,7 +349,7 @@ class ReaxFF:
             # if atom_total[key[0]] > val1-BO or atom_total[key[1]] > val2-BO: continue # over valenced after this bond
 
             if len(atom_graph[key[0]]) < val1 and len(atom_graph[key[1]]) < val2:  # not over bonded
-            # if True:
+                # if True:
                 atom_graph[key[0]].append(key[1])
                 atom_graph[key[1]].append(key[0])
                 atom_total[key[0]] += BO  # use attribute in atom object instead?

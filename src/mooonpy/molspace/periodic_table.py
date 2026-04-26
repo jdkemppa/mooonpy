@@ -71,7 +71,29 @@ class Elements:
                           'vdw':        1.55}
         nitrogen.valence = 4
         self.elements['N'] = nitrogen
-        
+
+        lithium = Element() # Extend this
+        lithium.masses = [6.941] # Firt index will be the formal mass used when getting a mass per element
+        lithium.masses.extend([])  # Other FF masses
+        lithium.radii = {}
+        lithium.valence = None
+        self.elements['Li'] = lithium
+
+        sulfur = Element() # Extend this
+        sulfur.masses = [32.064] # Firt index will be the formal mass used when getting a mass per element
+        sulfur.masses.extend([])  # Other FF masses
+        sulfur.radii = {}
+        sulfur.valence = None
+        self.elements['S'] = sulfur
+
+        silicon = Element() # Extend this
+        silicon.masses = [28.086] # Firt index will be the formal mass used when getting a mass per element
+        silicon.masses.extend([])  # Other FF masses
+        silicon.radii = {}
+        silicon.valence = None
+        self.elements['Si'] = silicon
+
+
     def mass2element(self, mass):
         mass_diffs = {} # {'element':minimum-difference in masses}
         for elem in self.elements:

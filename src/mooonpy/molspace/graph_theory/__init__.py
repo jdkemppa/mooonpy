@@ -2,7 +2,7 @@
 import importlib
 
 
-__all__ = ['ring_analysis'
+__all__ = ['ring_analysis', 'interface'
 ]
 
 for name in __all__:

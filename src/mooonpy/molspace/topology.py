@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 
 """
@@ -12,6 +11,7 @@
 ..TODO:: methods for safe lookup and __set__ with autocorrected order - 7-Jul-25
 
 """
+from copy import deepcopy
 
 
 def _make_class(class_name, slots, defaults=None):
@@ -68,6 +68,9 @@ class Bonds(dict):
     def id_set(self, value, id1, id2):
         self[self.key_rule(id1, id2)] = value
 
+    def copy(self):
+        return deepcopy(self)
+
 
 class Angles(dict):
     def __init__(self, **kwargs):
@@ -77,7 +80,7 @@ class Angles(dict):
         # Generate an Angle class with necessary slots and defaults, which will
         # be used by angle_factory() method to generate an instance of this class
         class_name = 'Angle'
-        defaults = {'type': 0, 'ordered': [], 'comment': '', 'theta': None, 'normal':None}
+        defaults = {'type': 0, 'ordered': [], 'comment': '', 'theta': None, 'normal': None}
         slots = tuple(defaults.keys())
         self.Angle = _make_class(class_name, slots, defaults=defaults)
 
@@ -97,6 +100,9 @@ class Angles(dict):
 
     def id_set(self, value, id1, id2, id3):
         self[self.key_rule(id1, id2, id3)] = value
+
+    def copy(self):
+        return deepcopy(self)
 
 
 class Dihedrals(dict):
@@ -128,6 +134,9 @@ class Dihedrals(dict):
     def id_set(self, value, id1, id2, id3, id4):
         self[self.key_rule(id1, id2, id3, id4)] = value
 
+    def copy(self):
+        return deepcopy(self)
+
 
 class Impropers(dict):
     def __init__(self, **kwargs):
@@ -155,3 +164,6 @@ class Impropers(dict):
 
     def id_set(self, value, id1, id2, id3, id4):
         self[self.key_rule(id1, id2, id3, id4)] = value
+
+    def copy(self):
+        return deepcopy(self)

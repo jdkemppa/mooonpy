@@ -10,6 +10,7 @@ import math
 import numpy as np
 
 
+
 @dataclass
 class Domain(list):
     """
@@ -33,6 +34,8 @@ class Pair():
         self.dy: float = dy
         self.dz: float = dz
         self.distance: float = distance
+        self.energy: float = 0.0
+        self.force: float = 0.0
 
 
 class Pairs(dict):
@@ -68,6 +71,69 @@ class Pairs(dict):
 
         if not isinstance(atoms, Atoms):
             raise TypeError('atoms must be a Atoms object')
+
+    def compute_energy(self, mol, special_bonds=(0, 0, 1),columbs=True, force=True):
+        from mooonpy.tools.math_utils import MixingRule, LJ_96, Coulumb, LJ_96_force, Coulumb_force
+        from mooonpy.molspace.graph_theory.interface import generate_graph, find_cumulative_neighs
+        pair_coeffs = mol.ff.pair_coeffs
+
+        ## Make mixed coeffs. both directions is fine, saves a sort on call
+        epsilon_mixer = MixingRule('sixth_epsilon')
+        sigma_mixer = MixingRule('sixth_sigma')
+        params = {}
+        for type1, param1 in pair_coeffs.items():
+            for type2, param2 in pair_coeffs.items():
+                key = (type1, type2)
+                epsilon = epsilon_mixer(param1.coeffs[0],param1.coeffs[1], param2.coeffs[0],param2.coeffs[1])
+                sigma = sigma_mixer(param1.coeffs[1], param2.coeffs[1])
+                params[key] = [epsilon, sigma]
+
+        graph = generate_graph(mol)
+        all_neighs = {}
+        for key, pair in self.items():
+            if key[0] in all_neighs:
+                neighbors = all_neighs[key[0]]
+            else:
+                neighbors = find_cumulative_neighs(graph, key[0], 3)
+
+            ## Special Bonds Scalar
+            scale = 1.0
+            if key[1] in neighbors[1]:
+                if special_bonds[0] == 0:
+                    continue
+                else:
+                    scale = special_bonds[0]
+            elif key[1] in neighbors[2]:
+                if special_bonds[1] == 0:
+                    continue
+                else:
+                    scale = special_bonds[1]
+            elif key[1] in neighbors[3]:
+                if special_bonds[2] == 0:
+                    continue
+                else:
+                    scale = special_bonds[2]
+
+            atom1 = mol.atoms[key[0]]
+            atom2 = mol.atoms[key[1]]
+
+            types = (atom1.type, atom2.type)
+            param = params[types]
+            lj = LJ_96(pair.distance,*param)
+            F = 0
+            if force:
+                F = LJ_96_force(pair.distance,*param)
+
+            if columbs:
+                col = Coulumb(pair.distance,atom1.q,atom2.q)
+                E = lj+col
+                if force:
+                    F += Coulumb_force(pair.distance,atom1.q,atom2.q)
+
+            else:
+                E = lj
+            pair.energy = E * scale
+            pair.force = F * scale
 
 
 def pairs_from_bonds(atoms, bonds, periodicity='ppp'):
@@ -304,12 +370,12 @@ def ADI_from_bonds(bonds, angles=None, dihedrals=None, impropers=None):
             if b1[0] != angle.ordered[1]: v1 = -v1  # if tip is center mirror a copy
             if b2[0] != angle.ordered[1]: v2 = -v2  # *= changes in the dict
 
-            cross = np.cross(v1, v2) # needed for later operations
-            if key[0] != angle.ordered[0]: cross *= -1 # later index uses key not ordered
-            angle.normal = cross/np.linalg.norm(cross)
+            cross = np.cross(v1, v2)  # needed for later operations
+            if key[0] != angle.ordered[0]: cross *= -1  # later index uses key not ordered
+            angle.normal = cross / np.linalg.norm(cross)
             # angle.theta = 180 - np.arcsin(np.linalg.norm(cross)) * 180 / np.pi # slower
 
-            dot = np.dot(v1, v2) # / bonds[b1].dist / bonds[b2].dist # recomputing dot is faster than sqrt
+            dot = np.dot(v1, v2)  # / bonds[b1].dist / bonds[b2].dist # recomputing dot is faster than sqrt
             angle.theta = np.arccos(dot) * 180 / np.pi
 
     else:
@@ -345,7 +411,7 @@ def ADI_from_bonds(bonds, angles=None, dihedrals=None, impropers=None):
             #                   vl[2] * (vr[0] * v2[1] - vr[1] * v2[0])) # slower
 
             cos_theta = np.dot(vl, vr)  # not normalized, cancels out
-            sin_theta = triple_product # / bonds[b2].dist # inv vl and inv vr would also be here
+            sin_theta = triple_product  # / bonds[b2].dist # inv vl and inv vr would also be here
             a = np.atan2(sin_theta, cos_theta) * 180 / np.pi
 
             dihedral.phi = a
@@ -365,7 +431,6 @@ def ADI_from_bonds(bonds, angles=None, dihedrals=None, impropers=None):
             if b1[0] != improper.ordered[1]: v1 = -v1  # all center out
             if b2[0] != improper.ordered[1]: v2 = -v2
             if b3[0] != improper.ordered[1]: v3 = -v3
-
 
             a1 = angles.key_rule(improper.ordered[2], improper.ordered[1], improper.ordered[3])
             a2 = angles.key_rule(improper.ordered[0], improper.ordered[1], improper.ordered[3])
