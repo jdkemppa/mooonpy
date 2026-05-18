@@ -25,12 +25,6 @@ import sys
 
 import pytest
 
-# Pin to the worktree mooonpy regardless of any installed/editable copy.
-_WORKTREE_SRC = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..", "src")
-)
-sys.path.insert(0, _WORKTREE_SRC)
-
 import mooonpy  # noqa: E402
 
 DETDA = os.path.join(
@@ -88,12 +82,8 @@ def pair(mode):
 
 
 # ---------------------------------------------------------------------------
-# Sanity: the worktree copy is the one under test, DETDA loaded as expected
+# Sanity:  DETDA loaded as expected
 # ---------------------------------------------------------------------------
-
-def test_using_worktree_mooonpy():
-    assert "cranky-proskuriakova-780598" in mooonpy.__file__, mooonpy.__file__
-
 
 def test_detda_loaded(original):
     assert len(original.atoms) == 31
