@@ -37,16 +37,16 @@ def find_cumulative_neighs(graph: dict[int, list[int]], node: int, max_depth: in
     Finds the cummulative neighbors of a graph starting at
     a given node and traversing to a maximum depth of max_depth.
     Depth is defined as follows:
-        
+
     1. first neighbors
     2. second neighbors
     3. thrid neighbors
-    
+
     .. note::
         For rings/cycles, where each neighbor has two classifications of
         depth due to ring symmetry, the lowest neighbor depth classification
         will be assigned and it will not be duplicated in the higher neighbor
-        depth set.  
+        depth set.
 
     :param graph: An undirected graph
     :type graph: dict[int, list[int]]
@@ -58,12 +58,75 @@ def find_cumulative_neighs(graph: dict[int, list[int]], node: int, max_depth: in
     :rtype: dict[int, set[int]]
     """
     neighbors = {i+1 : set() for i in range(max_depth)} # { depth : {id1, id2, ...} }
-    neighbors[1] = set(graph[node]) 
+    neighbors[1] = set(graph[node])
     visited = set(graph[node] + [node])
     for depth in range(1, max_depth):
         for i in neighbors[depth]:
             for j in graph[i]:
-                if j in visited: continue  
+                if j in visited: continue
                 neighbors[depth+1].add(j)
                 visited.add(j)
     return neighbors
+
+
+def find_reachable_neighbors(graph: dict[int, list[int]], node: int, max_depth: int) -> set[int]:
+    """
+    Flat-set version of :func:`find_cumulative_neighs`: every node within
+    ``max_depth`` bonds of ``node``, including ``node`` itself.
+
+    :param graph: An undirected graph.
+    :type graph: dict[int, list[int]]
+    :param node: Starting node.
+    :type node: int
+    :param max_depth: Maximum traversal depth (>= 0).
+    :type max_depth: int
+    :return: All reachable node ids.
+    :rtype: set[int]
+    """
+    if max_depth < 0:
+        raise ValueError(f"max_depth must be >= 0, got {max_depth}")
+    if max_depth == 0:
+        return {node}
+    by_depth = find_cumulative_neighs(graph, node, max_depth)
+    flat = {node}
+    for s in by_depth.values():
+        flat.update(s)
+    return flat
+
+
+def find_reachable_neighbors_all(graph: dict[int, list[int]], max_depth: int) -> dict[int, set[int]]:
+    """
+    Apply :func:`find_reachable_neighbors` once per node in ``graph``.
+
+    :return: ``{node: set_of_reachable_ids}``.
+    """
+    return {node: find_reachable_neighbors(graph, node, max_depth) for node in graph}
+
+
+def steps_from_initiator(graph: dict[int, list[int]], initiator: int, n_steps: int):
+    """
+    BFS exactly ``n_steps`` outward from ``initiator``. Returns the interior set
+    (nodes within ``n_steps`` bonds, inclusive of ``initiator``) and the
+    boundary set (nodes at exactly depth ``n_steps``, suitable as
+    fix bond/react template edge atoms).
+
+    :param graph: An undirected graph.
+    :type graph: dict[int, list[int]]
+    :param initiator: Starting node.
+    :type initiator: int
+    :param n_steps: Number of bonds to walk (>= 0). With ``n_steps=0`` the
+                    interior is just ``{initiator}`` and the boundary is empty.
+    :type n_steps: int
+    :return: ``(interior, boundary)``.
+    :rtype: tuple[set[int], set[int]]
+    """
+    if n_steps < 0:
+        raise ValueError(f"n_steps must be >= 0, got {n_steps}")
+    if n_steps == 0:
+        return {initiator}, set()
+    by_depth = find_cumulative_neighs(graph, initiator, n_steps)
+    interior = {initiator}
+    for depth in range(1, n_steps + 1):
+        interior.update(by_depth[depth])
+    boundary = set(by_depth[n_steps])
+    return interior, boundary

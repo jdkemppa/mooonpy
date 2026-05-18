@@ -1,0 +1,31 @@
+mooonpy NTA file for pre_rxn1.nta at 15-May-26
+style id
+
+1 cp
+2 cp
+3 cp
+4 cp
+5 cp
+6 c2
+7 c3
+8 nn
+9 hn2
+10 hn2
+11 o3e
+12 c3h
+13 c3h
+14 c2
+15 oc
+16 cp
+17 hpan
+18 hpan
+19 hpan
+20 hpan
+21 hpan
+
+edge id
+    2	cp  nn  
+    3	cp  hpan 
+    6	c3  hpan hpan 
+    7	hpan hpan hpan 
+   16	cp  cp  

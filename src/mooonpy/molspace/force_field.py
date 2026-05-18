@@ -49,6 +49,96 @@ class ForceField(object):
         if coeffs is None: coeffs = []
         return Parameters(coeffs)
 
+    def condense_element(self, atoms, ele_list=None):
+        """
+        Collapse :attr:`masses` to one entry per element and remap every
+        ``atom.type`` accordingly.
+
+        After ``Molspace.combine`` has stitched two systems together, the
+        masses dict typically has duplicate elements at different type ids
+        (e.g. ``{1: C, 2: H, 3: N, 4: C, 5: H, 6: O}``). This method
+        rewrites the table to one entry per element with the new type ids
+        assigned in ``ele_list`` order.
+
+        :param atoms: ``Molspace.atoms`` (or any dict of atom objects with a
+                      ``type`` attribute) whose type ids will be remapped in
+                      place.
+        :type atoms: Atoms
+        :param ele_list: Element-symbol order for the output type ids
+                         (``ele_list[0]`` becomes type 1, etc.). If ``None``,
+                         the elements present in :attr:`masses` are collected
+                         and sorted by the
+                         :mod:`mooonpy.molspace.periodic_table` ordering.
+        :type ele_list: list[str] or None
+        :raises ValueError: If a mass entry's element is not in ``ele_list``.
+
+        Element resolution per existing mass entry: ``params.element`` first,
+        then ``params.comment``, then a periodic-table lookup by mass.
+
+        :Example:
+        >>> # After combining DETDA (C, H, N) with DGEBF (C, H, O):
+        >>> mol.ff.condense_element(mol.atoms)
+        >>> sorted(mol.ff.masses)  # one entry per element, in ptable order
+        [1, 2, 3, 4]   # C, H, O, N
+        """
+        ptable = mooonpy.molspace.periodic_table.Elements()
+
+        # Resolve every existing type's element label.
+        type_to_element = {}
+        for type_int, params in self.masses.items():
+            element = params.element or params.comment
+            if not element:
+                element = ptable.mass2element(params.coeffs[0])
+            type_to_element[type_int] = element
+
+        # Pick the output ordering.
+        if ele_list is None:
+            present = set(type_to_element.values())
+            ele_list = [e for e in ptable.elements if e in present]
+            # Anything we don't recognize gets appended at the end so we
+            # never silently drop atoms.
+            for e in present:
+                if e not in ele_list:
+                    ele_list.append(e)
+        element_to_new_type = {e: i + 1 for i, e in enumerate(ele_list)}
+
+        # Build the old->new type remap and apply it to every atom.
+        type_remap = {}
+        for old_type, element in type_to_element.items():
+            if element not in element_to_new_type:
+                raise ValueError(
+                    f"element {element!r} (mass type {old_type}) is not in ele_list={ele_list}"
+                )
+            type_remap[old_type] = element_to_new_type[element]
+        for atom in atoms.values():
+            atom.type = type_remap[atom.type]
+
+        # Rebuild the masses dict in place: clear + repopulate so the
+        # Coefficients object identity is preserved.
+        new_entries = {}
+        for element in ele_list:
+            if element not in element_to_new_type:
+                continue
+            new_type = element_to_new_type[element]
+            existing = next(
+                (p for old_type, p in self.masses.items()
+                 if type_to_element[old_type] == element),
+                None,
+            )
+            if existing is None:
+                # Element listed in ele_list but absent from current masses;
+                # synthesize an entry from the periodic table.
+                params = self.coeffs_factory([ptable.elements[element].masses[0]])
+            else:
+                params = existing
+            params.element = element
+            if not params.comment:
+                params.comment = element
+            new_entries[new_type] = params
+
+        self.masses.clear()
+        self.masses.update(new_entries)
+
     def get_per_line_styles(self, coeff):
         lines = {}  # {'TypeID':'per-line-style'}
         potential = getattr(self, coeff)

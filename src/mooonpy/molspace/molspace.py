@@ -9,6 +9,7 @@ from mooonpy.molspace.distance import domain_decomp_13, pairs_from_bonds, pairs_
 from mooonpy.molspace.graph_theory import interface, ring_analysis
 from mooonpy.molspace.periodic_table import Elements as Ptable
 from mooonpy.molspace.bonds_from_distances import find as find_bonds_from_distances
+from mooonpy.molspace import remap as _remap
 
 from mooonpy.tools.file_utils import Path
 
@@ -324,8 +325,47 @@ class Molspace(object):
         graph = self.generate_graph()
         return ring_analysis.find_rings(graph, ring_sizes)
 
-    def find_cumulative_neighs(self):
-        return
+    def remap_ids(self, old2new):
+        """
+        Renumber and/or slice atom ids in place using ``old2new``.
+
+        Any current atom whose id is not a key in ``old2new`` is dropped, along
+        with any bond/angle/dihedral/improper entry that references it.
+        Container Python identities and surviving per-atom/per-bond object
+        identities are preserved. See :mod:`mooonpy.molspace.remap`.
+        """
+        return _remap.remap_ids(self, old2new)
+
+    def build_old2new(self, mode='contiguous', offset=0, start=1, keep=None):
+        """
+        Build an ``(old2new, new2old)`` mapping for use with :meth:`remap_ids`.
+
+        See :func:`mooonpy.molspace.remap.build_old2new` for parameter details.
+        """
+        return _remap.build_old2new(self, mode=mode, offset=offset, start=start, keep=keep)
+
+    def contiguous(self, start=1):
+        """
+        Renumber atoms ``start..start+N-1`` in current insertion order, in place.
+        Returns the ``old2new`` dict.
+        """
+        return _remap.contiguous(self, start=start)
+
+    def slice(self, keep_ids, renumber=True):
+        """
+        Drop every atom whose id is not in ``keep_ids``, in place. By default
+        the surviving atoms are renumbered contiguously from 1.
+        Returns the ``old2new`` dict.
+        """
+        return _remap.slice_mol(self, keep_ids, renumber=renumber)
+
+    def reachable(self, start_id, depth):
+        """
+        Flat-set bond-graph reachability from ``start_id`` up to ``depth`` bonds
+        (inclusive of ``start_id``). Thin wrapper around
+        :func:`mooonpy.molspace.graph_theory.interface.find_reachable_neighbors`.
+        """
+        return interface.find_reachable_neighbors(self.generate_graph(), start_id, depth)
 
     def update_elements(self, type2mass=None, type2element=None):
         """
@@ -426,6 +466,59 @@ class Molspace(object):
                 if slot in blacklist: continue
                 if whitelist is not None and slot not in whitelist: continue
                 setattr(self.atoms[id_], slot, getattr(atom, slot))
+
+    def combine(self, other, vect=None, move_mode='offset',
+                offset_types=False, assign_clusters=True):
+        """
+        Append ``other`` into ``self`` in place. ``other``'s atom ids are
+        shifted by ``self``'s current ``max(atoms)`` so they don't collide.
+        Coordinates of the shifted copy are translated via
+        :meth:`Atoms.move` before merging.
+
+        :param other: Molspace to append. Not mutated.
+        :type other: Molspace
+        :param vect: Displacement applied to ``other`` before merging.
+                     ``None`` skips translation.
+        :type vect: tuple[float, float, float] or None
+        :param move_mode: Mode passed to :meth:`Atoms.move`. Defaults to ``'offset'``.
+        :type move_mode: str
+        :param offset_types: If True, ``other``'s atom-type integers are
+            shifted by ``max(self.ff.masses)`` and the corresponding mass
+            entries are merged into ``self.ff.masses`` with the shifted keys.
+            This is needed when the two systems use unrelated type tables
+            (e.g. combining raw monomers from independent atom_typing runs).
+            For systems that already share the same FF (e.g. post-BRM data
+            files), leave it False so types stay aligned.
+        :type offset_types: bool
+        :param assign_clusters: Re-run cluster identification after merge.
+        :type assign_clusters: bool
+        :return: The id offset applied to ``other``'s atom ids.
+        :rtype: int
+        """
+        shift_atomid = max(self.atoms) if self.atoms else 0
+        other_copy = other.copy()
+        old2new, _ = other_copy.build_old2new(mode='offset', offset=shift_atomid)
+        other_copy.remap_ids(old2new)
+        other_copy.atoms.move(vect, mode=move_mode)
+
+        if offset_types:
+            type_shift = max(self.ff.masses) if self.ff.masses else 0
+            if type_shift:
+                for atom in other_copy.atoms.values():
+                    atom.type += type_shift
+                for old_type, params in other_copy.ff.masses.items():
+                    self.ff.masses[old_type + type_shift] = params
+
+        self.atoms.update(other_copy.atoms)
+        self.bonds.update(other_copy.bonds)
+        self.angles.update(other_copy.angles)
+        self.dihedrals.update(other_copy.dihedrals)
+        self.impropers.update(other_copy.impropers)
+
+        if assign_clusters:
+            self.clusters.compute_clusters()
+
+        return shift_atomid
 
     def KE(self):
         ke = 0.0

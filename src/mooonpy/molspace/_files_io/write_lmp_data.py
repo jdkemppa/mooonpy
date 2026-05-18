@@ -230,10 +230,14 @@ def write(mol, filename, atom_style):
                 line = atom_line(atom, style=atom_style)
                 f.write('{} {}\n'.format(line, comment))
 
-            f.write('\nVelocities\n\n')
-            for i in atoms:
-                atom = mol.atoms[i]
-                f.write('{:^6} {:^16.10f} {:^16.10f} {:^16.10f}\n'.format(i, atom.vx, atom.vy, atom.vz))
+            # Only write Velocities if any atom has a nonzero component;
+            # avoids emitting a meaningless all-zeros section for templates
+            # and other static structures.
+            if any((atom.vx or atom.vy or atom.vz) for atom in mol.atoms.values()):
+                f.write('\nVelocities\n\n')
+                for i in atoms:
+                    atom = mol.atoms[i]
+                    f.write('{:^6} {:^16.10f} {:^16.10f} {:^16.10f}\n'.format(i, atom.vx, atom.vy, atom.vz))
 
         # Write bonds
         if mol.bonds:
