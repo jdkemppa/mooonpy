@@ -3,7 +3,6 @@
 This module provides a class to organize atoms information
 """
 import warnings
-from copy import deepcopy
 
 from .box import Box
 from .atom_styles import Styles
@@ -23,8 +22,25 @@ class Atoms(dict):
     def shift(self, sx=0, sy=0, sz=0):
         return
 
-    def copy(self):
-        return deepcopy(self)
+    def copy(self, deepcopy=False):
+        """
+        Return a fully independent copy of this Atoms container
+        (independence verified in ``tests/test_molspace_copy.py``).
+
+        The Atom factory class and defaults are frozen, so the copy
+        references the SAME factory and read-only ``styles`` instance by
+        design; atom instances and ``box`` are rebuilt fresh.
+
+        :param deepcopy: if True, use the ``copy.deepcopy`` fallback
+            (same result, ~5x slower; for cross-checking only).
+        """
+        if deepcopy:
+            import copy as _copy_module
+            return _copy_module.deepcopy(self)
+        from mooonpy.molspace._copy import _copy_value_dict, _copy_box
+        new = _copy_value_dict(self, share_attrs=('styles',))
+        new.box = _copy_box(self.box)
+        return new
 
     def _select(self, atom_ids):
         """

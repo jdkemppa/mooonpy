@@ -14,7 +14,6 @@ from mooonpy.molspace import remap as _remap
 from mooonpy.tools.file_utils import Path
 
 from mooonpy.rcsetup import rcParams
-from copy import deepcopy
 import warnings
 import os
 
@@ -103,9 +102,24 @@ class Molspace(object):
 
             # keys = self.bonds
 
-    def copy(self):
-        return deepcopy(self)
-        ## This is absurdly slow, not sure why?
+    def copy(self, deepcopy=False):
+        """
+        Return a fully independent copy of this Molspace (independence
+        verified in ``tests/test_molspace_copy.py``).
+
+        Factory classes and defaults are frozen at construction, so the copy
+        references the SAME factory/lookup instances by design; all mutable
+        state is rebuilt fresh.
+
+        :param deepcopy: if True, use the ``copy.deepcopy`` fallback
+            (same result, ~6-8x slower; for cross-checking only).
+        :type deepcopy: bool
+        """
+        if deepcopy:
+            import copy as _copy_module
+            return _copy_module.deepcopy(self)
+        from mooonpy.molspace._copy import fast_copy
+        return fast_copy(self)
 
     def __str__(self):
         populated = []

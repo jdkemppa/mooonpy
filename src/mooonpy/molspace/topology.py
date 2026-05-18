@@ -11,7 +11,6 @@
 ..TODO:: methods for safe lookup and __set__ with autocorrected order - 7-Jul-25
 
 """
-from copy import deepcopy
 
 
 def _make_class(class_name, slots, defaults=None):
@@ -68,8 +67,22 @@ class Bonds(dict):
     def id_set(self, value, id1, id2):
         self[self.key_rule(id1, id2)] = value
 
-    def copy(self):
-        return deepcopy(self)
+    def copy(self, deepcopy=False):
+        """
+        Return a fully independent copy of this topology container
+        (independence verified in ``tests/test_molspace_copy.py``).
+
+        The factory class and defaults are frozen, so the copy references
+        the SAME factory instance by design; value objects are rebuilt fresh.
+
+        :param deepcopy: if True, use the ``copy.deepcopy`` fallback
+            (same result, ~7-8x slower; for cross-checking only).
+        """
+        if deepcopy:
+            import copy as _copy_module
+            return _copy_module.deepcopy(self)
+        from mooonpy.molspace._copy import _copy_value_dict
+        return _copy_value_dict(self)
 
 
 class Angles(dict):
@@ -101,8 +114,22 @@ class Angles(dict):
     def id_set(self, value, id1, id2, id3):
         self[self.key_rule(id1, id2, id3)] = value
 
-    def copy(self):
-        return deepcopy(self)
+    def copy(self, deepcopy=False):
+        """
+        Return a fully independent copy of this topology container
+        (independence verified in ``tests/test_molspace_copy.py``).
+
+        The factory class and defaults are frozen, so the copy references
+        the SAME factory instance by design; value objects are rebuilt fresh.
+
+        :param deepcopy: if True, use the ``copy.deepcopy`` fallback
+            (same result, ~7-8x slower; for cross-checking only).
+        """
+        if deepcopy:
+            import copy as _copy_module
+            return _copy_module.deepcopy(self)
+        from mooonpy.molspace._copy import _copy_value_dict
+        return _copy_value_dict(self)
 
 
 class Dihedrals(dict):
@@ -134,8 +161,22 @@ class Dihedrals(dict):
     def id_set(self, value, id1, id2, id3, id4):
         self[self.key_rule(id1, id2, id3, id4)] = value
 
-    def copy(self):
-        return deepcopy(self)
+    def copy(self, deepcopy=False):
+        """
+        Return a fully independent copy of this topology container
+        (independence verified in ``tests/test_molspace_copy.py``).
+
+        The factory class and defaults are frozen, so the copy references
+        the SAME factory instance by design; value objects are rebuilt fresh.
+
+        :param deepcopy: if True, use the ``copy.deepcopy`` fallback
+            (same result, ~7-8x slower; for cross-checking only).
+        """
+        if deepcopy:
+            import copy as _copy_module
+            return _copy_module.deepcopy(self)
+        from mooonpy.molspace._copy import _copy_value_dict
+        return _copy_value_dict(self)
 
 
 class Impropers(dict):
@@ -165,5 +206,19 @@ class Impropers(dict):
     def id_set(self, value, id1, id2, id3, id4):
         self[self.key_rule(id1, id2, id3, id4)] = value
 
-    def copy(self):
-        return deepcopy(self)
+    def copy(self, deepcopy=False):
+        """
+        Return a fully independent copy of this topology container
+        (independence verified in ``tests/test_molspace_copy.py``).
+
+        The factory class and defaults are frozen, so the copy references
+        the SAME factory instance by design; value objects are rebuilt fresh.
+
+        :param deepcopy: if True, use the ``copy.deepcopy`` fallback
+            (same result, ~7-8x slower; for cross-checking only).
+        """
+        if deepcopy:
+            import copy as _copy_module
+            return _copy_module.deepcopy(self)
+        from mooonpy.molspace._copy import _copy_value_dict
+        return _copy_value_dict(self)
