@@ -67,6 +67,14 @@ class Bonds(dict):
     def id_set(self, value, id1, id2):
         self[self.key_rule(id1, id2)] = value
 
+    def new(self, id1, id2, **kwargs):
+        ## refactor factory usages to use this, and other topologies
+        key = self.key_rule(id1, id2)
+        self[key] = self.bond_factory()
+        if kwargs:
+            self[key].update(kwargs)
+
+
     def copy(self, deepcopy=False):
         """
         Return a fully independent copy of this topology container

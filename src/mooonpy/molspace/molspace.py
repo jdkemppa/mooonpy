@@ -225,7 +225,7 @@ class Molspace(object):
                                                                            comp_angle, comp_dihedral, comp_improper)
         return bond_hist, angle_hist, dihedral_hist, improper_hist
 
-    def add_type_labels(self, labels):
+    def add_type_labels(self, labels, per_atom_comment=False):
         """
         Adds type labels for atom types and use 1st instance for each BADI type label
 
@@ -239,6 +239,11 @@ class Molspace(object):
                 ff.pair_coeffs[atom_type].type_label = labels[atom_type]  # does this always exist
             else:
                 raise Exception(f'Type label {atom_type} is not defined in input dictionary')
+
+        if per_atom_comment:
+            for id_, atom in self.atoms.items():
+                type_ = atom.type
+                atom.comment = labels[type_]
 
         ## Bond Types from example
         bond_types = {}
@@ -314,6 +319,66 @@ class Molspace(object):
 
     def generate_graph(self):
         return interface.generate_graph(self)
+
+    def min_image_unwrap(self, changeimg=True):
+        """
+        Make every molecule whole under the minimum-image convention, in place.
+
+        Walks each bonded cluster outward from the atom nearest the box center and
+        shifts every neighbor to its minimum-image position relative to the atom it
+        was reached from, so no bond spans more than half the box. Restricted-
+        triclinic safe: the minimum image is taken in fractional space (consistent
+        with ``Atoms.wrap()``), then converted back through the box h-matrix.
+
+        :param mol: Molspace modified in place (needs .atoms, .atoms.box, bonds).
+        :param changeimg: If True, update each shifted atom's image flags so the
+            canonical wrapped position is preserved (unwrapped = stored + h.image
+            stays invariant; ``Atoms.wrap()`` will still recover the cell).
+        """
+        atoms = self.atoms
+        box = atoms.box
+        h, h_inv, boxlo, _boxhi = box.get_transformation_matrix()
+        cx, cy, cz = box.frac2pos(0.5, 0.5, 0.5, h, boxlo)  # box center (triclinic-aware)
+
+        graph = self.generate_graph()  # {id: [neighbor ids]}
+
+        # Anchor each molecule by its most-central atom: visit nearest-to-center first.
+        order = sorted(
+            atoms,
+            key=lambda i: (atoms[i].x - cx) ** 2
+                          + (atoms[i].y - cy) ** 2
+                          + (atoms[i].z - cz) ** 2,
+        )
+
+        checked = set()
+        for start in order:
+            if start in checked:
+                continue
+            checked.add(start)
+            walking = [start]
+            while walking:
+                to_walk = []
+                for w_id in walking:
+                    w = atoms[w_id]
+                    fwx, fwy, fwz = box.pos2frac(w.x, w.y, w.z, h_inv, boxlo)
+                    for n_id in graph[w_id]:
+                        if n_id in checked:
+                            continue
+                        checked.add(n_id)
+                        to_walk.append(n_id)
+                        n = atoms[n_id]
+                        fnx, fny, fnz = box.pos2frac(n.x, n.y, n.z, h_inv, boxlo)
+                        # integer box shifts bringing n to the minimum image of w
+                        sx = round(fnx - fwx)
+                        sy = round(fny - fwy)
+                        sz = round(fnz - fwz)
+                        if sx or sy or sz:
+                            n.x, n.y, n.z = box.frac2pos(fnx - sx, fny - sy, fnz - sz, h, boxlo)
+                            if changeimg:
+                                n.ix += sx
+                                n.iy += sy
+                                n.iz += sz
+                walking = to_walk
 
     def find_rings(self, ring_sizes: tuple[int] = (3, 4, 5, 6, 7)):
         """

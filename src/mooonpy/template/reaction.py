@@ -101,7 +101,7 @@ class ReactionTemplate:
                                      assign_clusters=False)
         if A_mol.ff.masses:
             A_mol.ff.condense_element(A_mol.atoms)
-        A_mol.atoms.shrinkwrap(pad=1.0)
+        A_mol.atoms.shrinkwrap(pad=5.0)
 
         # Renumber the combined system 1..N and build the id_map.
         old2new = A_mol.contiguous()
@@ -152,13 +152,13 @@ class ReactionTemplate:
 
         pre_ntas = {a.comment for a in pre_mol.atoms.values()}
         post_ntas = {a.comment for a in post_mol.atoms.values()}
-        if pre_ntas != post_ntas:
-            warnings.warn(
-                "ReactionTemplate: pre and post have different NTA sets; "
-                "downstream type-merging tools will need to reconcile types "
-                "across all templates and monomers.",
-                stacklevel=2,
-            )
+        # if pre_ntas != post_ntas:
+        #     warnings.warn(
+        #         "ReactionTemplate: pre and post have different NTA sets; "
+        #         "downstream type-merging tools will need to reconcile types "
+        #         "across all templates and monomers.",
+        #         stacklevel=2,
+        #     )
 
         # Translate per-fragment edge sets, severed-neighbor NTAs, and
         # no-remap sets into the renumbered space. The external-neighbor NTAs
