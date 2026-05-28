@@ -1,0 +1,15 @@
+mooonpy.xrdspace package
+========================
+
+.. automodule:: mooonpy.xrdspace
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 8
+
+   mooonpy.xrdspace.hw

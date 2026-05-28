@@ -1,0 +1,261 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.template.fragment module &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7026087e"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">mooonpy.template.fragment module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mooonpy.template.fragment.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mooonpy.template.fragment">
+<span id="mooonpy-template-fragment-module"></span><h1>mooonpy.template.fragment module<a class="headerlink" href="#module-mooonpy.template.fragment" title="Link to this heading"></a></h1>
+<p>Fragment — a reactive sub-region of a Molspace with an initiator atom, a set
+of edge atoms, the NTAs of each edge’s severed (external) neighbors, and an
+optional set of atom ids excluded from charge remapping.</p>
+<p>For LAMMPS <code class="docutils literal notranslate"><span class="pre">fix</span> <span class="pre">bond/react</span></code> template matching, edge atoms must each have
+exactly one bond into the fragment interior; the constructor warns if any edge
+violates this. The fragment <code class="docutils literal notranslate"><span class="pre">mol</span></code> carries the original atom ids so the
+caller’s <code class="docutils literal notranslate"><span class="pre">breaks</span></code> / <code class="docutils literal notranslate"><span class="pre">makes</span></code> / <code class="docutils literal notranslate"><span class="pre">changed_typ</span></code> lists keep referring to the
+ids they already know.</p>
+<p>Construction modes (each accepts a <a class="reference internal" href="mooonpy.html#mooonpy.Molspace" title="mooonpy.Molspace"><code class="xref py py-class docutils literal notranslate"><span class="pre">Molspace</span></code></a> <em>or</em> another
+<a class="reference internal" href="#mooonpy.template.fragment.Fragment" title="mooonpy.template.fragment.Fragment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Fragment</span></code></a> as the source — when a Fragment is passed, its stored
+<code class="docutils literal notranslate"><span class="pre">edge_external_ntas</span></code> are inherited for any edge that survives into the new
+fragment):</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#mooonpy.template.fragment.Fragment.from_initiator_and_edges" title="mooonpy.template.fragment.Fragment.from_initiator_and_edges"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Fragment.from_initiator_and_edges()</span></code></a> — caller supplies an initiator and
+a list of edge ids; BFS walks outward from the initiator and stops at the
+edges.</p></li>
+<li><p><a class="reference internal" href="#mooonpy.template.fragment.Fragment.from_interior" title="mooonpy.template.fragment.Fragment.from_interior"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Fragment.from_interior()</span></code></a> — caller supplies the interior atom set;
+edges are derived as the boundary atoms.</p></li>
+<li><p><a class="reference internal" href="#mooonpy.template.fragment.Fragment.from_initiator_steps" title="mooonpy.template.fragment.Fragment.from_initiator_steps"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Fragment.from_initiator_steps()</span></code></a> — caller supplies an initiator and an
+integer <code class="docutils literal notranslate"><span class="pre">n_steps</span></code>; BFS walks exactly <code class="docutils literal notranslate"><span class="pre">n_steps</span></code> outward.</p></li>
+<li><p><a class="reference internal" href="#mooonpy.template.fragment.Fragment.assembled" title="mooonpy.template.fragment.Fragment.assembled"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Fragment.assembled()</span></code></a> — wrap an already-built Molspace (e.g. a combined
+reaction template) without slicing; edges and external NTAs are supplied
+explicitly. <code class="docutils literal notranslate"><span class="pre">initiator</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code> for this whole-template form.</p></li>
+</ul>
+<dl class="py class">
+<dt class="sig sig-object py" id="mooonpy.template.fragment.Fragment">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">mooonpy.template.fragment.</span></span><span class="sig-name descname"><span class="pre">Fragment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initiator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interior_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">charge_edge_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inherited_edge_ntas</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_external_ntas</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_remap_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/template/fragment.html#Fragment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.template.fragment.Fragment" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Reactive sub-region of a Molspace.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mol</strong> (<a class="reference internal" href="mooonpy.html#mooonpy.Molspace" title="mooonpy.Molspace"><em>Molspace</em></a>) – Molspace containing the fragment. Sliced (on a copy) down to
+<code class="docutils literal notranslate"><span class="pre">interior_ids</span></code> without renumbering, so original atom ids
+survive.</p></li>
+<li><p><strong>initiator</strong> (<em>int</em><em> or </em><em>None</em>) – Atom id of the initiator inside the fragment, or
+<code class="docutils literal notranslate"><span class="pre">None</span></code> for an assembled whole-template Fragment.</p></li>
+<li><p><strong>interior_ids</strong> (<a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.DimensionEntry.iterable" title="mooonpy.tools.loop_utils.DimensionEntry.iterable"><em>iterable</em></a><em>[</em><em>int</em><em>]</em>) – Atom ids that belong to the fragment.</p></li>
+<li><p><strong>edges</strong> (<a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.DimensionEntry.iterable" title="mooonpy.tools.loop_utils.DimensionEntry.iterable"><em>iterable</em></a><em>[</em><em>int</em><em>]</em>) – Atom ids that bound the fragment.</p></li>
+<li><p><strong>charge_edge_depth</strong> (<em>int</em>) – If <code class="docutils literal notranslate"><span class="pre">&gt;=</span> <span class="pre">0</span></code>, atoms within this many bonds of any
+edge are added to <code class="xref py py-attr docutils literal notranslate"><span class="pre">no_remap_ids</span></code>. <code class="docutils literal notranslate"><span class="pre">-1</span></code>
+disables.</p></li>
+<li><p><strong>inherited_edge_ntas</strong> (<em>dict</em><em>[</em><em>int</em><em>, </em><em>list</em><em>[</em><em>str</em><em>]</em><em>] or </em><em>None</em>) – When constructing from another Fragment, the
+parent’s <code class="docutils literal notranslate"><span class="pre">edge_external_ntas</span></code>. Used to keep the severed-neighbor NTA
+list for any edge whose external neighbors were already pruned from
+the immediate <code class="docutils literal notranslate"><span class="pre">mol</span></code>.</p></li>
+<li><p><strong>edge_external_ntas</strong> (<em>dict</em><em>[</em><em>int</em><em>, </em><em>list</em><em>[</em><em>str</em><em>]</em><em>] or </em><em>None</em>) – Explicit <code class="docutils literal notranslate"><span class="pre">{edge_id:</span> <span class="pre">[nta,</span> <span class="pre">...]}</span></code> override
+(used by <a class="reference internal" href="#mooonpy.template.fragment.Fragment.assembled" title="mooonpy.template.fragment.Fragment.assembled"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assembled()</span></code></a>). When given, the parent-graph computation
+is skipped entirely.</p></li>
+<li><p><strong>no_remap_ids</strong> (<em>set</em><em>[</em><em>int</em><em>] or </em><em>None</em>) – Explicit set of charge-preserved ids (used by
+<a class="reference internal" href="#mooonpy.template.fragment.Fragment.assembled" title="mooonpy.template.fragment.Fragment.assembled"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assembled()</span></code></a>). When given, <code class="docutils literal notranslate"><span class="pre">charge_edge_depth</span></code> is ignored.</p></li>
+</ul>
+</dd>
+</dl>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>mol<span class="classifier">Molspace</span></dt><dd><p>Sliced Molspace with original atom ids.</p>
+</dd>
+</dl>
+<p>initiator : int or None
+edges : set[int]
+edge_external_ntas : dict[int, list[str]]</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">{edge_id:</span> <span class="pre">[nta_of_severed_neighbor,</span> <span class="pre">...]}</span></code>.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>no_remap_ids<span class="classifier">set[int]</span></dt><dd><p>Atom ids whose charges should <em>not</em> be remapped during the reaction.</p>
+</dd>
+</dl>
+<p>charge_edge_depth : int</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.template.fragment.Fragment.assembled">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">assembled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_external_ntas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_remap_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/template/fragment.html#Fragment.assembled"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.template.fragment.Fragment.assembled" title="Link to this definition"></a></dt>
+<dd><p>Wrap an already-built Molspace (e.g. a combined reaction template)
+as a Fragment without slicing. <code class="docutils literal notranslate"><span class="pre">initiator</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mol</strong> – The whole-template Molspace.</p></li>
+<li><p><strong>edges</strong> – Edge atom ids (in <code class="docutils literal notranslate"><span class="pre">mol</span></code>’s numbering).</p></li>
+<li><p><strong>edge_external_ntas</strong> – <code class="docutils literal notranslate"><span class="pre">{edge_id:</span> <span class="pre">[nta,</span> <span class="pre">...]}</span></code> severed-neighbor
+NTAs, already in <code class="docutils literal notranslate"><span class="pre">mol</span></code>’s numbering.</p></li>
+<li><p><strong>no_remap_ids</strong> – Charge-preserved ids, or <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.template.fragment.Fragment.from_initiator_and_edges">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_initiator_and_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initiator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">charge_edge_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/template/fragment.html#Fragment.from_initiator_and_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.template.fragment.Fragment.from_initiator_and_edges" title="Link to this definition"></a></dt>
+<dd><p>BFS outward from <code class="docutils literal notranslate"><span class="pre">initiator</span></code>; stop at any atom in <code class="docutils literal notranslate"><span class="pre">edges</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>src</strong> – Molspace or Fragment to walk.</p></li>
+<li><p><strong>initiator</strong> – Atom id to start from.</p></li>
+<li><p><strong>edges</strong> – Atom ids that bound the fragment.</p></li>
+<li><p><strong>max_steps</strong> – Safety cutoff on BFS depth. A warning is emitted if
+BFS hits this limit before fully enclosing the
+fragment (caller probably forgot an edge id).</p></li>
+<li><p><strong>charge_edge_depth</strong> – See <a class="reference internal" href="#mooonpy.template.fragment.Fragment" title="mooonpy.template.fragment.Fragment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Fragment</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.template.fragment.Fragment.from_initiator_steps">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_initiator_steps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initiator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_steps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">charge_edge_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/template/fragment.html#Fragment.from_initiator_steps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.template.fragment.Fragment.from_initiator_steps" title="Link to this definition"></a></dt>
+<dd><p>Walk exactly <code class="docutils literal notranslate"><span class="pre">n_steps</span></code> bonds outward from <code class="docutils literal notranslate"><span class="pre">initiator</span></code>. The
+outermost shell becomes the edge set.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.template.fragment.Fragment.from_interior">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_interior</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initiator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interior_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">charge_edge_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/template/fragment.html#Fragment.from_interior"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.template.fragment.Fragment.from_interior" title="Link to this definition"></a></dt>
+<dd><p>Use <code class="docutils literal notranslate"><span class="pre">interior_ids</span></code> as-is; derive edges as the boundary atoms
+(interior atoms with at least one neighbor outside).</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

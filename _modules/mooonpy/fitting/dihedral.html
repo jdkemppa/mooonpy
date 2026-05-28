@@ -1,0 +1,544 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.fitting.dihedral &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mooonpy.fitting.dihedral</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mooonpy.fitting.dihedral</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Dihedral angle distribution analysis and fitting tools</span>
+<span class="sd">Cite PBZ paper by Tristan Muzzy</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.fitting.fitting</span><span class="w"> </span><span class="kn">import</span> <span class="n">CurveFit</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.tools.misc_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_axis_ticks</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+
+<div class="viewcode-block" id="symmetric_von_mises">
+<a class="viewcode-back" href="../../../mooonpy.fitting.dihedral.html#mooonpy.fitting.dihedral.symmetric_von_mises">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">symmetric_von_mises</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">rad</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Periodic von Mises fit, from -pi to pi or -180 to 180</span>
+<span class="sd">    Symmetry of dihedral angle PDF is enforced</span>
+
+<span class="sd">    Note under ~2.3 deg sigma uses gaussain to prevent float overflow</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">rad</span><span class="p">:</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="mi">625</span><span class="p">:</span> <span class="c1"># float overflow limit of bessel function</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;symmetric von Mises fit cannot be computed with high kappa, using gaussian eval&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">rad</span><span class="p">:</span>
+            <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">symmetric_gaussian_periodic</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">,</span> <span class="n">rad</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">rad</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">i0</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">center</span><span class="p">))</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">center</span><span class="p">)))</span> <span class="o">/</span> <span class="n">B</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">i0</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">*</span> <span class="mi">180</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">center</span><span class="p">)))</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">center</span><span class="p">))))</span> <span class="o">/</span> <span class="n">B</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">y</span> <span class="o">*</span> <span class="n">amplitude</span></div>
+
+
+
+<div class="viewcode-block" id="symmetric_gaussian_periodic">
+<a class="viewcode-back" href="../../../mooonpy.fitting.dihedral.html#mooonpy.fitting.dihedral.symmetric_gaussian_periodic">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">symmetric_gaussian_periodic</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">,</span> <span class="n">rad</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Symmetric Gaussian with proper periodicity handling.</span>
+<span class="sd">    Creates Gaussian&#39;s at ±center and their first periodic images for bleed-through.</span>
+<span class="sd">    https://en.wikipedia.org/wiki/Wrapped_normal_distribution</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">norm</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">amplitude</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">amplitude</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">center</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span>
+
+    <span class="c1"># Add periodic images for bleed-through</span>
+    <span class="k">if</span> <span class="n">rad</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">+=</span> <span class="n">amplitude</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">center</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">+=</span> <span class="n">amplitude</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">center</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">+=</span> <span class="n">amplitude</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">center</span> <span class="o">-</span> <span class="mi">360</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">+=</span> <span class="n">amplitude</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">center</span> <span class="o">+</span> <span class="mi">360</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">y</span></div>
+
+
+
+<div class="viewcode-block" id="multi_symmetric_gaussian">
+<a class="viewcode-back" href="../../../mooonpy.fitting.dihedral.html#mooonpy.fitting.dihedral.multi_symmetric_gaussian">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">multi_symmetric_gaussian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sum of multiple symmetric Gaussian&#39;s with periodicity</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="sa">f</span><span class="s1">&#39;center_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>  <span class="c1"># change this to not assume 1?</span>
+        <span class="n">mu</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;center_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;sigma_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span>
+        <span class="n">amplitude</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;amp_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span>
+
+        <span class="n">y</span> <span class="o">+=</span> <span class="n">symmetric_gaussian_periodic</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">y</span></div>
+
+
+
+<div class="viewcode-block" id="multi_symmetric_von_mises">
+<a class="viewcode-back" href="../../../mooonpy.fitting.dihedral.html#mooonpy.fitting.dihedral.multi_symmetric_von_mises">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">multi_symmetric_von_mises</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sum of multiple symmetric von Mises</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="sa">f</span><span class="s1">&#39;center_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>  <span class="c1"># change this to not assume 1?</span>
+        <span class="n">mu</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;center_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;sigma_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span>
+        <span class="n">amplitude</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;amp_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span>
+
+        <span class="n">y</span> <span class="o">+=</span> <span class="n">symmetric_von_mises</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">y</span></div>
+
+
+
+<div class="viewcode-block" id="DihedralDist">
+<a class="viewcode-back" href="../../../mooonpy.fitting.dihedral.html#mooonpy.fitting.dihedral.DihedralDist">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DihedralDist</span><span class="p">(</span><span class="n">CurveFit</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fit and analyze the dihedral angle distributions with histograms and probability density functions.</span>
+<span class="sd">    using fit_model curve fits histogram bins</span>
+<span class="sd">    using fit_mle uses MLE (recommended/default)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">default_fit_kws</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="s1">&#39;powell&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;max_nfev&#39;</span><span class="p">:</span> <span class="mi">5000</span><span class="p">,</span>
+
+    <span class="p">}</span>
+    <span class="n">default_limits</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;sigma&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">90</span><span class="p">),</span>
+        <span class="s1">&#39;mu&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phi_angles</span><span class="p">,</span> <span class="n">bin_scale</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">function</span><span class="o">=</span><span class="n">multi_symmetric_gaussian</span><span class="p">,</span> <span class="n">ic</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">density</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">phi_angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">phi_angles</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bin_scale</span> <span class="o">=</span> <span class="n">bin_scale</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">bins</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">phi_angles</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">bin_scale</span><span class="p">)</span>  <span class="c1"># count</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hist</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bin_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">phi_angles</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bins</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bin_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bin_edges</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">bin_edges</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">bin_centers</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bin_edges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">bin_edges</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bin_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bin_edges</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># overwrite with both edges</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hist_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hist</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">[</span><span class="mi">0</span><span class="p">]])</span>  <span class="c1"># copy to make step histogram</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">amp2count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bin_width</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">phi_angles</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bin_centers</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hist</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">ic</span><span class="p">,</span> <span class="n">limits</span><span class="p">)</span>  <span class="c1"># makes x and y attributes</span>
+
+<div class="viewcode-block" id="DihedralDist.guess_ic">
+<a class="viewcode-back" href="../../../mooonpy.fitting.dihedral.html#mooonpy.fitting.dihedral.DihedralDist.guess_ic">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">guess_ic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">guess</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Basic guessing function.</span>
+<span class="sd">        could make smart with peak detection or BIC but this is good enough for now</span>
+<span class="sd">        Guess may be int 1-3 for number of peaks to use a default, or a dict of custom ICs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span> <span class="ow">is</span> <span class="n">multi_symmetric_gaussian</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span> <span class="ow">is</span> <span class="n">multi_symmetric_von_mises</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">guess</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># could do isint(guess) and some spacing thing to compact</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">[</span><span class="s1">&#39;center_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">90</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">[</span><span class="s1">&#39;sigma_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">30</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">[</span><span class="s1">&#39;amp_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amp2count</span>
+            <span class="k">elif</span> <span class="n">guess</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">[</span><span class="s1">&#39;center_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">[</span><span class="s1">&#39;sigma_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">30</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">[</span><span class="s1">&#39;amp_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amp2count</span> <span class="o">/</span> <span class="mi">2</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">[</span><span class="s1">&#39;center_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">180</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">[</span><span class="s1">&#39;sigma_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">30</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">[</span><span class="s1">&#39;amp_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amp2count</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="k">elif</span> <span class="n">guess</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">or</span> <span class="n">guess</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">[</span><span class="s1">&#39;center_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">[</span><span class="s1">&#39;sigma_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">30</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">[</span><span class="s1">&#39;amp_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amp2count</span> <span class="o">/</span> <span class="mi">3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">[</span><span class="s1">&#39;center_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">180</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">[</span><span class="s1">&#39;sigma_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">30</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">[</span><span class="s1">&#39;amp_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amp2count</span> <span class="o">/</span> <span class="mi">3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">[</span><span class="s1">&#39;center_3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">90</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">[</span><span class="s1">&#39;sigma_3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">30</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">[</span><span class="s1">&#39;amp_3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amp2count</span> <span class="o">/</span> <span class="mi">3</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">guess</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>  <span class="c1"># unpack custom guesses</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">guess</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                    <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;center&#39;</span><span class="p">):</span>
+                        <span class="n">N</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># number</span>
+                        <span class="k">if</span> <span class="sa">f</span><span class="s1">&#39;amp_</span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s1">&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">guess</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;amp_</span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amp2count</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">guess</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="sa">f</span><span class="s1">&#39;sigma_</span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s1">&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">guess</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;sigma_</span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">30</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="DihedralDist.guess_limit">
+<a class="viewcode-back" href="../../../mooonpy.fitting.dihedral.html#mooonpy.fitting.dihedral.DihedralDist.guess_limit">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">guess_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add parameter limits. May be overridden outside</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;center&#39;</span><span class="p">):</span>
+                <span class="n">N</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># number</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">limits</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">limits</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_limits</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="sa">f</span><span class="s1">&#39;amp_</span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s1">&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">limits</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">limits</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;amp_</span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">amp2count</span> <span class="o">*</span> <span class="mf">1.1</span><span class="p">)</span>
+                <span class="k">if</span> <span class="sa">f</span><span class="s1">&#39;sigma_</span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s1">&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">limits</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">limits</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;sigma_</span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_limits</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="DihedralDist.make_params">
+<a class="viewcode-back" href="../../../mooonpy.fitting.dihedral.html#mooonpy.fitting.dihedral.DihedralDist.make_params">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">make_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override base class make_params function with extra amplitude constraint</span>
+<span class="sd">        Initial area under the curve and sum of amplitudes=1 is preserved</span>
+<span class="sd">        Note: this is only relevant for fitting histograms, MLE constrains using scaling.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">lmfit</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parameters</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">Parameters</span><span class="p">()</span>
+        <span class="n">amps</span> <span class="o">=</span> <span class="p">[</span><span class="n">param</span> <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;amp_&#39;</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">param</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">limit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">limits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">def_limit</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">param</span> <span class="o">==</span> <span class="n">amps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>  <span class="c1"># constraint mode for total area on last param</span>
+                <span class="n">expr</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">amp2count</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="k">for</span> <span class="n">amp</span> <span class="ow">in</span> <span class="n">amps</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">expr</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39; - </span><span class="si">{</span><span class="n">amp</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="c1"># print(expr) # amp_3 = 10000 - amp_1 - amp_2</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="n">limit</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">max</span><span class="o">=</span><span class="n">limit</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">expr</span><span class="o">=</span><span class="n">expr</span><span class="p">)</span>
+                <span class="c1">## ^ last amp is dependent such that area is preserved from ic</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="nb">min</span><span class="o">=</span><span class="n">limit</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">max</span><span class="o">=</span><span class="n">limit</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                           <span class="n">vary</span><span class="o">=</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">))</span>  <span class="c1"># no vary if value is string</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span></div>
+
+
+<div class="viewcode-block" id="DihedralDist.plot_mode_decomposition">
+<a class="viewcode-back" href="../../../mooonpy.fitting.dihedral.html#mooonpy.fitting.dihedral.DihedralDist.plot_mode_decomposition">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_mode_decomposition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">)):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make pretty plots</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+        <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bin_edges</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hist_edges</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span>
+                <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Data: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">phi_angles</span><span class="p">)</span><span class="si">}</span><span class="s1"> Dihedrals, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">bins</span><span class="si">}</span><span class="s1"> Bins&#39;</span><span class="p">)</span>
+
+        <span class="n">bin_centers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bin_centers</span>
+
+        <span class="n">y_fit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">fitted_params</span><span class="p">)</span>
+
+        <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fitted_params</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">//</span> <span class="mi">3</span>  <span class="c1"># 3 params per mode</span>
+        <span class="k">if</span> <span class="n">N</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">,</span> <span class="n">y_fit</span><span class="p">,</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Total Fit: Area=</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_fit</span><span class="p">))</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;#FFB300&#39;</span><span class="p">,</span> <span class="s1">&#39;brown&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">]</span>
+        <span class="n">color_cyle</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitted_params</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;center_</span><span class="si">{</span><span class="n">ii</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span>
+            <span class="n">sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitted_params</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;sigma_</span><span class="si">{</span><span class="n">ii</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span>
+            <span class="n">amplitude</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitted_params</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;amp_</span><span class="si">{</span><span class="n">ii</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span> <span class="ow">is</span> <span class="n">multi_symmetric_gaussian</span><span class="p">:</span>
+                <span class="n">y_component</span> <span class="o">=</span> <span class="n">symmetric_gaussian_periodic</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span> <span class="ow">is</span> <span class="n">multi_symmetric_von_mises</span><span class="p">:</span>
+                <span class="n">y_component</span> <span class="o">=</span> <span class="n">symmetric_von_mises</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">y_component</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">N</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Mode </span><span class="si">{</span><span class="n">ii</span><span class="si">}</span><span class="s2">: ±</span><span class="si">{</span><span class="n">center</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°; σ=</span><span class="si">{</span><span class="n">sigma</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°; Area=</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_component</span><span class="p">))</span><span class="si">}</span><span class="s2">→</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_component</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_fit</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="si">}</span><span class="s2">%&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Mode </span><span class="si">{</span><span class="n">ii</span><span class="si">}</span><span class="s2">: ±</span><span class="si">{</span><span class="n">center</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°; σ=</span><span class="si">{</span><span class="n">sigma</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°; Area=</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_component</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">if</span> <span class="n">center</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;#00CED1&#39;</span>  <span class="c1"># turquoise</span>
+            <span class="k">elif</span> <span class="n">center</span> <span class="o">==</span> <span class="mi">180</span><span class="p">:</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;#D946A6&#39;</span>  <span class="c1"># magenta</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="n">colors</span><span class="p">[</span><span class="n">color_cyle</span><span class="p">]</span>  <span class="c1"># amber</span>
+                <span class="n">color_cyle</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="c1"># ax.plot(bin_centers, y_component, &#39;--&#39;, color=colors[ii - 1 % len(colors)],</span>
+            <span class="c1">#         linewidth=1.5, label=label)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">,</span> <span class="n">y_component</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+                    <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+
+            <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;Phi Angle [Degrees]&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Count&#39;</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">180</span><span class="p">),</span> <span class="n">xticks</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">181</span><span class="p">,</span> <span class="mi">60</span><span class="p">),</span>
+                   <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hist</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.01</span><span class="p">),</span>
+                   <span class="n">title</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">yticks</span><span class="p">,</span> <span class="n">ylim</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="n">calculate_axis_ticks</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hist</span><span class="p">))</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">ylim</span><span class="p">],</span> <span class="n">yticks</span><span class="o">=</span><span class="n">yticks</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
+
+
+<div class="viewcode-block" id="DihedralDist.fit_mle">
+<a class="viewcode-back" href="../../../mooonpy.fitting.dihedral.html#mooonpy.fitting.dihedral.DihedralDist.fit_mle">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit_mle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit using Maximum Likelihood Estimation on raw angle data</span>
+<span class="sd">        Returns fitted parameters in the same format as fit_model()</span>
+<span class="sd">        Note: lmfit.minimize doesn&#39;t support expr constraints, so we normalize in post-processing</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">lmfit</span><span class="w"> </span><span class="kn">import</span> <span class="n">minimize</span>
+        <span class="c1"># Use lmfit.minimize to minimize negative log-likelihood</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_negative_log_likelihood</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">default_fit_kws</span><span class="p">)</span>
+
+        <span class="c1"># Store result (lmfit.MinimizerResult instead of ModelResult)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="n">result</span>
+
+        <span class="c1"># Extract fitted parameters and normalize amplitudes to sum to amp2count</span>
+        <span class="n">fitted_params_raw</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">params</span><span class="p">}</span>
+
+        <span class="c1"># Find all amplitude parameters and normalize them</span>
+        <span class="n">amp_keys</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">fitted_params_raw</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;amp_&#39;</span><span class="p">)])</span>
+        <span class="n">raw_amp_sum</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">fitted_params_raw</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">amp_keys</span><span class="p">)</span>
+
+        <span class="c1"># Rescale amplitudes to sum to amp2count</span>
+        <span class="n">fitted_params</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">fitted_params_raw</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;amp_&#39;</span><span class="p">):</span>
+                <span class="n">fitted_params</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amp2count</span> <span class="o">/</span> <span class="n">raw_amp_sum</span><span class="p">)</span> <span class="k">if</span> <span class="n">raw_amp_sum</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">value</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">fitted_params</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fitted_params</span> <span class="o">=</span> <span class="n">fitted_params</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitted_params</span><span class="p">,</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="DihedralDist.run_default">
+<a class="viewcode-back" href="../../../mooonpy.fitting.dihedral.html#mooonpy.fitting.dihedral.DihedralDist.run_default">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override to use MLE by default for DihedralDist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">guess_ic</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ic</span><span class="p">:</span>  <span class="c1"># if above cannot make IC ...</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;ic is required, no parameters to fit&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">limits</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">guess_limit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_params</span><span class="p">()</span>
+        <span class="n">fitted_params</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_mle</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">fitted_params</span><span class="p">,</span> <span class="n">result</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_convert_amps_to_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params_dict</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert amplitude parameters to weights (sum to 1) for PDF calculation</span>
+<span class="sd">        Enforces constraint by normalizing all amplitudes by their sum</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Find all amp parameters</span>
+        <span class="n">amp_keys</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">params_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;amp_&#39;</span><span class="p">)])</span>
+        <span class="n">amp_sum</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">params_dict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">amp_keys</span><span class="p">)</span>
+
+        <span class="c1"># Normalize to get weights that sum to 1</span>
+        <span class="n">weight_params</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">params_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;amp_&#39;</span><span class="p">):</span>
+                <span class="n">weight_params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span> <span class="o">/</span> <span class="n">amp_sum</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">weight_params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="k">return</span> <span class="n">weight_params</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_negative_log_likelihood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Negative log-likelihood for MLE optimization</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Convert Parameters object to dict and then to weights</span>
+        <span class="n">params_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">params</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">params</span><span class="p">}</span>
+        <span class="n">weight_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_amps_to_weights</span><span class="p">(</span><span class="n">params_dict</span><span class="p">)</span>
+
+        <span class="c1"># Calculate PDF for all angles using existing functions with weights as amplitudes</span>
+        <span class="n">pdf_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">phi_angles</span><span class="p">,</span> <span class="o">**</span><span class="n">weight_params</span><span class="p">)</span>
+
+        <span class="c1"># Avoid log(0) by adding small epsilon</span>
+        <span class="n">pdf_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">pdf_values</span><span class="p">,</span> <span class="mf">1e-10</span><span class="p">)</span>
+
+        <span class="c1"># Return negative log-likelihood</span>
+        <span class="n">nll</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">pdf_values</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">nll</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">mooonpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mp</span>
+
+    <span class="n">mol</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Molspace</span><span class="p">(</span><span class="s1">&#39;..</span><span class="se">\\</span><span class="s1">..</span><span class="se">\\</span><span class="s1">..</span><span class="se">\\</span><span class="s1">examples</span><span class="se">\\</span><span class="s1">EPON_862</span><span class="se">\\</span><span class="s1">lmp_dump</span><span class="se">\\</span><span class="s1">small_epon_densify.data&#39;</span><span class="p">)</span>  <span class="c1"># included in git</span>
+    <span class="n">bond_hist</span><span class="p">,</span> <span class="n">angle_hist</span><span class="p">,</span> <span class="n">dihedral_hist</span><span class="p">,</span> <span class="n">improper_hist</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">compute_BADI_by_type</span><span class="p">()</span>
+
+    <span class="c1"># test_dist = dihedral_hist[&#39;cp-cp-cp-hc&#39;]</span>
+    <span class="n">test_dist</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">list_</span> <span class="ow">in</span> <span class="n">dihedral_hist</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">test_dist</span> <span class="o">+=</span> <span class="n">list_</span>
+    <span class="n">dihed_dist</span> <span class="o">=</span> <span class="n">DihedralDist</span><span class="p">(</span><span class="n">test_dist</span><span class="p">)</span>
+    <span class="n">dihed_dist</span><span class="o">.</span><span class="n">run_default</span><span class="p">()</span>
+    <span class="n">fig1</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">dihed_dist</span><span class="o">.</span><span class="n">plot_mode_decomposition</span><span class="p">()</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+    <span class="n">vm_dist</span> <span class="o">=</span> <span class="n">DihedralDist</span><span class="p">(</span><span class="n">test_dist</span><span class="p">,</span> <span class="n">function</span><span class="o">=</span><span class="n">multi_symmetric_von_mises</span><span class="p">)</span>
+    <span class="c1"># vm_dist.amp2count = vm_dist.amp2count/np.pi # close to the right value, 3 and pi are close but not exact?</span>
+    <span class="n">vm_dist</span><span class="o">.</span><span class="n">guess_ic</span><span class="p">()</span>
+    <span class="c1"># vm_dist.ic.update({&#39;center_1&#39;:&#39;0&#39;,&#39;center_2&#39;:&#39;180&#39;}) # hardcode 2, last is free</span>
+    <span class="n">vm_dist</span><span class="o">.</span><span class="n">run_default</span><span class="p">()</span>
+    <span class="n">fig2</span><span class="p">,</span> <span class="n">ax2</span> <span class="o">=</span> <span class="n">vm_dist</span><span class="o">.</span><span class="n">plot_mode_decomposition</span><span class="p">()</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+mooonpy.programs.coarse\_graining module
+========================================
+
+.. automodule:: mooonpy.programs.coarse_graining
+   :members:
+   :show-inheritance:
+   :undoc-members:

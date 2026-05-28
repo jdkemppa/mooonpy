@@ -1,0 +1,7 @@
+mooonpy.template.fragment module
+================================
+
+.. automodule:: mooonpy.template.fragment
+   :members:
+   :show-inheritance:
+   :undoc-members:
