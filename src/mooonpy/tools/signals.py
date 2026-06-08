@@ -246,14 +246,16 @@ def data_extension(xdata: Array1D, ydata: Array1D, lo: Number = 1, hi: Number = 
 
     # Perform hi padding operations
     if hi == 2:
-        hi_xdata = -min(xdata) + max(xdata) + xdata[index + 1:]
-        hi_ydata = ydata[::-1][index + 1:]
+        hi_xdata = (max(xdata) - min(xdata)) + xdata[index+1:]  
+        hi_ydata = ydata[::-1][index+1:]
     elif hi == 3:
-        hi_xdata = -min(xdata) + max(xdata) + xdata[index + 1:]
-        hi_ydata = ydata[index] - ydata[::-1][index + 1:] + 2 * ydata[-(index + 1)] + ydata[index]
+        hi_xdata = (max(xdata) - min(xdata)) + xdata[index+1:]  
+        hi_ydata = ydata[index] - ydata[::-1][index+1:] + 2*ydata[-(index+1)] + ydata[index] # OLD
+        hi_ydata = 2*ydata[-(index+1)] - ydata[::-1][index+1:]
     elif hi == 4:
-        hi_xdata = -min(xdata) + max(xdata) + xdata[index + 1:]
-        hi_ydata = ydata[-(index + 1)] + ydata[index + 1:]
+        hi_xdata = (max(xdata) - min(xdata)) + xdata[index+1:]  
+        hi_ydata = ydata[-(index+1)] + ydata[index+1:] # OLD
+        hi_ydata = (ydata[-(index+1)] - ydata[index]) + ydata[index+1:]
     else:
         hi_xdata = np.array([])
         hi_ydata = np.array([])
