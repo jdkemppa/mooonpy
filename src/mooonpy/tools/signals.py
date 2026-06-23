@@ -94,6 +94,8 @@ def butter_lowpass(xdata: Optional[Array1D], ydata: Array1D, wn: Union[Number, s
     :type quadrant: str
     :param order: Order of filter, defaults to 2
     :type order: Number
+    :param order: Order of filter, defaults to 2
+    :type order: Number
 
     :return: Filtered data, wn used, qm string used
     """
