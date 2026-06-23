@@ -94,8 +94,8 @@ def butter_lowpass(xdata: Optional[Array1D], ydata: Array1D, wn: Union[Number, s
     :type quadrant: str
     :param order: Order of filter, defaults to 2
     :type order: Number
-    :param order: Order of filter, defaults to 2
-    :type order: Number
+    :param zero_shift: Whether to shift the data so that the closest point to zero is at zero, defaults to False
+    :type zero_shift: bool
 
     :return: Filtered data, wn used, qm string used
     """
