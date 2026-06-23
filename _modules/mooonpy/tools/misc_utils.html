@@ -1,0 +1,540 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.tools.misc_utils &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mooonpy.tools.misc_utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mooonpy.tools.misc_utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">miscellaneous utilities that do not belong anywhere else</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.tools.tables</span><span class="w"> </span><span class="kn">import</span> <span class="n">ListListTable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.tools.file_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.axes</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes</span>
+
+<div class="viewcode-block" id="ColorMap">
+<a class="viewcode-back" href="../../../mooonpy.tools.misc_utils.html#mooonpy.tools.misc_utils.ColorMap">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ColorMap</span><span class="p">(</span><span class="n">ListListTable</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Read csv files of RGB values with a similar format to matplotlib.colormaps.</span>
+<span class="sd">    root/tools/lookups contains some example custom colormaps, more can be added by adding files to this directory.</span>
+
+<span class="sd">    **Currently Supported Colormaps**</span>
+<span class="sd">        - coolwarm: blue to light to red diverging map (same as matplotlib?)</span>
+<span class="sd">        - cooloverwarm: blue to grey to red diverging map</span>
+<span class="sd">        - coswan: pink to grey to green diverging map</span>
+<span class="sd">        - pyrolyze: green to grey to dark purple diverging map</span>
+<span class="sd">        - redblack: red to dark grey linearish map</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read csv files of RGB vales into a ListListTable object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="n">thisfile</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="n">ListListTable</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">thisfile</span><span class="o">.</span><span class="n">dir</span><span class="p">()</span> <span class="o">/</span> <span class="sa">f</span><span class="s1">&#39;lookups/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">.csv&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">low</span> <span class="o">=</span> <span class="n">low</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">high</span> <span class="o">=</span> <span class="n">high</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scalar</span><span class="p">,</span> <span class="n">interp</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return nearest color on 0-1 scale</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scalar</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+            <span class="n">scalar</span> <span class="o">=</span> <span class="p">(</span><span class="n">scalar</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">low</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">high</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">low</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">scalar</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">row_ind</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">elif</span> <span class="n">scalar</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">row_ind</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">row_ind</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">scalar</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">[</span><span class="n">row_ind</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scalar</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">[</span><span class="n">scalar</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># iterable</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">scalar_</span> <span class="ow">in</span> <span class="n">scalar</span><span class="p">:</span>
+                <span class="n">scalar_</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">scalar_</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">low</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">high</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">low</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">scalar_</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">row_ind</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">elif</span> <span class="n">scalar_</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">row_ind</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">row_ind</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">scalar_</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+                <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">[</span><span class="n">row_ind</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="n">out</span></div>
+
+
+
+<div class="viewcode-block" id="inc_arrange">
+<a class="viewcode-back" href="../../../mooonpy.tools.misc_utils.html#mooonpy.tools.misc_utils.inc_arrange">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">inc_arrange</span><span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span> <span class="o">+</span> <span class="n">step</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="auto_colorbar">
+<a class="viewcode-back" href="../../../mooonpy.tools.misc_utils.html#mooonpy.tools.misc_utils.auto_colorbar">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">auto_colorbar</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span><span class="p">,</span> <span class="n">colormap</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                  <span class="n">label</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.cm</span><span class="w"> </span><span class="kn">import</span> <span class="n">ScalarMappable</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">ListedColormap</span><span class="p">,</span> <span class="n">BoundaryNorm</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">colormap</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">ColorMap</span><span class="p">(</span><span class="n">colormap</span><span class="p">)</span>  <span class="c1"># custom</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">colormaps</span> <span class="k">as</span> <span class="n">cm</span>
+            <span class="n">colormap</span> <span class="o">=</span> <span class="n">cm</span><span class="p">[</span><span class="n">colormap</span><span class="p">]</span>  <span class="c1"># mpl built in</span>
+            <span class="n">cmap</span> <span class="o">=</span> <span class="n">colormap</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">colormap</span><span class="p">,</span> <span class="n">ColorMap</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">low</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">low</span> <span class="o">=</span> <span class="n">colormap</span><span class="o">.</span><span class="n">low</span>
+        <span class="k">if</span> <span class="n">high</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">high</span> <span class="o">=</span> <span class="n">colormap</span><span class="o">.</span><span class="n">high</span>
+        <span class="n">ticks</span> <span class="o">=</span> <span class="n">inc_arrange</span><span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
+        <span class="n">colors</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">(</span><span class="n">ticks</span><span class="p">)</span>
+        <span class="n">cmap</span> <span class="o">=</span> <span class="n">ListedColormap</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">low</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">low</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">if</span> <span class="n">high</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">high</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">ticks</span> <span class="o">=</span> <span class="n">inc_arrange</span><span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
+        <span class="n">cmap</span> <span class="o">=</span> <span class="n">colormap</span>
+
+    <span class="n">bounds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">low</span> <span class="o">-</span> <span class="n">step</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">high</span> <span class="o">+</span> <span class="n">step</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
+    <span class="n">norm</span> <span class="o">=</span> <span class="n">BoundaryNorm</span><span class="p">(</span><span class="n">bounds</span><span class="p">,</span> <span class="n">cmap</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">sm</span> <span class="o">=</span> <span class="n">ScalarMappable</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">)</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">set_array</span><span class="p">([])</span>
+    <span class="k">if</span> <span class="n">kwargs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">shrink</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;shrink&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">shrink</span>
+    <span class="k">if</span> <span class="n">pad</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;pad&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pad</span>
+    <span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">sm</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">,</span> <span class="n">boundaries</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span> <span class="n">ticks</span><span class="o">=</span><span class="n">ticks</span><span class="p">,</span>
+                        <span class="n">orientation</span><span class="o">=</span><span class="n">orientation</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="reset_axis_limits">
+<a class="viewcode-back" href="../../../mooonpy.tools.misc_utils.html#mooonpy.tools.misc_utils.reset_axis_limits">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">reset_axis_limits</span><span class="p">(</span>
+        <span class="n">ax</span><span class="p">:</span> <span class="n">Axes</span><span class="p">,</span>
+        <span class="n">x</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">y</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">view</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">style</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">xtick_spacing</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">ytick_spacing</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reset axis limits based on plotted line data with optional view presets and styling.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    ax : matplotlib.axes.Axes</span>
+<span class="sd">        The axes object to modify</span>
+<span class="sd">    x : bool</span>
+<span class="sd">        Tighten x-axis limits to limit of data(default: True)</span>
+<span class="sd">    y : bool</span>
+<span class="sd">        Tighten y-axis limits to limit of data(default: True)</span>
+<span class="sd">    view : str, optional</span>
+<span class="sd">        Preset view configurations:</span>
+<span class="sd">        - &#39;q1&#39;: First quadrant (x_min=0, y_min=0)</span>
+<span class="sd">        - &#39;q2&#39;: Second quadrant (x_max=0, y_min=0)</span>
+<span class="sd">        - &#39;q3&#39;: Third quadrant (x_max=0, y_max=0)</span>
+<span class="sd">        - &#39;q4&#39;: Fourth quadrant (x_min=0, y_max=0)</span>
+<span class="sd">        - &#39;+x&#39;: Positive x (x_min=0, uses y parameter)</span>
+<span class="sd">        - &#39;-x&#39;: Negative x (x_max=0, uses y parameter)</span>
+<span class="sd">        - &#39;+y&#39;: Positive y (y_min=0, uses x parameter)</span>
+<span class="sd">        - &#39;-y&#39;: Negative y (y_max=0, uses x parameter)</span>
+<span class="sd">    style : str or list of str, optional</span>
+<span class="sd">        Styling options:</span>
+<span class="sd">        - &#39;equal&#39;: Equal aspect ratio (ax.axis(&#39;equal&#39;))</span>
+<span class="sd">        - &#39;square&#39;: Square plot area (ax.axis(&#39;square&#39;))</span>
+<span class="sd">        - &#39;scaled&#39;: Scaled aspect ratio (ax.axis(&#39;scaled&#39;))</span>
+<span class="sd">        - &#39;tight&#39;: Tight layout (ax.axis(&#39;tight&#39;))</span>
+<span class="sd">        - &#39;auto&#39;: Auto scaling (ax.axis(&#39;auto&#39;))</span>
+<span class="sd">        - &#39;off&#39;: Turn off axis (ax.axis(&#39;off&#39;))</span>
+<span class="sd">        - &#39;on&#39;: Turn on axis (ax.axis(&#39;on&#39;))</span>
+<span class="sd">        - &#39;equalticks&#39;: Equal tick spacing with locked aspect ratio</span>
+<span class="sd">        - &#39;box&#39;: Add box around plot (ax.set_frame_on(True))</span>
+<span class="sd">        - &#39;nobox&#39;: Remove box (ax.set_frame_on(False))</span>
+<span class="sd">        - &#39;grid&#39;: Add grid (ax.grid(True))</span>
+<span class="sd">        - &#39;nogrid&#39;: Remove grid (ax.grid(False))</span>
+<span class="sd">        Can pass a single string or list of strings for multiple styles</span>
+<span class="sd">    xtick_spacing : float, optional</span>
+<span class="sd">        Major tick spacing for x-axis (uses MultipleLocator)</span>
+<span class="sd">    ytick_spacing : float, optional</span>
+<span class="sd">        Major tick spacing for y-axis (uses MultipleLocator)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_lines</span><span class="p">()</span>
+    <span class="n">collections</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">collections</span>  <span class="c1"># For scatter plots</span>
+    <span class="n">patches</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">patches</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">lines</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">collections</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">patches</span><span class="p">:</span>
+        <span class="k">return</span>  <span class="c1"># No data to fit to</span>
+
+    <span class="c1"># Get min/max x and y values from all lines and scatter plots</span>
+    <span class="n">x_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">y_data</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Get data from lines</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="n">x_data</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">get_xdata</span><span class="p">())</span>
+        <span class="n">y_data</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">get_ydata</span><span class="p">())</span>
+
+    <span class="c1"># Get data from scatter plots (PathCollections)</span>
+    <span class="k">for</span> <span class="n">collection</span> <span class="ow">in</span> <span class="n">collections</span><span class="p">:</span>
+        <span class="n">offsets</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">get_offsets</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">offsets</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">x_data</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">offsets</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="n">y_data</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">offsets</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">patch</span> <span class="ow">in</span> <span class="n">patches</span><span class="p">:</span>
+        <span class="c1"># Get the bounding box of each patch</span>
+        <span class="n">bbox</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">get_bbox</span><span class="p">()</span>
+        <span class="n">x_data</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">bbox</span><span class="o">.</span><span class="n">x0</span><span class="p">,</span> <span class="n">bbox</span><span class="o">.</span><span class="n">x1</span><span class="p">])</span>
+        <span class="n">y_data</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">bbox</span><span class="o">.</span><span class="n">y0</span><span class="p">,</span> <span class="n">bbox</span><span class="o">.</span><span class="n">y1</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">x_data</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">y_data</span><span class="p">:</span>
+        <span class="k">return</span>  <span class="c1"># No valid data</span>
+
+    <span class="n">x_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">x_data</span><span class="p">)</span>
+    <span class="n">x_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">x_data</span><span class="p">)</span>
+    <span class="n">y_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">y_data</span><span class="p">)</span>
+    <span class="n">y_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">y_data</span><span class="p">)</span>
+
+    <span class="c1"># Store current limits for view presets</span>
+    <span class="n">curr_xlim</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span>
+    <span class="n">curr_ylim</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
+
+    <span class="c1"># Apply view presets</span>
+    <span class="k">if</span> <span class="n">view</span><span class="p">:</span>
+        <span class="n">view</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="c1"># Set bounds to 0 based on view, only for the axes that are True</span>
+        <span class="k">if</span> <span class="n">view</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="s1">&#39;q4&#39;</span><span class="p">,</span> <span class="s1">&#39;+x&#39;</span><span class="p">]:</span>
+            <span class="n">x_min</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span><span class="p">:</span>
+                <span class="n">x_max</span> <span class="o">=</span> <span class="n">curr_xlim</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">view</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="s1">&#39;q3&#39;</span><span class="p">,</span> <span class="s1">&#39;-x&#39;</span><span class="p">]:</span>
+            <span class="n">x_max</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span><span class="p">:</span>
+                <span class="n">x_min</span> <span class="o">=</span> <span class="n">curr_xlim</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">view</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="s1">&#39;+y&#39;</span><span class="p">]:</span>
+            <span class="n">y_min</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">y</span><span class="p">:</span>
+                <span class="n">y_max</span> <span class="o">=</span> <span class="n">curr_ylim</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">view</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;q3&#39;</span><span class="p">,</span> <span class="s1">&#39;q4&#39;</span><span class="p">,</span> <span class="s1">&#39;-y&#39;</span><span class="p">]:</span>
+            <span class="n">y_max</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">y</span><span class="p">:</span>
+                <span class="n">y_min</span> <span class="o">=</span> <span class="n">curr_ylim</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># Set the axis limits to the data limits</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">x</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">y</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span><span class="p">)</span>
+
+    <span class="c1"># Set tick spacing using MultipleLocator</span>
+    <span class="k">if</span> <span class="n">xtick_spacing</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ytick_spacing</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.ticker</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultipleLocator</span>
+    <span class="k">if</span> <span class="n">xtick_spacing</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="n">xtick_spacing</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">ytick_spacing</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="n">ytick_spacing</span><span class="p">))</span>
+
+    <span class="c1"># Apply styling</span>
+    <span class="k">if</span> <span class="n">style</span><span class="p">:</span>
+        <span class="c1"># Handle single string or list of strings</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">style</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">style</span> <span class="o">=</span> <span class="p">[</span><span class="n">style</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">style</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="s1">&#39;square&#39;</span><span class="p">,</span> <span class="s1">&#39;scaled&#39;</span><span class="p">,</span> <span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="s1">&#39;off&#39;</span><span class="p">,</span> <span class="s1">&#39;on&#39;</span><span class="p">]:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">s</span> <span class="o">==</span> <span class="s1">&#39;equalticks&#39;</span><span class="p">:</span>
+                <span class="c1"># Force matplotlib to update ticks</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+
+                <span class="c1"># Get the tick locations</span>
+                <span class="n">x_ticks</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_xticks</span><span class="p">()</span>
+                <span class="n">y_ticks</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_yticks</span><span class="p">()</span>
+
+                <span class="c1"># Calculate tick spacing (assuming uniform spacing)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_ticks</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_ticks</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">x_tick_spacing</span> <span class="o">=</span> <span class="n">x_ticks</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">x_ticks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">y_tick_spacing</span> <span class="o">=</span> <span class="n">y_ticks</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y_ticks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+                    <span class="c1"># Set aspect ratio so that tick spacing appears equal</span>
+                    <span class="c1"># physical_spacing_x / physical_spacing_y = 1</span>
+                    <span class="c1"># (x_tick_spacing / aspect) / y_tick_spacing = 1</span>
+                    <span class="c1"># aspect = x_tick_spacing / y_tick_spacing</span>
+                    <span class="n">aspect_ratio</span> <span class="o">=</span> <span class="n">x_tick_spacing</span> <span class="o">/</span> <span class="n">y_tick_spacing</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="n">aspect_ratio</span><span class="p">,</span> <span class="n">adjustable</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">s</span> <span class="o">==</span> <span class="s1">&#39;box&#39;</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_frame_on</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">s</span> <span class="o">==</span> <span class="s1">&#39;nobox&#39;</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_frame_on</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">s</span> <span class="o">==</span> <span class="s1">&#39;grid&#39;</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">s</span> <span class="o">==</span> <span class="s1">&#39;nogrid&#39;</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="calculate_axis_ticks">
+<a class="viewcode-back" href="../../../mooonpy.tools.misc_utils.html#mooonpy.tools.misc_utils.calculate_axis_ticks">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">calculate_axis_ticks</span><span class="p">(</span><span class="n">data_min</span><span class="p">,</span> <span class="n">data_max</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xaxis</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                         <span class="n">tick_range</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>
+                         <span class="n">allowed_spacings</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">raise_error</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate optimal axis limits and tick positions.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data_min : float</span>
+<span class="sd">        Lower limit (usually 0)</span>
+<span class="sd">    data_max : float</span>
+<span class="sd">        Maximum data value to accommodate</span>
+<span class="sd">    tick_range : tuple of int, optional</span>
+<span class="sd">        (min_ticks, max_ticks), default (5, 9)</span>
+<span class="sd">    allowed_spacings : list of float, optional</span>
+<span class="sd">        Acceptable tick spacings, default [5, 10, 25, 50, 100, 200, 250]</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ticks : ndarray</span>
+<span class="sd">        Array of tick positions</span>
+<span class="sd">    limit : float</span>
+<span class="sd">        Upper axis limit</span>
+<span class="sd">    spacing : float</span>
+<span class="sd">        Spacing between ticks</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If no valid tick configuration exists</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">allowed_spacings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">allowed_spacings</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">250</span><span class="p">]</span>
+
+    <span class="n">min_ticks</span><span class="p">,</span> <span class="n">max_ticks</span> <span class="o">=</span> <span class="n">tick_range</span>
+
+    <span class="c1"># Find all valid combinations</span>
+    <span class="n">valid_configs</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">spacing</span> <span class="ow">in</span> <span class="n">allowed_spacings</span><span class="p">:</span>
+        <span class="c1"># Calculate how many ticks we&#39;d need</span>
+        <span class="n">n_ticks</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="n">data_max</span> <span class="o">-</span> <span class="n">data_min</span><span class="p">)</span> <span class="o">/</span> <span class="n">spacing</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="c1"># Check if within acceptable range</span>
+        <span class="k">if</span> <span class="n">min_ticks</span> <span class="o">&lt;=</span> <span class="n">n_ticks</span> <span class="o">&lt;=</span> <span class="n">max_ticks</span><span class="p">:</span>
+            <span class="n">upper_limit</span> <span class="o">=</span> <span class="n">data_min</span> <span class="o">+</span> <span class="p">(</span><span class="n">n_ticks</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">spacing</span>
+            <span class="n">gap</span> <span class="o">=</span> <span class="n">upper_limit</span> <span class="o">-</span> <span class="n">data_max</span>
+            <span class="n">valid_configs</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s1">&#39;spacing&#39;</span><span class="p">:</span> <span class="n">spacing</span><span class="p">,</span>
+                <span class="s1">&#39;n_ticks&#39;</span><span class="p">:</span> <span class="n">n_ticks</span><span class="p">,</span>
+                <span class="s1">&#39;limit&#39;</span><span class="p">:</span> <span class="n">upper_limit</span><span class="p">,</span>
+                <span class="s1">&#39;gap&#39;</span><span class="p">:</span> <span class="n">gap</span>
+            <span class="p">})</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">valid_configs</span><span class="p">:</span>
+        <span class="c1"># Calculate the extreme cases</span>
+        <span class="n">smallest_spacing</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">allowed_spacings</span><span class="p">)</span>
+        <span class="n">largest_spacing</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">allowed_spacings</span><span class="p">)</span>
+
+        <span class="c1"># Smallest possible data_max: smallest spacing with min ticks</span>
+        <span class="n">min_data_max</span> <span class="o">=</span> <span class="n">data_min</span> <span class="o">+</span> <span class="p">(</span><span class="n">min_ticks</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">smallest_spacing</span>
+
+        <span class="c1"># Largest possible data_max: largest spacing with max ticks</span>
+        <span class="n">max_data_max</span> <span class="o">=</span> <span class="n">data_min</span> <span class="o">+</span> <span class="p">(</span><span class="n">max_ticks</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">largest_spacing</span>
+
+        <span class="k">if</span> <span class="n">raise_error</span><span class="p">:</span>
+            <span class="c1"># Determine which constraint is violated</span>
+            <span class="k">if</span> <span class="n">data_max</span> <span class="o">&gt;</span> <span class="n">max_data_max</span><span class="p">:</span>
+                <span class="c1"># Data range too LARGE</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;No valid tick configuration found for data_min=</span><span class="si">{</span><span class="n">data_min</span><span class="si">}</span><span class="s2">, data_max=</span><span class="si">{</span><span class="n">data_max</span><span class="si">}</span><span class="s2"> &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;with tick_range=</span><span class="si">{</span><span class="n">tick_range</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;Data range too LARGE: maximum feasible data_max is </span><span class="si">{</span><span class="n">max_data_max</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;(using largest spacing=</span><span class="si">{</span><span class="n">largest_spacing</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">max_ticks</span><span class="si">}</span><span class="s2"> ticks)&quot;</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">data_max</span> <span class="o">&lt;</span> <span class="n">min_data_max</span><span class="p">:</span>
+                <span class="c1"># Data range too SMALL</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;No valid tick configuration found for data_min=</span><span class="si">{</span><span class="n">data_min</span><span class="si">}</span><span class="s2">, data_max=</span><span class="si">{</span><span class="n">data_max</span><span class="si">}</span><span class="s2"> &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;with tick_range=</span><span class="si">{</span><span class="n">tick_range</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;Data range too SMALL: minimum feasible data_max is </span><span class="si">{</span><span class="n">min_data_max</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;(using smallest spacing=</span><span class="si">{</span><span class="n">smallest_spacing</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">min_ticks</span><span class="si">}</span><span class="s2"> ticks)&quot;</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;No valid tick configuration found for data_min=</span><span class="si">{</span><span class="n">data_min</span><span class="si">}</span><span class="s2">, data_max=</span><span class="si">{</span><span class="n">data_max</span><span class="si">}</span><span class="s2"> &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;with tick_range=</span><span class="si">{</span><span class="n">tick_range</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;Spacing infeasible:</span><span class="si">{</span><span class="n">allowed_spacings</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="c1"># Sort by gap (ascending), then by n_ticks (ascending) for tiebreaking</span>
+    <span class="n">valid_configs</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;gap&#39;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;n_ticks&#39;</span><span class="p">]))</span>
+
+    <span class="c1"># Select best configuration</span>
+    <span class="n">best</span> <span class="o">=</span> <span class="n">valid_configs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># Generate tick array</span>
+    <span class="n">ticks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">data_min</span><span class="p">,</span> <span class="n">best</span><span class="p">[</span><span class="s1">&#39;limit&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">best</span><span class="p">[</span><span class="s1">&#39;spacing&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">best</span><span class="p">[</span><span class="s1">&#39;spacing&#39;</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">xaxis</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xticks</span><span class="o">=</span><span class="n">ticks</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="n">data_min</span><span class="p">,</span><span class="n">best</span><span class="p">[</span><span class="s1">&#39;limit&#39;</span><span class="p">]])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">yticks</span><span class="o">=</span><span class="n">ticks</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="n">data_min</span><span class="p">,</span><span class="n">best</span><span class="p">[</span><span class="s1">&#39;limit&#39;</span><span class="p">]])</span>
+    <span class="k">return</span> <span class="n">ticks</span><span class="p">,</span> <span class="n">best</span><span class="p">[</span><span class="s1">&#39;limit&#39;</span><span class="p">],</span> <span class="n">best</span><span class="p">[</span><span class="s1">&#39;spacing&#39;</span><span class="p">]</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

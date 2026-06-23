@@ -1,0 +1,7 @@
+mooonpy.template.mapfile module
+===============================
+
+.. automodule:: mooonpy.template.mapfile
+   :members:
+   :show-inheritance:
+   :undoc-members:

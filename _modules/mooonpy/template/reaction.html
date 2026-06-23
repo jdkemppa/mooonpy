@@ -1,0 +1,488 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.template.reaction &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mooonpy.template.reaction</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mooonpy.template.reaction</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">ReactionTemplate — build a LAMMPS ``fix bond/react`` template pair from two</span>
+<span class="sd">:class:`Fragment` objects.</span>
+
+<span class="sd">Atom ids are preserved 1:1 between the pre and post Molspaces so the LAMMPS</span>
+<span class="sd">internal topology-map optimizer is sidestepped.</span>
+
+<span class="sd">Force-field handling stays out of this module: the output ``.data`` files are</span>
+<span class="sd">emitted with no angles / dihedrals / impropers, all bonds collapsed to a single</span>
+<span class="sd">dummy bond type, and FF coefficient dicts cleared. NTA strings live in</span>
+<span class="sd">``atom.comment`` and are the truth source for downstream typing tools, which</span>
+<span class="sd">overwrite the integer ``atom.type`` regardless.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.tools.file_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.template.fragment</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fragment</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.template.mapfile</span><span class="w"> </span><span class="kn">import</span> <span class="n">write_mapfile</span> <span class="k">as</span> <span class="n">_write_mapfile_fn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.template.ntafile</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">write_ntafile</span> <span class="k">as</span> <span class="n">_write_ntafile_fn</span><span class="p">,</span>
+    <span class="n">canonicalize_ntas</span> <span class="k">as</span> <span class="n">_canonicalize_ntas</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="ReactionTemplate">
+<a class="viewcode-back" href="../../../mooonpy.template.reaction.html#mooonpy.ReactionTemplate">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ReactionTemplate</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Build a ``fix bond/react`` template pair from two :class:`Fragment` reactants.</span>
+
+<span class="sd">    :param A: First reactant fragment.</span>
+<span class="sd">    :type A: Fragment</span>
+<span class="sd">    :param B: Second reactant fragment.</span>
+<span class="sd">    :type B: Fragment</span>
+<span class="sd">    :param A_name: Short string used as the dictionary key for ``A`` atoms in</span>
+<span class="sd">                   ``breaks``, ``makes``, ``changed_typ``, and ``id_map``.</span>
+<span class="sd">    :type A_name: str</span>
+<span class="sd">    :param B_name: Same as ``A_name`` for ``B``.</span>
+<span class="sd">    :type B_name: str</span>
+<span class="sd">    :param breaks: List of ``(name, orig_id1, orig_id2)`` triples — bonds to</span>
+<span class="sd">                   remove from the post state. Both ids must reference the</span>
+<span class="sd">                   same reactant.</span>
+<span class="sd">    :type breaks: list[tuple[str, int, int]]</span>
+<span class="sd">    :param makes: List of ``(name1, orig_id1, name2, orig_id2)`` quads — bonds</span>
+<span class="sd">                  to create in the post state.</span>
+<span class="sd">    :type makes: list[tuple[str, int, str, int]]</span>
+<span class="sd">    :param changed_typ: List of ``(name, orig_id, new_nta)`` triples — write</span>
+<span class="sd">                        ``new_nta`` into ``post.atoms[new_id].comment``. The</span>
+<span class="sd">                        integer ``atom.type`` is left untouched (downstream</span>
+<span class="sd">                        atom_typing re-assigns it from the ``.nta`` file).</span>
+<span class="sd">    :type changed_typ: list[tuple[str, int, str]]</span>
+<span class="sd">    :param vect: Relative displacement between the two fragment initiators in</span>
+<span class="sd">                 the combined pre state. ``B``&#39;s initiator is placed at</span>
+<span class="sd">                 ``A_initiator + vect``. ``(0, 0, 0)`` makes them coincident.</span>
+<span class="sd">    :type vect: tuple[float, float, float]</span>
+<span class="sd">    :param delete_byproduct: After applying bond changes, run cluster ID on</span>
+<span class="sd">                             the post state; everything not in the largest</span>
+<span class="sd">                             cluster is added to ``DeleteIDs``.</span>
+<span class="sd">    :type delete_byproduct: bool</span>
+
+<span class="sd">    Computed attributes:</span>
+
+<span class="sd">    * ``pre`` (Molspace): merged pre-reaction state with 1..N ids.</span>
+<span class="sd">    * ``post`` (Molspace): same ids; bonds and NTAs updated.</span>
+<span class="sd">    * ``rxn_map`` (dict): editable intermediate; written by :meth:`write_map`.</span>
+<span class="sd">    * ``id_map`` (dict): ``{(name, original_id): preserved_id}``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+                 <span class="n">A_name</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">B_name</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">,</span>
+                 <span class="n">breaks</span><span class="o">=</span><span class="p">(),</span> <span class="n">makes</span><span class="o">=</span><span class="p">(),</span> <span class="n">changed_typ</span><span class="o">=</span><span class="p">(),</span>
+                 <span class="n">vect</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+                 <span class="n">delete_byproduct</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_inputs</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">A_name</span><span class="p">,</span> <span class="n">B_name</span><span class="p">,</span> <span class="n">breaks</span><span class="p">,</span> <span class="n">makes</span><span class="p">,</span> <span class="n">changed_typ</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">A_name</span> <span class="o">=</span> <span class="n">A_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">B_name</span> <span class="o">=</span> <span class="n">B_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">A</span> <span class="o">=</span> <span class="n">A</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="n">B</span>
+
+        <span class="c1"># Work on copies of the fragment Molspaces so we don&#39;t mutate inputs.</span>
+        <span class="n">A_mol</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">mol</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">B_mol</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">mol</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="c1"># Place B&#39;s initiator at A&#39;s initiator + vect (relative-offset positioning).</span>
+        <span class="n">a_init</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">initiator</span>
+        <span class="n">b_init</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">initiator</span>
+        <span class="n">a_atom</span> <span class="o">=</span> <span class="n">A_mol</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">a_init</span><span class="p">]</span>
+        <span class="n">b_atom</span> <span class="o">=</span> <span class="n">B_mol</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">b_init</span><span class="p">]</span>
+        <span class="n">dx</span> <span class="o">=</span> <span class="n">a_atom</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">vect</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">b_atom</span><span class="o">.</span><span class="n">x</span>
+        <span class="n">dy</span> <span class="o">=</span> <span class="n">a_atom</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">vect</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="n">b_atom</span><span class="o">.</span><span class="n">y</span>
+        <span class="n">dz</span> <span class="o">=</span> <span class="n">a_atom</span><span class="o">.</span><span class="n">z</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">vect</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">-</span> <span class="n">b_atom</span><span class="o">.</span><span class="n">z</span>
+        <span class="n">B_mol</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">move</span><span class="p">((</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;offset&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Combine into a single pre state. shift_atomid is the offset applied</span>
+        <span class="c1"># to B&#39;s atom ids during the combine. offset_types=True forces the</span>
+        <span class="c1"># type tables to be merged side-by-side; condense_element below then</span>
+        <span class="c1"># collapses duplicates per element. shrinkwrap fits the box around</span>
+        <span class="c1"># the merged geometry with a small pad so neither all2lmp nor LAMMPS</span>
+        <span class="c1"># complains about atoms outside the box.</span>
+        <span class="n">shift_atomid</span> <span class="o">=</span> <span class="n">A_mol</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">B_mol</span><span class="p">,</span> <span class="n">vect</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">offset_types</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                     <span class="n">assign_clusters</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">A_mol</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">masses</span><span class="p">:</span>
+            <span class="n">A_mol</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">condense_element</span><span class="p">(</span><span class="n">A_mol</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span>
+        <span class="n">A_mol</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">shrinkwrap</span><span class="p">(</span><span class="n">pad</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
+
+        <span class="c1"># Renumber the combined system 1..N and build the id_map.</span>
+        <span class="n">old2new</span> <span class="o">=</span> <span class="n">A_mol</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span>
+        <span class="n">id_map</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">orig_id</span> <span class="ow">in</span> <span class="n">A</span><span class="o">.</span><span class="n">mol</span><span class="o">.</span><span class="n">atoms</span><span class="p">:</span>
+            <span class="n">id_map</span><span class="p">[(</span><span class="n">A_name</span><span class="p">,</span> <span class="n">orig_id</span><span class="p">)]</span> <span class="o">=</span> <span class="n">old2new</span><span class="p">[</span><span class="n">orig_id</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">orig_id</span> <span class="ow">in</span> <span class="n">B</span><span class="o">.</span><span class="n">mol</span><span class="o">.</span><span class="n">atoms</span><span class="p">:</span>
+            <span class="n">id_map</span><span class="p">[(</span><span class="n">B_name</span><span class="p">,</span> <span class="n">orig_id</span><span class="p">)]</span> <span class="o">=</span> <span class="n">old2new</span><span class="p">[</span><span class="n">orig_id</span> <span class="o">+</span> <span class="n">shift_atomid</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_map</span> <span class="o">=</span> <span class="n">id_map</span>
+
+        <span class="n">pre_mol</span> <span class="o">=</span> <span class="n">A_mol</span>
+        <span class="n">post_mol</span> <span class="o">=</span> <span class="n">pre_mol</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="c1"># Apply breaks.</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">breaks</span><span class="p">:</span>
+            <span class="n">name</span><span class="p">,</span> <span class="n">oid1</span><span class="p">,</span> <span class="n">oid2</span> <span class="o">=</span> <span class="n">entry</span>
+            <span class="n">nid1</span> <span class="o">=</span> <span class="n">id_map</span><span class="p">[(</span><span class="n">name</span><span class="p">,</span> <span class="n">oid1</span><span class="p">)]</span>
+            <span class="n">nid2</span> <span class="o">=</span> <span class="n">id_map</span><span class="p">[(</span><span class="n">name</span><span class="p">,</span> <span class="n">oid2</span><span class="p">)]</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">post_mol</span><span class="o">.</span><span class="n">bonds</span><span class="o">.</span><span class="n">key_rule</span><span class="p">(</span><span class="n">nid1</span><span class="p">,</span> <span class="n">nid2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">post_mol</span><span class="o">.</span><span class="n">bonds</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;break bond (</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">oid1</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">oid2</span><span class="si">}</span><span class="s2">) -&gt; (</span><span class="si">{</span><span class="n">nid1</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">nid2</span><span class="si">}</span><span class="s2">) &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;not found in post.bonds&quot;</span>
+                <span class="p">)</span>
+            <span class="k">del</span> <span class="n">post_mol</span><span class="o">.</span><span class="n">bonds</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+        <span class="c1"># Apply makes.</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">makes</span><span class="p">:</span>
+            <span class="n">name1</span><span class="p">,</span> <span class="n">oid1</span><span class="p">,</span> <span class="n">name2</span><span class="p">,</span> <span class="n">oid2</span> <span class="o">=</span> <span class="n">entry</span>
+            <span class="n">nid1</span> <span class="o">=</span> <span class="n">id_map</span><span class="p">[(</span><span class="n">name1</span><span class="p">,</span> <span class="n">oid1</span><span class="p">)]</span>
+            <span class="n">nid2</span> <span class="o">=</span> <span class="n">id_map</span><span class="p">[(</span><span class="n">name2</span><span class="p">,</span> <span class="n">oid2</span><span class="p">)]</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">post_mol</span><span class="o">.</span><span class="n">bonds</span><span class="o">.</span><span class="n">key_rule</span><span class="p">(</span><span class="n">nid1</span><span class="p">,</span> <span class="n">nid2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">post_mol</span><span class="o">.</span><span class="n">bonds</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;make bond (</span><span class="si">{</span><span class="n">name1</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">oid1</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">name2</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">oid2</span><span class="si">}</span><span class="s2">) -&gt; &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">nid1</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">nid2</span><span class="si">}</span><span class="s2">) already exists in post.bonds&quot;</span>
+                <span class="p">)</span>
+            <span class="n">bond</span> <span class="o">=</span> <span class="n">post_mol</span><span class="o">.</span><span class="n">bonds</span><span class="o">.</span><span class="n">bond_factory</span><span class="p">()</span>
+            <span class="n">bond</span><span class="o">.</span><span class="n">ordered</span> <span class="o">=</span> <span class="p">[</span><span class="n">nid1</span><span class="p">,</span> <span class="n">nid2</span><span class="p">]</span>
+            <span class="n">bond</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># FF-stripped output uses a single dummy bond type</span>
+            <span class="n">post_mol</span><span class="o">.</span><span class="n">bonds</span><span class="o">.</span><span class="n">id_set</span><span class="p">(</span><span class="n">bond</span><span class="p">,</span> <span class="n">nid1</span><span class="p">,</span> <span class="n">nid2</span><span class="p">)</span>
+
+        <span class="c1"># Apply changed_typ: overwrite atom.comment with the new NTA string.</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">changed_typ</span><span class="p">:</span>
+            <span class="n">name</span><span class="p">,</span> <span class="n">oid</span><span class="p">,</span> <span class="n">new_nta</span> <span class="o">=</span> <span class="n">entry</span>
+            <span class="n">nid</span> <span class="o">=</span> <span class="n">id_map</span><span class="p">[(</span><span class="n">name</span><span class="p">,</span> <span class="n">oid</span><span class="p">)]</span>
+            <span class="n">post_mol</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">nid</span><span class="p">]</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="n">new_nta</span>
+
+        <span class="n">pre_ntas</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="o">.</span><span class="n">comment</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">pre_mol</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">values</span><span class="p">()}</span>
+        <span class="n">post_ntas</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="o">.</span><span class="n">comment</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">post_mol</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">values</span><span class="p">()}</span>
+        <span class="c1"># if pre_ntas != post_ntas:</span>
+        <span class="c1">#     warnings.warn(</span>
+        <span class="c1">#         &quot;ReactionTemplate: pre and post have different NTA sets; &quot;</span>
+        <span class="c1">#         &quot;downstream type-merging tools will need to reconcile types &quot;</span>
+        <span class="c1">#         &quot;across all templates and monomers.&quot;,</span>
+        <span class="c1">#         stacklevel=2,</span>
+        <span class="c1">#     )</span>
+
+        <span class="c1"># Translate per-fragment edge sets, severed-neighbor NTAs, and</span>
+        <span class="c1"># no-remap sets into the renumbered space. The external-neighbor NTAs</span>
+        <span class="c1"># describe atoms *outside* the template, so they are identical for</span>
+        <span class="c1"># pre and post (changed_typ only touches in-template atoms).</span>
+        <span class="n">edge_ids</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">id_map</span><span class="p">[(</span><span class="n">A_name</span><span class="p">,</span> <span class="n">oid</span><span class="p">)]</span> <span class="k">for</span> <span class="n">oid</span> <span class="ow">in</span> <span class="n">A</span><span class="o">.</span><span class="n">edges</span><span class="p">]</span> <span class="o">+</span>
+            <span class="p">[</span><span class="n">id_map</span><span class="p">[(</span><span class="n">B_name</span><span class="p">,</span> <span class="n">oid</span><span class="p">)]</span> <span class="k">for</span> <span class="n">oid</span> <span class="ow">in</span> <span class="n">B</span><span class="o">.</span><span class="n">edges</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">edge_external_ntas</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">oid</span><span class="p">,</span> <span class="n">ntas</span> <span class="ow">in</span> <span class="n">A</span><span class="o">.</span><span class="n">edge_external_ntas</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">edge_external_ntas</span><span class="p">[</span><span class="n">id_map</span><span class="p">[(</span><span class="n">A_name</span><span class="p">,</span> <span class="n">oid</span><span class="p">)]]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ntas</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">oid</span><span class="p">,</span> <span class="n">ntas</span> <span class="ow">in</span> <span class="n">B</span><span class="o">.</span><span class="n">edge_external_ntas</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">edge_external_ntas</span><span class="p">[</span><span class="n">id_map</span><span class="p">[(</span><span class="n">B_name</span><span class="p">,</span> <span class="n">oid</span><span class="p">)]]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ntas</span><span class="p">)</span>
+
+        <span class="n">no_remap</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">{</span><span class="n">id_map</span><span class="p">[(</span><span class="n">A_name</span><span class="p">,</span> <span class="n">oid</span><span class="p">)]</span> <span class="k">for</span> <span class="n">oid</span> <span class="ow">in</span> <span class="n">A</span><span class="o">.</span><span class="n">no_remap_ids</span><span class="p">}</span> <span class="o">|</span>
+            <span class="p">{</span><span class="n">id_map</span><span class="p">[(</span><span class="n">B_name</span><span class="p">,</span> <span class="n">oid</span><span class="p">)]</span> <span class="k">for</span> <span class="n">oid</span> <span class="ow">in</span> <span class="n">B</span><span class="o">.</span><span class="n">no_remap_ids</span><span class="p">}</span>
+        <span class="p">)</span>
+        <span class="c1"># qedge: atoms whose charges *do* get remapped — everything not marked</span>
+        <span class="c1"># to be preserved by either fragment.</span>
+        <span class="k">if</span> <span class="n">no_remap</span><span class="p">:</span>
+            <span class="n">qedge</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">aid</span> <span class="k">for</span> <span class="n">aid</span> <span class="ow">in</span> <span class="n">post_mol</span><span class="o">.</span><span class="n">atoms</span> <span class="k">if</span> <span class="n">aid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">no_remap</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">qedge</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Byproduct detection.</span>
+        <span class="n">delete_ids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">delete_byproduct</span><span class="p">:</span>
+            <span class="n">post_mol</span><span class="o">.</span><span class="n">clusters</span><span class="o">.</span><span class="n">compute_clusters</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">post_mol</span><span class="o">.</span><span class="n">clusters</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">molid</span><span class="p">,</span> <span class="n">cluster</span> <span class="ow">in</span> <span class="n">post_mol</span><span class="o">.</span><span class="n">clusters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">molid</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="k">continue</span>  <span class="c1"># largest cluster (per Clusters.compute_clusters sort)</span>
+                    <span class="n">delete_ids</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">cluster</span><span class="o">.</span><span class="n">members</span><span class="p">))</span>
+
+        <span class="n">initiator_new</span> <span class="o">=</span> <span class="p">[</span><span class="n">id_map</span><span class="p">[(</span><span class="n">A_name</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">initiator</span><span class="p">)],</span>
+                         <span class="n">id_map</span><span class="p">[(</span><span class="n">B_name</span><span class="p">,</span> <span class="n">B</span><span class="o">.</span><span class="n">initiator</span><span class="p">)]]</span>
+
+        <span class="c1"># pre and post are themselves Fragments so the edge / severed-neighbor</span>
+        <span class="c1"># info travels with them — e.g. for write_data&#39;s .nta edge section, or</span>
+        <span class="c1"># when a follow-up reaction slices the post for the next crosslink.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pre</span> <span class="o">=</span> <span class="n">Fragment</span><span class="o">.</span><span class="n">assembled</span><span class="p">(</span>
+            <span class="n">pre_mol</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="n">edge_ids</span><span class="p">,</span>
+            <span class="n">edge_external_ntas</span><span class="o">=</span><span class="n">edge_external_ntas</span><span class="p">,</span> <span class="n">no_remap_ids</span><span class="o">=</span><span class="n">no_remap</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post</span> <span class="o">=</span> <span class="n">Fragment</span><span class="o">.</span><span class="n">assembled</span><span class="p">(</span>
+            <span class="n">post_mol</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="n">edge_ids</span><span class="p">,</span>
+            <span class="n">edge_external_ntas</span><span class="o">=</span><span class="n">edge_external_ntas</span><span class="p">,</span> <span class="n">no_remap_ids</span><span class="o">=</span><span class="n">no_remap</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">rxn_map</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;Comment&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;nicknames </span><span class="si">{</span><span class="n">A_name</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">B_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;InitiatorIDs&#39;</span><span class="p">:</span> <span class="n">initiator_new</span><span class="p">,</span>
+            <span class="s1">&#39;EdgeIDs&#39;</span><span class="p">:</span> <span class="n">edge_ids</span><span class="p">,</span>
+            <span class="s1">&#39;DeleteIDs&#39;</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">delete_ids</span><span class="p">),</span>
+            <span class="s1">&#39;Equivalences&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="n">aid</span><span class="p">,</span> <span class="n">aid</span><span class="p">)</span> <span class="k">for</span> <span class="n">aid</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">post_mol</span><span class="o">.</span><span class="n">atoms</span><span class="p">)],</span>
+            <span class="s1">&#39;CustomChargesQedge&#39;</span><span class="p">:</span> <span class="n">qedge</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="c1"># ---- IO ----</span>
+
+<div class="viewcode-block" id="ReactionTemplate.write_map">
+<a class="viewcode-back" href="../../../mooonpy.template.reaction.html#mooonpy.ReactionTemplate.write_map">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write ``self.rxn_map`` to ``path`` in mooonpy map-file format.</span>
+
+<span class="sd">        :param path: Output path. Wrapped in :class:`Path` if it isn&#39;t one.</span>
+<span class="sd">        :type path: str or :class:`mooonpy.tools.file_utils.Path`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">_write_mapfile_fn</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rxn_map</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ReactionTemplate.write_data">
+<a class="viewcode-back" href="../../../mooonpy.template.reaction.html#mooonpy.ReactionTemplate.write_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pre_path</span><span class="p">,</span> <span class="n">post_path</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write pre and post ``.data`` files plus their companion ``.nta`` files.</span>
+
+<span class="sd">        Data files are FF-stripped: no angles / dihedrals / impropers, no FF</span>
+<span class="sd">        coefficient sections, no Velocities section, and a single dummy bond</span>
+<span class="sd">        type. The Masses section is kept so downstream tools can sanity-check</span>
+<span class="sd">        atom types. Atom comments are reduced to just the NTA token.</span>
+
+<span class="sd">        The ``.nta`` files are derived from the data file paths by replacing</span>
+<span class="sd">        the extension. They feed ``atom_typing``/``all2lmp`` downstream.</span>
+
+<span class="sd">        :param pre_path: Output path for the pre-reaction ``.data`` file.</span>
+<span class="sd">        :param post_path: Output path for the post-reaction ``.data`` file.</span>
+<span class="sd">        :type pre_path: str or :class:`Path`</span>
+<span class="sd">        :type post_path: str or :class:`Path`</span>
+<span class="sd">        :return: ``(pre_data, post_data, pre_nta, post_nta)`` as :class:`Path` objects.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pre_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">pre_path</span><span class="p">)</span>
+        <span class="n">post_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">post_path</span><span class="p">)</span>
+        <span class="n">pre_nta</span> <span class="o">=</span> <span class="n">pre_path</span><span class="o">.</span><span class="n">new_ext</span><span class="p">(</span><span class="s1">&#39;.nta&#39;</span><span class="p">)</span>
+        <span class="n">post_nta</span> <span class="o">=</span> <span class="n">post_path</span><span class="o">.</span><span class="n">new_ext</span><span class="p">(</span><span class="s1">&#39;.nta&#39;</span><span class="p">)</span>
+        <span class="n">_write_skeletal_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pre</span><span class="o">.</span><span class="n">mol</span><span class="p">,</span> <span class="n">pre_path</span><span class="p">)</span>
+        <span class="n">_write_skeletal_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">post</span><span class="o">.</span><span class="n">mol</span><span class="p">,</span> <span class="n">post_path</span><span class="p">)</span>
+        <span class="n">_write_ntafile_fn</span><span class="p">(</span><span class="n">pre_nta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre</span><span class="o">.</span><span class="n">mol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre</span><span class="o">.</span><span class="n">edge_external_ntas</span><span class="p">)</span>
+        <span class="n">_write_ntafile_fn</span><span class="p">(</span><span class="n">post_nta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">post</span><span class="o">.</span><span class="n">mol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">post</span><span class="o">.</span><span class="n">edge_external_ntas</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pre_path</span><span class="p">,</span> <span class="n">post_path</span><span class="p">,</span> <span class="n">pre_nta</span><span class="p">,</span> <span class="n">post_nta</span></div>
+
+
+    <span class="c1"># ---- validation ----</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_inputs</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">A_name</span><span class="p">,</span> <span class="n">B_name</span><span class="p">,</span> <span class="n">breaks</span><span class="p">,</span> <span class="n">makes</span><span class="p">,</span> <span class="n">changed_typ</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">Fragment</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;A must be a Fragment&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">Fragment</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;B must be a Fragment&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">A_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;A_name must be str&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">B_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;B_name must be str&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">A_name</span> <span class="o">==</span> <span class="n">B_name</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;A_name and B_name must differ&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">breaks</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;break entry must be (name, id, id), got </span><span class="si">{</span><span class="n">entry</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">name</span><span class="p">,</span> <span class="n">oid1</span><span class="p">,</span> <span class="n">oid2</span> <span class="o">=</span> <span class="n">entry</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">A_name</span><span class="p">,</span> <span class="n">B_name</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;break name </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s2"> is not A_name or B_name&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">oid1</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">oid2</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;break ids must be int, got </span><span class="si">{</span><span class="n">entry</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">makes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;make entry must be (name, id, name, id), got </span><span class="si">{</span><span class="n">entry</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">name1</span><span class="p">,</span> <span class="n">oid1</span><span class="p">,</span> <span class="n">name2</span><span class="p">,</span> <span class="n">oid2</span> <span class="o">=</span> <span class="n">entry</span>
+            <span class="k">for</span> <span class="n">nm</span> <span class="ow">in</span> <span class="p">(</span><span class="n">name1</span><span class="p">,</span> <span class="n">name2</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">nm</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">A_name</span><span class="p">,</span> <span class="n">B_name</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;make name </span><span class="si">{</span><span class="n">nm</span><span class="si">!r}</span><span class="s2"> is not A_name or B_name&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">oid1</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">oid2</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;make ids must be int, got </span><span class="si">{</span><span class="n">entry</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">changed_typ</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;changed_typ entry must be (name, id, nta), got </span><span class="si">{</span><span class="n">entry</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">name</span><span class="p">,</span> <span class="n">oid</span><span class="p">,</span> <span class="n">nta</span> <span class="o">=</span> <span class="n">entry</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">A_name</span><span class="p">,</span> <span class="n">B_name</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;changed_typ name </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s2"> is not A_name or B_name&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">oid</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;changed_typ id must be int, got </span><span class="si">{</span><span class="n">entry</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nta</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;changed_typ nta must be str, got </span><span class="si">{</span><span class="n">entry</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_write_skeletal_data</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Write ``mol`` as a LAMMPS .data file with all force-field info stripped.</span>
+
+<span class="sd">    On a temporary copy:</span>
+<span class="sd">      * Angles/dihedrals/impropers are dropped.</span>
+<span class="sd">      * Every bond is collapsed to type 1.</span>
+<span class="sd">      * All FF coefficient dicts are cleared (Masses survives).</span>
+<span class="sd">      * Velocities are zeroed (the writer suppresses an all-zero Velocities</span>
+<span class="sd">        section automatically).</span>
+<span class="sd">      * Atom comments are canonicalized to just the NTA token, so downstream</span>
+<span class="sd">        diffs and the companion .nta file stay clean.</span>
+
+<span class="sd">    The original Molspace is not mutated.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">skel</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">skel</span><span class="o">.</span><span class="n">angles</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">skel</span><span class="o">.</span><span class="n">dihedrals</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">skel</span><span class="o">.</span><span class="n">impropers</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">bond</span> <span class="ow">in</span> <span class="n">skel</span><span class="o">.</span><span class="n">bonds</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">bond</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">skel</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">pair_coeffs</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">skel</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">bond_coeffs</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">skel</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">angle_coeffs</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">skel</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">dihedral_coeffs</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">skel</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">improper_coeffs</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">skel</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">bondbond_coeffs</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">skel</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">bondangle_coeffs</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">skel</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">angleangletorsion_coeffs</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">skel</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">endbondtorsion_coeffs</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">skel</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">middlebondtorsion_coeffs</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">skel</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">bondbond13_coeffs</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">skel</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">angletorsion_coeffs</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">skel</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">angleangle_coeffs</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">skel</span><span class="o">.</span><span class="n">ff</span><span class="o">.</span><span class="n">has_type_labels</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">skel</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">atom</span><span class="o">.</span><span class="n">vx</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">atom</span><span class="o">.</span><span class="n">vy</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">atom</span><span class="o">.</span><span class="n">vz</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">_canonicalize_ntas</span><span class="p">(</span><span class="n">skel</span><span class="p">)</span>
+    <span class="n">skel</span><span class="o">.</span><span class="n">write_files</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">atom_style</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

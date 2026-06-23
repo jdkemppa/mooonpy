@@ -1,0 +1,228 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.template.ntafile &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mooonpy.template.ntafile</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mooonpy.template.ntafile</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">NTA-file writer for atom_typing/all2lmp consumption.</span>
+
+<span class="sd">Format::</span>
+
+<span class="sd">    mooonpy NTA file for &lt;basename&gt; at &lt;date&gt;</span>
+<span class="sd">    style id</span>
+
+<span class="sd">    &lt;atom_id&gt; &lt;nta_string&gt;</span>
+<span class="sd">    &lt;atom_id&gt; &lt;nta_string&gt;</span>
+<span class="sd">    ...</span>
+
+<span class="sd">The file uses ``style id`` (per-atom-id NTA assignments). Atom NTA strings</span>
+<span class="sd">come from ``atom.comment`` after canonicalization (only the NTA token is</span>
+<span class="sd">kept, any verbose ``atom_typing``-style preamble is stripped).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+
+
+<div class="viewcode-block" id="extract_nta">
+<a class="viewcode-back" href="../../../mooonpy.template.ntafile.html#mooonpy.template.ntafile.extract_nta">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_nta</span><span class="p">(</span><span class="n">comment</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pull the NTA token out of an atom_typing comment string.</span>
+
+<span class="sd">    atom_typing writes verbose comments like</span>
+<span class="sd">    ``&quot;C        Sp2     avg-angle: 120.000000      type: cp&quot;``. After a</span>
+<span class="sd">    ``ReactionTemplate.changed_typ`` rewrite the field may already be just</span>
+<span class="sd">    ``&quot;cp&quot;``. This handles both: returns ``&quot;cp&quot;`` either way, or ``&quot;&quot;`` for</span>
+<span class="sd">    an empty comment.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">comment</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">parts</span> <span class="o">=</span> <span class="n">comment</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">if</span> <span class="s1">&#39;type:&#39;</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">parts</span><span class="p">[</span><span class="n">parts</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;type:&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="canonicalize_ntas">
+<a class="viewcode-back" href="../../../mooonpy.template.ntafile.html#mooonpy.template.ntafile.canonicalize_ntas">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">canonicalize_ntas</span><span class="p">(</span><span class="n">mol</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reduce every ``atom.comment`` in ``mol`` to just its NTA token, in place.</span>
+
+<span class="sd">    Idempotent: running it on a Molspace whose comments are already plain</span>
+<span class="sd">    NTAs is a no-op.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">mol</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">atom</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="n">extract_nta</span><span class="p">(</span><span class="n">atom</span><span class="o">.</span><span class="n">comment</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="write_ntafile">
+<a class="viewcode-back" href="../../../mooonpy.template.ntafile.html#mooonpy.template.ntafile.write_ntafile">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">write_ntafile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mol</span><span class="p">,</span> <span class="n">edge_external_ntas</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Write a per-atom NTA assignment file for ``mol``.</span>
+
+<span class="sd">    :param filename: Output path.</span>
+<span class="sd">    :type filename: str or :class:`Path`</span>
+<span class="sd">    :param mol: Molspace whose ``atom.comment`` carries the NTA tokens. The</span>
+<span class="sd">                comment is canonicalized (verbose ``atom_typing`` preambles</span>
+<span class="sd">                stripped) before writing.</span>
+<span class="sd">    :param edge_external_ntas: Optional ``{edge_atom_id: [nta, ...]}`` mapping</span>
+<span class="sd">        each template edge atom to the NTA strings of its bonded neighbors</span>
+<span class="sd">        *outside* the template. When given (and non-empty), an ``edge id``</span>
+<span class="sd">        section is appended so downstream charge-equilibration can account</span>
+<span class="sd">        for the severed bonds. Empty lists are skipped.</span>
+<span class="sd">    :type edge_external_ntas: dict[int, list[str]] or None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+    <span class="n">stamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">-%b-%y&#39;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;mooonpy NTA file for </span><span class="si">{</span><span class="n">basename</span><span class="si">}</span><span class="s1"> at </span><span class="si">{</span><span class="n">stamp</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;style id</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">id_</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">mol</span><span class="o">.</span><span class="n">atoms</span><span class="p">):</span>
+            <span class="n">atom</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">id_</span><span class="p">]</span>
+            <span class="n">nta</span> <span class="o">=</span> <span class="n">extract_nta</span><span class="p">(</span><span class="n">atom</span><span class="o">.</span><span class="n">comment</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">id_</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">nta</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">edge_external_ntas</span><span class="p">:</span>
+            <span class="n">rows</span> <span class="o">=</span> <span class="p">{</span><span class="n">eid</span><span class="p">:</span> <span class="n">ntas</span> <span class="k">for</span> <span class="n">eid</span><span class="p">,</span> <span class="n">ntas</span> <span class="ow">in</span> <span class="n">edge_external_ntas</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">ntas</span><span class="p">}</span>
+            <span class="k">if</span> <span class="n">rows</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">edge id</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">eid</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:5d}</span><span class="se">\t</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">eid</span><span class="p">))</span>
+                    <span class="k">for</span> <span class="n">nn</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">[</span><span class="n">eid</span><span class="p">]:</span>
+                        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:3}</span><span class="s1"> &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nn</span><span class="p">))</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

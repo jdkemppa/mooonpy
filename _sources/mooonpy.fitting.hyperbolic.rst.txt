@@ -1,0 +1,7 @@
+mooonpy.fitting.hyperbolic module
+=================================
+
+.. automodule:: mooonpy.fitting.hyperbolic
+   :members:
+   :show-inheritance:
+   :undoc-members:

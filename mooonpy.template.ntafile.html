@@ -1,0 +1,189 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.template.ntafile module &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7026087e"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">mooonpy.template.ntafile module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mooonpy.template.ntafile.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mooonpy.template.ntafile">
+<span id="mooonpy-template-ntafile-module"></span><h1>mooonpy.template.ntafile module<a class="headerlink" href="#module-mooonpy.template.ntafile" title="Link to this heading"></a></h1>
+<p>NTA-file writer for atom_typing/all2lmp consumption.</p>
+<p>Format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mooonpy</span> <span class="n">NTA</span> <span class="n">file</span> <span class="k">for</span> <span class="o">&lt;</span><span class="n">basename</span><span class="o">&gt;</span> <span class="n">at</span> <span class="o">&lt;</span><span class="n">date</span><span class="o">&gt;</span>
+<span class="n">style</span> <span class="nb">id</span>
+
+<span class="o">&lt;</span><span class="n">atom_id</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">nta_string</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">atom_id</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">nta_string</span><span class="o">&gt;</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>The file uses <code class="docutils literal notranslate"><span class="pre">style</span> <span class="pre">id</span></code> (per-atom-id NTA assignments). Atom NTA strings
+come from <code class="docutils literal notranslate"><span class="pre">atom.comment</span></code> after canonicalization (only the NTA token is
+kept, any verbose <code class="docutils literal notranslate"><span class="pre">atom_typing</span></code>-style preamble is stripped).</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mooonpy.template.ntafile.canonicalize_ntas">
+<span class="sig-prename descclassname"><span class="pre">mooonpy.template.ntafile.</span></span><span class="sig-name descname"><span class="pre">canonicalize_ntas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mol</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/template/ntafile.html#canonicalize_ntas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.template.ntafile.canonicalize_ntas" title="Link to this definition"></a></dt>
+<dd><p>Reduce every <code class="docutils literal notranslate"><span class="pre">atom.comment</span></code> in <code class="docutils literal notranslate"><span class="pre">mol</span></code> to just its NTA token, in place.</p>
+<p>Idempotent: running it on a Molspace whose comments are already plain
+NTAs is a no-op.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mooonpy.template.ntafile.extract_nta">
+<span class="sig-prename descclassname"><span class="pre">mooonpy.template.ntafile.</span></span><span class="sig-name descname"><span class="pre">extract_nta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">comment</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/template/ntafile.html#extract_nta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.template.ntafile.extract_nta" title="Link to this definition"></a></dt>
+<dd><p>Pull the NTA token out of an atom_typing comment string.</p>
+<p>atom_typing writes verbose comments like
+<code class="docutils literal notranslate"><span class="pre">&quot;C</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">Sp2</span>&#160;&#160;&#160;&#160; <span class="pre">avg-angle:</span> <span class="pre">120.000000</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">type:</span> <span class="pre">cp&quot;</span></code>. After a
+<code class="docutils literal notranslate"><span class="pre">ReactionTemplate.changed_typ</span></code> rewrite the field may already be just
+<code class="docutils literal notranslate"><span class="pre">&quot;cp&quot;</span></code>. This handles both: returns <code class="docutils literal notranslate"><span class="pre">&quot;cp&quot;</span></code> either way, or <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> for
+an empty comment.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mooonpy.template.ntafile.write_ntafile">
+<span class="sig-prename descclassname"><span class="pre">mooonpy.template.ntafile.</span></span><span class="sig-name descname"><span class="pre">write_ntafile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_external_ntas</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/template/ntafile.html#write_ntafile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.template.ntafile.write_ntafile" title="Link to this definition"></a></dt>
+<dd><p>Write a per-atom NTA assignment file for <code class="docutils literal notranslate"><span class="pre">mol</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (str or <code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>) – Output path.</p></li>
+<li><p><strong>mol</strong> – Molspace whose <code class="docutils literal notranslate"><span class="pre">atom.comment</span></code> carries the NTA tokens. The
+comment is canonicalized (verbose <code class="docutils literal notranslate"><span class="pre">atom_typing</span></code> preambles
+stripped) before writing.</p></li>
+<li><p><strong>edge_external_ntas</strong> (<em>dict</em><em>[</em><em>int</em><em>, </em><em>list</em><em>[</em><em>str</em><em>]</em><em>] or </em><em>None</em>) – Optional <code class="docutils literal notranslate"><span class="pre">{edge_atom_id:</span> <span class="pre">[nta,</span> <span class="pre">...]}</span></code> mapping
+each template edge atom to the NTA strings of its bonded neighbors
+<em>outside</em> the template. When given (and non-empty), an <code class="docutils literal notranslate"><span class="pre">edge</span> <span class="pre">id</span></code>
+section is appended so downstream charge-equilibration can account
+for the severed bonds. Empty lists are skipped.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+mooonpy.rcsetup module
+======================
+
+.. automodule:: mooonpy.rcsetup
+   :members:
+   :show-inheritance:
+   :undoc-members:

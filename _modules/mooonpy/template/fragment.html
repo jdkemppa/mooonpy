@@ -1,0 +1,431 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.template.fragment &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">GUIs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.guis.html">mooonpy.guis package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mooonpy.tools.html">mooonpy.tools package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mooonpy.template.fragment</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mooonpy.template.fragment</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Fragment — a reactive sub-region of a Molspace with an initiator atom, a set</span>
+<span class="sd">of edge atoms, the NTAs of each edge&#39;s severed (external) neighbors, and an</span>
+<span class="sd">optional set of atom ids excluded from charge remapping.</span>
+
+<span class="sd">For LAMMPS ``fix bond/react`` template matching, edge atoms must each have</span>
+<span class="sd">exactly one bond into the fragment interior; the constructor warns if any edge</span>
+<span class="sd">violates this. The fragment ``mol`` carries the original atom ids so the</span>
+<span class="sd">caller&#39;s ``breaks`` / ``makes`` / ``changed_typ`` lists keep referring to the</span>
+<span class="sd">ids they already know.</span>
+
+<span class="sd">Construction modes (each accepts a :class:`~mooonpy.Molspace` *or* another</span>
+<span class="sd">:class:`Fragment` as the source — when a Fragment is passed, its stored</span>
+<span class="sd">``edge_external_ntas`` are inherited for any edge that survives into the new</span>
+<span class="sd">fragment):</span>
+
+<span class="sd">* :meth:`Fragment.from_initiator_and_edges` — caller supplies an initiator and</span>
+<span class="sd">  a list of edge ids; BFS walks outward from the initiator and stops at the</span>
+<span class="sd">  edges.</span>
+<span class="sd">* :meth:`Fragment.from_interior` — caller supplies the interior atom set;</span>
+<span class="sd">  edges are derived as the boundary atoms.</span>
+<span class="sd">* :meth:`Fragment.from_initiator_steps` — caller supplies an initiator and an</span>
+<span class="sd">  integer ``n_steps``; BFS walks exactly ``n_steps`` outward.</span>
+<span class="sd">* :meth:`Fragment.assembled` — wrap an already-built Molspace (e.g. a combined</span>
+<span class="sd">  reaction template) without slicing; edges and external NTAs are supplied</span>
+<span class="sd">  explicitly. ``initiator`` is ``None`` for this whole-template form.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy.molspace.graph_theory.interface</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">find_reachable_neighbors</span><span class="p">,</span> <span class="n">steps_from_initiator</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_resolve_input</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Accept a Molspace or a Fragment as a construction source.</span>
+
+<span class="sd">    :return: ``(mol, inherited_edge_ntas)`` where ``mol`` is the Molspace to</span>
+<span class="sd">             walk and ``inherited_edge_ntas`` is the source Fragment&#39;s stored</span>
+<span class="sd">             ``edge_external_ntas`` (empty dict when ``src`` is a Molspace).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">Fragment</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">src</span><span class="o">.</span><span class="n">mol</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">edge_external_ntas</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">src</span><span class="p">,</span> <span class="p">{}</span>
+
+
+<div class="viewcode-block" id="Fragment">
+<a class="viewcode-back" href="../../../mooonpy.template.fragment.html#mooonpy.template.fragment.Fragment">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Fragment</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reactive sub-region of a Molspace.</span>
+
+<span class="sd">    :param mol: Molspace containing the fragment. Sliced (on a copy) down to</span>
+<span class="sd">                ``interior_ids`` without renumbering, so original atom ids</span>
+<span class="sd">                survive.</span>
+<span class="sd">    :type mol: Molspace</span>
+<span class="sd">    :param initiator: Atom id of the initiator inside the fragment, or</span>
+<span class="sd">                      ``None`` for an assembled whole-template Fragment.</span>
+<span class="sd">    :type initiator: int or None</span>
+<span class="sd">    :param interior_ids: Atom ids that belong to the fragment.</span>
+<span class="sd">    :type interior_ids: iterable[int]</span>
+<span class="sd">    :param edges: Atom ids that bound the fragment.</span>
+<span class="sd">    :type edges: iterable[int]</span>
+<span class="sd">    :param charge_edge_depth: If ``&gt;= 0``, atoms within this many bonds of any</span>
+<span class="sd">                              edge are added to :attr:`no_remap_ids`. ``-1``</span>
+<span class="sd">                              disables.</span>
+<span class="sd">    :type charge_edge_depth: int</span>
+<span class="sd">    :param inherited_edge_ntas: When constructing from another Fragment, the</span>
+<span class="sd">        parent&#39;s ``edge_external_ntas``. Used to keep the severed-neighbor NTA</span>
+<span class="sd">        list for any edge whose external neighbors were already pruned from</span>
+<span class="sd">        the immediate ``mol``.</span>
+<span class="sd">    :type inherited_edge_ntas: dict[int, list[str]] or None</span>
+<span class="sd">    :param edge_external_ntas: Explicit ``{edge_id: [nta, ...]}`` override</span>
+<span class="sd">        (used by :meth:`assembled`). When given, the parent-graph computation</span>
+<span class="sd">        is skipped entirely.</span>
+<span class="sd">    :type edge_external_ntas: dict[int, list[str]] or None</span>
+<span class="sd">    :param no_remap_ids: Explicit set of charge-preserved ids (used by</span>
+<span class="sd">        :meth:`assembled`). When given, ``charge_edge_depth`` is ignored.</span>
+<span class="sd">    :type no_remap_ids: set[int] or None</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mol : Molspace</span>
+<span class="sd">        Sliced Molspace with original atom ids.</span>
+<span class="sd">    initiator : int or None</span>
+<span class="sd">    edges : set[int]</span>
+<span class="sd">    edge_external_ntas : dict[int, list[str]]</span>
+<span class="sd">        ``{edge_id: [nta_of_severed_neighbor, ...]}``.</span>
+<span class="sd">    no_remap_ids : set[int]</span>
+<span class="sd">        Atom ids whose charges should *not* be remapped during the reaction.</span>
+<span class="sd">    charge_edge_depth : int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mol</span><span class="p">,</span> <span class="n">initiator</span><span class="p">,</span> <span class="n">interior_ids</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span>
+                 <span class="n">charge_edge_depth</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">inherited_edge_ntas</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">edge_external_ntas</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">no_remap_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">interior</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">interior_ids</span><span class="p">)</span>
+        <span class="n">edge_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">initiator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">initiator</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">interior</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;initiator=</span><span class="si">{</span><span class="n">initiator</span><span class="si">}</span><span class="s2"> is not in the interior set&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">edge_set</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">interior</span><span class="p">):</span>
+            <span class="n">stray</span> <span class="o">=</span> <span class="n">edge_set</span> <span class="o">-</span> <span class="n">interior</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;edges </span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">stray</span><span class="p">)</span><span class="si">}</span><span class="s2"> are not in the interior set&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">edge_external_ntas</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Assembled form: caller already knows the severed-neighbor NTAs.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">edge_external_ntas</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">edge_external_ntas</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Compute each edge&#39;s external-neighbor NTAs from the parent&#39;s</span>
+            <span class="c1"># bond graph *before* slicing. When an edge&#39;s externals were</span>
+            <span class="c1"># already pruned (the parent was itself a sliced Fragment.mol),</span>
+            <span class="c1"># fall back to the inherited list so the info isn&#39;t lost.</span>
+            <span class="n">inherited</span> <span class="o">=</span> <span class="n">inherited_edge_ntas</span> <span class="ow">or</span> <span class="p">{}</span>
+            <span class="n">parent_graph</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">generate_graph</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">edge_external_ntas</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">edge_id</span> <span class="ow">in</span> <span class="n">edge_set</span><span class="p">:</span>
+                <span class="n">externals</span> <span class="o">=</span> <span class="p">[</span><span class="n">nbr</span> <span class="k">for</span> <span class="n">nbr</span> <span class="ow">in</span> <span class="n">parent_graph</span><span class="p">[</span><span class="n">edge_id</span><span class="p">]</span>
+                             <span class="k">if</span> <span class="n">nbr</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">interior</span><span class="p">]</span>
+                <span class="n">computed</span> <span class="o">=</span> <span class="p">[</span><span class="n">mol</span><span class="o">.</span><span class="n">atoms</span><span class="p">[</span><span class="n">nbr</span><span class="p">]</span><span class="o">.</span><span class="n">comment</span> <span class="k">for</span> <span class="n">nbr</span> <span class="ow">in</span> <span class="n">externals</span><span class="p">]</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">computed</span> <span class="ow">and</span> <span class="n">edge_id</span> <span class="ow">in</span> <span class="n">inherited</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">edge_external_ntas</span><span class="p">[</span><span class="n">edge_id</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">inherited</span><span class="p">[</span><span class="n">edge_id</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">edge_external_ntas</span><span class="p">[</span><span class="n">edge_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">computed</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mol</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="c1"># Slice the working copy without renumbering so original ids persist.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mol</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="n">interior</span><span class="p">,</span> <span class="n">renumber</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">initiator</span> <span class="o">=</span> <span class="n">initiator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">edges</span> <span class="o">=</span> <span class="n">edge_set</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">charge_edge_depth</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">charge_edge_depth</span><span class="p">)</span>
+
+        <span class="c1"># The single-interior-bond rule is about a *sliced* fragment&#39;s</span>
+        <span class="c1"># boundary anchors. An assembled whole-template (initiator is None)</span>
+        <span class="c1"># keeps every atom, so its edges legitimately have many in-template</span>
+        <span class="c1"># bonds — skip the check there.</span>
+        <span class="k">if</span> <span class="n">initiator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_validate_edge_topology</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">no_remap_ids</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">no_remap_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">no_remap_ids</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">no_remap_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_no_remap_ids</span><span class="p">()</span>
+
+    <span class="c1"># ------------------------------------------------------------------</span>
+    <span class="c1"># Constructors</span>
+    <span class="c1"># ------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="Fragment.from_initiator_and_edges">
+<a class="viewcode-back" href="../../../mooonpy.template.fragment.html#mooonpy.template.fragment.Fragment.from_initiator_and_edges">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_initiator_and_edges</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">initiator</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span>
+                                 <span class="n">max_steps</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">charge_edge_depth</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        BFS outward from ``initiator``; stop at any atom in ``edges``.</span>
+
+<span class="sd">        :param src: Molspace or Fragment to walk.</span>
+<span class="sd">        :param initiator: Atom id to start from.</span>
+<span class="sd">        :param edges: Atom ids that bound the fragment.</span>
+<span class="sd">        :param max_steps: Safety cutoff on BFS depth. A warning is emitted if</span>
+<span class="sd">                          BFS hits this limit before fully enclosing the</span>
+<span class="sd">                          fragment (caller probably forgot an edge id).</span>
+<span class="sd">        :param charge_edge_depth: See :class:`Fragment`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mol</span><span class="p">,</span> <span class="n">inherited</span> <span class="o">=</span> <span class="n">_resolve_input</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+        <span class="n">edge_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">initiator</span> <span class="ow">in</span> <span class="n">edge_set</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;initiator cannot also be in edges&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">initiator</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mol</span><span class="o">.</span><span class="n">atoms</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;initiator=</span><span class="si">{</span><span class="n">initiator</span><span class="si">}</span><span class="s2"> not in mol.atoms&quot;</span><span class="p">)</span>
+
+        <span class="n">graph</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">generate_graph</span><span class="p">()</span>
+        <span class="n">interior</span> <span class="o">=</span> <span class="p">{</span><span class="n">initiator</span><span class="p">}</span>
+        <span class="n">frontier</span> <span class="o">=</span> <span class="p">{</span><span class="n">initiator</span><span class="p">}</span>
+        <span class="n">steps</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">frontier</span> <span class="ow">and</span> <span class="n">steps</span> <span class="o">&lt;</span> <span class="n">max_steps</span><span class="p">:</span>
+            <span class="n">next_frontier</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">id_</span> <span class="ow">in</span> <span class="n">frontier</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">id_</span> <span class="ow">in</span> <span class="n">edge_set</span><span class="p">:</span>
+                    <span class="k">continue</span>  <span class="c1"># don&#39;t walk past an edge</span>
+                <span class="k">for</span> <span class="n">nbr</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">[</span><span class="n">id_</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="n">nbr</span> <span class="ow">in</span> <span class="n">interior</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="n">interior</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">nbr</span><span class="p">)</span>
+                    <span class="n">next_frontier</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">nbr</span><span class="p">)</span>
+            <span class="n">frontier</span> <span class="o">=</span> <span class="n">next_frontier</span>
+            <span class="n">steps</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">frontier</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Fragment.from_initiator_and_edges: BFS hit max_steps=</span><span class="si">{</span><span class="n">max_steps</span><span class="si">}</span><span class="s2"> &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;without enclosing the fragment from initiator </span><span class="si">{</span><span class="n">initiator</span><span class="si">}</span><span class="s2">; &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;some edge ids may be missing.&quot;</span><span class="p">,</span>
+                <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="n">reached_edges</span> <span class="o">=</span> <span class="n">edge_set</span> <span class="o">&amp;</span> <span class="n">interior</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">initiator</span><span class="p">,</span> <span class="n">interior</span><span class="p">,</span> <span class="n">reached_edges</span><span class="p">,</span>
+                   <span class="n">charge_edge_depth</span><span class="o">=</span><span class="n">charge_edge_depth</span><span class="p">,</span>
+                   <span class="n">inherited_edge_ntas</span><span class="o">=</span><span class="n">inherited</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Fragment.from_interior">
+<a class="viewcode-back" href="../../../mooonpy.template.fragment.html#mooonpy.template.fragment.Fragment.from_interior">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_interior</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">initiator</span><span class="p">,</span> <span class="n">interior_ids</span><span class="p">,</span> <span class="n">charge_edge_depth</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Use ``interior_ids`` as-is; derive edges as the boundary atoms</span>
+<span class="sd">        (interior atoms with at least one neighbor outside).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mol</span><span class="p">,</span> <span class="n">inherited</span> <span class="o">=</span> <span class="n">_resolve_input</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+        <span class="n">interior</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">interior_ids</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">initiator</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">interior</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;initiator=</span><span class="si">{</span><span class="n">initiator</span><span class="si">}</span><span class="s2"> is not in interior_ids&quot;</span>
+            <span class="p">)</span>
+        <span class="n">graph</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">generate_graph</span><span class="p">()</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="p">{</span><span class="n">id_</span> <span class="k">for</span> <span class="n">id_</span> <span class="ow">in</span> <span class="n">interior</span>
+                 <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">nbr</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">interior</span> <span class="k">for</span> <span class="n">nbr</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">[</span><span class="n">id_</span><span class="p">])}</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">initiator</span><span class="p">,</span> <span class="n">interior</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span>
+                   <span class="n">charge_edge_depth</span><span class="o">=</span><span class="n">charge_edge_depth</span><span class="p">,</span>
+                   <span class="n">inherited_edge_ntas</span><span class="o">=</span><span class="n">inherited</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Fragment.from_initiator_steps">
+<a class="viewcode-back" href="../../../mooonpy.template.fragment.html#mooonpy.template.fragment.Fragment.from_initiator_steps">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_initiator_steps</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">initiator</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">charge_edge_depth</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Walk exactly ``n_steps`` bonds outward from ``initiator``. The</span>
+<span class="sd">        outermost shell becomes the edge set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mol</span><span class="p">,</span> <span class="n">inherited</span> <span class="o">=</span> <span class="n">_resolve_input</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">initiator</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mol</span><span class="o">.</span><span class="n">atoms</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;initiator=</span><span class="si">{</span><span class="n">initiator</span><span class="si">}</span><span class="s2"> not in mol.atoms&quot;</span><span class="p">)</span>
+        <span class="n">graph</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">generate_graph</span><span class="p">()</span>
+        <span class="n">interior</span><span class="p">,</span> <span class="n">boundary</span> <span class="o">=</span> <span class="n">steps_from_initiator</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">initiator</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">initiator</span><span class="p">,</span> <span class="n">interior</span><span class="p">,</span> <span class="n">boundary</span><span class="p">,</span>
+                   <span class="n">charge_edge_depth</span><span class="o">=</span><span class="n">charge_edge_depth</span><span class="p">,</span>
+                   <span class="n">inherited_edge_ntas</span><span class="o">=</span><span class="n">inherited</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Fragment.assembled">
+<a class="viewcode-back" href="../../../mooonpy.template.fragment.html#mooonpy.template.fragment.Fragment.assembled">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">assembled</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">mol</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">edge_external_ntas</span><span class="p">,</span> <span class="n">no_remap_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wrap an already-built Molspace (e.g. a combined reaction template)</span>
+<span class="sd">        as a Fragment without slicing. ``initiator`` is ``None``.</span>
+
+<span class="sd">        :param mol: The whole-template Molspace.</span>
+<span class="sd">        :param edges: Edge atom ids (in ``mol``&#39;s numbering).</span>
+<span class="sd">        :param edge_external_ntas: ``{edge_id: [nta, ...]}`` severed-neighbor</span>
+<span class="sd">                                   NTAs, already in ``mol``&#39;s numbering.</span>
+<span class="sd">        :param no_remap_ids: Charge-preserved ids, or ``None``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">set</span><span class="p">(</span><span class="n">mol</span><span class="o">.</span><span class="n">atoms</span><span class="p">),</span> <span class="n">edges</span><span class="p">,</span>
+                   <span class="n">edge_external_ntas</span><span class="o">=</span><span class="n">edge_external_ntas</span><span class="p">,</span>
+                   <span class="n">no_remap_ids</span><span class="o">=</span><span class="n">no_remap_ids</span><span class="p">)</span></div>
+
+
+    <span class="c1"># ------------------------------------------------------------------</span>
+    <span class="c1"># Internals</span>
+    <span class="c1"># ------------------------------------------------------------------</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_edge_topology</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Each edge atom must have exactly one bond into the fragment interior.</span>
+<span class="sd">        ``fix bond/react`` matches templates by graph isomorphism with the</span>
+<span class="sd">        edges as anchors; multi-bond edges break that match.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">graph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mol</span><span class="o">.</span><span class="n">generate_graph</span><span class="p">()</span>
+        <span class="n">interior</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mol</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">edge_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">:</span>
+            <span class="n">n_interior</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">nbr</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">[</span><span class="n">edge_id</span><span class="p">]</span> <span class="k">if</span> <span class="n">nbr</span> <span class="ow">in</span> <span class="n">interior</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">n_interior</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Fragment edge atom </span><span class="si">{</span><span class="n">edge_id</span><span class="si">}</span><span class="s2"> has </span><span class="si">{</span><span class="n">n_interior</span><span class="si">}</span><span class="s2"> bonds &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;into the fragment interior; fix bond/react requires &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;exactly 1 for template matching.&quot;</span><span class="p">,</span>
+                    <span class="n">stacklevel</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_no_remap_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">charge_edge_depth</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">graph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mol</span><span class="o">.</span><span class="n">generate_graph</span><span class="p">()</span>
+        <span class="n">keep</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">edge_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="p">:</span>
+            <span class="n">keep</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">find_reachable_neighbors</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">edge_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">charge_edge_depth</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">keep</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
