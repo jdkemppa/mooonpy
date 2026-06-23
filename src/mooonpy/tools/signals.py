@@ -74,7 +74,7 @@ def _butter(ydata: Array1D, wn: float, order: Number) -> np.ndarray:
 
 
 def butter_lowpass(xdata: Optional[Array1D], ydata: Array1D, wn: Union[Number, str] = 'PSD', quadrant: str = 'msr',
-                   order: Number = 2) -> Tuple[np.ndarray,Number,str]:
+                   order: Number = 2, zero_shift: bool = False) -> Tuple[np.ndarray,Number,str]:
     """
     Call butterworth low-pass filter with Quadrant Mirroring padding.
     The original image region is returned fully filtered.
@@ -106,7 +106,15 @@ def butter_lowpass(xdata: Optional[Array1D], ydata: Array1D, wn: Union[Number, s
     ydata = ydata.copy()
 
     if wn == 'PSD':
-        wns, psd = compute_PSD(xdata, ydata)
+        # Ensure closests y-data point to zero is moved to be zero
+        if zero_shift:
+            closests_zero_index = np.argmin(np.abs(ydata - 0))
+            yshift = -ydata[closests_zero_index]
+            ydata_psd = ydata + yshift
+        else:
+            ydata_psd = ydata
+
+        wns, psd = compute_PSD(xdata, ydata_psd)
         wn = first_value_cross(wns, psd)
         if wn == 0: wn=wns[1] # use the lowest allowed value
 
