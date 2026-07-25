@@ -81,7 +81,7 @@ class ForceField(object):
         >>> sorted(mol.ff.masses)  # one entry per element, in ptable order
         [1, 2, 3, 4]   # C, H, O, N
         """
-        ptable = mooonpy.molspace.periodic_table.Elements()
+        ptable = mooonpy.molspace.periodic_table.PeriodicTable()
 
         # Resolve every existing type's element label.
         type_to_element = {}
@@ -160,7 +160,7 @@ class ForceField(object):
         from mooonpy.molspace.atoms import Atoms
         if not isinstance(atoms, Atoms):
             raise TypeError('atoms must be a Atoms object')
-        pt = mooonpy.molspace.periodic_table.Elements()
+        pt = mooonpy.molspace.periodic_table.PeriodicTable()
         if elements is None:
             elements_used = set()
             for atom in atoms.values():

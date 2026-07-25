@@ -18,7 +18,7 @@ def find(mol, periodicity):
     for element in elements:
         ptable = mol.ptable.elements[element]
         valences[element] = ptable.valence
-        atom_sizes[element] = ptable.radii['vdw']
+        atom_sizes[element] = ptable.radius['vdw']
     
     # Set cutoff as twice that largest atoms vdw radii
     cutoff = 2*atom_sizes[max(atom_sizes, key=atom_sizes.get)]

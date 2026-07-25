@@ -7,7 +7,7 @@ from mooonpy.molspace.force_field import ForceField
 from mooonpy.molspace.distance import domain_decomp_13, pairs_from_bonds, pairs_from_domains, ADI_from_bonds, \
     BADI_by_type
 from mooonpy.molspace.graph_theory import interface, ring_analysis
-from mooonpy.molspace.periodic_table import Elements as Ptable
+from mooonpy.molspace.periodic_table import PeriodicTable as Ptable
 from mooonpy.molspace.bonds_from_distances import find as find_bonds_from_distances
 from mooonpy.molspace import remap as _remap
 
