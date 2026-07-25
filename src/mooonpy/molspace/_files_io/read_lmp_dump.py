@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import warnings
-from typing import Union, Optional
-from mooonpy.tools.file_utils import smart_open, Path
+from typing import Optional
+
+from mooonpy import Path
+from mooonpy.tools.file_utils import smart_open
 from mooonpy.tools.string_utils import string2digit
 
 _Molspace = None
@@ -16,7 +18,7 @@ def _get_molspace_class():
         _Molspace = Molspace
     return _Molspace
 
-def read(filename: Union[str, Path], steps: Optional[int|list]=None, mol=None):
+def read(filename: str | Path, steps: Optional[int|list]=None, mol=None):
     """
     Read dump file into Molspace.
     steps is a whitelist of steps to read. An int will return the first matching molspace,

@@ -1,37 +1,50 @@
 # -*- coding: utf-8 -*-
 import importlib
-import os
+from typing import TYPE_CHECKING
 
-from .rcsetup import rcParams
+_aliases = {
+    'Molspace': '.molspace.molspace',
+    'DocExamples': '.molspace',
+    'Thermospace': '.thermospace.thermospace',
+    'Path': '.tools.file_utils',
+    'ReactionTemplate': '.template.reaction',
+    # submodules
+    'molspace': '.molspace',
+    'programs': '.programs',
+    'thermospace': '.thermospace',
+    'tools': '.tools',
+    'xrdspace': '.xrdspace',
+    'fitting': '.fitting',
+    'template': '.template',
+}
 
-# Generate "aliased" imports
-from .molspace.molspace import Molspace as Molspace
-from .molspace import doc_examples as DocExamples
+__all__ = list(_aliases.keys())
 
-from .thermospace.thermospace import Thermospace as Thermospace ## TDM
-from .tools.file_utils import Path as Path ## TDM
-
-from .template.reaction import ReactionTemplate as ReactionTemplate
-
-
-from .rcsetup import rcParams
-
-__all__ = ['Molspace',
-           'DocExamples',
-           'Thermospace',
-           'Path',
-           'ReactionTemplate',
-]
+if TYPE_CHECKING: # style/type hints
+    from .fitting import fitting as fitting
+    from .molspace import doc_examples as DocExamples
+    from .molspace.molspace import Molspace
+    from .programs import programs as programs
+    from .template.reaction import ReactionTemplate
+    from .thermospace.thermospace import Thermospace
+    from .tools.file_utils import Path
 
 
-# Get the current directory (the package root)
-_package_dir = os.path.dirname(__file__)
+def __getattr__(name: str):
+    if name in _aliases:
+        module = importlib.import_module(_aliases[name], __package__)
+        try:
+            obj = getattr(module, name)
+        except AttributeError:
+            if module.__name__.split('.')[-1] == name:
+                obj = module
+            else:
+                raise
 
+        globals()[name] = obj # cache module for later lookups
+        return obj
 
-# List of submodules/folders to import
-_submodules = ['guis', 'molspace', 'programs', 'thermospace', 'tools', 'xrdspace','fitting', 'template']
-for name in _submodules:
-    if os.path.isdir(os.path.join(_package_dir, name)):
-        module = importlib.import_module(f'.{name}', __package__)
-        globals()[name] = module
-        __all__.append(name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+def __dir__():
+    return sorted(list(globals().keys()) + __all__)

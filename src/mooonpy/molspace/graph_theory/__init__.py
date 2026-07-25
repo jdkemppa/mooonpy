@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-import importlib
 
+from . import ring_analysis
+from . import interface
 
-__all__ = ['ring_analysis', 'interface'
+__all__ = [
+    'ring_analysis',
+    'interface',
 ]
-
-for name in __all__:
-    module = importlib.import_module(f'.{name}', __package__)
-    globals()[name] = module

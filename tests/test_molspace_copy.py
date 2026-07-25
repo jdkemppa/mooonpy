@@ -24,7 +24,6 @@ import os
 import sys
 
 import pytest
-
 import mooonpy  # noqa: E402
 
 DETDA = os.path.join(

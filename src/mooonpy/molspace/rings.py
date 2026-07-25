@@ -9,6 +9,7 @@ class Ring(object):
 
     def __init__(self, in_set=None, mol=None):
         self.mol = mol
+        self.molid = 0
         if in_set is None:
             self.members = set()
         else:
@@ -35,6 +36,14 @@ class Ring(object):
             num = tuple(num[i] + atom_coords[i] for i in range(3))
 
         return tuple(num[i] / len(self.members) for i in range(3))
+
+    def get_ring_molid(self):
+        ### THIS SHOULD CHECK THAT ALL MEMBERS SHARE A MOLID
+        # ...IT DOES NOT (yet)
+        molid_list = []
+        for atom in self.members:
+            molid_list.append(atom.molid)
+        return molid_list[0]
 
     def reset_ring_image(self):
         positions = np.empty((len(self.members), 3,))

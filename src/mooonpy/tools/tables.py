@@ -3,9 +3,9 @@ import numpy as np
 from copy import deepcopy
 from typing import Optional, Tuple, List, Dict
 
-from .string_utils import _col_convert, string2digit
-from .math_utils import aggregate_fun
-from .file_utils import Path
+from mooonpy.tools.string_utils import _col_convert, string2digit
+from mooonpy.tools.math_utils import aggregate_fun
+from mooonpy import Path
 
 
 class Table(object):

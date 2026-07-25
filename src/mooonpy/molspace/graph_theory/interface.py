@@ -5,8 +5,7 @@ The main purpose is to provide an interface between a Molspace instance
 and the graph data structure used in all the graph theory supported 
 workflows.
 """
-#from ..molspace import Molspace
-# from mooonpy.molspace.molspace import Molspace
+
 from collections import defaultdict
 def generate_graph(mol):
     """

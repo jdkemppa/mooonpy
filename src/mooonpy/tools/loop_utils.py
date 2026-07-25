@@ -4,7 +4,7 @@ from collections import defaultdict
 from typing import Dict, List, Tuple, Union, Any, Optional, Iterator, Iterable
 from dataclasses import dataclass
 
-from mooonpy.tools.file_utils import Path
+from mooonpy import Path
 
 
 @dataclass

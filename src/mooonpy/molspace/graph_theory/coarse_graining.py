@@ -79,6 +79,7 @@ def add_center_atom(mol, ring_sizes=(5, 6, 7), method='centroid'):
 
         atom.type = u_type
         atom.id = atom_id_iterator
+        atom.molid = ring.get_ring_molid()
         center_ids.append((atom.id))  # add to list of ids for graph theory
         mol.atoms[atom_id_iterator] = atom  # add the atom to the system
 
@@ -128,12 +129,11 @@ def coarsen_by_rings(mol, ring_sizes=(5, 6, 7), depth=1, center_method='centroid
         if remove_old_atoms:
             # remove non-center atoms:
             remove_ids = []
-            for atom in mol.atoms:
+            for atom in mol.atoms:            #create list of all atoms (big list)
                 remove_ids.append(atom)
-
-            for center in center_ids:
+                mol.atoms[atom].type = 1
+            for center in center_ids:         # remove ring-centers from big list
                 remove_ids.remove(center)
+            mol.remove_atoms(remove_ids)      # remove non-centers from list
 
-            mol.remove_atoms(remove_ids)
-            mol.update_elements()
     return mol

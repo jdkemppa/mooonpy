@@ -11,7 +11,7 @@ Houghton, MI 49931
 Revision 1.1
 July 5, 2025
 """
-from typing import Union, Optional, List, Tuple
+from typing import List, Tuple
 
 
 class Box:
