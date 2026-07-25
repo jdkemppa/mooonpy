@@ -1,0 +1,7 @@
+mooonpy.fitting.fitting module
+==============================
+
+.. automodule:: mooonpy.fitting.fitting
+   :members:
+   :show-inheritance:
+   :undoc-members:

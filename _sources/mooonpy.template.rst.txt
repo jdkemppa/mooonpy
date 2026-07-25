@@ -1,0 +1,18 @@
+mooonpy.template package
+========================
+
+.. automodule:: mooonpy.template
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 8
+
+   mooonpy.template.fragment
+   mooonpy.template.mapfile
+   mooonpy.template.ntafile
+   mooonpy.template.reaction

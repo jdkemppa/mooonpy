@@ -1,0 +1,7 @@
+mooonpy.molspace.molspace module
+================================
+
+.. automodule:: mooonpy.molspace.molspace
+   :members:
+   :show-inheritance:
+   :undoc-members:

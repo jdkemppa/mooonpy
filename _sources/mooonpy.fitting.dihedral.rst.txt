@@ -1,0 +1,7 @@
+mooonpy.fitting.dihedral module
+===============================
+
+.. automodule:: mooonpy.fitting.dihedral
+   :members:
+   :show-inheritance:
+   :undoc-members:

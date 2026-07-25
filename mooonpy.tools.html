@@ -1,0 +1,960 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mooonpy.tools package &mdash; mooonpy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7026087e"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="mooonpy.tools.file_utils module" href="mooonpy.tools.file_utils.html" />
+    <link rel="prev" title="mooonpy.programs.regression_fringe_response module" href="mooonpy.programs.regression_fringe_response.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mooonpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Using pip from PyPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#using-pip-locally">Using pip locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#dependency-list">Dependency List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#simple-python-example">Simple Python example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MolSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.molspace.html">mooonpy.molspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">ThermoSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.thermospace.html">mooonpy.thermospace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">XRDSpace:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.xrdspace.html">mooonpy.xrdspace package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Programs:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.programs.html">mooonpy.programs package</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">mooonpy.tools package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mooonpy.tools.Cartesian"><code class="docutils literal notranslate"><span class="pre">Cartesian</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Cartesian.generate"><code class="docutils literal notranslate"><span class="pre">Cartesian.generate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Cartesian.generate_list"><code class="docutils literal notranslate"><span class="pre">Cartesian.generate_list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Cartesian.get_combined_index"><code class="docutils literal notranslate"><span class="pre">Cartesian.get_combined_index()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mooonpy.tools.ColorMap"><code class="docutils literal notranslate"><span class="pre">ColorMap</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mooonpy.tools.Path"><code class="docutils literal notranslate"><span class="pre">Path</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Path.basename"><code class="docutils literal notranslate"><span class="pre">Path.basename()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Path.dir"><code class="docutils literal notranslate"><span class="pre">Path.dir()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Path.ext"><code class="docutils literal notranslate"><span class="pre">Path.ext()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Path.find_prefix"><code class="docutils literal notranslate"><span class="pre">Path.find_prefix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Path.format"><code class="docutils literal notranslate"><span class="pre">Path.format()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Path.ignore_nonnumeric_priority_wild"><code class="docutils literal notranslate"><span class="pre">Path.ignore_nonnumeric_priority_wild</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Path.locate"><code class="docutils literal notranslate"><span class="pre">Path.locate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Path.locate_all"><code class="docutils literal notranslate"><span class="pre">Path.locate_all()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Path.matches"><code class="docutils literal notranslate"><span class="pre">Path.matches()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Path.natsort_right_to_left"><code class="docutils literal notranslate"><span class="pre">Path.natsort_right_to_left</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Path.new_ext"><code class="docutils literal notranslate"><span class="pre">Path.new_ext()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Path.open"><code class="docutils literal notranslate"><span class="pre">Path.open()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Path.recent"><code class="docutils literal notranslate"><span class="pre">Path.recent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Path.root"><code class="docutils literal notranslate"><span class="pre">Path.root()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Path.search_common"><code class="docutils literal notranslate"><span class="pre">Path.search_common</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Path.search_prefixes"><code class="docutils literal notranslate"><span class="pre">Path.search_prefixes</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Path.swap_prefix"><code class="docutils literal notranslate"><span class="pre">Path.swap_prefix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mooonpy.tools.Table"><code class="docutils literal notranslate"><span class="pre">Table</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Table.col_fun"><code class="docutils literal notranslate"><span class="pre">Table.col_fun()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Table.console"><code class="docutils literal notranslate"><span class="pre">Table.console()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Table.copy"><code class="docutils literal notranslate"><span class="pre">Table.copy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Table.csv"><code class="docutils literal notranslate"><span class="pre">Table.csv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Table.plot"><code class="docutils literal notranslate"><span class="pre">Table.plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooonpy.tools.Table.yield_line"><code class="docutils literal notranslate"><span class="pre">Table.yield_line()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.file_utils.html">mooonpy.tools.file_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.loop_utils.html">mooonpy.tools.loop_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.math_utils.html">mooonpy.tools.math_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.misc_utils.html">mooonpy.tools.misc_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.signals.html">mooonpy.tools.signals module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.string_utils.html">mooonpy.tools.string_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html">mooonpy.tools.tables module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Example: 1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mooonpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">mooonpy.tools package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mooonpy.tools.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mooonpy.tools">
+<span id="mooonpy-tools-package"></span><h1>mooonpy.tools package<a class="headerlink" href="#module-mooonpy.tools" title="Link to this heading"></a></h1>
+<p>Kept as lazy imports since some of the math and signals analysis can bog
+down import times</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mooonpy.tools.Cartesian">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">mooonpy.tools.</span></span><span class="sig-name descname"><span class="pre">Cartesian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cartesian_sets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/tools/loop_utils.html#Cartesian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Cartesian" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Enhanced cartesian product generator with index tracking and conditional dimensions.</p>
+<p>Initialize Cartesian generator.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>cartesian_sets: Dictionary of cart_key: iterable pairs
+delim: Delimiter for parsing dimension.condition.name syntax</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Cartesian.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_combined_indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.CartesianResult" title="mooonpy.tools.loop_utils.CartesianResult"><span class="pre">CartesianResult</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/mooonpy/tools/loop_utils.html#Cartesian.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Cartesian.generate" title="Link to this definition"></a></dt>
+<dd><p>Generate cartesian product permutations.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>return_combined_indices: List of dimension name tuples for combined indexing</dt><dd><p>e.g., [(‘R’, ‘dir’)] to get combined R+dir index</p>
+</dd>
+</dl>
+</dd>
+<dt>Yields:</dt><dd><p>CartesianResult containing {name: value} pairs with index attributes populated</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Cartesian.generate_list">
+<span class="sig-name descname"><span class="pre">generate_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.CartesianResult" title="mooonpy.tools.loop_utils.CartesianResult"><span class="pre">CartesianResult</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/mooonpy/tools/loop_utils.html#Cartesian.generate_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Cartesian.generate_list" title="Link to this definition"></a></dt>
+<dd><p>Generate full list of permutations (convenience method).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Cartesian.get_combined_index">
+<span class="sig-name descname"><span class="pre">get_combined_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dimension_combo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/mooonpy/tools/loop_utils.html#Cartesian.get_combined_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Cartesian.get_combined_index" title="Link to this definition"></a></dt>
+<dd><p>Calculate combined index for given dimensions from a value dictionary.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>dimension_combo: Tuple of dimension names
+value_dict: Dictionary of {name: value} pairs</p>
+</dd>
+<dt>Returns:</dt><dd><p>Combined index for the specified dimensions</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mooonpy.tools.ColorMap">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">mooonpy.tools.</span></span><span class="sig-name descname"><span class="pre">ColorMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'coolwarm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">high</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/tools/misc_utils.html#ColorMap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.ColorMap" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ListListTable" title="mooonpy.tools.tables.ListListTable"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListListTable</span></code></a></p>
+<p>Read csv files of RGB values with a similar format to matplotlib.colormaps.
+root/tools/lookups contains some example custom colormaps, more can be added by adding files to this directory.</p>
+<dl class="simple">
+<dt><strong>Currently Supported Colormaps</strong></dt><dd><ul class="simple">
+<li><p>coolwarm: blue to light to red diverging map (same as matplotlib?)</p></li>
+<li><p>cooloverwarm: blue to grey to red diverging map</p></li>
+<li><p>coswan: pink to grey to green diverging map</p></li>
+<li><p>pyrolyze: green to grey to dark purple diverging map</p></li>
+<li><p>redblack: red to dark grey linearish map</p></li>
+</ul>
+</dd>
+</dl>
+<p>Read csv files of RGB vales into a ListListTable object.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mooonpy.tools.Path">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">mooonpy.tools.</span></span><span class="sig-name descname"><span class="pre">Path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path" title="mooonpy.tools.file_utils.Path"><span class="pre">Path</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/tools/file_utils.html#Path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Path" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+<p><em>As computational scientists, half our jobs is file management and manipulation,
+the Path class contains several aliases for the os.path and glob.glob modules
+to make processing data easier. All mooonpy functions internally use this class
+for inputs of files or folders. Relevant strings are converted to path on entering functions</em></p>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<p>A copy of the code used in these examples is avalible in rootmooonpyexamplestoolspath_utilsexample_Path.py</p>
+<dl>
+<dt><strong>Basic Path Operations</strong></dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">project_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;Project/Data/Analysis&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">filename</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;results.txt&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">full_path</span> <span class="o">=</span> <span class="n">project_path</span> <span class="o">/</span> <span class="n">filename</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">full_path</span><span class="p">)</span>
+<span class="go">Project\Data\Analysis\results.txt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">full_path</span><span class="p">))</span>
+<span class="go">root\mooonpy\examples\tools\path_utils\Project\Data\Analysis\results.txt</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>Path Parsing</strong></dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sample_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;experiments/run_001/data.csv.gz&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">sample_path</span><span class="o">.</span><span class="n">dir</span><span class="p">())</span>
+<span class="go">experiments\run_001</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">sample_path</span><span class="o">.</span><span class="n">basename</span><span class="p">())</span>
+<span class="go">data.csv.gz</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">sample_path</span><span class="o">.</span><span class="n">root</span><span class="p">())</span>
+<span class="go">data.csv</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">sample_path</span><span class="o">.</span><span class="n">ext</span><span class="p">())</span>
+<span class="go">.gz</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>Extension Manipulation</strong></dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;analysis/results.txt&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data_file</span><span class="o">.</span><span class="n">new_ext</span><span class="p">(</span><span class="s1">&#39;.json&#39;</span><span class="p">))</span>
+<span class="go">analysis\results.json</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data_file</span><span class="o">.</span><span class="n">new_ext</span><span class="p">(</span><span class="s1">&#39;.txt.gz&#39;</span><span class="p">))</span>
+<span class="go">analysis\results.txt.gz</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>File Existence</strong></dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">current_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fake_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;nonexistent.txt&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">current_file</span><span class="p">))</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">fake_file</span><span class="p">))</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>Wildcard Matching</strong></dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">txt_pattern</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;temp_dir/*.txt&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">txt_pattern</span><span class="o">.</span><span class="n">matches</span><span class="p">())</span>
+<span class="go">[&#39;test1.txt&#39;, &#39;test2.txt&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;temp_dir/*&#39;</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">basename</span><span class="p">())</span>
+<span class="go">data.csv</span>
+<span class="go">readme.md</span>
+<span class="go">test1.txt</span>
+<span class="go">test2.txt</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>Recent File Finding</strong></dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pattern</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;temp_dir/*.txt&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">pattern</span><span class="o">.</span><span class="n">recent</span><span class="p">())</span>
+<span class="go">newest_file.txt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">pattern</span><span class="o">.</span><span class="n">recent</span><span class="p">(</span><span class="n">oldest</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="go">old_file.txt</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>Smart File Opening</strong></dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mypath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">mypath</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">)</span>
+<span class="go"># Creates regular file</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">compressed_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;data.txt.gz&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># compressed_path.open() would use gzip automatically</span>
+<span class="go"># Would automatically handle gzip compression</span>
+<span class="go">** Absolute Path Conversion **</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rel_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;data/file.txt&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">rel_path</span><span class="p">))</span>
+<span class="go">root\mooonpy\examples\tools\path_utils\data\file.txt</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>__truediv__ __bool__ __abs__ and __iter__ docstrings in config?</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Path.basename">
+<span class="sig-name descname"><span class="pre">basename</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path" title="mooonpy.tools.file_utils.Path"><span class="pre">Path</span></a></span></span><a class="reference internal" href="_modules/mooonpy/tools/file_utils.html#Path.basename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Path.basename" title="Link to this definition"></a></dt>
+<dd><p>Split Path to filename and extention.</p>
+<p>Alias for os.path.basename</p>
+<dl class="field-list">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Path of file</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#mooonpy.tools.Path" title="mooonpy.tools.Path">Path</a></p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">MyPath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;Project/Monomers/DETDA.mol&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">MyPath</span><span class="o">.</span><span class="n">basename</span><span class="p">())</span>
+<span class="go">&#39;DETDA.mol&#39;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Path.dir">
+<span class="sig-name descname"><span class="pre">dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path" title="mooonpy.tools.file_utils.Path"><span class="pre">Path</span></a></span></span><a class="reference internal" href="_modules/mooonpy/tools/file_utils.html#Path.dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Path.dir" title="Link to this definition"></a></dt>
+<dd><p>Split Path to directory.</p>
+<p>Alias for os.path.dirname.</p>
+<dl class="field-list">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Path to directory</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#mooonpy.tools.Path" title="mooonpy.tools.Path">Path</a></p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">MyPath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;Project/Monomers/DETDA.mol&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">MyPath</span><span class="o">.</span><span class="n">dir</span><span class="p">())</span>
+<span class="go">&#39;Project\Monomers&#39;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Path.ext">
+<span class="sig-name descname"><span class="pre">ext</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path" title="mooonpy.tools.file_utils.Path"><span class="pre">Path</span></a></span></span><a class="reference internal" href="_modules/mooonpy/tools/file_utils.html#Path.ext"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Path.ext" title="Link to this definition"></a></dt>
+<dd><p>Split Path to just extention.</p>
+<p>Alias for os.path.basename and splitext.</p>
+<dl class="field-list">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>extention as Path</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#mooonpy.tools.Path" title="mooonpy.tools.Path">Path</a></p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">MyPath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;Project/Monomers/DETDA.mol&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">MyPath</span><span class="o">.</span><span class="n">ext</span><span class="p">())</span>
+<span class="go">&#39;.mol&#39;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Path.find_prefix">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">find_prefix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">common</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path" title="mooonpy.tools.file_utils.Path"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/mooonpy/tools/file_utils.html#Path.find_prefix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Path.find_prefix" title="Link to this definition"></a></dt>
+<dd><p>Extract the prefix of <em>path</em> up to and including <em>common</em>, and
+optionally append it to <a class="reference internal" href="#mooonpy.tools.Path.search_prefixes" title="mooonpy.tools.Path.search_prefixes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">search_prefixes</span></code></a>.</p>
+<p>When <em>path</em> is omitted the caller’s <code class="docutils literal notranslate"><span class="pre">__file__</span></code> is used automatically,
+so a script located inside the common directory tree only needs to supply
+the common directory name.  When <em>common</em> is omitted the already-stored
+<a class="reference internal" href="#mooonpy.tools.Path.search_common" title="mooonpy.tools.Path.search_common"><code class="xref py py-attr docutils literal notranslate"><span class="pre">search_common</span></code></a> is reused, allowing multiple calls for different
+drives without repeating the directory name.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>common</strong> (<em>str</em><em> or </em><em>None</em>) – Shared directory name, e.g. <code class="docutils literal notranslate"><span class="pre">'research'</span></code>.  Omit to
+reuse <a class="reference internal" href="#mooonpy.tools.Path.search_common" title="mooonpy.tools.Path.search_common"><code class="xref py py-attr docutils literal notranslate"><span class="pre">search_common</span></code></a> (must have been set earlier).</p></li>
+<li><p><strong>path</strong> (<em>str</em><em>, </em><a class="reference internal" href="#mooonpy.tools.Path" title="mooonpy.tools.Path"><em>Path</em></a><em>, or </em><em>None</em>) – Path containing <em>common</em> as a component.  Omit to use
+the calling script’s <code class="docutils literal notranslate"><span class="pre">__file__</span></code> automatically.</p></li>
+<li><p><strong>add</strong> (<em>bool</em>) – Append the extracted prefix to <a class="reference internal" href="#mooonpy.tools.Path.search_prefixes" title="mooonpy.tools.Path.search_prefixes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">search_prefixes</span></code></a>
+(default <code class="docutils literal notranslate"><span class="pre">True</span></code>).  Duplicates are skipped.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Extracted prefix <code class="docutils literal notranslate"><span class="pre">Path</span></code>, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if <em>common</em> was
+not found in <em>path</em>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mooonpy.tools.Path" title="mooonpy.tools.Path">Path</a> or None</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># In a script at C:/research/sims/run_001/analysis.py:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Path</span><span class="o">.</span><span class="n">find_prefix</span><span class="p">(</span><span class="s1">&#39;research&#39;</span><span class="p">)</span>           <span class="c1"># auto-detects C:\research</span>
+<span class="go">Path(&#39;C:\\research&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Path</span><span class="o">.</span><span class="n">find_prefix</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;D:/backups/research/sims/run_001/analysis.py&#39;</span><span class="p">)</span>
+<span class="go">Path(&#39;D:\\backups\\research&#39;)          # reuses search_common=&#39;research&#39;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Path.format">
+<span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/mooonpy/tools/file_utils.html#Path.format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Path.format" title="Link to this definition"></a></dt>
+<dd><p>Return a formatted version of S, using substitutions from args and kwargs.
+The substitutions are identified by braces (‘{’ and ‘}’).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mooonpy.tools.Path.ignore_nonnumeric_priority_wild">
+<span class="sig-name descname"><span class="pre">ignore_nonnumeric_priority_wild</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="headerlink" href="#mooonpy.tools.Path.ignore_nonnumeric_priority_wild" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Path.locate">
+<span class="sig-name descname"><span class="pre">locate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path" title="mooonpy.tools.file_utils.Path"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/mooonpy/tools/file_utils.html#Path.locate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Path.locate" title="Link to this definition"></a></dt>
+<dd><p>Locate this path across <a class="reference internal" href="#mooonpy.tools.Path.search_prefixes" title="mooonpy.tools.Path.search_prefixes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">search_prefixes</span></code></a>.</p>
+<p>Behaviour depends on <em>recent</em> and whether the path contains a <code class="docutils literal notranslate"><span class="pre">*</span></code>
+wildcard:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">recent=None</span></code> <em>(default)</em> — <strong>prefix-order priority</strong></p>
+<ul>
+<li><p><em>No wildcard</em>: return the first prefix for which the exact file
+exists.</p></li>
+<li><p><em>Wildcard</em>: return the glob <strong>pattern</strong> (<code class="docutils literal notranslate"><span class="pre">*</span></code> kept in place) for
+the first prefix that has any matches.  Pass that result to
+<a class="reference internal" href="#mooonpy.tools.Path.matches" title="mooonpy.tools.Path.matches"><code class="xref py py-meth docutils literal notranslate"><span class="pre">matches()</span></code></a> or iterate over it to expand the files.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">recent=True</span></code> — return the <strong>most recently modified</strong> file across
+all prefixes (wildcards expanded via <a class="reference internal" href="#mooonpy.tools.Path.locate_all" title="mooonpy.tools.Path.locate_all"><code class="xref py py-meth docutils literal notranslate"><span class="pre">locate_all()</span></code></a>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">recent=False</span></code> — return the <strong>oldest</strong> file across all prefixes.</p></li>
+</ul>
+<p>Naming note: <code class="docutils literal notranslate"><span class="pre">locate</span></code> avoids shadowing the built-in
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">str.find()</span></code> method.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>recent</strong> – <code class="docutils literal notranslate"><span class="pre">None</span></code> for prefix-order (default), <code class="docutils literal notranslate"><span class="pre">True</span></code> for
+newest, <code class="docutils literal notranslate"><span class="pre">False</span></code> for oldest.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Matched <code class="docutils literal notranslate"><span class="pre">Path</span></code>, or <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mooonpy.tools.Path" title="mooonpy.tools.Path">Path</a> or None</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Path</span><span class="o">.</span><span class="n">search_prefixes</span> <span class="o">=</span> <span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;C:/research&#39;</span><span class="p">),</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;D:/backups/research&#39;</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Path</span><span class="o">.</span><span class="n">search_common</span>   <span class="o">=</span> <span class="s1">&#39;research&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;sims/run_001/output.log&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">locate</span><span class="p">()</span>
+<span class="go">Path(&#39;C:\\research\\sims\\run_001\\output.log&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;sims/*/output.log&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">locate</span><span class="p">()</span>          <span class="c1"># returns the pattern</span>
+<span class="go">Path(&#39;C:\\research\\sims\\*\\output.log&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;sims/*/output.log&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">locate</span><span class="p">(</span><span class="n">recent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">Path(&#39;D:\\backups\\research\\sims\\run_002\\output.log&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;sims/*/output.log&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">locate</span><span class="p">(</span><span class="n">recent</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="go">Path(&#39;C:\\research\\sims\\run_001\\output.log&#39;)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Path.locate_all">
+<span class="sig-name descname"><span class="pre">locate_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">whitelist_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blacklist_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path" title="mooonpy.tools.file_utils.Path"><span class="pre">Path</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/mooonpy/tools/file_utils.html#Path.locate_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Path.locate_all" title="Link to this definition"></a></dt>
+<dd><p>Return all glob matches of this path across every prefix in
+<a class="reference internal" href="#mooonpy.tools.Path.search_prefixes" title="mooonpy.tools.Path.search_prefixes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">search_prefixes</span></code></a>.</p>
+<p>Wildcards are expanded on each prefix independently, so
+<code class="docutils literal notranslate"><span class="pre">Path('sims/*/output.log').locate_all()</span></code> collects every matching file
+across all configured drives.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>whitelist_ext</strong> – If given, only include paths with these extensions.</p></li>
+<li><p><strong>blacklist_ext</strong> – If given, exclude paths with these extensions.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>All matching <code class="docutils literal notranslate"><span class="pre">Path</span></code> objects across all prefixes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#mooonpy.tools.Path" title="mooonpy.tools.Path">Path</a>]</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Path</span><span class="o">.</span><span class="n">search_prefixes</span> <span class="o">=</span> <span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;C:/research&#39;</span><span class="p">),</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;D:/backups/research&#39;</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Path</span><span class="o">.</span><span class="n">search_common</span>   <span class="o">=</span> <span class="s1">&#39;research&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;sims/*/output.log&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">locate_all</span><span class="p">()</span>
+<span class="go">[Path(&#39;C:\\research\\sims\\run_001\\output.log&#39;),</span>
+<span class="go"> Path(&#39;D:\\backups\\research\\sims\\run_001\\output.log&#39;),</span>
+<span class="go"> Path(&#39;D:\\backups\\research\\sims\\run_002\\output.log&#39;)]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Path.matches">
+<span class="sig-name descname"><span class="pre">matches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">whitelist_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blacklist_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path" title="mooonpy.tools.file_utils.Path"><span class="pre">Path</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/mooonpy/tools/file_utils.html#Path.matches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Path.matches" title="Link to this definition"></a></dt>
+<dd><p>Finds matching paths with a * (asterisk) wildcard character.</p>
+<dl class="field-list">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of matching Paths</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="#mooonpy.tools.Path" title="mooonpy.tools.Path">Path</a>]</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">MyWildcard</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;*.mol&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">matches</span><span class="p">(</span><span class="n">MyWildcard</span><span class="p">))</span>
+<span class="go">[Path(&#39;DETDA.mol&#39;), Path(&#39;DEGBF.mol&#39;)]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mooonpy.tools.Path.natsort_right_to_left">
+<span class="sig-name descname"><span class="pre">natsort_right_to_left</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></span><a class="headerlink" href="#mooonpy.tools.Path.natsort_right_to_left" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Path.new_ext">
+<span class="sig-name descname"><span class="pre">new_ext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ext</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path" title="mooonpy.tools.file_utils.Path"><span class="pre">Path</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path" title="mooonpy.tools.file_utils.Path"><span class="pre">Path</span></a></span></span><a class="reference internal" href="_modules/mooonpy/tools/file_utils.html#Path.new_ext"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Path.new_ext" title="Link to this definition"></a></dt>
+<dd><p>Replace extension on a Path with a new extension.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ext</strong> (<em>str</em><em> or </em><a class="reference internal" href="#mooonpy.tools.Path" title="mooonpy.tools.Path"><em>Path</em></a>) – new extension including delimeter.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>replaced Path</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mooonpy.tools.Path" title="mooonpy.tools.Path">Path</a></p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">MyPath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;Project/Monomers/DETDA.mol&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">MyPath</span><span class="o">.</span><span class="n">new_ext</span><span class="p">(</span><span class="s1">&#39;.data&#39;</span><span class="p">))</span>
+<span class="go">&#39;Project/Monomers/DETDA.data&#39;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Path.open">
+<span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/tools/file_utils.html#Path.open"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Path.open" title="Link to this definition"></a></dt>
+<dd><p>Open path with smart_open</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mode</strong> (<em>str</em>) – Open mode, usually ‘r’ or ‘a’</p></li>
+<li><p><strong>encoding</strong> (<em>str</em>) – File encoding</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>opened file as object</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>File Object</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">MyPath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;Project/Monomers/DETDA.mol&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">MyFileObj</span> <span class="o">=</span> <span class="n">MyPath</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Path.recent">
+<span class="sig-name descname"><span class="pre">recent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">oldest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path" title="mooonpy.tools.file_utils.Path"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/mooonpy/tools/file_utils.html#Path.recent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Path.recent" title="Link to this definition"></a></dt>
+<dd><p>Find wildcard matches and return the Path of the most recently modified file.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>oldest</strong> (<em>bool</em>) – Reverses direction and finds least recently modified file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path of most recently modified file</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mooonpy.tools.Path" title="mooonpy.tools.Path">Path</a></p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">MyWildcard</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;Template_*.lmpmol&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">recent</span><span class="p">())</span>
+<span class="go">&#39;Template_1_v10_final_realthistime.lmpmol&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">recent</span><span class="p">(</span><span class="n">oldest</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="go">&#39;Template_1.lmpmol&#39;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Path.root">
+<span class="sig-name descname"><span class="pre">root</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path" title="mooonpy.tools.file_utils.Path"><span class="pre">Path</span></a></span></span><a class="reference internal" href="_modules/mooonpy/tools/file_utils.html#Path.root"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Path.root" title="Link to this definition"></a></dt>
+<dd><p>Split Path to filename with no extention.</p>
+<p>Alias for os.path.basename and splitext.</p>
+<dl class="field-list">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Path of filename</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#mooonpy.tools.Path" title="mooonpy.tools.Path">Path</a></p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mooonpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">MyPath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;Project/Monomers/DETDA.mol&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">MyPath</span><span class="o">.</span><span class="n">root</span><span class="p">())</span>
+<span class="go">&#39;DETDA&#39;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mooonpy.tools.Path.search_common">
+<span class="sig-name descname"><span class="pre">search_common</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#mooonpy.tools.Path.search_common" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mooonpy.tools.Path.search_prefixes">
+<span class="sig-name descname"><span class="pre">search_prefixes</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#mooonpy.tools.Path.search_prefixes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Path.swap_prefix">
+<span class="sig-name descname"><span class="pre">swap_prefix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path" title="mooonpy.tools.file_utils.Path"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/mooonpy/tools/file_utils.html#Path.swap_prefix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Path.swap_prefix" title="Link to this definition"></a></dt>
+<dd><p>Return a new path with this path’s prefix replaced by <em>target</em>.</p>
+<p>Strips everything up to and including <a class="reference internal" href="#mooonpy.tools.Path.search_common" title="mooonpy.tools.Path.search_common"><code class="xref py py-attr docutils literal notranslate"><span class="pre">search_common</span></code></a> from <em>self</em>
+(via <code class="xref py py-meth docutils literal notranslate"><span class="pre">_relpath_from_common()</span></code>), then prepends the chosen prefix.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>target</strong> (<em>int</em><em>, </em><em>str</em><em>, or </em><a class="reference internal" href="#mooonpy.tools.Path" title="mooonpy.tools.Path"><em>Path</em></a>) – Replacement prefix — either an <code class="docutils literal notranslate"><span class="pre">int</span></code> index into
+<a class="reference internal" href="#mooonpy.tools.Path.search_prefixes" title="mooonpy.tools.Path.search_prefixes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">search_prefixes</span></code></a>, or a <code class="docutils literal notranslate"><span class="pre">str</span></code>/<code class="docutils literal notranslate"><span class="pre">Path</span></code> value.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Rewritten <code class="docutils literal notranslate"><span class="pre">Path</span></code>, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if <em>target</em> is an
+out-of-range integer index.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mooonpy.tools.Path" title="mooonpy.tools.Path">Path</a> or None</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Path</span><span class="o">.</span><span class="n">search_prefixes</span> <span class="o">=</span> <span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;C:/research&#39;</span><span class="p">),</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;D:/backups/research&#39;</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Path</span><span class="o">.</span><span class="n">search_common</span>   <span class="o">=</span> <span class="s1">&#39;research&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;D:/backups/research/sims/run_001/output.log&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">swap_prefix</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">Path(&#39;C:\\research\\sims\\run_001\\output.log&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">swap_prefix</span><span class="p">(</span><span class="s1">&#39;D:/backups/research&#39;</span><span class="p">)</span>
+<span class="go">Path(&#39;D:\\backups\\research\\sims\\run_001\\output.log&#39;)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mooonpy.tools.Table">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">mooonpy.tools.</span></span><span class="sig-name descname"><span class="pre">Table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cornerlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Ellipsis</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/tools/tables.html#Table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Table" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The Table object takes several form-factors of the underlying data structure
+implemented in its subclasses. The main class is a dummy for storage but
+handles IO to csv or text. Methods are developed so access can be aliased
+for any of the subclasses. Or the .grid attribute can be used for direct
+access on specific subclasses.</p>
+<dl class="simple">
+<dt>def shape(self) -&gt; Tuple[Optional[int], Optional[int]]:</dt><dd><p>‘’’
+Size of the grid attribute, similar to numpy’s .shape attribute.
+If one item in the tuple is None, the grid is asymmetric or does
+not match the labels and shape is meaningless.
+‘’’
+return tuple((0,0)) # makes code happy</p>
+</dd>
+<dt>def headers(self) -&gt; Optional[List[str]]:</dt><dd><p>‘’’
+Return a list of keywords or headers of the table
+‘’’
+pass</p>
+</dd>
+<dt>def rowlabels(self) -&gt; Optional[List[str]]:</dt><dd><p>‘’’
+Returns a list of row labels of the table
+‘’’
+pass</p>
+</dd>
+<dt>def col(self,key):</dt><dd><p>‘’’
+Returns column from index of ‘key’ in headers, or if not found, index of the header
+if that fails, a column of appropriate length is created with .default
+‘’’
+pass</p>
+</dd>
+<dt>def row(self,row_key):</dt><dd><p>‘’’
+Returns a row from the index of ‘row_key’ in rows, or if not found is used as the index
+This has O(N) cost if using ‘rowlabel’ as a list, or O(1) cost without the list
+‘’’
+pass</p>
+</dd>
+<dt>def rowcol(self,row_key,key):</dt><dd><p>pass</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Table.col_fun">
+<span class="sig-name descname"><span class="pre">col_fun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fun_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span></span></span><a class="reference internal" href="_modules/mooonpy/tools/tables.html#Table.col_fun"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Table.col_fun" title="Link to this definition"></a></dt>
+<dd><p>Compute aggregate functions on each column.</p>
+<p>The result is added to the summary dict as a ‘fun_name’:dict(key:value,…)</p>
+<p>pair if keywords are defined, or a list(value,…) if not.</p>
+<p>note that the summary dict may be converted to a RowTable</p>
+<p>RowTable does not exist yet</p>
+<p>The data is also returned.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Table.console">
+<span class="sig-name descname"><span class="pre">console</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/tools/tables.html#Table.console"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Table.console" title="Link to this definition"></a></dt>
+<dd><p>Convert table to string representation
+This is ok to use in console for small tables, but will struggle for file IO with large tables</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Table.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/tools/tables.html#Table.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Table.copy" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Table.csv">
+<span class="sig-name descname"><span class="pre">csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path" title="mooonpy.tools.file_utils.Path"><span class="pre">Path</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">append</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/tools/tables.html#Table.csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Table.csv" title="Link to this definition"></a></dt>
+<dd><p>Write table to csv file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Table.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/tools/tables.html#Table.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Table.plot" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mooonpy.tools.Table.yield_line">
+<span class="sig-name descname"><span class="pre">yield_line</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mooonpy/tools/tables.html#Table.yield_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mooonpy.tools.Table.yield_line" title="Link to this definition"></a></dt>
+<dd><p>Create one line of a table with a specified format
+Will probably only work for rectangular tables</p>
+</dd></dl>
+
+</dd></dl>
+
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.tools.file_utils.html">mooonpy.tools.file_utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path"><code class="docutils literal notranslate"><span class="pre">Path</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path.basename"><code class="docutils literal notranslate"><span class="pre">Path.basename()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path.dir"><code class="docutils literal notranslate"><span class="pre">Path.dir()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path.ext"><code class="docutils literal notranslate"><span class="pre">Path.ext()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path.find_prefix"><code class="docutils literal notranslate"><span class="pre">Path.find_prefix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path.format"><code class="docutils literal notranslate"><span class="pre">Path.format()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path.ignore_nonnumeric_priority_wild"><code class="docutils literal notranslate"><span class="pre">Path.ignore_nonnumeric_priority_wild</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path.locate"><code class="docutils literal notranslate"><span class="pre">Path.locate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path.locate_all"><code class="docutils literal notranslate"><span class="pre">Path.locate_all()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path.matches"><code class="docutils literal notranslate"><span class="pre">Path.matches()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path.natsort_right_to_left"><code class="docutils literal notranslate"><span class="pre">Path.natsort_right_to_left</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path.new_ext"><code class="docutils literal notranslate"><span class="pre">Path.new_ext()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path.open"><code class="docutils literal notranslate"><span class="pre">Path.open()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path.recent"><code class="docutils literal notranslate"><span class="pre">Path.recent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path.root"><code class="docutils literal notranslate"><span class="pre">Path.root()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path.search_common"><code class="docutils literal notranslate"><span class="pre">Path.search_common</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path.search_prefixes"><code class="docutils literal notranslate"><span class="pre">Path.search_prefixes</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.Path.swap_prefix"><code class="docutils literal notranslate"><span class="pre">Path.swap_prefix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.file_utils.html#mooonpy.tools.file_utils.smart_open"><code class="docutils literal notranslate"><span class="pre">smart_open()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.tools.loop_utils.html">mooonpy.tools.loop_utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.Cartesian"><code class="docutils literal notranslate"><span class="pre">Cartesian</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.Cartesian.generate"><code class="docutils literal notranslate"><span class="pre">Cartesian.generate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.Cartesian.generate_list"><code class="docutils literal notranslate"><span class="pre">Cartesian.generate_list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.Cartesian.get_combined_index"><code class="docutils literal notranslate"><span class="pre">Cartesian.get_combined_index()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.CartesianResult"><code class="docutils literal notranslate"><span class="pre">CartesianResult</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.CartesianResult.string_format"><code class="docutils literal notranslate"><span class="pre">CartesianResult.string_format()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.DimensionEntry"><code class="docutils literal notranslate"><span class="pre">DimensionEntry</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.DimensionEntry.cart_key"><code class="docutils literal notranslate"><span class="pre">DimensionEntry.cart_key</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.DimensionEntry.condition"><code class="docutils literal notranslate"><span class="pre">DimensionEntry.condition</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.DimensionEntry.iterable"><code class="docutils literal notranslate"><span class="pre">DimensionEntry.iterable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.DimensionEntry.name"><code class="docutils literal notranslate"><span class="pre">DimensionEntry.name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.DimensionInfo"><code class="docutils literal notranslate"><span class="pre">DimensionInfo</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.DimensionInfo.base"><code class="docutils literal notranslate"><span class="pre">DimensionInfo.base</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.DimensionInfo.conditionals"><code class="docutils literal notranslate"><span class="pre">DimensionInfo.conditionals</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.DimensionInfo.parallels"><code class="docutils literal notranslate"><span class="pre">DimensionInfo.parallels</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.DimensionInfo.size"><code class="docutils literal notranslate"><span class="pre">DimensionInfo.size</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.IndexInfo"><code class="docutils literal notranslate"><span class="pre">IndexInfo</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.IndexInfo.combined"><code class="docutils literal notranslate"><span class="pre">IndexInfo.combined</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.IndexInfo.dimensions"><code class="docutils literal notranslate"><span class="pre">IndexInfo.dimensions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.loop_utils.html#mooonpy.tools.loop_utils.IndexInfo.global_idx"><code class="docutils literal notranslate"><span class="pre">IndexInfo.global_idx</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.tools.math_utils.html">mooonpy.tools.math_utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.Coulumb"><code class="docutils literal notranslate"><span class="pre">Coulumb()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.Coulumb_force"><code class="docutils literal notranslate"><span class="pre">Coulumb_force()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.HistBins"><code class="docutils literal notranslate"><span class="pre">HistBins</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.LJ_96"><code class="docutils literal notranslate"><span class="pre">LJ_96()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.LJ_96_force"><code class="docutils literal notranslate"><span class="pre">LJ_96_force()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.MixingRule"><code class="docutils literal notranslate"><span class="pre">MixingRule</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.aggregate_fun"><code class="docutils literal notranslate"><span class="pre">aggregate_fun()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.bilinear"><code class="docutils literal notranslate"><span class="pre">bilinear()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.compute_derivative"><code class="docutils literal notranslate"><span class="pre">compute_derivative()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.compute_fringe_slope"><code class="docutils literal notranslate"><span class="pre">compute_fringe_slope()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.edge_tan_intersect"><code class="docutils literal notranslate"><span class="pre">edge_tan_intersect()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.find_peaks_and_minima"><code class="docutils literal notranslate"><span class="pre">find_peaks_and_minima()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.find_peaks_and_valleys"><code class="docutils literal notranslate"><span class="pre">find_peaks_and_valleys()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.first_value_cross"><code class="docutils literal notranslate"><span class="pre">first_value_cross()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.gaussian_quad_turn"><code class="docutils literal notranslate"><span class="pre">gaussian_quad_turn()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.gaussian_turn"><code class="docutils literal notranslate"><span class="pre">gaussian_turn()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.math_utils.html#mooonpy.tools.math_utils.hyperbola"><code class="docutils literal notranslate"><span class="pre">hyperbola()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.tools.misc_utils.html">mooonpy.tools.misc_utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.misc_utils.html#mooonpy.tools.misc_utils.ColorMap"><code class="docutils literal notranslate"><span class="pre">ColorMap</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.misc_utils.html#mooonpy.tools.misc_utils.auto_colorbar"><code class="docutils literal notranslate"><span class="pre">auto_colorbar()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.misc_utils.html#mooonpy.tools.misc_utils.calculate_axis_ticks"><code class="docutils literal notranslate"><span class="pre">calculate_axis_ticks()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.misc_utils.html#mooonpy.tools.misc_utils.inc_arrange"><code class="docutils literal notranslate"><span class="pre">inc_arrange()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.misc_utils.html#mooonpy.tools.misc_utils.reset_axis_limits"><code class="docutils literal notranslate"><span class="pre">reset_axis_limits()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.tools.signals.html">mooonpy.tools.signals module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.signals.html#mooonpy.tools.signals.butter_lowpass"><code class="docutils literal notranslate"><span class="pre">butter_lowpass()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.signals.html#mooonpy.tools.signals.compute_PSD"><code class="docutils literal notranslate"><span class="pre">compute_PSD()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.signals.html#mooonpy.tools.signals.data_extension"><code class="docutils literal notranslate"><span class="pre">data_extension()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.signals.html#mooonpy.tools.signals.determine_mirroring_locations"><code class="docutils literal notranslate"><span class="pre">determine_mirroring_locations()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.signals.html#mooonpy.tools.signals.power_to_db"><code class="docutils literal notranslate"><span class="pre">power_to_db()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.signals.html#mooonpy.tools.signals.sparse_eye_diff"><code class="docutils literal notranslate"><span class="pre">sparse_eye_diff()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.signals.html#mooonpy.tools.signals.whitt_smooth"><code class="docutils literal notranslate"><span class="pre">whitt_smooth()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.tools.string_utils.html">mooonpy.tools.string_utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.string_utils.html#mooonpy.tools.string_utils.is_float"><code class="docutils literal notranslate"><span class="pre">is_float()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.string_utils.html#mooonpy.tools.string_utils.list2digit"><code class="docutils literal notranslate"><span class="pre">list2digit()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.string_utils.html#mooonpy.tools.string_utils.string2digit"><code class="docutils literal notranslate"><span class="pre">string2digit()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mooonpy.tools.tables.html">mooonpy.tools.tables module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ArrayTable"><code class="docutils literal notranslate"><span class="pre">ArrayTable</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ArrayTable.col"><code class="docutils literal notranslate"><span class="pre">ArrayTable.col()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ArrayTable.headers"><code class="docutils literal notranslate"><span class="pre">ArrayTable.headers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ArrayTable.row"><code class="docutils literal notranslate"><span class="pre">ArrayTable.row()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ArrayTable.rowcol"><code class="docutils literal notranslate"><span class="pre">ArrayTable.rowcol()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ArrayTable.rowlabels"><code class="docutils literal notranslate"><span class="pre">ArrayTable.rowlabels()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ArrayTable.shape"><code class="docutils literal notranslate"><span class="pre">ArrayTable.shape()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ColTable"><code class="docutils literal notranslate"><span class="pre">ColTable</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ColTable.col"><code class="docutils literal notranslate"><span class="pre">ColTable.col()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ColTable.headers"><code class="docutils literal notranslate"><span class="pre">ColTable.headers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ColTable.items"><code class="docutils literal notranslate"><span class="pre">ColTable.items()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ColTable.keys"><code class="docutils literal notranslate"><span class="pre">ColTable.keys()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ColTable.read_csv"><code class="docutils literal notranslate"><span class="pre">ColTable.read_csv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ColTable.row"><code class="docutils literal notranslate"><span class="pre">ColTable.row()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ColTable.rowcol"><code class="docutils literal notranslate"><span class="pre">ColTable.rowcol()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ColTable.rowlabels"><code class="docutils literal notranslate"><span class="pre">ColTable.rowlabels()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ColTable.shape"><code class="docutils literal notranslate"><span class="pre">ColTable.shape()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ColTable.values"><code class="docutils literal notranslate"><span class="pre">ColTable.values()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ListListTable"><code class="docutils literal notranslate"><span class="pre">ListListTable</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ListListTable.append"><code class="docutils literal notranslate"><span class="pre">ListListTable.append()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ListListTable.col"><code class="docutils literal notranslate"><span class="pre">ListListTable.col()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ListListTable.headers"><code class="docutils literal notranslate"><span class="pre">ListListTable.headers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ListListTable.read_csv"><code class="docutils literal notranslate"><span class="pre">ListListTable.read_csv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ListListTable.row"><code class="docutils literal notranslate"><span class="pre">ListListTable.row()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ListListTable.rowcol"><code class="docutils literal notranslate"><span class="pre">ListListTable.rowcol()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ListListTable.rowlabels"><code class="docutils literal notranslate"><span class="pre">ListListTable.rowlabels()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.ListListTable.shape"><code class="docutils literal notranslate"><span class="pre">ListListTable.shape()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.Table"><code class="docutils literal notranslate"><span class="pre">Table</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.Table.col_fun"><code class="docutils literal notranslate"><span class="pre">Table.col_fun()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.Table.console"><code class="docutils literal notranslate"><span class="pre">Table.console()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.Table.copy"><code class="docutils literal notranslate"><span class="pre">Table.copy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.Table.csv"><code class="docutils literal notranslate"><span class="pre">Table.csv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.Table.plot"><code class="docutils literal notranslate"><span class="pre">Table.plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mooonpy.tools.tables.html#mooonpy.tools.tables.Table.yield_line"><code class="docutils literal notranslate"><span class="pre">Table.yield_line()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mooonpy.programs.regression_fringe_response.html" class="btn btn-neutral float-left" title="mooonpy.programs.regression_fringe_response module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mooonpy.tools.file_utils.html" class="btn btn-neutral float-right" title="mooonpy.tools.file_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Kemppainen-Muzzy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
